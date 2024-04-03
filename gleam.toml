@@ -1,0 +1,15 @@
+name = "craft"
+target = "javascript"
+version = "1.0.0"
+
+description = "A CSS-in-Gleam package, made to work with frontend, backend, and directly with lustre!"
+licences = ["MIT"]
+links = [{title = "Sponsor", href = "https://github.com/sponsors/ghivert"}]
+repository = {type = "github", user = "ghivert", repo = "craft"}
+
+[dependencies]
+gleam_stdlib = "~> 0.34 or ~> 1.0"
+lustre = "~> 4.1"
+
+[dev-dependencies]
+gleeunit = "~> 1.0"
