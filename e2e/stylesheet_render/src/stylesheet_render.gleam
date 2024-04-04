@@ -1,4 +1,5 @@
 import craft
+import craft/options as craft_options
 import craft/size.{px}
 import gleam/int
 import lustre
@@ -14,7 +15,10 @@ pub type Msg {
 }
 
 pub fn main() {
-  let assert Ok(render) = craft.setup()
+  let assert Ok(render) =
+    craft_options.default()
+    |> craft_options.node()
+    |> craft.setup()
 
   let assert Ok(_) =
     fn(_) { 0 }

@@ -1,14 +1,7 @@
 import * as helpers from './helpers.ffi.mjs'
+import { StyleSheet } from './stylesheet.ffi.mjs'
 
 export let cache
-
-const createStyleSheet = () => {
-  const styleElement = document.createElement('style')
-  styleElement.setAttribute('className', 'craft-stylesheet')
-  document.head.appendChild(styleElement)
-  if (!styleElement.sheet) throw new Error('StyleSheet not found, styled cannot be used.')
-  return styleElement.sheet
-}
 
 export class Cache {
   #memoCache
@@ -16,11 +9,11 @@ export class Cache {
   #passiveCache
   #stylesheet
 
-  constructor() {
+  constructor(options) {
     this.#memoCache = new Map()
     this.#activeCache = new Map()
     this.#passiveCache = new Map()
-    this.#stylesheet = createStyleSheet()
+    this.#stylesheet = StyleSheet.for(options.stylesheet)
   }
 
   prepare() {
@@ -30,16 +23,21 @@ export class Cache {
 
   diff() {
     const keys = new Set()
-    for (const key of this.#activeCache) keys.add(key)
-    for (const key of this.#passiveCache) keys.add(key)
+    for (const key of this.#activeCache.keys()) keys.add(key)
+    for (const key of this.#passiveCache.keys()) keys.add(key)
+    console.log(keys)
+    console.log(this.#activeCache.keys())
+    console.log(this.#passiveCache.keys())
     keys.forEach(key => {
       if (this.#activeCache.has(key)) {
-        if (this.#activeCache[key].indexRules !== null) return
-        return this.#insertStyles(this.#activeCache[key])
+        const klass = this.#activeCache.get(key)
+        if (klass?.indexRules !== null) return
+        return this.#insertStyles(klass)
       }
-      if (key in this.#passiveCache)
+      if (this.#passiveCache.has(key))
         return this.#deleteStyles(this.#passiveCache.get(key))
     })
+    this.#stylesheet.render()
   }
 
   persist(className, properties) {
@@ -79,6 +77,7 @@ export class Cache {
   // It saves the content of the class right away in the browser, and will never
   // recompute them later.
   memoize({ className }) {
+    if (this.#memoCache.has(className)) return
     const klass = this.#activeCache.get(className)
     this.#memoCache.set(className, klass)
     this.#activeCache.delete(className)
@@ -105,8 +104,8 @@ export class Cache {
 }
 
 
-export function createCache() {
-  cache = new Cache()
+export function createCache(options) {
+  cache = new Cache(options)
   return cache
 }
 

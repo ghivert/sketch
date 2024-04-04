@@ -9,7 +9,7 @@ export const uid = (function() {
     const index = (id++).toString().padStart(4, '0')
     return `css-${index}`
   }
-})
+})()
 
 export function getFunctionName() {
   const error = new Error()

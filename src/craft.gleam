@@ -164,6 +164,7 @@ import gleam/string
 import lustre/attribute.{type Attribute}
 import craft/media.{type Query}
 import craft/size.{type Size}
+import craft/options.{type Options}
 
 // Types
 // Most of them are opaque because they're just JS types from the FFI.
@@ -207,20 +208,20 @@ pub type PseudoStyle =
 // Used exclusively in the package.
 // They should never be exposed.
 
-@external(javascript, "./craft_ffi.mjs", "compileClass")
+@external(javascript, "./craft.ffi.mjs", "compileClass")
 fn compile_class(styles: List(Style(media, pseudo))) -> Class
 
-@external(javascript, "./craft_ffi.mjs", "compileClass")
+@external(javascript, "./craft.ffi.mjs", "compileClass")
 fn compile_style(styles: List(Style(media, pseudo)), id: String) -> Class
 
-@external(javascript, "./craft_ffi.mjs", "memo")
+@external(javascript, "./craft.ffi.mjs", "memo")
 fn memo(class: Class) -> Class
 
-@external(javascript, "./craft_ffi.mjs", "toString")
+@external(javascript, "./craft.ffi.mjs", "toString")
 fn to_string(class: Class) -> String
 
 @external(javascript, "./cache.ffi.mjs", "createCache")
-fn create_cache() -> Cache
+fn create_cache(options: Options) -> Cache
 
 @external(javascript, "./cache.ffi.mjs", "prepareCache")
 fn prepare_cache(cache: Cache) -> Nil
@@ -984,11 +985,9 @@ pub fn to_lustre(class: Class) -> Attribute(a) {
   |> attribute.classes()
 }
 
-pub fn setup() {
-  io.debug("In setup")
-  let cache = create_cache()
+pub fn setup(options: Options) {
+  let cache = create_cache(options)
   Ok(fn(view: fn(model) -> element) {
-    io.debug("In intermediate")
     fn(model: model) {
       prepare_cache(cache)
       let el = view(model)
