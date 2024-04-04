@@ -157,6 +157,7 @@
 //// In case something is missing or a property does not have its underscore
 //// alternative, [open an issue — or better, a PR — on the repo!](https://github.com/ghivert/craft)
 
+import gleam/io
 import gleam/list
 import gleam/int
 import gleam/string
@@ -169,6 +170,8 @@ import craft/size.{type Size}
 // No one should use them directly outside of this package.
 // If you end up here reading this because you want to access internals,
 // consider forking the repo and working on it on your own, or submit a PR!
+
+type Cache
 
 pub opaque type Class
 
@@ -215,6 +218,15 @@ fn memo(class: Class) -> Class
 
 @external(javascript, "./craft_ffi.mjs", "toString")
 fn to_string(class: Class) -> String
+
+@external(javascript, "./cache.ffi.mjs", "createCache")
+fn create_cache() -> Cache
+
+@external(javascript, "./cache.ffi.mjs", "prepareCache")
+fn prepare_cache(cache: Cache) -> Nil
+
+@external(javascript, "./cache.ffi.mjs", "renderCache")
+fn render_cache(cache: Cache) -> Nil
 
 // Properties
 // All the properties accessible for the user.
@@ -970,4 +982,18 @@ pub fn to_lustre(class: Class) -> Attribute(a) {
   |> string.split(" ")
   |> list.map(fn(value) { #(value, True) })
   |> attribute.classes()
+}
+
+pub fn setup() {
+  io.debug("In setup")
+  let cache = create_cache()
+  Ok(fn(view: fn(model) -> element) {
+    io.debug("In intermediate")
+    fn(model: model) {
+      prepare_cache(cache)
+      let el = view(model)
+      render_cache(cache)
+      el
+    }
+  })
 }
