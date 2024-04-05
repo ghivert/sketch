@@ -52,7 +52,7 @@ import lustre/element/html.{div, button, p}
 import lustre/event.{on_click}
 
 pub fn main() {
-  let assert Ok(render) = craft.setup(craft_options.dom())
+  let assert Ok(render) = craft.setup(craft_options.browser())
   let app = lustre.simple(init, update, render(view))
   let assert Ok(_) = lustre.start(app, "#app", Nil)
   Nil
