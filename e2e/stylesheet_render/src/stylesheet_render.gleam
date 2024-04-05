@@ -18,7 +18,7 @@ pub type Msg {
 pub fn main() {
   let assert Ok(render) =
     craft_options.node()
-    |> craft.setup()
+    |> craft.lustre_setup()
 
   let assert Ok(_) =
     fn(_) { 0 }
@@ -55,7 +55,7 @@ fn color_class(model: Model) {
     _ -> "green"
   }
   let id = "color-" <> back
-  craft.variable(id, [craft.background(back)])
+  craft.dynamic(id, [craft.background(back)])
   |> craft.to_lustre()
 }
 

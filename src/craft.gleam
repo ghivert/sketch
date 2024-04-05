@@ -1,161 +1,71 @@
-//// Craft is a small module providing CSS-in-Gleam in its simpler form.
-//// Craft does not try to add complicated API on top of CSS. If you have CSS
-//// knowledge, you'll feel right at home, with all the niceties offered by
-//// Craft, i.e. type-checking of sizes and push-to-browser stylesheets of your
-//// classes, as well as SSR support.
+//// Craft tries to be to CSS what the VDOM is to the DOM: the ultimate pain-free
+//// tool to manage the state of your CSS styles, without having to worry with CSS
+//// while leveraging CSS skills.
 ////
-//// Craft has currently two run modes: directly in your browser and leverages on
-//// all abilities of the JS runtime, and on backend, to leverages on SSR.
+//// ## I don't know anything about Craft!
 ////
-//// Craft has currently to way to use it: directly in your vanilla Gleam
-//// application or in your fully-featured [Lustre](https://hexdocs.pm/lustre/) application.
-//// Craft allows you to build two types of CSS classes: dynamic ones, changing
-//// over time, and static ones, compiled once and for all, and reused during the
-//// entire lifetime of the application, just like classic CSS stylesheets.
+//// This documentation focuses on internal and how is working Craft under-the-hood.
+//// No worry though, just heads up to the [README](https://hexdocs.pm/craft/index.html)
+//// to get an overview of Craft, and to get it work with your favorite framework!
 ////
-//// ## Compiling static classes
+//// ## Lifecycle
 ////
-//// Craft exposes a single function [`class`](#class) allowing you to build your
-//// class. The first time your function is called, the corresponding styles will
-//// be compiled into CSS rules, and pushed in your browser or your SSR stylesheet.
-//// Every time you'll call the function in the future, no computation will be done,
-//// the class name will be returned, thanks to memoization.
+//// To do this, Craft tries to maintain a cache of styles, that can be updated
+//// between every render of the DOM, and will update the correct StyleSheet in DOM.
+//// Craft has a lifecycle to make it work.
+//// After having created a Cache, you have to call `prepare` before every repaint,
+//// and `render` after every repaint.
 ////
 //// ```
-//// import craft
-////
-//// fn my_class() -> String {
-////   craft.class([
-////     craft.display("flex"),
-////     craft.flex_direction("column"),
-////   ])
-////   |> craft.to_class_name()
-//// }
+////                 ┌──────────────┐
+////                 │ Create Cache │
+////                 └──────────────┘
+////                        │
+////                        │
+////                        │
+////                        ↓
+////         ┌───────────────────────────────┐
+////         │ Before paint, setup the cache │  ←───────┐
+////         └───────────────────────────────┘          │
+////                        │                           │
+////                        │                           │
+////                        │                           │
+////                        ↓                           │
+////   ┌───────────────────────────────────────────┐    │
+////   │                                           │    │
+////   │      framework paints to the DOM          │    │
+////   │   and calls class and dynamic functions   │    │
+////   │                                           │    │
+////   └───────────────────────────────────────────┘    │
+////                        │                           │
+////                        │                           │
+////                        │                           │
+////                        ↓                           │
+////         ┌───────────────────────────────┐          │
+////         │ After paint, render the cache │  ────────┘
+////         └───────────────────────────────┘
 //// ```
 ////
-//// ## Compiling dynamic classes
+//// - `prepare` setup the Cache in order to diff the old styles with the new styles.
+////   If `prepare` is not called before every repaint, the stylesheet will not diff
+////   styles, and it will continue to append styles to the stylesheet.
 ////
-//// Craft exposes another function [`variable`](#variable) allowing you to build a
-//// dynamic class, changing over time. Each time the function is called, the
-//// properties in the declaration will be compiled into CSS, the previous class
-//// will be wiped from the browser, and the new one will pushed.
+//// - `render` accepts the cache and will inject the stylesheet in the DOM or the
+////   document.
 ////
-//// ```
-//// import craft
+//// ## Some notes on side-effects
 ////
-//// fn my_variable_class(is_column: Bool) -> String {
-////   craft.variable([
-////     craft.display("flex"),
-////     case is_column {
-////       True -> craft.flex_direction("column")
-////       False -> craft.flex_direction("row")
-////     }
-////   ])
-////   |> craft.to_class_name()
-//// }
-//// ```
-////
-//// ## Usage with Lustre
-////
-//// [Lustre](https://hexdocs.pm/lustre/) is the main framework for frontend
-//// development in Gleam. Because of this, craft provides a function to directly
-//// use classes in Lustre views: [`to_lustre()`](#to_lustre). Just use it in place
-//// of [`to_class_name()`](#to_class_name) to get a Lustre attribute and use it
-//// in your views.
-////
-//// ```
-//// import craft
-//// import lustre/element/html
-////
-//// // With a pipeline.
-//// fn my_view() {
-////   [craft.background("red")]
-////   |> craft.class()
-////   |> craft.to_lustre()
-////   |> list.repeat(1)
-////   |> html.div(_, [])
-//// }
-////
-//// // With a variable class.
-//// fn my_other_view(model: Bool) {
-////   let color = case model {
-////     True -> "red"
-////     False -> "blue"
-////   }
-////   html.div(
-////    [craft.to_lustre(craft.variable([craft.background(color)]))],
-////    [],
-////   )
-//// }
-//// ```
-////
-//// ## Using media queries and pseudo-selectors
-////
-//// Because we're in CSS-in-Gleam, we can leverage on the full CSS power,
-//// contrarily to inline styling. This mean we can use media queries and pseudo-selectors!
-//// You only need to call the proper functions, and craft will take care of the rest.
-////
-//// ```
-//// import craft
-//// import craft/media
-//// import craft/size.{px}
-////
-//// fn my_class() {
-////   craft.class([
-////     craft.display("flex"),
-////     craft.flex_direction("row"),
-////     craft.background("red"),
-////     craft.hover([
-////       craft.background("blue"),
-////     ]),
-////     craft.media(media.max_width(px(320)), [
-////       craft.flex_direction("column"),
-////       craft.hover([
-////         craft.background("green"),
-////       ]),
-////     ]),
-////   ])
-////   |> craft.to_lustre()
-//// }
-//// ```
-////
-//// The example above will be compiled to the following CSS.
-////
-//// ```
-//// .css-001 {
-////   display: flex;
-////   flex-direction: row;
-////   background: red;
-//// }
-////
-//// .css-001:hover {
-////   background: blue;
-//// }
-////
-//// @media (max-width: 320px) {
-////   .css-001 {
-////     flex-direction: column;
-////   }
-////
-////   .css-001:hover {
-////     background: green;
-////   }
-//// }
-//// ```
-////
-//// ## Some opinions on properties
-////
-//// A lot of properties are accessible directly through the `craft` package.
-//// But with time, some could be added, and new features for existing features
-//// can appear. That's why craft will never try to be on your way: at any time
-//// you can access [`property()`](#property), which allows you to push any
-//// arbitrary property in a class. Another thing is that craft will always let
-//// you access raw, low-level properties. If you're trying to use something like
-//// `craft.width("auto")` and the property does not support String, look for a
-//// variant with an underscore (`_`), it should fullfill your needs, like
-//// `craft.width_("auto")`!
-//// In case something is missing or a property does not have its underscore
-//// alternative, [open an issue — or better, a PR — on the repo!](https://github.com/ghivert/craft)
+//// Unfortunately, and because of the nature of the different frameworks and of
+//// CSS, Craft is doing some side-effects in background, to collect the styles
+//// and to push them in the browser. Maybe it could be removed in the future,
+//// but it would involve work with different maintainers of different packages,
+//// and it would take a lot of time and energy. It's not on plan right now,
+//// but rather to focus on correct UX and to find good ways of doing things.
+//// When the dust will settle and that API will be stable, then we could take
+//// some time to figure out how to get rid of side-effects.
+//// In the meantime, if you plan to integrate Craft in your framework, and need
+//// some access to underlying and internals, open an issue with your use case,
+//// I'd more than happy to help on that point and reduce side-effects.
 
 import gleam/list
 import gleam/int
@@ -173,7 +83,7 @@ import craft/options.{type Options}
 // If you end up here reading this because you want to access internals,
 // consider forking the repo and working on it on your own, or submit a PR!
 
-type Cache
+pub type Cache
 
 pub opaque type Class
 
@@ -207,7 +117,7 @@ pub type PseudoStyle =
 
 // FFI
 // Used exclusively in the package.
-// They should never be exposed.
+// Most should not be exposed, or in a low-level way.
 
 @external(javascript, "./craft.ffi.mjs", "compileClass")
 fn compile_class(styles: List(Style(media, pseudo))) -> Class
@@ -218,17 +128,42 @@ fn compile_style(styles: List(Style(media, pseudo)), id: String) -> Class
 @external(javascript, "./craft.ffi.mjs", "memo")
 fn memo(class: Class) -> Class
 
+/// Convert a `Class` to its proper class name, to use it anywhere in your
+/// application. It can have the form `class1` or `class1 class2` in case of
+/// classes composition.
 @external(javascript, "./craft.ffi.mjs", "toString")
-fn to_string(class: Class) -> String
+fn to_class_name(class: Class) -> String
 
+/// Create a cache manager, managing the styles for every repaint. You can
+/// instanciate as much cache manager that you want, if you want to use multiple
+/// render lifecycle.
+/// You can output the styles directly in a node style in the DOM, or by pushing
+/// them directly in a CSSStyleSheet, at the document level. The choice is up to
+/// you at the initialization of the Cache.
+/// If you're using Lustre, you shouldn't have to worry about it, and consider
+/// it as internal low-level.
 @external(javascript, "./cache.ffi.mjs", "createCache")
-fn create_cache(options: Options) -> Result(Cache, error.CraftError)
+pub fn create_cache(options: Options) -> Result(Cache, error.CraftError)
 
+/// Lifecycle function — not side-effect free
+/// `prepare` should be called before your repaint, and before the different
+/// calls to [`class`](#class) and [`dynamic`](#dynamic) functions. This setups
+/// the cache to prepare for a new paint, and will allow for diffing the styles.
+/// As long as you don't call `prepare`, the stylesheet output by craft will not
+/// diff, and you'll use the stylesheet as append-only. This could be done at
+/// will.
+/// Be careful, the styles computed by [`class`](#class) and [`dynamic`](#dynamic)
+/// will be pushed in the last cache called by `prepare`, due to the styles
+/// handling (and some side-effects under-the-hood for performance purposes).
 @external(javascript, "./cache.ffi.mjs", "prepareCache")
-fn prepare_cache(cache: Cache) -> Nil
+pub fn prepare(cache: Cache) -> Nil
 
+/// Lifecycle function — not side-effect free
+/// `render` takes a Cache, and render its content to the stylesheet, according
+/// to the choice of the Cache. `render` is idempotent, and can be called as
+/// much as you want
 @external(javascript, "./cache.ffi.mjs", "renderCache")
-fn render_cache(cache: Cache) -> Nil
+pub fn render(cache: Cache) -> Nil
 
 // Properties
 // All the properties accessible for the user.
@@ -947,7 +882,7 @@ pub fn important(style: Style(media, pseudo)) {
 /// Works similarly to `composes` property in CSS modules.
 pub fn compose(class: Class) {
   class
-  |> to_string()
+  |> to_class_name()
   |> ClassName()
 }
 
@@ -963,36 +898,28 @@ pub fn class(styles: List(Style(media, pseudo))) -> Class {
 /// the class will be re-computed, and a new version will be pushed in the browser.
 /// Be careful to add a unique ID: right now, it's not possible to push
 /// a dynamic class in the browser without defining an ID.
-pub fn variable(id: String, styles: List(Style(media, pseudo))) -> Class {
+pub fn dynamic(id: String, styles: List(Style(media, pseudo))) -> Class {
   styles
   |> compile_style(id)
-}
-
-/// Convert a `Class` to its proper class name, to use it anywhere in your
-/// application. It can have the form `class1` or `class1 class2` in case of
-/// classes composition.
-pub fn to_class_name(class: Class) -> String {
-  class
-  |> to_string()
 }
 
 /// Convert a `Class` to its equivalent lustre attribute. Use it in your
 /// view functions. I.e. `html.div([craft.to_lustre(class())], [])`.
 pub fn to_lustre(class: Class) -> Attribute(a) {
   class
-  |> to_string()
+  |> to_class_name()
   |> string.split(" ")
   |> list.map(fn(value) { #(value, True) })
   |> attribute.classes()
 }
 
-pub fn setup(options: Options) {
+pub fn lustre_setup(options: Options) {
   use cache <- result.then(create_cache(options))
   Ok(fn(view: fn(model) -> element) {
     fn(model: model) {
-      prepare_cache(cache)
+      prepare(cache)
       let el = view(model)
-      render_cache(cache)
+      render(cache)
       el
     }
   })
