@@ -1,4 +1,13 @@
-//// Defines media queries directly with functions.
+//// Define media queries directly with functions.
+//// Refer to the craft module to get more details on the usage.
+////
+//// ## Advanced usage
+////
+//// Media queries can be rather complex, and the module tries to give all
+//// features in a usable way. A media query takes form (property: value) and
+//// can be combined, like (orientation: landscape or min-width: 1000px).
+//// Those media queries can be created by using the corresponding `and`,
+//// `or` or `not` functions.
 
 import craft/size.{type Size, to_string as to_str}
 import gleam/string
@@ -79,7 +88,7 @@ fn q_to_str(query: Query) {
   }
 }
 
-/// Mainly internal function, can be used if you need to go from a media query to a String
+/// Internal function, can be used if you need to go from a media query to a String
 /// in case you're building on top of craft.
 pub fn to_string(query: Query) {
   let content = q_to_str(query)

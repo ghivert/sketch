@@ -17,8 +17,7 @@ pub type Msg {
 
 pub fn main() {
   let assert Ok(render) =
-    craft_options.default()
-    |> craft_options.node()
+    craft_options.node()
     |> craft.setup()
 
   let assert Ok(_) =

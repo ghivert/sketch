@@ -20,17 +20,22 @@ export function getFunctionName() {
   return stack.split('\n').slice(1, 5).join('\n')
 }
 
-export function deepEqual(args, previousArgs) {
-  const constants = ['string', 'number', 'boolean']
-  if (constants.includes(typeof args) || constants.includes(typeof previousArgs)) return args === previousArgs
-  for (const value in args) {
-    if (!(value in previousArgs)) return false
-    const isSame = deepEqual(args[value], previousArgs[value])
+// Compare two data structures to check if they're the same.
+export function deepEqual(a, b) {
+  const consts = ['string', 'number', 'boolean']
+  if (consts.includes(typeof a) || consts.includes(typeof b)) return a === b
+  for (const value in a) {
+    if (!(value in b)) return false
+    const isSame = deepEqual(a[value], b[value])
     if (!isSame) return false
   }
   return true
 }
 
+// A Style property can be of four types: a class composition, a property definition
+// a pseudo-selector definitions or a media query definition.
+// They're defined in Gleam, and the class is opaque, so the only way is to
+// read in the content of the object to check the interesting fields.
 export function determineStyleType(style) {
   if ('class_name' in style && typeof style.class_name === 'string') {
     return 'compose'
@@ -43,11 +48,18 @@ export function determineStyleType(style) {
   }
 }
 
+// Take a class definition, and turns it to something like
+// .className {
+//   property1: value;
+//   property2: value;
+// }
 export function wrapClass(id, properties, indent_, pseudo = '') {
   const baseIndent = indent(indent_)
   return [`${baseIndent}.${id}${pseudo} {`, ...properties, `${baseIndent}}`].join('\n')
 }
 
+// Turn the different components of a property into the correct CSS property.
+// I.e. property: value [!important];
 export function computeProperty(indent_, property) {
   const baseIndent = indent(indent_)
   const key = `${baseIndent}${property.key}`

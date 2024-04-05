@@ -5,6 +5,10 @@ import gleam/int
 import gleam/float
 import gleam/string
 
+/// Size defines a CSS Unit. It can be either `px`, `pt`, `vh`, `vw`, `em`,
+/// `rem`, `lh`, `rlh`, `ch`, `%`. To instanciate a Size, use the corresponding
+/// functions. Every unit exposes two functions: the Int function (like `px(0)`)
+/// and the Float version suffixed by an underscore (like `px_(0.0)`).
 pub opaque type Size {
   Px(Float)
   Pt(Float)
@@ -98,7 +102,7 @@ pub fn ch_(value: Float) {
   Ch(value)
 }
 
-/// Mainly internal function, can be used if you need to go from a Size to a String
+/// Internal function, can be used if you need to go from a Size to a String
 /// in case you're building on top of craft.
 pub fn to_string(size) {
   case size {

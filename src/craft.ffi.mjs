@@ -1,6 +1,8 @@
 import { cache } from './cache.ffi.mjs'
 import * as helpers from './helpers.ffi.mjs'
 
+// The Style data structure being a recursive data, computeProperties traverse
+// the data structure and collect the properties with their context.
 function computeProperties(rawProperties, indent = 2) {
   const properties = rawProperties.toArray()
   const init = { properties: [], medias: [], classes: [], pseudoSelectors: [], indent }
@@ -39,6 +41,8 @@ function computeProperties(rawProperties, indent = 2) {
   }, init)
 }
 
+// Compute classes by using the class definitions, and by wrapping them in the
+// correct class declarations, to be CSS compliant.
 function computeClasses(id, computedProperties) {
   const { properties, medias, classes, pseudoSelectors } = computedProperties
   const classDef = helpers.wrapClass(id, properties, 0)
@@ -68,11 +72,15 @@ export function compileClass(styles, classId) {
   return { name, className }
 }
 
+// Memoize the class definitions in the cache.
+// Once memoized, it's impossible to un-memoize a class.
 export function memo(klass) {
   cache.memoize(klass)
   return klass
 }
 
+// Extract the name of the Class type, which is an opaque type for
+// the type { name: string, className: string }
 export function toString({ name }) {
   return name
 }

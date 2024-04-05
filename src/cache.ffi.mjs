@@ -3,6 +3,18 @@ import { StyleSheet } from './stylesheet.ffi.mjs'
 
 export let cache
 
+/**
+ * The cache maintains a structure similar to a VDOM, but for CSS. It tries to
+ * works on the more optimized way, by using two different cache, to store the
+ * current state, and the old state, and apply a diff correctly.
+ * The way it works is to first call the `prepare` function, and then to add
+ * add style by using the `store` function. To avoid doing the hard work twice,
+ * the function `persist` will try to get the style in the old cache, and
+ * transfer it to the new cache, to make sure it will not be destroyed in the
+ * diff.
+ * It uses a virtual StyleSheet, in which it's possible to insert or delete rules
+ * and allow to build the real stylesheet once the diff is made.
+ */
 export class Cache {
   #memoCache
   #activeCache
@@ -21,6 +33,9 @@ export class Cache {
     this.#activeCache = new Map()
   }
 
+  // Compute the predefined classes C = (Keys(Old) ∩ Keys(New))
+  // Remove the keys defined by Keys(Old) - C.
+  // Insert the keys defined by Keys(New) - C.
   diff() {
     const keys = new Set()
     for (const key of this.#activeCache.keys()) keys.add(key)
@@ -84,7 +99,9 @@ export class Cache {
   }
 
   // Insert the styles in the stylesheet.
-  // It inserts medias, selectors and index rules.
+  // It inserts medias, selectors and index rules. It inserts first the rule,
+  // then the selectors, and then the media, to respect the usual order in a
+  // standard CSS sheet, and to respect precedence of the styles.
   #insertStyles(klass) {
     const indexRules = []
     const { definitions } = klass
@@ -107,7 +124,8 @@ export function createCache(options) {
   return cache
 }
 
-export function prepareCache(cache) {
+export function prepareCache(cache_) {
+  cache = cache_
   cache.prepare()
 }
 
