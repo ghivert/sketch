@@ -30,3 +30,27 @@ export function deepEqual(args, previousArgs) {
   }
   return true
 }
+
+export function determineStyleType(style) {
+  if ('class_name' in style && typeof style.class_name === 'string') {
+    return 'compose'
+  } else if ('key' in style && 'value' in style) {
+    return 'property'
+  } else if ('pseudo_selector' in style && 'styles' in style) {
+    return 'pseudoSelector'
+  } else if ('query' in style && 'styles' in style) {
+    return 'mediaQuery'
+  }
+}
+
+export function wrapClass(id, properties, indent_, pseudo = '') {
+  const baseIndent = indent(indent_)
+  return [`${baseIndent}.${id}${pseudo} {`, ...properties, `${baseIndent}}`].join('\n')
+}
+
+export function computeProperty(indent_, property) {
+  const baseIndent = indent(indent_)
+  const key = `${baseIndent}${property.key}`
+  const important = property.important ? ' !important' : ''
+  return `${key}: ${property.value}${important};`
+}

@@ -51,9 +51,9 @@ fn main_class() {
 }
 
 fn color_class(model: Model) {
-  let back = case model % 2 == 0 {
-    True -> "blue"
-    False -> "green"
+  let back = case model % 3 {
+    0 -> "blue"
+    _ -> "green"
   }
   let id = "color-" <> back
   craft.variable(id, [craft.background(back)])

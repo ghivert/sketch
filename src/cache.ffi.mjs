@@ -52,7 +52,7 @@ export class Cache {
     // paint if the properties are equal. If they're not, don't persist it in
     // order to get it wiped by the class collection later in the cycle.
     const oldContent = this.#passiveCache.get(className)
-    if (oldContent && helpers.deepEqual(properties, previousProperties)) {
+    if (oldContent && helpers.deepEqual(properties, oldContent.previousStyles)) {
       this.#activeCache.set(className, oldContent)
       return { name: oldContent.name, className }
     }
@@ -62,7 +62,7 @@ export class Cache {
   // className: string
   // content: {
   //   name: string,
-  //   previousArgs: List(Style),
+  //   previousStyles: List(Style),
   //   indexRules: number[] | null,
   //   definitions: { mediasDef: string, selectorsDef: string, classDef: string },
   // }
