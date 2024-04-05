@@ -1107,7 +1107,8 @@ pub fn class(styles: List(Style(media, pseudo))) -> Class {
 /// Compiles a dynamic class, and not memoizing it. It means at every render,
 /// the class will be re-computed, and a new version will be pushed in the browser.
 /// Be careful to add a unique ID: right now, it's not possible to push
-/// a dynamic class in the browser without defining an ID.
+/// a dynamic class in the browser without defining an ID. The ID should be unique
+/// to the computed class, otherwise you could end up with some classes overlap.
 pub fn dynamic(id: String, styles: List(Style(media, pseudo))) -> Class {
   styles
   |> compile_style(id)

@@ -138,11 +138,18 @@ allowing you to build a dynamic class, changing over time. Each time the functio
 is called, the properties in the declaration will be compiled into CSS, the previous
 class will be wiped from the browser, and the new one will pushed.
 
+An ID *should be provided* at the moment, due to a limitation of the runtime, and
+the limitations of the compilation. Until a workaround is found, be careful to
+provide a unique id for your dynamic class, to avoid overlap with other classes.
+
 ```gleam
+import gleam/bool
 import sketch
 
-fn my_variable_class(is_column: Bool) -> String {
-  sketch.variable([
+fn my_dynamic_class(is_column: Bool) -> String {
+  // id is unfortunately required at the moment.
+  let id = "column-" <> bool.to_string(is_column)
+  sketch.dynamic(id, [
     sketch.display("flex"),
     case is_column {
       True -> sketch.flex_direction("column")
