@@ -33,7 +33,7 @@ export class Cache {
 
   static create(options) {
     const stylesheetType = stylesheet_to_string(options.stylesheet)
-    if (stylesheetType === 'browser' && !helpers.isBrowser())
+    if (stylesheetType === 'document' && !helpers.isBrowser())
       return new gleam.Error(new error.NotABrowser())
     return new Cache(options)
   }
@@ -131,8 +131,7 @@ export class Cache {
 
 export function createCache(options) {
   const newCache = Cache.create(options)
-  if (newCache instanceof Cache)
-    cache = newCache
+  if (newCache instanceof Cache) cache = newCache
   return new gleam.Ok(newCache)
 }
 

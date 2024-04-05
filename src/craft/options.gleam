@@ -5,7 +5,7 @@
 /// Internal use.
 pub opaque type StyleSheet {
   Node
-  Browser
+  Document
 }
 
 pub opaque type Options {
@@ -16,8 +16,8 @@ pub fn node() -> Options {
   Options(stylesheet: Node)
 }
 
-pub fn browser() -> Options {
-  Options(stylesheet: Browser)
+pub fn document() -> Options {
+  Options(stylesheet: Document)
 }
 
 /// Internal function, can be used if you need to go from a StyleSheet to a String
@@ -25,6 +25,6 @@ pub fn browser() -> Options {
 pub fn stylesheet_to_string(stylesheet: StyleSheet) -> String {
   case stylesheet {
     Node -> "node"
-    Browser -> "browser"
+    Document -> "document"
   }
 }

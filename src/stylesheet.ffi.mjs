@@ -4,7 +4,7 @@ export class StyleSheet {
   static for(type) {
     switch (options.stylesheet_to_string(type)) {
       case 'node': return new NodeStyleSheet()
-      case 'browser' : return new BrowserStyleSheet()
+      case 'document' : return new DocumentStyleSheet()
     }
   }
 }
@@ -55,7 +55,7 @@ class NodeStyleSheet extends AbstractSheet {
 
 /** Create a virtual StyleSheet, responding to the same interface as CSSStyleSheet
  * with render added, and push the stylesheet in a node in DOM. */
-class BrowserStyleSheet extends AbstractSheet {
+class DocumentStyleSheet extends AbstractSheet {
   #styleElement
 
   constructor() {
