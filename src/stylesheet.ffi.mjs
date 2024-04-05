@@ -1,4 +1,4 @@
-import * as options from './craft/options.mjs'
+import * as options from './sketch/options.mjs'
 
 export class StyleSheet {
   static for(type) {
@@ -43,7 +43,7 @@ class NodeStyleSheet extends AbstractSheet {
   constructor() {
     super()
     this.#styleElement = document.createElement('style')
-    this.#styleElement.setAttribute('class', 'craft-stylesheet')
+    this.#styleElement.setAttribute('class', 'sketch-stylesheet')
     document.head.appendChild(this.#styleElement)
   }
 

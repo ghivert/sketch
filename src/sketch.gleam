@@ -1,18 +1,18 @@
-//// Craft tries to be to CSS what the VDOM is to the DOM: the ultimate pain-free
+//// Sketch tries to be to CSS what the VDOM is to the DOM: the ultimate pain-free
 //// tool to manage the state of your CSS styles, without having to worry with CSS
 //// while leveraging CSS skills.
 ////
-//// ## I don't know anything about Craft!
+//// ## I don't know anything about Sketch!
 ////
-//// This documentation focuses on internal and how is working Craft under-the-hood.
-//// No worry though, just heads up to the [README](https://hexdocs.pm/craft/index.html)
-//// to get an overview of Craft, and to get it work with your favorite framework!
+//// This documentation focuses on internal and how is working Sketch under-the-hood.
+//// No worry though, just heads up to the [README](https://hexdocs.pm/sketch/index.html)
+//// to get an overview of Sketch, and to get it work with your favorite framework!
 ////
 //// ## Lifecycle
 ////
-//// To do this, Craft tries to maintain a cache of styles, that can be updated
+//// To do this, Sketch tries to maintain a cache of styles, that can be updated
 //// between every render of the DOM, and will update the correct StyleSheet in DOM.
-//// Craft has a lifecycle to make it work.
+//// Sketch has a lifecycle to make it work.
 //// After having created a Cache, you have to call `prepare` before every repaint,
 //// and `render` after every repaint.
 ////
@@ -56,26 +56,26 @@
 //// ## Some notes on side-effects
 ////
 //// Unfortunately, and because of the nature of the different frameworks and of
-//// CSS, Craft is doing some side-effects in background, to collect the styles
+//// CSS, Sketch is doing some side-effects in background, to collect the styles
 //// and to push them in the browser. Maybe it could be removed in the future,
 //// but it would involve work with different maintainers of different packages,
 //// and it would take a lot of time and energy. It's not on plan right now,
 //// but rather to focus on correct UX and to find good ways of doing things.
 //// When the dust will settle and that API will be stable, then we could take
 //// some time to figure out how to get rid of side-effects.
-//// In the meantime, if you plan to integrate Craft in your framework, and need
+//// In the meantime, if you plan to integrate Sketch in your framework, and need
 //// some access to underlying and internals, open an issue with your use case,
 //// I'd more than happy to help on that point and reduce side-effects.
 
-import gleam/list
 import gleam/int
+import gleam/list
 import gleam/result
 import gleam/string
 import lustre/attribute.{type Attribute}
-import craft/error
-import craft/media.{type Query}
-import craft/size.{type Size}
-import craft/options.{type Options}
+import sketch/error
+import sketch/media.{type Query}
+import sketch/options.{type Options}
+import sketch/size.{type Size}
 
 // Types
 // Most of them are opaque because they're just JS types from the FFI.
@@ -109,29 +109,29 @@ pub opaque type PseudoSelector
 
 pub opaque type NoPseudoSelector
 
-pub type MediaStyle =
+type MediaStyle =
   Style(NoMedia, PseudoSelector)
 
-pub type PseudoStyle =
+type PseudoStyle =
   Style(NoMedia, NoPseudoSelector)
 
 // FFI
 // Used exclusively in the package.
 // Most should not be exposed, or in a low-level way.
 
-@external(javascript, "./craft.ffi.mjs", "compileClass")
+@external(javascript, "./sketch.ffi.mjs", "compileClass")
 fn compile_class(styles: List(Style(media, pseudo))) -> Class
 
-@external(javascript, "./craft.ffi.mjs", "compileClass")
+@external(javascript, "./sketch.ffi.mjs", "compileClass")
 fn compile_style(styles: List(Style(media, pseudo)), id: String) -> Class
 
-@external(javascript, "./craft.ffi.mjs", "memo")
+@external(javascript, "./sketch.ffi.mjs", "memo")
 fn memo(class: Class) -> Class
 
 /// Convert a `Class` to its proper class name, to use it anywhere in your
 /// application. It can have the form `class1` or `class1 class2` in case of
 /// classes composition.
-@external(javascript, "./craft.ffi.mjs", "toString")
+@external(javascript, "./sketch.ffi.mjs", "toString")
 fn to_class_name(class: Class) -> String
 
 /// Create a cache manager, managing the styles for every repaint. You can
@@ -143,13 +143,13 @@ fn to_class_name(class: Class) -> String
 /// If you're using Lustre, you shouldn't have to worry about it, and consider
 /// it as internal low-level.
 @external(javascript, "./cache.ffi.mjs", "createCache")
-pub fn create_cache(options: Options) -> Result(Cache, error.CraftError)
+pub fn create_cache(options: Options) -> Result(Cache, error.SketchError)
 
 /// Lifecycle function — not side-effect free
 /// `prepare` should be called before your repaint, and before the different
 /// calls to [`class`](#class) and [`dynamic`](#dynamic) functions. This setups
 /// the cache to prepare for a new paint, and will allow for diffing the styles.
-/// As long as you don't call `prepare`, the stylesheet output by craft will not
+/// As long as you don't call `prepare`, the stylesheet output by sketch will not
 /// diff, and you'll use the stylesheet as append-only. This could be done at
 /// will.
 /// Be careful, the styles computed by [`class`](#class) and [`dynamic`](#dynamic)
@@ -904,7 +904,7 @@ pub fn dynamic(id: String, styles: List(Style(media, pseudo))) -> Class {
 }
 
 /// Convert a `Class` to its equivalent lustre attribute. Use it in your
-/// view functions. I.e. `html.div([craft.to_lustre(class())], [])`.
+/// view functions. I.e. `html.div([sketch.to_lustre(class())], [])`.
 pub fn to_lustre(class: Class) -> Attribute(a) {
   class
   |> to_class_name()

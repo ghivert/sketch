@@ -1,6 +1,6 @@
 import * as helpers from './helpers.ffi.mjs'
-import * as error from './craft/error.mjs'
-import { stylesheet_to_string } from './craft/options.mjs'
+import * as error from './sketch/error.mjs'
+import { stylesheet_to_string } from './sketch/options.mjs'
 import * as gleam from './gleam.mjs'
 import { StyleSheet } from './stylesheet.ffi.mjs'
 
@@ -64,11 +64,11 @@ export class Cache {
 
   persist(className, properties) {
     // If class is memoized, returns it. Should be most classes, when used with
-    // craft.class() in order to maximize perfs.
+    // sketch.class() in order to maximize perfs.
     const memoizedContent = this.#memoCache.get(className)
     if (memoizedContent) return { name: memoizedContent.name, className }
 
-    // In this branch, it should be craft.variable().
+    // In this branch, it should be sketch.variable().
     // If class is already in use during this paint, returns it.
     const newContent = this.#activeCache.get(className)
     if (newContent) return { name: newContent.name, className }

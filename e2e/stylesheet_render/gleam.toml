@@ -14,9 +14,9 @@ version = "1.0.0"
 # https://gleam.run/writing-gleam/gleam-toml/.
 
 [dependencies]
-craft = {path = "../.."}
 gleam_stdlib = "~> 0.34 or ~> 1.0"
 lustre = "~> 4.1"
+sketch = {path = "../.."}
 
 [dev-dependencies]
 gleeunit = "~> 1.0"

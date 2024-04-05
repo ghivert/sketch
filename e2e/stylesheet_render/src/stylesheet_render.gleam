@@ -1,11 +1,11 @@
-import craft
-import craft/media
-import craft/options as craft_options
-import craft/size.{px}
 import gleam/int
 import lustre
 import lustre/element/html
 import lustre/event
+import sketch
+import sketch/media
+import sketch/options as sketch_options
+import sketch/size.{px}
 
 pub type Model =
   Int
@@ -17,8 +17,8 @@ pub type Msg {
 
 pub fn main() {
   let assert Ok(render) =
-    craft_options.node()
-    |> craft.lustre_setup()
+    sketch_options.node()
+    |> sketch.lustre_setup()
 
   let assert Ok(_) =
     fn(_) { 0 }
@@ -34,19 +34,19 @@ fn update(model: Model, msg: Msg) {
 }
 
 fn main_class() {
-  craft.class([
-    craft.background("red"),
-    craft.display("flex"),
-    craft.flex_direction("row"),
-    craft.gap(px(12)),
-    craft.padding(px(12)),
-    craft.hover([craft.background("yellow")]),
-    craft.media(media.max_width(px(450)), [
-      craft.background("purple"),
-      craft.hover([craft.background("white")]),
+  sketch.class([
+    sketch.background("red"),
+    sketch.display("flex"),
+    sketch.flex_direction("row"),
+    sketch.gap(px(12)),
+    sketch.padding(px(12)),
+    sketch.hover([sketch.background("yellow")]),
+    sketch.media(media.max_width(px(450)), [
+      sketch.background("purple"),
+      sketch.hover([sketch.background("white")]),
     ]),
   ])
-  |> craft.to_lustre()
+  |> sketch.to_lustre()
 }
 
 fn color_class(model: Model) {
@@ -55,8 +55,8 @@ fn color_class(model: Model) {
     _ -> "green"
   }
   let id = "color-" <> back
-  craft.dynamic(id, [craft.background(back)])
-  |> craft.to_lustre()
+  sketch.dynamic(id, [sketch.background(back)])
+  |> sketch.to_lustre()
 }
 
 fn view(model: Model) {

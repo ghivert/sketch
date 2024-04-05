@@ -1,4 +1,4 @@
-//// Defines Options to setup the runtime of craft.
+//// Defines Options to setup the runtime of sketch.
 //// The Options could right now be a `style` node injected in the DOM, or on
 //// a CSSStyleSheet, adopted directly on the document.
 
@@ -21,7 +21,7 @@ pub fn document() -> Options {
 }
 
 /// Internal function, can be used if you need to go from a StyleSheet to a String
-/// in case you're building on top of craft. Used in FFI at the moment.
+/// in case you're building on top of sketch. Used in FFI at the moment.
 pub fn stylesheet_to_string(stylesheet: StyleSheet) -> String {
   case stylesheet {
     Node -> "node"
