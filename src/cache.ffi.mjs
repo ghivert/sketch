@@ -1,4 +1,7 @@
 import * as helpers from './helpers.ffi.mjs'
+import * as error from './craft/error.mjs'
+import { stylesheet_to_string } from './craft/options.mjs'
+import * as gleam from './gleam.mjs'
 import { StyleSheet } from './stylesheet.ffi.mjs'
 
 export let cache
@@ -26,6 +29,13 @@ export class Cache {
     this.#activeCache = new Map()
     this.#passiveCache = new Map()
     this.#stylesheet = StyleSheet.for(options.stylesheet)
+  }
+
+  static create(options) {
+    const stylesheetType = stylesheet_to_string(options.stylesheet)
+    if (stylesheetType === 'browser' && !helpers.isBrowser())
+      return new gleam.Error(new error.NotABrowser())
+    return new Cache(options)
   }
 
   prepare() {
@@ -120,8 +130,10 @@ export class Cache {
 }
 
 export function createCache(options) {
-  cache = new Cache(options)
-  return cache
+  const newCache = Cache.create(options)
+  if (newCache instanceof Cache)
+    cache = newCache
+  return new gleam.Ok(newCache)
 }
 
 export function prepareCache(cache_) {

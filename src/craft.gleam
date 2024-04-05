@@ -159,8 +159,10 @@
 
 import gleam/list
 import gleam/int
+import gleam/result
 import gleam/string
 import lustre/attribute.{type Attribute}
+import craft/error
 import craft/media.{type Query}
 import craft/size.{type Size}
 import craft/options.{type Options}
@@ -220,7 +222,7 @@ fn memo(class: Class) -> Class
 fn to_string(class: Class) -> String
 
 @external(javascript, "./cache.ffi.mjs", "createCache")
-fn create_cache(options: Options) -> Cache
+fn create_cache(options: Options) -> Result(Cache, error.CraftError)
 
 @external(javascript, "./cache.ffi.mjs", "prepareCache")
 fn prepare_cache(cache: Cache) -> Nil
@@ -985,7 +987,7 @@ pub fn to_lustre(class: Class) -> Attribute(a) {
 }
 
 pub fn setup(options: Options) {
-  let cache = create_cache(options)
+  use cache <- result.then(create_cache(options))
   Ok(fn(view: fn(model) -> element) {
     fn(model: model) {
       prepare_cache(cache)

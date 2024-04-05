@@ -66,3 +66,9 @@ export function computeProperty(indent_, property) {
   const important = property.important ? ' !important' : ''
   return `${key}: ${property.value}${important};`
 }
+
+export function isBrowser() {
+  if (typeof window === 'undefined') return false
+  if (typeof document === 'undefined') return false
+  return true
+}
