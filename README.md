@@ -185,19 +185,22 @@ fn my_class() {
 
 The example above will be compiled to the following CSS.
 
-```gleam
+```css
 .css-001 {
   display: flex;
   flex-direction: row;
   background: red;
 }
+
 .css-001:hover {
   background: blue;
 }
+
 @media (max-width: 320px) {
   .css-001 {
     flex-direction: column;
   }
+
   .css-001:hover {
     background: green;
   }
@@ -232,14 +235,14 @@ fn my_view() {
   |> html.div(_, [])
 }
 
-// With a variable class.
+// With a dynamic class.
 fn my_other_view(model: Bool) {
   let color = case model {
     True -> "red"
     False -> "blue"
   }
   html.div(
-    [craft.to_lustre(craft.variable([craft.background(color)]))],
+    [craft.to_lustre(craft.dynamic([craft.background(color)]))],
     [],
   )
 }
