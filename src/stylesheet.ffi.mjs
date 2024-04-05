@@ -9,23 +9,20 @@ export class StyleSheet {
   }
 }
 
-class NodeStyleSheet {
-  #styleElement
+/** Create an abstract StyleSheet, responding to the same interface as CSSStyleSheet
+ * with buildRules added, to get the corresponding StyleSheet as string. */
+class AbstractSheet {
   #rules
   #index
 
   constructor() {
-    this.#styleElement = document.createElement('style')
     this.#rules = new Map()
     this.#index = 0
-    this.#styleElement.setAttribute('className', 'craft-stylesheet')
-    document.head.appendChild(this.#styleElement)
   }
 
   insertRule(definition) {
     const index = this.#index++
     this.#rules.set(index, definition)
-    console.log(definition)
     return index
   }
 
@@ -33,29 +30,42 @@ class NodeStyleSheet {
     this.#rules.delete(index)
   }
 
+  buildRules() {
+    return [...this.#rules.values()].join('\n\n')
+  }
+}
+
+/** Create a virtual StyleSheet, responding to the same interface as CSSStyleSheet
+ * with render added, and push the stylesheet in a node in DOM. */
+class NodeStyleSheet extends AbstractSheet {
+  #styleElement
+
+  constructor() {
+    super()
+    this.#styleElement = document.createElement('style')
+    this.#styleElement.setAttribute('class', 'craft-stylesheet')
+    document.head.appendChild(this.#styleElement)
+  }
+
   render() {
-    const rules = [...this.#rules.values()].join('\n\n')
+    const rules = this.buildRules()
     this.#styleElement.innerHTML = rules
   }
 }
 
-class BrowserStyleSheet {
+/** Create a virtual StyleSheet, responding to the same interface as CSSStyleSheet
+ * with render added, and push the stylesheet in a node in DOM. */
+class BrowserStyleSheet extends AbstractSheet {
   #styleElement
 
   constructor() {
-    this.#styleElement = document.createElement('style')
-    this.#styleElement.setAttribute('className', 'craft-stylesheet')
-    document.head.appendChild(this.#styleElement)
-    if (!this.#styleElement.sheet) throw new Error('StyleSheet not found, styled cannot be used.')
+    super()
+    this.#styleElement = new CSSStyleSheet()
+    document.adoptedStyleSheets.push(this.#styleElement)
   }
 
-  insertRule(definition) {
-    return this.#styleElement.sheet.insertRule(definition)
+  render() {
+    const rules = this.buildRules()
+    this.#styleElement.replaceSync(rules)
   }
-
-  deleteRule(index) {
-    return this.#styleElement.sheet.deleteRule(index)
-  }
-
-  render() {}
 }

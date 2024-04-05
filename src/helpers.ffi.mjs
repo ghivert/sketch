@@ -5,8 +5,10 @@ export function indent(size) {
 
 export const uid = (function() {
   let id = 0
-  return function() {
-    const index = (id++).toString().padStart(4, '0')
+  const classNames = {}
+  return function(className) {
+    classNames[className] ??= (id++).toString().padStart(4, '0')
+    const index = classNames[className]
     return `css-${index}`
   }
 })()

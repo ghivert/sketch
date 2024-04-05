@@ -157,7 +157,6 @@
 //// In case something is missing or a property does not have its underscore
 //// alternative, [open an issue — or better, a PR — on the repo!](https://github.com/ghivert/craft)
 
-import gleam/io
 import gleam/list
 import gleam/int
 import gleam/string

@@ -1,4 +1,5 @@
 import craft
+import craft/media
 import craft/options as craft_options
 import craft/size.{px}
 import gleam/int
@@ -40,18 +41,22 @@ fn main_class() {
     craft.flex_direction("row"),
     craft.gap(px(12)),
     craft.padding(px(12)),
+    craft.hover([craft.background("yellow")]),
+    craft.media(media.max_width(px(450)), [
+      craft.background("purple"),
+      craft.hover([craft.background("white")]),
+    ]),
   ])
   |> craft.to_lustre()
 }
 
 fn color_class(model: Model) {
-  let id = "color-" <> int.to_string(model)
-  craft.variable(id, [
-    craft.background(case model % 2 == 0 {
-      True -> "blue"
-      False -> "green"
-    }),
-  ])
+  let back = case model % 2 == 0 {
+    True -> "blue"
+    False -> "green"
+  }
+  let id = "color-" <> back
+  craft.variable(id, [craft.background(back)])
   |> craft.to_lustre()
 }
 

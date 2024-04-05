@@ -61,7 +61,7 @@ export function compileClass(args, classId) {
 
   // Keeping track of test to better display class names.
   // const id = classId?.replace(/[ ,#\.()]/g, '-') ?? uniqueId()
-  const id = helpers.uid()
+  const id = helpers.uid(className)
   const { properties, medias, classes, pseudoSelectors } = computeProperties(args)
   const wrapClass = (properties, indent, pseudo = '') => {
     const baseIndent = helpers.indent(indent)

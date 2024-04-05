@@ -25,9 +25,6 @@ export class Cache {
     const keys = new Set()
     for (const key of this.#activeCache.keys()) keys.add(key)
     for (const key of this.#passiveCache.keys()) keys.add(key)
-    console.log(keys)
-    console.log(this.#activeCache.keys())
-    console.log(this.#passiveCache.keys())
     keys.forEach(key => {
       if (this.#activeCache.has(key)) {
         const klass = this.#activeCache.get(key)
@@ -67,8 +64,8 @@ export class Cache {
   //   name: string,
   //   previousArgs: List(Style),
   //   indexRules: number[] | null,
-  //   definitions: { mediasDef: string, selectorsDef: string, classDef: string }
-  //  }
+  //   definitions: { mediasDef: string, selectorsDef: string, classDef: string },
+  // }
   store(className, content) {
     this.#activeCache.set(className, content)
   }
@@ -86,6 +83,8 @@ export class Cache {
     }
   }
 
+  // Insert the styles in the stylesheet.
+  // It inserts medias, selectors and index rules.
   #insertStyles(klass) {
     const indexRules = []
     const { definitions } = klass
@@ -102,7 +101,6 @@ export class Cache {
     })
   }
 }
-
 
 export function createCache(options) {
   cache = new Cache(options)
