@@ -90,9 +90,9 @@ export class Cache {
     const indexRules = []
     const { definitions } = klass
     const { mediasDef, selectorsDef, classDef } = definitions
-    mediasDef.forEach(def => indexRules.push(this.#stylesheet.insertRule(def)))
-    selectorsDef.forEach(def => indexRules.push(this.#stylesheet.insertRule(def)))
     indexRules.push(this.#stylesheet.insertRule(classDef))
+    selectorsDef.forEach(def => indexRules.push(this.#stylesheet.insertRule(def)))
+    mediasDef.forEach(def => indexRules.push(this.#stylesheet.insertRule(def)))
     klass.indexRules = indexRules
   }
 
