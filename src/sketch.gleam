@@ -36,6 +36,7 @@
 ////   - [`font_family`](#font_family)
 ////   - [`font_style`](#font_style)
 ////   - [`font_size`](#font_size)
+////   - [`font_size_`](#font_size_)
 ////   - [`font_weight`](#font_weight)
 ////   - [`letter_spacing`](#letter_spacing)
 ////   - [`line_break`](#line_break)
@@ -159,6 +160,7 @@
 ////   - [`margin_bottom`](#margin_bottom)
 ////   - [`margin_right`](#margin_right)
 ////   - [`margin_left`](#margin_left)
+////   - [`cursor`](#cursor)
 ////   - [`property`](#property)
 ////
 //// - Pseudo-selectors
@@ -441,6 +443,10 @@ pub fn font_style(font_style: String) {
 
 pub fn font_size(font_size: Size) {
   Property("font-size", size.to_string(font_size), False)
+}
+
+pub fn font_size_(font_size: String) {
+  Property("font-size", font_size, False)
 }
 
 pub fn font_weight(font_weight: String) {
@@ -933,6 +939,10 @@ pub fn margin_right(margin: Size) {
 
 pub fn margin_left(margin: Size) {
   Property("margin-left", size.to_string(margin), False)
+}
+
+pub fn cursor(cursor: String) {
+  Property("cursor", cursor, False)
 }
 
 pub fn property(field: String, content: String) {
