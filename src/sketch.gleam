@@ -445,6 +445,10 @@ pub fn font_size(font_size: Size) {
   Property("font-size", size.to_string(font_size), False)
 }
 
+pub fn font_size_(font_size: String) {
+  Property("font-size", font_size, False)
+}
+
 pub fn font_weight(font_weight: String) {
   Property("font-weight", font_weight, False)
 }
