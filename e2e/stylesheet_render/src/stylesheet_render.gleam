@@ -59,10 +59,15 @@ fn color_class(model: Model) {
   |> sketch.to_lustre()
 }
 
+fn button_class() {
+	sketch.class([sketch.cursor("crosshair"), sketch.font_size_("14px")])
+	|> sketch.to_lustre()
+}
+
 fn view(model: Model) {
   html.div([main_class()], [
-    html.button([event.on_click(Decrement)], [html.text("Decrement")]),
+    html.button([event.on_click(Decrement), button_class()], [html.text("Decrement")]),
     html.div([color_class(model)], [html.text(int.to_string(model))]),
-    html.button([event.on_click(Increment)], [html.text("Increment")]),
+    html.button([event.on_click(Increment), button_class()], [html.text("Increment")]),
   ])
 }
