@@ -124,7 +124,7 @@ export class Cache {
   }
 
   #deleteStyles(klass) {
-    klass.indexRules.forEach(indexRule => {
+    klass.indexRules?.forEach(indexRule => {
       this.#stylesheet.deleteRule(indexRule)
     })
   }
