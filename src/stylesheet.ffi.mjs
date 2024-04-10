@@ -5,6 +5,7 @@ export class StyleSheet {
     switch (options.stylesheet_to_string(type)) {
       case 'node': return new NodeStyleSheet()
       case 'document' : return new DocumentStyleSheet()
+      case 'shadow-root': return new ShadowStyleSheet(type.root)
     }
   }
 }
@@ -62,6 +63,21 @@ class DocumentStyleSheet extends AbstractSheet {
     super()
     this.#styleElement = new CSSStyleSheet()
     document.adoptedStyleSheets.push(this.#styleElement)
+  }
+
+  render() {
+    const rules = this.buildRules()
+    this.#styleElement.replaceSync(rules)
+  }
+}
+
+class ShadowStyleSheet extends AbstractSheet {
+  #styleElement
+
+  constructor(shadowRoot) {
+    super()
+    this.#styleElement = new CSSStyleSheet()
+    shadowRoot.adoptedStyleSheets.push(this.#styleElement)
   }
 
   render() {

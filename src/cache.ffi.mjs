@@ -33,7 +33,8 @@ export class Cache {
 
   static create(options) {
     const stylesheetType = stylesheet_to_string(options.stylesheet)
-    if (stylesheetType === 'document' && !helpers.isBrowser())
+    const isBrowserOnly = ['document', 'shadow-root'].includes(stylesheetType)
+    if (isBrowserOnly && !helpers.isBrowser())
       return new gleam.Error(new error.NotABrowser())
     return new Cache(options)
   }

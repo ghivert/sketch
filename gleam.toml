@@ -10,6 +10,7 @@ repository = {type = "github", user = "ghivert", repo = "sketch"}
 [dependencies]
 gleam_stdlib = "~> 0.34 or ~> 1.0"
 lustre = "~> 4.1"
+plinth = {path = "../plinth"}
 
 [dev-dependencies]
 gleeunit = "~> 1.0"
