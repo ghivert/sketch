@@ -270,7 +270,6 @@
 
 import gleam/int
 import gleam/list
-import gleam/result
 import gleam/string
 import lustre/attribute.{type Attribute}
 import sketch/error
@@ -1132,16 +1131,4 @@ pub fn to_lustre(class: Class) -> Attribute(a) {
   |> string.split(" ")
   |> list.map(fn(value) { #(value, True) })
   |> attribute.classes()
-}
-
-pub fn lustre_setup(options: Options) {
-  use cache <- result.then(create_cache(options))
-  Ok(fn(view: fn(model) -> element) {
-    fn(model: model) {
-      prepare(cache)
-      let el = view(model)
-      render(cache)
-      el
-    }
-  })
 }

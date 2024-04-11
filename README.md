@@ -43,7 +43,7 @@ and let the magic happen in your browser. Heads up in the docs for more details.
 ## Example with Lustre
 
 ```gleam
-import sketch
+import sketch/lustre as sketch
 import sketch/options as sketch_options
 import gleam/int
 import lustre
@@ -52,10 +52,11 @@ import lustre/element/html.{div, button, p}
 import lustre/event.{on_click}
 
 pub fn main() {
-  let assert Ok(render) = sketch.setup(sketch_options.browser())
-  let app = lustre.simple(init, update, render(view))
-  let assert Ok(_) = lustre.start(app, "#app", Nil)
-  Nil
+  let assert Ok(cache) = sketch.setup(sketch_options.browser())
+  let assert Ok(app) =
+    lustre.simple(init, update, view)
+    |> sketch.wrap(cache)
+    |> lustre.start("#app", Nil)
 }
 
 fn init(_flags) {

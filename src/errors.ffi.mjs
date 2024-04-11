@@ -21,16 +21,17 @@ pub fn main() {
 const lustreSetup = `// main.gleam
 // If you're using lustre, initialize Sketch in your main().
 
-import sketch
+import sketch/lustre as sketch
 import sketch/options as sketch_options
 
 pub fn main() {
-  let assert Ok(render) =
+  let assert Ok(cache) =
     sketch_options.node()
     |> sketch.lustre_setup()
 
   let assert Ok(_) =
-    lustre.simple(init, update, render(view))
+    lustre.simple(init, update, view)
+    |> sketch.wrap(cache)
     |> lustre.start("#app", Nil)
 }
 `
