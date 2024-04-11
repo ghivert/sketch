@@ -268,6 +268,7 @@
 //// some access to underlying and internals, open an issue with your use case,
 //// I'd more than happy to help on that point and reduce side-effects.
 
+import gleam/float
 import gleam/int
 import gleam/list
 import gleam/string
@@ -544,8 +545,8 @@ pub fn object_position(object_position: String) {
   Property("object-position", object_position, False)
 }
 
-pub fn opacity(opacity: String) {
-  Property("opacity", opacity, False)
+pub fn opacity(opacity: Float) {
+  Property("opacity", float.to_string(opacity), False)
 }
 
 pub fn pointer_events(pointer_events: String) {
@@ -876,19 +877,39 @@ pub fn border_radius_(border_radius: String) {
   Property("border-radius", border_radius, False)
 }
 
-pub fn border_top_right_radius(border_top_right_radius: String) {
+pub fn border_top_right_radius(border_top_right_radius: Size) {
+  size.to_string(border_top_right_radius)
+  |> Property("border-top-right-radius", _, False)
+}
+
+pub fn border_top_left_radius(border_top_left_radius: Size) {
+  size.to_string(border_top_left_radius)
+  |> Property("border-top-left-radius", _, False)
+}
+
+pub fn border_bottom_right_radius(border_bottom_right_radius: Size) {
+  size.to_string(border_bottom_right_radius)
+  |> Property("border-bottom-right-radius", _, False)
+}
+
+pub fn border_bottom_left_radius(border_bottom_left_radius: Size) {
+  size.to_string(border_bottom_left_radius)
+  |> Property("border-bottom-left-radius", _, False)
+}
+
+pub fn border_top_right_radius_(border_top_right_radius: String) {
   Property("border-top-right-radius", border_top_right_radius, False)
 }
 
-pub fn border_top_left_radius(border_top_left_radius: String) {
+pub fn border_top_left_radius_(border_top_left_radius: String) {
   Property("border-top-left-radius", border_top_left_radius, False)
 }
 
-pub fn border_bottom_right_radius(border_bottom_right_radius: String) {
+pub fn border_bottom_right_radius_(border_bottom_right_radius: String) {
   Property("border-bottom-right-radius", border_bottom_right_radius, False)
 }
 
-pub fn border_bottom_left_radius(border_bottom_left_radius: String) {
+pub fn border_bottom_left_radius_(border_bottom_left_radius: String) {
   Property("border-bottom-left-radius", border_bottom_left_radius, False)
 }
 
