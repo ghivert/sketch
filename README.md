@@ -43,16 +43,23 @@ and let the magic happen in your browser. Heads up in the docs for more details.
 ## Example with Lustre
 
 ```gleam
-import sketch
-import sketch/options as sketch_options
 import gleam/int
 import lustre
 import lustre/element.{text}
-import lustre/element/html.{div, button, p}
+import lustre/element/html.{button, div, p}
 import lustre/event.{on_click}
+import sketch
+import sketch/media
+import sketch/options as sketch_options
+import sketch/size.{px}
+
+type Model =
+  Int
 
 pub fn main() {
-  let assert Ok(render) = sketch.setup(sketch_options.browser())
+  let assert Ok(render) =
+    sketch_options.document()
+    |> sketch.lustre_setup()
   let app = lustre.simple(init, update, render(view))
   let assert Ok(_) = lustre.start(app, "#app", Nil)
   Nil
@@ -105,8 +112,8 @@ fn view(model) {
 
   div([main_class()], [
     button([on_click(Incr)], [text(" + ")]),
-    p([color_class()], [text(count)]),
-    button([on_click(Decr)], [text(" - ")])
+    p([color_class(model)], [text(count)]),
+    button([on_click(Decr)], [text(" - ")]),
   ])
 }
 ```
@@ -230,8 +237,9 @@ Just use it in place of [`to_class_name()`](https://hexdocs.pm/sketch/sketch.htm
 to get a Lustre attribute and use it in your views.
 
 ```gleam
-import sketch
+import gleam/list
 import lustre/element/html
+import sketch
 
 // With a pipeline.
 fn my_view() {
@@ -248,8 +256,9 @@ fn my_other_view(model: Bool) {
     True -> "red"
     False -> "blue"
   }
+  let id = "my-other-view-" <> color
   html.div(
-    [sketch.to_lustre(sketch.dynamic([sketch.background(color)]))],
+    [sketch.to_lustre(sketch.dynamic(id, [sketch.background(color)]))],
     [],
   )
 }
