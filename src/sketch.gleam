@@ -344,7 +344,7 @@ fn memo(class: Class) -> Class
 /// application. It can have the form `class1` or `class1 class2` in case of
 /// classes composition.
 @external(javascript, "./sketch.ffi.mjs", "toString")
-fn to_class_name(class: Class) -> String
+pub fn to_class_name(class: Class) -> String
 
 /// Create a cache manager, managing the styles for every repaint. You can
 /// instanciate as much cache manager that you want, if you want to use multiple
