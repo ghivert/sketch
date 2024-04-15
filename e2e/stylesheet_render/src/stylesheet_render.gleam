@@ -25,7 +25,7 @@ pub fn main() {
 
   let assert Ok(_) =
     view
-    |> sketch_lustre.wrap(cache)
+    |> sketch_lustre.compose(cache)
     |> lustre.simple(init, update, _)
     |> lustre.start("#app", Nil)
 }

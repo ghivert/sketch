@@ -8,7 +8,7 @@ pub fn setup(options: Options) {
 }
 
 /// Wrap the view function in lustre.
-pub fn wrap(view: fn(model) -> element, cache: Cache) {
+pub fn compose(view: fn(model) -> element, cache: Cache) {
   fn(model) {
     sketch.prepare(cache)
     let el = view(model)

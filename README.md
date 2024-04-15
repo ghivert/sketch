@@ -65,12 +65,12 @@ pub fn main() {
   let init = fn(_) { 0 }
 
   let assert Ok(cache) =
-    sketch_options.node()
+    sketch_options.document()
     |> sketch_lustre.setup()
 
   let assert Ok(_) =
     view
-    |> sketch_lustre.wrap(cache)
+    |> sketch_lustre.compose(cache)
     |> lustre.simple(init, update, _)
     |> lustre.start("#app", Nil)
 }
@@ -230,9 +230,11 @@ The example above will be compiled to the following CSS.
 
 [Lustre](https://hexdocs.pm/lustre/) is the recommended framework for frontend
 development in Gleam. Sketch tries to simplify as much the development with Lustre.
-That's why Sketch exposes a [`lustre_setup`](https://hexdocs.pm/sketch/sketch.html#lustre_setup)
-function. This function creates a cache, and returns a middleware for the view function.
-It comes as a "hook" (lustre does not offcially supports hooks right now): it setups
+That's why Sketch exposes a [`setup`](https://hexdocs.pm/sketch/sketch/lustre.html#setup)
+function. This function creates a cache, and returns it. Another function,
+[`compose`](https://hexdocs.pm/sketch/sketch/lustre.html#compose) allows to easily
+compose the cache with the view function of Lustre.
+It acts as a "hook" (lustre does not officially supports hooks right now): it setups
 the cache before the view, and render the stylesheet after the view has executed.
 It tries to be side-effect free in the `view` in order to have a predictable render
 in Lustre, and stick with the Elm architecture mindset.
@@ -268,6 +270,15 @@ fn my_other_view(model: Bool) {
   )
 }
 ```
+
+## Use with Shadow DOM
+
+Sketch can work with a Shadow DOM, in order to hide the compiled styles from the
+rest of the application. To do it, you can use [`plinth`](https://github.com/CrowdHailer/plinth).
+This allows to create a `ShadowRoot`, to use
+[`sketch/options.shadow_root()`](https://hexdocs.pm/sketch/sketch/options.html#shadow_root).
+In the same way you can initialize the cache to render in document or in a `style` node,
+you can now use a Shadow Root to paint styles in your application!
 
 ## Some opinions on properties
 
