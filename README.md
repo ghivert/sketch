@@ -30,7 +30,8 @@ gleam add sketch
 ## Setup
 
 If you're using Lustre (which is strongly recommended), you can just use the
-[`lustre_setup`](https://hexdocs.pm/sketch/sketch.html#lustre_setup) function.
+[`sketch/lustre.setup`](https://hexdocs.pm/sketch/sketch/lustre.html#setup) function
+and [`sketch/lustre.compose`](https://hexdocs.pm/sketch/sketch/lustre.html#compose) function.
 
 Otherwise, you have to follow the lifecycle of Sketch, and use the three low-level
 functions [`create_cache`](https://hexdocs.pm/sketch/sketch.html#create_cache),
