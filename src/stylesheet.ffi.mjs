@@ -71,6 +71,8 @@ class DocumentStyleSheet extends AbstractSheet {
   }
 }
 
+/** Create a virtual StyleSheet, responding to the same interface as CSSStyleSheet
+ * with render added, and push the stylesheet in a ShadowDOM adopted stylesheet. */
 class ShadowStyleSheet extends AbstractSheet {
   #styleElement
 
