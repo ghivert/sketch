@@ -3,10 +3,10 @@ import lustre
 import lustre/element/html
 import lustre/event
 import sketch
+import sketch/lustre as sketch_lustre
 import sketch/media
 import sketch/options as sketch_options
 import sketch/size.{px}
-import sketch/lustre as sketch_lustre
 
 pub type Model =
   Int
@@ -64,7 +64,7 @@ fn color_class(model: Model) {
 }
 
 fn button_class() {
-  sketch.class([sketch.cursor("crosshair"), sketch.font_size_("14px")])
+  sketch.class([sketch.cursor("crosshair"), sketch.font_size(px(14))])
   |> sketch.to_lustre()
 }
 

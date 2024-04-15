@@ -4,10 +4,9 @@
 ////   - [`class`](#class)
 ////   - [`dynamic`](#dynamic)
 ////   - [`to_class_name`](#to_class_name)
-////   - [`lustre_setup`](#lustre_setup)
 ////   - [`to_lustre`](#to_lustre)
 ////
-//// - Lifeycle functions
+//// - Lifecycle functions
 ////   - [`create_cache`](#create_cache)
 ////   - [`prepare`](#prepare)
 ////   - [`render`](#render)
@@ -145,9 +144,13 @@
 ////   - [`border_radius`](#border_radius)
 ////   - [`border_radius_`](#border_radius_)
 ////   - [`border_top_right_radius`](#border_top_right_radius)
+////   - [`border_top_right_radius_`](#border_top_right_radius_)
 ////   - [`border_top_left_radius`](#border_top_left_radius)
+////   - [`border_top_left_radius_`](#border_top_left_radius_)
 ////   - [`border_bottom_right_radius`](#border_bottom_right_radius)
+////   - [`border_bottom_right_radius_`](#border_bottom_right_radius_)
 ////   - [`border_bottom_left_radius`](#border_bottom_left_radius)
+////   - [`border_bottom_left_radius_`](#border_bottom_left_radius_)
 ////   - [`padding`](#padding)
 ////   - [`padding_`](#padding_)
 ////   - [`padding_top`](#padding_top)

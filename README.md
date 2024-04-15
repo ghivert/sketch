@@ -43,35 +43,42 @@ and let the magic happen in your browser. Heads up in the docs for more details.
 ## Example with Lustre
 
 ```gleam
-import sketch/lustre as sketch
-import sketch/options as sketch_options
 import gleam/int
 import lustre
-import lustre/element.{text}
-import lustre/element/html.{div, button, p}
-import lustre/event.{on_click}
+import lustre/element/html
+import lustre/event
+import sketch
+import sketch/lustre as sketch_lustre
+import sketch/media
+import sketch/options as sketch_options
+import sketch/size.{px}
+
+pub type Model =
+  Int
+
+pub type Msg {
+  Increment
+  Decrement
+}
 
 pub fn main() {
-  let assert Ok(cache) = sketch.setup(sketch_options.browser())
-  let assert Ok(app) =
-    lustre.simple(init, update, view)
-    |> sketch.wrap(cache)
+  let init = fn(_) { 0 }
+
+  let assert Ok(cache) =
+    sketch_options.node()
+    |> sketch_lustre.setup()
+
+  let assert Ok(_) =
+    view
+    |> sketch_lustre.wrap(cache)
+    |> lustre.simple(init, update, _)
     |> lustre.start("#app", Nil)
 }
 
-fn init(_flags) {
-  0
-}
-
-type Msg {
-  Incr
-  Decr
-}
-
-fn update(model, msg) {
+fn update(model: Model, msg: Msg) {
   case msg {
-    Incr -> model + 1
-    Decr -> model - 1
+    Increment -> model + 1
+    Decrement -> model - 1
   }
 }
 
@@ -101,13 +108,17 @@ fn color_class(model: Model) {
   |> sketch.to_lustre()
 }
 
-fn view(model) {
-  let count = int.to_string(model)
+fn button_class() {
+  [sketch.cursor("crosshair"), sketch.font_size(px(14))]
+  |> sketch.class()
+  |> sketch.to_lustre()
+}
 
-  div([main_class()], [
-    button([on_click(Incr)], [text(" + ")]),
-    p([color_class()], [text(count)]),
-    button([on_click(Decr)], [text(" - ")])
+fn view(model: Model) {
+  html.div([main_class()], [
+    html.button([event.on_click(Decrement), button_class()], [html.text(" - ")]),
+    html.div([color_class(model)], [html.text(int.to_string(model))]),
+    html.button([event.on_click(Increment), button_class()], [html.text(" + ")]),
   ])
 }
 ```
@@ -231,8 +242,9 @@ Just use it in place of [`to_class_name()`](https://hexdocs.pm/sketch/sketch.htm
 to get a Lustre attribute and use it in your views.
 
 ```gleam
-import sketch
+import gleam/list
 import lustre/element/html
+import sketch
 
 // With a pipeline.
 fn my_view() {
@@ -249,8 +261,9 @@ fn my_other_view(model: Bool) {
     True -> "red"
     False -> "blue"
   }
+  let id = "my-other-view-" <> color
   html.div(
-    [sketch.to_lustre(sketch.dynamic([sketch.background(color)]))],
+    [sketch.to_lustre(sketch.dynamic(id, [sketch.background(color)]))],
     [],
   )
 }
