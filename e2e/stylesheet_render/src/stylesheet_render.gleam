@@ -6,6 +6,7 @@ import sketch
 import sketch/media
 import sketch/options as sketch_options
 import sketch/size.{px}
+import sketch/lustre as sketch_lustre
 
 pub type Model =
   Int
@@ -16,13 +17,16 @@ pub type Msg {
 }
 
 pub fn main() {
-  let assert Ok(render) =
+  let init = fn(_) { 0 }
+
+  let assert Ok(cache) =
     sketch_options.node()
-    |> sketch.lustre_setup()
+    |> sketch_lustre.setup()
 
   let assert Ok(_) =
-    fn(_) { 0 }
-    |> lustre.simple(update, render(view))
+    view
+    |> sketch_lustre.wrap(cache)
+    |> lustre.simple(init, update, _)
     |> lustre.start("#app", Nil)
 }
 
@@ -60,14 +64,18 @@ fn color_class(model: Model) {
 }
 
 fn button_class() {
-	sketch.class([sketch.cursor("crosshair"), sketch.font_size_("14px")])
-	|> sketch.to_lustre()
+  sketch.class([sketch.cursor("crosshair"), sketch.font_size_("14px")])
+  |> sketch.to_lustre()
 }
 
 fn view(model: Model) {
   html.div([main_class()], [
-    html.button([event.on_click(Decrement), button_class()], [html.text("Decrement")]),
+    html.button([event.on_click(Decrement), button_class()], [
+      html.text("Decrement"),
+    ]),
     html.div([color_class(model)], [html.text(int.to_string(model))]),
-    html.button([event.on_click(Increment), button_class()], [html.text("Increment")]),
+    html.button([event.on_click(Increment), button_class()], [
+      html.text("Increment"),
+    ]),
   ])
 }

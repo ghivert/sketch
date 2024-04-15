@@ -97,9 +97,3 @@ export function memo(klass) {
 export function toString({ name }) {
   return name
 }
-
-export function updateLustre(application, viewMapper) {
-  return application.withFields({
-    view: viewMapper(application.view),
-  })
-}

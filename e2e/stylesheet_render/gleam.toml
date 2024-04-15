@@ -20,4 +20,4 @@ sketch = {path = "../.."}
 
 [dev-dependencies]
 gleeunit = "~> 1.0"
-lustre_dev_tools = "~> 1.1"
+lustre_dev_tools = "1.1.2"

@@ -17,4 +17,4 @@ packages = [
 gleam_stdlib = { version = "~> 0.34 or ~> 1.0" }
 gleeunit = { version = "~> 1.0" }
 lustre = { version = "~> 4.1" }
-plinth = { version = "~> 0.2"}
+plinth = { version = "~> 0.2" }

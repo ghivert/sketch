@@ -19,10 +19,12 @@ pub fn node() -> Options {
   Options(stylesheet: Node)
 }
 
+/// document cannot be used on server.
 pub fn document() -> Options {
   Options(stylesheet: Document)
 }
 
+/// shadow cannot be used on server.
 pub fn shadow(root: ShadowRoot) -> Options {
   Options(stylesheet: Shadow(root: root))
 }
