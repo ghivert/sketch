@@ -2,20 +2,21 @@
 
 -export([save_current_cache/1, get_current_cache/0, stacktrace/0]).
 
-create_cache_manager() ->
+create_cache() ->
   ets:new(cache_manager, [set, public, named_table]).
 
 save_current_cache(Cache) ->
   Exists = ets:whereis(cache_manager),
-  if
-    Exists == undefined -> create_cache_manager();
-    true -> nil
-  end,
-  ets:insert(cache_manager, {self(), Cache}).
+  case Exists of undefined -> create_cache(); _ -> ok end,
+  Pid = self(),
+  ets:insert(cache_manager, {Pid, Cache}).
 
 get_current_cache() ->
-  [{_, Cache}] = ets:lookup(cache_manager, self()),
+  Pid = self(),
+  [{_, Cache}] = ets:lookup(cache_manager, Pid),
   Cache.
 
 stacktrace() ->
-  try throw(42) catch _:_:Stk -> Stk end.
+  try throw(42) catch _:_:Stk ->
+    lists:sublist(Stk, 2, 4)
+  end.

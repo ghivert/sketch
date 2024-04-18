@@ -55,14 +55,14 @@ pub fn create_cache(_options: Options) -> Result(Cache, error.SketchError) {
 pub fn prepare(cache: Cache) -> Nil {
   let Cache(subject) = cache
   save_current_cache(cache)
+  io.debug("PREPARE RRSTIENTSUIRERSIUTENSRTUNSRIETNRSUTENRUTSIETSRET")
   process.send(subject, Prepare)
 }
 
-pub fn render(cache: Cache) -> Nil {
+pub fn render(cache: Cache) -> String {
   let Cache(subject) = cache
   let res = process.try_call(subject, Diff, 1000)
-  io.debug(res)
-  Nil
+  result.unwrap(res, "")
 }
 
 fn update_cache(msg: Request, state: state.State) {

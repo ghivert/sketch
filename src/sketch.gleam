@@ -390,7 +390,7 @@ pub fn prepare(cache: Cache) -> Nil {
 /// to the choice of the Cache. `render` is idempotent, and can be called as
 /// much as you want
 @external(javascript, "./cache.ffi.mjs", "renderCache")
-pub fn render(cache: Cache) -> Nil {
+pub fn render(cache: Cache) -> String {
   cache.render(cache)
 }
 

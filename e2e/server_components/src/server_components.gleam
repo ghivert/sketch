@@ -114,10 +114,11 @@ fn socket_init(
       // subject, and then it could be handled (perhaps with some other work) in
       // the `mist.Custom` branch of `socket_update` below.
       fn(patch) {
-        patch
-        |> server_component.encode_patch
-        |> json.to_string
-        |> mist.send_text_frame(conn, _)
+        let _ =
+          patch
+          |> server_component.encode_patch
+          |> json.to_string
+          |> mist.send_text_frame(conn, _)
 
         Nil
       },
