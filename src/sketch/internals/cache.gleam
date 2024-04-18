@@ -3,6 +3,7 @@
 
 import gleam/erlang/process.{type Subject}
 import gleam/function
+import gleam/io
 import gleam/otp/actor
 import gleam/pair
 import gleam/result
@@ -59,7 +60,8 @@ pub fn prepare(cache: Cache) -> Nil {
 
 pub fn render(cache: Cache) -> Nil {
   let Cache(subject) = cache
-  let _res = process.try_call(subject, Diff, 1000)
+  let res = process.try_call(subject, Diff, 1000)
+  io.debug(res)
   Nil
 }
 

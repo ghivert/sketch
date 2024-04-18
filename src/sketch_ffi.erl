@@ -7,7 +7,10 @@ create_cache_manager() ->
 
 save_current_cache(Cache) ->
   Exists = ets:whereis(cache_manager),
-  if Exists == undefined -> create_cache_manager() end,
+  if
+    Exists == undefined -> create_cache_manager();
+    true -> nil
+  end,
   ets:insert(cache_manager, {self(), Cache}).
 
 get_current_cache() ->
