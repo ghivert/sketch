@@ -1,4 +1,7 @@
 import gleam/list
+import gleam/option.{None, Some}
+import gleam/string
+import sketch/internals/class as sketch_class
 import sketch/internals/string as sketch_string
 
 pub type Style {
@@ -8,7 +11,7 @@ pub type Style {
   Property(key: String, value: String, important: Bool)
 }
 
-type ComputedProperties {
+pub type ComputedProperties {
   ComputedProperties(
     properties: List(String),
     medias: List(MediaProperty),
@@ -18,7 +21,7 @@ type ComputedProperties {
   )
 }
 
-type MediaProperty {
+pub type MediaProperty {
   MediaProperty(
     query: String,
     properties: List(String),
@@ -26,7 +29,7 @@ type MediaProperty {
   )
 }
 
-type PseudoProperty {
+pub type PseudoProperty {
   PseudoProperty(pseudo_selector: String, properties: List(String))
 }
 
@@ -36,7 +39,7 @@ fn compute_property(indent: Int, key: String, value: String, important: Bool) {
     True -> " !important"
     False -> ""
   }
-  base_indent <> key <> ": " <> value <> important_
+  base_indent <> key <> ": " <> value <> important_ <> ";"
 }
 
 fn init_computed_properties(indent: Int) {
@@ -49,9 +52,11 @@ fn init_computed_properties(indent: Int) {
   )
 }
 
-// The Style data structure being a recursive data, computeProperties traverse
-// the data structure and collect the properties with their context.
-fn compute_properties(
+// Computing of properties
+
+/// The Style data structure being a recursive data, computeProperties traverse
+/// the data structure and collect the properties with their context.
+pub fn compute_properties(
   properties: List(Style),
   indent: Int,
 ) -> ComputedProperties {
@@ -98,4 +103,43 @@ fn handle_pseudo_selector(props: ComputedProperties, style: Style) {
   |> list.prepend(computed_props.pseudo_selectors, _)
   |> list.append(props.pseudo_selectors)
   |> fn(p) { ComputedProperties(..props, pseudo_selectors: p) }
+}
+
+// Wrapping of classes.
+
+pub type ComputedClass {
+  ComputedClass(
+    class_def: String,
+    medias_def: List(String),
+    selectors_def: List(String),
+    name: String,
+  )
+}
+
+fn wrap_pseudo_selectors(
+  id: String,
+  indent: Int,
+  pseudo_selectors: List(PseudoProperty),
+) {
+  use p <- list.map(pseudo_selectors)
+  sketch_class.wrap_class(id, p.properties, indent, Some(p.pseudo_selector))
+}
+
+// Compute classes by using the class definitions, and by wrapping them in the
+// correct class declarations, to be CSS compliant.
+pub fn compute_classes(id: String, computed_properties: ComputedProperties) {
+  let ComputedProperties(properties, medias, classes, pseudo_selectors, _) =
+    computed_properties
+  let class_def = sketch_class.wrap_class(id, properties, 0, None)
+  let medias_def = {
+    use MediaProperty(query, properties, pseudo_selectors) <- list.map(medias)
+    let selectors_def = wrap_pseudo_selectors(id, 2, pseudo_selectors)
+    [query <> " {", sketch_class.wrap_class(id, properties, 2, None)]
+    |> list.prepend([selectors_def, ["}"]], _)
+    |> list.concat()
+    |> string.join("\n")
+  }
+  let selectors_def = wrap_pseudo_selectors(id, 0, pseudo_selectors)
+  let name = string.trim(string.join(classes, " ") <> " " <> id)
+  ComputedClass(class_def, medias_def, selectors_def, name)
 }
