@@ -1,16 +1,67 @@
-import gleam/option.{type Option}
-import gleam/string
-import sketch/internals/string as sketch_string
+import gleam/option.{type Option, None, Some}
+import sketch/internals/style
 
-pub fn wrap_class(
-  id: String,
-  properties: List(String),
-  idt: Int,
-  pseudo: Option(String),
+pub type Definitions {
+  Definitions(
+    medias_def: List(String),
+    selectors_def: List(String),
+    class_def: String,
+  )
+}
+
+pub opaque type Class {
+  Class(
+    class_name: String,
+    class_id: String,
+    definitions: Definitions,
+    rules: Option(List(Int)),
+    previous_styles: List(style.Style),
+  )
+}
+
+pub fn no_class() {
+  let defs = Definitions(medias_def: [], selectors_def: [], class_def: "")
+  Class(
+    class_name: "",
+    class_id: "",
+    definitions: defs,
+    rules: None,
+    previous_styles: [],
+  )
+}
+
+pub fn previous_styles(class: Class) {
+  class.previous_styles
+}
+
+pub fn class_id(class: Class) {
+  class.class_id
+}
+
+pub fn class_name(class: Class) {
+  class.class_name
+}
+
+pub fn rules(class: Class) {
+  class.rules
+}
+
+pub fn set_rules(class: Class, rules: List(Int)) {
+  Class(..class, rules: Some(rules))
+}
+
+pub fn create(
+  class_name class_name: String,
+  class_id class_id: String,
+  rules rules: Option(List(Int)),
+  previous_styles previous_styles: List(style.Style),
+  definitions definitions: Definitions,
 ) {
-  let base_indent = sketch_string.indent(idt)
-  let pseudo_ = option.unwrap(pseudo, "")
-  [base_indent <> "." <> id <> pseudo_ <> " {", ..properties]
-  |> string.join("\n")
-  |> string.append("\n" <> base_indent <> "}")
+  Class(
+    class_name: class_name,
+    class_id: class_id,
+    definitions: definitions,
+    rules: rules,
+    previous_styles: previous_styles,
+  )
 }

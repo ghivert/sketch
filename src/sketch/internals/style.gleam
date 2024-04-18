@@ -1,7 +1,6 @@
 import gleam/list
 import gleam/option.{None, Some}
 import gleam/string
-import sketch/internals/class as sketch_class
 import sketch/internals/string as sketch_string
 
 pub type Style {
@@ -122,24 +121,27 @@ fn wrap_pseudo_selectors(
   pseudo_selectors: List(PseudoProperty),
 ) {
   use p <- list.map(pseudo_selectors)
-  sketch_class.wrap_class(id, p.properties, indent, Some(p.pseudo_selector))
+  sketch_string.wrap_class(id, p.properties, indent, Some(p.pseudo_selector))
 }
 
 // Compute classes by using the class definitions, and by wrapping them in the
 // correct class declarations, to be CSS compliant.
-pub fn compute_classes(id: String, computed_properties: ComputedProperties) {
+pub fn compute_classes(
+  class_name: String,
+  computed_properties: ComputedProperties,
+) {
   let ComputedProperties(properties, medias, classes, pseudo_selectors, _) =
     computed_properties
-  let class_def = sketch_class.wrap_class(id, properties, 0, None)
+  let class_def = sketch_string.wrap_class(class_name, properties, 0, None)
   let medias_def = {
     use MediaProperty(query, properties, pseudo_selectors) <- list.map(medias)
-    let selectors_def = wrap_pseudo_selectors(id, 2, pseudo_selectors)
-    [query <> " {", sketch_class.wrap_class(id, properties, 2, None)]
+    let selectors_def = wrap_pseudo_selectors(class_name, 2, pseudo_selectors)
+    [query <> " {", sketch_string.wrap_class(class_name, properties, 2, None)]
     |> list.prepend([selectors_def, ["}"]], _)
     |> list.concat()
     |> string.join("\n")
   }
-  let selectors_def = wrap_pseudo_selectors(id, 0, pseudo_selectors)
-  let name = string.trim(string.join(classes, " ") <> " " <> id)
+  let selectors_def = wrap_pseudo_selectors(class_name, 0, pseudo_selectors)
+  let name = string.trim(string.join(classes, " ") <> " " <> class_name)
   ComputedClass(class_def, medias_def, selectors_def, name)
 }

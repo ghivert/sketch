@@ -279,6 +279,7 @@ import gleam/string
 import lustre/attribute.{type Attribute}
 import sketch/error
 import sketch/internals/cache
+import sketch/internals/class
 import sketch/internals/style
 import sketch/media.{type Query}
 import sketch/options.{type Options}
@@ -292,7 +293,7 @@ import sketch/size.{type Size}
 
 /// Represents a CSS class, compiled.
 pub type Class =
-  cache.Class
+  class.Class
 
 /// Manages the styles. Can be instanciated with [`create_cache`](#create_cache).
 pub type Cache =
@@ -353,7 +354,7 @@ fn memo(class: Class) -> Class {
 /// classes composition.
 @external(javascript, "./sketch.ffi.mjs", "toString")
 pub fn to_class_name(class: Class) -> String {
-  ""
+  class.class_name(class)
 }
 
 /// Create a cache manager, managing the styles for every repaint. You can
