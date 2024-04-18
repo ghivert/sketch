@@ -363,6 +363,7 @@ pub fn to_class_name(class: Class) -> String {
 /// You can output the styles directly in a node style in the DOM, or by pushing
 /// them directly in a CSSStyleSheet, at the document level. The choice is up to
 /// you at the initialization of the Cache.
+/// On BEAM, this setting is ignored.
 /// If you're using Lustre, you shouldn't have to worry about it, and consider
 /// it as internal low-level.
 @external(javascript, "./cache.ffi.mjs", "createCache")

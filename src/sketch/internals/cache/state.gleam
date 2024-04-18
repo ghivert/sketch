@@ -1,9 +1,12 @@
 //// BEAM only.
 
 import gleam/dict.{type Dict}
+import gleam/erlang/process.{type Subject}
+import gleam/function
 import gleam/int
 import gleam/list
 import gleam/option.{None, Some}
+import gleam/otp/actor
 import gleam/pair
 import gleam/result
 import gleam/set
@@ -23,6 +26,17 @@ pub type State {
   )
 }
 
+pub type Request {
+  Prepare
+  Diff(stylesheet: Subject(String))
+  Memoize(class: class.Class)
+  Persist(
+    class_id: String,
+    styles: List(style.Style),
+    subject: Subject(class.Class),
+  )
+}
+
 pub fn init() {
   State(
     memo_cache: dict.new(),
@@ -34,6 +48,34 @@ pub fn init() {
 
 pub fn prepare(state: State) {
   State(..state, passive_cache: state.active_cache, active_cache: dict.new())
+}
+
+pub fn loop(msg: Request, state: State) {
+  case msg {
+    Prepare ->
+      state
+      |> prepare()
+      |> actor.continue()
+    Diff(subject) ->
+      state
+      |> diff()
+      |> function.tap(fn(s) { process.send(subject, render(s)) })
+      |> actor.continue()
+    Memoize(class) ->
+      state
+      |> memo(class)
+      |> actor.continue()
+    Persist(id, styles, subject) -> {
+      result.unwrap_both({
+        let res = persist(state, id, styles)
+        use _ <- result.map_error(res)
+        compute_class(state, id, styles)
+      })
+      |> function.tap(fn(state) { process.send(subject, pair.second(state)) })
+      |> pair.first()
+      |> actor.continue()
+    }
+  }
 }
 
 pub fn persist(
