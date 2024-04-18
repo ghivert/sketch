@@ -14,6 +14,8 @@ packages = [
 ]
 
 [requirements]
+gleam_erlang = { version = ">= 0.25.0 and < 1.0.0"}
+gleam_otp = { version = ">= 0.10.0 and < 1.0.0" }
 gleam_stdlib = { version = "~> 0.34 or ~> 1.0" }
 gleeunit = { version = "~> 1.0" }
 lustre = { version = "~> 4.1" }

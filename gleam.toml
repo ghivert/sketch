@@ -1,13 +1,15 @@
 name = "sketch"
-target = "javascript"
 version = "2.0.0"
 
 description = "A CSS-in-Gleam package, made to work with frontend, backend, and directly with lustre!"
+internal_modules = ["sketch/internals", "sketch/internals/*"]
 licences = ["MIT"]
 links = [{title = "Sponsor", href = "https://github.com/sponsors/ghivert"}]
 repository = {type = "github", user = "ghivert", repo = "sketch"}
 
 [dependencies]
+gleam_erlang = ">= 0.25.0 and < 1.0.0"
+gleam_otp = ">= 0.10.0 and < 1.0.0"
 gleam_stdlib = "~> 0.34 or ~> 1.0"
 lustre = "~> 4.1"
 plinth = "~> 0.2"

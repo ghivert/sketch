@@ -1,8 +1,3 @@
-export function indent(size) {
-  const space = ' '
-  return space.repeat(size)
-}
-
 export const uid = (function() {
   let id = 0
   const classNames = {}
@@ -30,41 +25,6 @@ export function deepEqual(a, b) {
     if (!isSame) return false
   }
   return true
-}
-
-// A Style property can be of four types: a class composition, a property definition
-// a pseudo-selector definitions or a media query definition.
-// They're defined in Gleam, and the class is opaque, so the only way is to
-// read in the content of the object to check the interesting fields.
-export function determineStyleType(style) {
-  if ('class_name' in style && typeof style.class_name === 'string') {
-    return 'compose'
-  } else if ('key' in style && 'value' in style) {
-    return 'property'
-  } else if ('pseudo_selector' in style && 'styles' in style) {
-    return 'pseudoSelector'
-  } else if ('query' in style && 'styles' in style) {
-    return 'mediaQuery'
-  }
-}
-
-// Take a class definition, and turns it to something like
-// .className {
-//   property1: value;
-//   property2: value;
-// }
-export function wrapClass(id, properties, indent_, pseudo = '') {
-  const baseIndent = indent(indent_)
-  return [`${baseIndent}.${id}${pseudo} {`, ...properties, `${baseIndent}}`].join('\n')
-}
-
-// Turn the different components of a property into the correct CSS property.
-// I.e. property: value [!important];
-export function computeProperty(indent_, property) {
-  const baseIndent = indent(indent_)
-  const key = `${baseIndent}${property.key}`
-  const important = property.important ? ' !important' : ''
-  return `${key}: ${property.value}${important};`
 }
 
 export function isBrowser() {

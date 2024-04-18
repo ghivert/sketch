@@ -2,6 +2,7 @@ import * as helpers from './helpers.ffi.mjs'
 import * as error from './sketch/error.mjs'
 import { stylesheet_to_string } from './sketch/options.mjs'
 import * as gleam from './gleam.mjs'
+import { None } from '../gleam_stdlib/gleam/option.mjs'
 import { StyleSheet } from './stylesheet.ffi.mjs'
 
 export let cache
@@ -90,7 +91,7 @@ export class Cache {
   //   name: string,
   //   previousStyles: List(Style),
   //   indexRules: number[] | null,
-  //   definitions: { mediasDef: string, selectorsDef: string, classDef: string },
+  //   definitions: { medias_def: string, selectors_def: string, class_def: string },
   // }
   store(className, content) {
     this.#activeCache.set(className, content)
@@ -116,10 +117,11 @@ export class Cache {
   #insertStyles(klass) {
     const indexRules = []
     const { definitions } = klass
-    const { mediasDef, selectorsDef, classDef } = definitions
-    indexRules.push(this.#stylesheet.insertRule(classDef))
-    selectorsDef.forEach(def => indexRules.push(this.#stylesheet.insertRule(def)))
-    mediasDef.forEach(def => indexRules.push(this.#stylesheet.insertRule(def)))
+    indexRules.push(this.#stylesheet.insertRule(definitions.class_def))
+    for (const def of definitions.selectors_def)
+      indexRules.push(this.#stylesheet.insertRule(def))
+    for (const def of definitions.medias_def)
+      indexRules.push(this.#stylesheet.insertRule(def))
     klass.indexRules = indexRules
   }
 
@@ -143,4 +145,5 @@ export function prepareCache(cache_) {
 
 export function renderCache(cache) {
   cache.diff()
+  return new None()
 }
