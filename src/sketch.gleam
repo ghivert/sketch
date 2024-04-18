@@ -278,6 +278,7 @@ import gleam/result
 import gleam/string
 import lustre/attribute.{type Attribute}
 import sketch/error
+import sketch/internals/cache
 import sketch/internals/style
 import sketch/media.{type Query}
 import sketch/options.{type Options}
@@ -289,11 +290,13 @@ import sketch/size.{type Size}
 // If you end up here reading this because you want to access internals,
 // consider forking the repo and working on it on your own, or submit a PR!
 
-/// Manages the styles. Can be instanciated with [`create_cache`](#create_cache).
-pub opaque type Cache
-
 /// Represents a CSS class, compiled.
-pub opaque type Class
+pub type Class =
+  cache.Class
+
+/// Manages the styles. Can be instanciated with [`create_cache`](#create_cache).
+pub type Cache =
+  cache.Cache
 
 /// Represents a Style. It can be a class composition, a media query with its
 /// sub-properties, a pseudo-selector with its sub-properties or a property
@@ -309,16 +312,16 @@ pub opaque type Style(media, pseudo) {
 // They have no utilities outside of the type namespace.
 
 /// No direct usage, used for type-checking and to cancel impossible states.
-pub opaque type Media
+pub type Media
 
 /// No direct usage, used for type-checking and to cancel impossible states.
-pub opaque type NoMedia
+pub type NoMedia
 
 /// No direct usage, used for type-checking and to cancel impossible states.
-pub opaque type PseudoSelector
+pub type PseudoSelector
 
 /// No direct usage, used for type-checking and to cancel impossible states.
-pub opaque type NoPseudoSelector
+pub type NoPseudoSelector
 
 type MediaStyle =
   Style(NoMedia, PseudoSelector)
@@ -331,19 +334,27 @@ type PseudoStyle =
 // Most should not be exposed, or in a low-level way.
 
 @external(javascript, "./sketch.ffi.mjs", "compileClass")
-fn compile_class(styles: List(style.Style)) -> Class
+fn compile_class(styles: List(style.Style)) -> Class {
+  cache.compile_class(styles)
+}
 
 @external(javascript, "./sketch.ffi.mjs", "compileClass")
-fn compile_style(styles: List(style.Style), id: String) -> Class
+fn compile_style(styles: List(style.Style), id: String) -> Class {
+  cache.compile_style(styles, id)
+}
 
 @external(javascript, "./sketch.ffi.mjs", "memo")
-fn memo(class: Class) -> Class
+fn memo(class: Class) -> Class {
+  cache.memo(class)
+}
 
 /// Convert a `Class` to its proper class name, to use it anywhere in your
 /// application. It can have the form `class1` or `class1 class2` in case of
 /// classes composition.
 @external(javascript, "./sketch.ffi.mjs", "toString")
-pub fn to_class_name(class: Class) -> String
+pub fn to_class_name(class: Class) -> String {
+  ""
+}
 
 /// Create a cache manager, managing the styles for every repaint. You can
 /// instanciate as much cache manager that you want, if you want to use multiple
@@ -354,7 +365,9 @@ pub fn to_class_name(class: Class) -> String
 /// If you're using Lustre, you shouldn't have to worry about it, and consider
 /// it as internal low-level.
 @external(javascript, "./cache.ffi.mjs", "createCache")
-pub fn create_cache(options: Options) -> Result(Cache, error.SketchError)
+pub fn create_cache(options: Options) -> Result(Cache, error.SketchError) {
+  cache.create_cache(options)
+}
 
 /// Lifecycle function — not side-effect free
 /// `prepare` should be called before your repaint, and before the different
@@ -367,14 +380,18 @@ pub fn create_cache(options: Options) -> Result(Cache, error.SketchError)
 /// will be pushed in the last cache called by `prepare`, due to the styles
 /// handling (and some side-effects under-the-hood for performance purposes).
 @external(javascript, "./cache.ffi.mjs", "prepareCache")
-pub fn prepare(cache: Cache) -> Nil
+pub fn prepare(cache: Cache) -> Nil {
+  cache.prepare(cache)
+}
 
 /// Lifecycle function — not side-effect free
 /// `render` takes a Cache, and render its content to the stylesheet, according
 /// to the choice of the Cache. `render` is idempotent, and can be called as
 /// much as you want
 @external(javascript, "./cache.ffi.mjs", "renderCache")
-pub fn render(cache: Cache) -> Nil
+pub fn render(cache: Cache) -> Nil {
+  cache.render(cache)
+}
 
 /// Used internally to get rid of phantom types
 fn convert_styles(styles: List(Style(media, pseudo))) -> List(style.Style) {
