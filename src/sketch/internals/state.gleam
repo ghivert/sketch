@@ -1,12 +1,15 @@
+//// BEAM only
+
 import gleam/dict.{type Dict}
 import gleam/int
-import gleam/io
+import gleam/list
 import gleam/option.{None, Some}
 import gleam/pair
 import gleam/result
 import gleam/set
 import sketch/internals/class.{type Class}
 import sketch/internals/style
+import sketch/internals/stylesheet
 
 @external(erlang, "erlang", "unique_integer")
 fn unique_integer() -> Int
@@ -16,6 +19,7 @@ pub type State {
     memo_cache: Dict(String, Class),
     active_cache: Dict(String, Class),
     passive_cache: Dict(String, Class),
+    stylesheet: stylesheet.StyleSheet,
   )
 }
 
@@ -24,6 +28,7 @@ pub fn init() {
     memo_cache: dict.new(),
     active_cache: dict.new(),
     passive_cache: dict.new(),
+    stylesheet: stylesheet.init(),
   )
 }
 
@@ -84,6 +89,22 @@ pub fn compute_class(
   }
 }
 
+fn insert_rules(class: Class, stylesheet: stylesheet.StyleSheet) {
+  case class.rules(class) {
+    Some(_) -> #(stylesheet, class)
+    None -> {
+      class
+      |> class.definitions()
+      |> list.fold(#(stylesheet, []), fn(acc, def) {
+        let #(stylesheet, rules) = acc
+        let #(st, index) = stylesheet.insert_styles(stylesheet, def)
+        #(st, [index, ..rules])
+      })
+      |> pair.map_second(class.set_rules(class, _))
+    }
+  }
+}
+
 pub fn memo(state: State, class: Class) {
   let id = class.class_id(class)
   state.memo_cache
@@ -92,13 +113,14 @@ pub fn memo(state: State, class: Class) {
   |> result.try_recover(fn(_) {
     let value = dict.get(state.active_cache, id)
     use class <- result.map(value)
+    let #(new_stylesheet, new_class) = insert_rules(class, state.stylesheet)
     State(
       ..state,
-      memo_cache: dict.insert(state.memo_cache, id, class),
+      stylesheet: new_stylesheet,
+      memo_cache: dict.insert(state.memo_cache, id, new_class),
       active_cache: dict.delete(state.active_cache, id),
     )
-  }// TODO Insert styles here
-  )
+  })
   |> result.replace_error(state)
   |> result.unwrap_both()
 }
@@ -113,14 +135,24 @@ pub fn diff(state: State) {
         case class.rules(class) {
           Some(_) -> state
           None -> {
-            state
-            // TODO insert styles here
+            let #(st, new_class) = insert_rules(class, state.stylesheet)
+            dict.insert(state.active_cache, key, new_class)
+            |> fn(c) { State(..state, stylesheet: st, active_cache: c) }
           }
         }
       Error(_) ->
-        // TODO delete styles here
-        state
+        case dict.get(state.passive_cache, key) {
+          Error(_) -> state
+          Ok(class) ->
+            class.rules(class)
+            |> option.unwrap([])
+            |> list.fold(state.stylesheet, stylesheet.delete_styles)
+            |> fn(st) { State(..state, stylesheet: st) }
+        }
     }
   })
-  |> io.debug()
+}
+
+pub fn render(state: State) {
+  stylesheet.render(state.stylesheet)
 }

@@ -3,7 +3,6 @@
 
 import gleam/erlang/process.{type Subject}
 import gleam/function
-import gleam/io
 import gleam/otp/actor
 import gleam/pair
 import gleam/result
@@ -29,7 +28,7 @@ fn stacktrace() -> String
 
 type Request {
   Prepare
-  Diff
+  Diff(stylesheet: Subject(String))
   Memoize(class: class.Class)
   Persist(
     class_id: String,
@@ -60,7 +59,8 @@ pub fn prepare(cache: Cache) -> Nil {
 
 pub fn render(cache: Cache) -> Nil {
   let Cache(subject) = cache
-  process.send(subject, Diff)
+  let _res = process.try_call(subject, Diff, 1000)
+  Nil
 }
 
 fn update_cache(msg: Request, state: state.State) {
@@ -69,9 +69,10 @@ fn update_cache(msg: Request, state: state.State) {
       state
       |> state.prepare()
       |> actor.continue()
-    Diff ->
+    Diff(subject) ->
       state
       |> state.diff()
+      |> function.tap(fn(s) { process.send(subject, state.render(s)) })
       |> actor.continue()
     Memoize(class) ->
       state

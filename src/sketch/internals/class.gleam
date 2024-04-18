@@ -1,3 +1,6 @@
+//// BEAM only
+
+import gleam/list
 import gleam/option.{type Option, None, Some}
 import sketch/internals/style
 
@@ -44,6 +47,12 @@ pub fn class_name(class: Class) {
 
 pub fn rules(class: Class) {
   class.rules
+}
+
+pub fn definitions(class: Class) {
+  let Definitions(medias, selectors, class) = class.definitions
+  [[class], selectors, medias]
+  |> list.concat()
 }
 
 pub fn set_rules(class: Class, rules: List(Int)) {
