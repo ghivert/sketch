@@ -274,6 +274,7 @@
 import gleam/float
 import gleam/int
 import gleam/list
+import gleam/option.{type Option}
 import gleam/result
 import gleam/string
 import lustre/attribute.{type Attribute}
@@ -389,9 +390,11 @@ pub fn prepare(cache: Cache) -> Nil {
 /// Lifecycle function — not side-effect free
 /// `render` takes a Cache, and render its content to the stylesheet, according
 /// to the choice of the Cache. `render` is idempotent, and can be called as
-/// much as you want
+/// much as you want.
+/// You can expect `render` to return Some(String) representing the stylesheet on
+/// BEAM, and None on JS.
 @external(javascript, "./cache.ffi.mjs", "renderCache")
-pub fn render(cache: Cache) -> String {
+pub fn render(cache: Cache) -> Option(String) {
   cache.render(cache)
 }
 

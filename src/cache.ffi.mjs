@@ -2,6 +2,7 @@ import * as helpers from './helpers.ffi.mjs'
 import * as error from './sketch/error.mjs'
 import { stylesheet_to_string } from './sketch/options.mjs'
 import * as gleam from './gleam.mjs'
+import { None } from '../gleam_stdlib/gleam/option.mjs'
 import { StyleSheet } from './stylesheet.ffi.mjs'
 
 export let cache
@@ -144,5 +145,5 @@ export function prepareCache(cache_) {
 
 export function renderCache(cache) {
   cache.diff()
-  return ""
+  return new None()
 }
