@@ -1,16 +1,15 @@
-//// BEAM only
+//// BEAM only.
 
 import gleam/dict.{type Dict}
 import gleam/int
-import gleam/io
 import gleam/list
 import gleam/option.{None, Some}
 import gleam/pair
 import gleam/result
 import gleam/set
+import sketch/internals/cache/stylesheet
 import sketch/internals/class.{type Class}
 import sketch/internals/style
-import sketch/internals/stylesheet
 
 @external(erlang, "erlang", "unique_integer")
 fn unique_integer() -> Int

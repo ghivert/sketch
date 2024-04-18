@@ -1,4 +1,4 @@
-//// BEAM only
+//// BEAM only.
 
 import gleam/list
 import gleam/option.{type Option, None, Some}

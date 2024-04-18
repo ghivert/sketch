@@ -278,7 +278,7 @@ import gleam/result
 import gleam/string
 import lustre/attribute.{type Attribute}
 import sketch/error
-import sketch/internals/cache
+import sketch/internals/cache/setup as cache
 import sketch/internals/class
 import sketch/internals/style
 import sketch/media.{type Query}

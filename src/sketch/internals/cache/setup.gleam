@@ -1,15 +1,13 @@
-//// Functions here only work for the BEAM target. JS has a native implementation,
-//// to increase performances.
+//// BEAM only.
 
 import gleam/erlang/process.{type Subject}
 import gleam/function
-import gleam/io
 import gleam/otp/actor
 import gleam/pair
 import gleam/result
 import sketch/error
+import sketch/internals/cache/state
 import sketch/internals/class
-import sketch/internals/state
 import sketch/internals/style
 import sketch/options.{type Options}
 
@@ -55,7 +53,6 @@ pub fn create_cache(_options: Options) -> Result(Cache, error.SketchError) {
 pub fn prepare(cache: Cache) -> Nil {
   let Cache(subject) = cache
   save_current_cache(cache)
-  io.debug("PREPARE RRSTIENTSUIRERSIUTENSRTUNSRIETNRSUTENRUTSIETSRET")
   process.send(subject, Prepare)
 }
 
