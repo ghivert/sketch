@@ -274,7 +274,6 @@
 import gleam/float
 import gleam/int
 import gleam/list
-import gleam/option.{type Option}
 import gleam/result
 import gleam/string
 import lustre/attribute.{type Attribute}
@@ -1208,7 +1207,7 @@ pub fn lustre_setup(options: Options) {
     fn(model: model) {
       prepare(cache)
       let el = view(model)
-      render(cache)
+      let _ = render(cache)
       el
     }
   })
