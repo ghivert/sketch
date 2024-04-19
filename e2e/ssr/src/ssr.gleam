@@ -27,7 +27,6 @@ pub fn main() {
     }
     |> mist.new()
     |> mist.port(3000)
-    |> mist.after_start(fn(_, _) { sketch.prepare(cache) })
     |> mist.start_http()
 
   process.sleep_forever()

@@ -345,8 +345,15 @@ fn compile_style(styles: List(style.Style), id: String) -> Class {
   cache.compile_style(styles, id)
 }
 
+/// Memoizes a function across multiple renders. When encountered for the first time,
+/// the class will be put in long-live section of the stylesheet. Once in long-live
+/// section, the computed class will never be garbaged, and will be included in every
+/// render.
+/// This saves some time during render by skipping every memoized class. You can use it
+/// when you know that a class will be used during every render, or when you want
+/// a class to not be forgetted, because you're using it often.
 @external(javascript, "./sketch.ffi.mjs", "memo")
-fn memo(class: Class) -> Class {
+pub fn memo(class: Class) -> Class {
   cache.memo(class)
 }
 
@@ -1161,17 +1168,19 @@ pub fn compose(class: Class) -> Style(media, pseudo) {
   |> Style()
 }
 
-/// Compiles a static class, and memoizes it.
+/// Compiles a static class, and reuses it across the same render flow.
 /// Don't use dynamic styles with it, use `dynamic` instead.
 pub fn class(styles: List(Style(media, pseudo))) -> Class {
   styles
   |> convert_styles()
   |> compile_class()
-  |> memo()
 }
 
-/// Compiles a dynamic class, and not memoizing it. It means at every render,
-/// the class will be re-computed, and a new version will be pushed in the browser.
+/// Compiles a dynamic class. It means during the render, when the class with the id
+/// is re-computed, a new version will be pushed in the browser if needed.
+/// It means you can reuse the function to output different classes with the same
+/// function and basis. With a `class`, once computed once during the render, it's
+/// not possible to change the content of the class.
 /// Be careful to add a unique ID: right now, it's not possible to push
 /// a dynamic class in the browser without defining an ID. The ID should be unique
 /// to the computed class, otherwise you could end up with some classes overlap.

@@ -1,5 +1,6 @@
 import gleam/int
 import lustre
+import lustre/element
 import lustre/element/html
 import lustre/event
 import sketch
@@ -53,6 +54,16 @@ fn main_class() {
   |> sketch.to_lustre()
 }
 
+fn second_class() {
+  sketch.class([
+    sketch.background("green"),
+    sketch.font_size(px(20)),
+    sketch.font_family("-apple-system"),
+  ])
+  |> sketch.memo()
+  |> sketch.to_lustre()
+}
+
 fn color_class(model: Model) {
   let back = case model % 3 {
     0 -> "blue"
@@ -68,14 +79,26 @@ fn button_class() {
   |> sketch.to_lustre()
 }
 
+fn class_test(model: Model) {
+  case model % 5 {
+    0 -> html.div([second_class()], [html.text("Class Test")])
+    _ -> element.none()
+  }
+}
+
 fn view(model: Model) {
-  html.div([main_class()], [
-    html.button([event.on_click(Decrement), button_class()], [
-      html.text("Decrement"),
+  html.div([], [
+    html.div([main_class()], [
+      html.button([event.on_click(Decrement), button_class()], [
+        html.text("Decrement"),
+      ]),
+      html.div([color_class(model)], [html.text(int.to_string(model))]),
+      html.button([event.on_click(Increment), button_class()], [
+        html.text("Increment"),
+      ]),
     ]),
-    html.div([color_class(model)], [html.text(int.to_string(model))]),
-    html.button([event.on_click(Increment), button_class()], [
-      html.text("Increment"),
-    ]),
+    class_test(model),
+    class_test(model),
+    class_test(model),
   ])
 }
