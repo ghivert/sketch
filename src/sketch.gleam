@@ -398,10 +398,11 @@ pub fn prepare(cache: Cache) -> Nil {
 /// `render` takes a Cache, and render its content to the stylesheet, according
 /// to the choice of the Cache. `render` is idempotent, and can be called as
 /// much as you want.
-/// You can expect `render` to return Some(String) representing the stylesheet on
-/// BEAM, and None on JS.
+/// You can expect `render` to return Ok(String) representing the stylesheet on
+/// BEAM, and Error(Nil) on JS. It means there's not output String in JS, but the
+/// modification happened in the DOM!
 @external(javascript, "./cache.ffi.mjs", "renderCache")
-pub fn render(cache: Cache) -> Option(String) {
+pub fn render(cache: Cache) -> Result(String, Nil) {
   cache.render(cache)
 }
 

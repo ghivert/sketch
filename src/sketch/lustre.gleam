@@ -1,5 +1,5 @@
 import gleam/list
-import gleam/option.{None, Some}
+import gleam/result
 import lustre/element.{type Element}
 import lustre/element/html
 import lustre/internals/vdom
@@ -32,8 +32,8 @@ pub fn compose(view: fn(model) -> element.Element(msg), cache: Cache) {
     let el = view(model)
     let content = sketch.render(cache)
     case content {
-      None -> el
-      Some(content) -> html.div([], [html.style([], content), el])
+      Error(_) -> el
+      Ok(content) -> html.div([], [html.style([], content), el])
     }
   }
 }
@@ -67,11 +67,11 @@ fn put_in_head(el: Element(a), content: String) {
 pub fn ssr(el: Element(a), cache: Cache) {
   cache
   |> sketch.render()
-  |> option.map(fn(content) {
+  |> result.map(fn(content) {
     case contains_head(el) {
       True -> put_in_head(el, content)
       False -> html.div([], [html.style([], content), el])
     }
   })
-  |> option.unwrap(el)
+  |> result.unwrap(el)
 }

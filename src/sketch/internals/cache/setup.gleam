@@ -1,7 +1,6 @@
 //// BEAM only.
 
 import gleam/erlang/process.{type Subject}
-import gleam/option.{type Option}
 import gleam/otp/actor
 import gleam/result
 import sketch/error
@@ -35,10 +34,10 @@ pub fn prepare(cache: Cache) -> Nil {
   process.send(subject, state.Prepare)
 }
 
-pub fn render(cache: Cache) -> Option(String) {
+pub fn render(cache: Cache) -> Result(String, Nil) {
   let Cache(subject) = cache
-  let res = process.try_call(subject, state.Diff, 1000)
-  option.from_result(res)
+  process.try_call(subject, state.Diff, 1000)
+  |> result.nil_error()
 }
 
 pub fn compile_class(styles: List(style.Style)) -> class.Class {
