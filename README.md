@@ -1,6 +1,6 @@
 # Sketch
 
-Sketch is a small module providing CSS-in-Gleam in its simpler form.
+Sketch is a module providing CSS-in-Gleam in its simpler form.
 Sketch does not try to add complicated API on top of CSS. If you have CSS
 knowledge, you'll feel right at home, with all the niceties offered by
 Sketch, i.e. type-checking of sizes and push-to-browser stylesheets of your
@@ -8,15 +8,28 @@ classes, as well as SSR support.
 
 Sketch has currently only one run mode: directly in your browser to leverage on
 all abilities of the JS runtime.
-It also allows you to build two types of CSS classes: dynamic ones, changing
-over time, and static ones, compiled once and for all, and reused during the
-entire lifetime of the application, just like classic CSS stylesheets.
+It also allows you to build three types of CSS classes: dynamic ones, changing
+over time, static ones, compiled once at each render, and memoized ones,
+compiled once and for all, and reused during the entire lifetime of the application,
+just like classic CSS stylesheets.
 
 Sketch is thought to interact nicely with [Lustre](https://hexdocs.pm/lustre/),
 but can also be used directly in your vanilla Gleam application or in your
 fully-featured application. This should probably only be considered to create
 custom framework or to integrate Sketch in your favorite framework, because Sketch
 has its own lifecycle to render styles. More informations can be found in the docs.
+
+Sketch targets both the JS and the BEAM ecosystem. You can use it transparently
+no matter the target you're using. Sketch works in frontend, backend, SSR, SSG, with OTP
+actors or on Node. While sketch tries to be transparent, it does not compromise
+with performances, and tries to leverage on every abilities of the different
+platforms (and uses a custom renderer both for BEAM and JS, to ensures sparkling
+performances in your browser)!
+
+The rest of this README will focus to get you started quickly with a lustre example,
+and some details on the available functions. If you want to know more on how
+sketch is working, how to use lustre with SSR or SSG, heads up to the
+documentation directly!
 
 ## Installation
 
@@ -37,11 +50,11 @@ Otherwise, you have to follow the lifecycle of Sketch, and use the three low-lev
 functions [`create_cache`](https://hexdocs.pm/sketch/sketch.html#create_cache),
 [`prepare`](https://hexdocs.pm/sketch/sketch.html#prepare) and [`render`](https://hexdocs.pm/sketch/sketch.html#render).
 Create the cache with [`create_cache`](https://hexdocs.pm/sketch/sketch.html#create_cache)
-and before every repaint of your frontend, call [`prepare`](https://hexdocs.pm/sketch/sketch.html#prepare).
+and before every repaint of your application, call [`prepare`](https://hexdocs.pm/sketch/sketch.html#prepare).
 After the repaint, synchronously, call [`render`](https://hexdocs.pm/sketch/sketch.html#render),
-and let the magic happen in your browser. Heads up in the docs for more details.
+and let the magic happen. Heads up in the docs for more details.
 
-## Example with Lustre
+## Example with Lustre — Frontend
 
 ```gleam
 import gleam/int
@@ -129,8 +142,8 @@ fn view(model: Model) {
 Sketch exposes a single function [`class`](https://hexdocs.pm/sketch/sketch.html#class)
 allowing you to build your class. The first time your function is called, the
 corresponding styles will be compiled into CSS rules, and pushed in your browser
-or your SSR stylesheet. Every time you'll call the function in the future, no
-computation will be done, the class name will be returned, thanks to memoization.
+or your `<style>` stylesheet. Every time you'll call the function during the render, no
+computation will be done, the class name will be returned, thanks to virtual stylesheet.
 
 ```gleam
 import sketch
@@ -147,13 +160,21 @@ fn my_class() -> String {
 ## Compiling dynamic classes
 
 Sketch exposes another function [`dynamic`](https://hexdocs.pm/sketch/sketch.html#dynamic)
-allowing you to build a dynamic class, changing over time. Each time the function
-is called, the properties in the declaration will be compiled into CSS, the previous
-class will be wiped from the browser, and the new one will pushed.
+allowing you to build a dynamic class, changing over time. The first time the function
+is called, the properties in the declaration will be compiled into CSS, and a class
+with the name of the ID will be pushed in the browser. When a class with the same ID
+is found once again during the render, it will be kept, and reused. `dynamic` allows
+you to build different dynamic classes, with different ID. When you're generating
+the ID, if it does not exists in the stylesheet, it will be pushed in it, and kept
+at least till the next render.
+While a `class` function generates _one_ class at every render, a `dynamic` function
+generates _multiple_ classes at every render.
 
-An ID *should be provided* at the moment, due to a limitation of the runtime, and
-the limitations of the compilation. Until a workaround is found, be careful to
-provide a unique id for your dynamic class, to avoid overlap with other classes.
+An ID *should be provided* at the moment, because the runtime is unable to distinguish
+between the dynamic classes, or at a high cost during computations: finding the ID
+of the new class to generate _is_ a hard task by itself.
+While a solution is awaited to be found, be careful to provide a unique id for your dynamic
+class.
 
 ```gleam
 import gleam/bool
@@ -172,6 +193,16 @@ fn my_dynamic_class(is_column: Bool) -> String {
   |> sketch.to_class_name()
 }
 ```
+
+## Memoizing a class
+
+Sketch exposes a way to memoize a class: [`memo`](https://hexdocs.pm/sketch/sketch.html#memo).
+`memo` allows to keep a generated class _for ever_. When called on a class, sketch
+will preserves the class for ever, and will includes the class in every render,
+as long as the virtual stylesheet exists. This allows to skip all computations work
+for every class computations later, and to increase performances render.
+_Be careful, a class marked as `memo` will be then considered immutable and can
+never change._
 
 ## Using media queries and pseudo-selectors
 
