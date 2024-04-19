@@ -3,11 +3,12 @@
 To use sketch with lustre SSR, little modifications are necessary. Sketch
 bundles helpers to work with lustre SSR right out-of-the-box. Just use them, and
 you'll be good to go. Like every lustre application, it has to be setuped with
-[`setup`](https://hexdocs.pm/sketch/lustre#setup), but after that, you'll have
-to use [`prepare`](https://hexdocs.pm/sketch/sketch#prepare) in your HTTP
-handler, and at the end of the HTML generation, when you still have an
-[`Element`](https://hexdocs.pm/lustre/element#Element) from lustre, run
-[`ssr`](https://hexdocs.pm/sketch/lustre#ssr) and let the magic happen!
+[`setup`](https://hexdocs.pm/sketch/sketch/lustre.html#setup), but after that,
+you'll have to use [`prepare`](https://hexdocs.pm/sketch/sketch.html#prepare) in
+your HTTP handler, and at the end of the HTML generation, when you still have an
+[`Element`](https://hexdocs.pm/lustre/lustre/element.html#Element) from lustre,
+run [`ssr`](https://hexdocs.pm/sketch/sketch/lustre.html#ssr) and let the magic
+happen!
 
 ## Example
 

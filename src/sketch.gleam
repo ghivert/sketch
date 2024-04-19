@@ -1,8 +1,14 @@
+//// Want to know more about details? Go to the
+//// [additional docs](https://hexdocs.pm/sketch/internal-details.html)!
+////
+//// ---
+////
 //// # Table of Contents
 ////
 //// - Setup and usage
 ////   - [`class`](#class)
 ////   - [`dynamic`](#dynamic)
+////   - [`memo`](#memo)
 ////   - [`to_class_name`](#to_class_name)
 ////   - [`to_lustre`](#to_lustre)
 ////
@@ -196,80 +202,6 @@
 ////   - [`first_of_type`](#first_of_type)
 ////   - [`last_of_type`](#last_of_type)
 ////   - [`only_of_type`](#only_of_type)
-////
-//// ---
-////
-//// # Internals
-////
-//// Sketch tries to be to CSS what the VDOM is to the DOM: the ultimate pain-free
-//// tool to manage the state of your CSS styles, without having to worry with CSS
-//// while leveraging CSS skills.
-////
-//// ## I don't know anything about Sketch!
-////
-//// This documentation focuses on internal and how is working Sketch under-the-hood.
-//// No worry though, just heads up to the [README](https://hexdocs.pm/sketch/index.html)
-//// to get an overview of Sketch, and to get it work with your favorite framework!
-////
-//// ## Lifecycle
-////
-//// To do this, Sketch tries to maintain a cache of styles, that can be updated
-//// between every render of the DOM, and will update the correct StyleSheet in DOM.
-//// Sketch has a lifecycle to make it work.
-//// After having created a Cache, you have to call `prepare` before every repaint,
-//// and `render` after every repaint.
-////
-//// ```txt
-////                             +--------------+
-////                             | Create Cache |
-////                             +--------------+
-////                                    |
-////                                    |
-////                                    |
-////                                    v
-////                     +-------------------------------+
-////                     | Before paint, setup the cache |  <-------+
-////                     +-------------------------------+          |
-////                                    |                           |
-////                                    |                           |
-////                                    |                           |
-////                                    v                           |
-////               +-------------------------------------------+    |
-////               |                                           |    |
-////               |      framework paints to the DOM          |    |
-////               |   and calls class and dynamic functions   |    |
-////               |            provided by sketch             |    |
-////               |                                           |    |
-////               +-------------------------------------------+    |
-////                                    |                           |
-////                                    |                           |
-////                                    |                           |
-////                                    v                           |
-////                     +-------------------------------+          |
-////                     | After paint, render the cache |  --------+
-////                     +-------------------------------+
-//// ```
-////
-//// - `prepare` setup the Cache in order to diff the old styles with the new styles.
-////   If `prepare` is not called before every repaint, the stylesheet will not diff
-////   styles, and it will continue to append styles to the stylesheet.
-////
-//// - `render` accepts the cache and will inject the stylesheet in the DOM or the
-////   document.
-////
-//// ## Some notes on side-effects
-////
-//// Unfortunately, and because of the nature of the different frameworks and of
-//// CSS, Sketch is doing some side-effects in background, to collect the styles
-//// and to push them in the browser. Maybe it could be removed in the future,
-//// but it would involve work with different maintainers of different packages,
-//// and it would take a lot of time and energy. It's not on plan right now,
-//// but rather to focus on correct UX and to find good ways of doing things.
-//// When the dust will settle and that API will be stable, then we could take
-//// some time to figure out how to get rid of side-effects.
-//// In the meantime, if you plan to integrate Sketch in your framework, and need
-//// some access to underlying and internals, open an issue with your use case,
-//// I'd more than happy to help on that point and reduce side-effects.
 
 import gleam/float
 import gleam/int

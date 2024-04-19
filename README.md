@@ -28,7 +28,8 @@ sparkling performances in your browser)!
 The rest of this README will focus to get you started quickly with a lustre
 example, and some details on the available functions. If you want to know more
 on how sketch is working, how to use lustre with SSR or SSG, heads up to the
-documentation directly!
+documentation directly! Bonus: if you're using server components, just follow
+this guide, everything will be working directly!
 
 ## Installation
 
