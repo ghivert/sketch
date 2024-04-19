@@ -41,7 +41,8 @@ pub fn main() {
 export const warn = {
   setup() {
     if (warningDisplayed) return
-    const notRender = 'Meanwhile, styles won’t apply, but will not block your render.'
+    const notRender =
+      'Meanwhile, styles won’t apply, but will not block your render.'
     const documentation = 'More informations on https://hexdocs.pm/sketch.'
     console.warn(lifecycleMissing)
     console.warn(lustreSetup)
@@ -49,5 +50,5 @@ export const warn = {
     console.warn(notRender)
     console.warn(documentation)
     warningDisplayed = true
-  }
+  },
 }
