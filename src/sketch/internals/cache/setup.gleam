@@ -19,7 +19,7 @@ pub opaque type Cache {
 fn save_current_cache(cache: Cache) -> Nil
 
 @external(erlang, "sketch_ffi", "get_current_cache")
-fn get_current_cache() -> Cache
+fn get_current_cache() -> Result(Cache, Nil)
 
 @external(erlang, "sketch_ffi", "stacktrace")
 fn stacktrace() -> String
@@ -42,20 +42,34 @@ pub fn render(cache: Cache) -> Option(String) {
 }
 
 pub fn compile_class(styles: List(style.Style)) -> class.Class {
-  let Cache(subject) = get_current_cache()
+  let cache = get_current_cache()
   let st = stacktrace()
-  process.try_call(subject, fn(s) { state.Persist(st, styles, s) }, within: 100)
+  cache
+  |> result.try(fn(cache) {
+    let Cache(subject) = cache
+    let persist = fn(s) { state.Persist(st, styles, s) }
+    process.try_call(subject, persist, within: 100)
+    |> result.nil_error()
+  })
   |> result.unwrap(class.no_class())
 }
 
 pub fn compile_style(styles: List(style.Style), id: String) -> class.Class {
-  let Cache(subject) = get_current_cache()
-  process.try_call(subject, fn(s) { state.Persist(id, styles, s) }, within: 100)
+  let cache = get_current_cache()
+  cache
+  |> result.try(fn(cache) {
+    let Cache(subject) = cache
+    let persist = fn(s) { state.Persist(id, styles, s) }
+    process.try_call(subject, persist, within: 100)
+    |> result.nil_error()
+  })
   |> result.unwrap(class.no_class())
 }
 
 pub fn memo(class: class.Class) -> class.Class {
-  let Cache(subject) = get_current_cache()
-  process.send(subject, state.Memoize(class))
+  case get_current_cache() {
+    Ok(Cache(subject)) -> process.send(subject, state.Memoize(class))
+    _ -> Nil
+  }
   class
 }
