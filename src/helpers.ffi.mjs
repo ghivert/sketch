@@ -1,7 +1,7 @@
-export const uid = (function() {
+export const uid = (function () {
   let id = 0
   const classNames = {}
-  return function(className) {
+  return function (className) {
     classNames[className] ??= (id++).toString().padStart(4, '0')
     const index = classNames[className]
     return `css-${index}`
@@ -10,7 +10,8 @@ export const uid = (function() {
 
 export function getFunctionName() {
   const error = new Error()
-  if (!error.stack) throw new Error('Unable to find the stacktrace and to infer the className')
+  if (!error.stack)
+    throw new Error('Unable to find the stacktrace and to infer the className')
   const stack = error.stack ?? ''
   return stack.split('\n').slice(1, 5).join('\n')
 }

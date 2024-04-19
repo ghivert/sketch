@@ -9,7 +9,7 @@ export function compileClass(styles, classId) {
   if (!cache) {
     errors.warn.setup()
     // I'm not sure what to do here. Right now, it just conforms to the type system.
-    return { name: "", className: "" }
+    return { name: '', className: '' }
   }
 
   // Search for already compiled class. Class can be already compiled and did
@@ -23,8 +23,16 @@ export function compileClass(styles, classId) {
   // class. It should be rebuild.
   const id = helpers.uid(className)
   const computedProperties = sketch.compute_properties(styles, 2)
-  const { name, ...definitions } = sketch.compute_classes(id, computedProperties)
-  cache.store(className, { name, definitions, previousStyles: styles, indexRules: null })
+  const { name, ...definitions } = sketch.compute_classes(
+    id,
+    computedProperties
+  )
+  cache.store(className, {
+    name,
+    definitions,
+    previousStyles: styles,
+    indexRules: null,
+  })
   return { name, className }
 }
 

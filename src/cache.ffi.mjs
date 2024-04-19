@@ -2,7 +2,6 @@ import * as helpers from './helpers.ffi.mjs'
 import * as error from './sketch/error.mjs'
 import { stylesheet_to_string } from './sketch/options.mjs'
 import * as gleam from './gleam.mjs'
-import { None } from '../gleam_stdlib/gleam/option.mjs'
 import { StyleSheet } from './stylesheet.ffi.mjs'
 
 export let cache
@@ -52,7 +51,7 @@ export class Cache {
     const keys = new Set()
     for (const key of this.#activeCache.keys()) keys.add(key)
     for (const key of this.#passiveCache.keys()) keys.add(key)
-    keys.forEach(key => {
+    keys.forEach((key) => {
       if (this.#activeCache.has(key)) {
         const klass = this.#activeCache.get(key)
         if (klass?.indexRules !== null) return
@@ -79,7 +78,10 @@ export class Cache {
     // paint if the properties are equal. If they're not, don't persist it in
     // order to get it wiped by the class collection later in the cycle.
     const oldContent = this.#passiveCache.get(className)
-    if (oldContent && helpers.deepEqual(properties, oldContent.previousStyles)) {
+    if (
+      oldContent &&
+      helpers.deepEqual(properties, oldContent.previousStyles)
+    ) {
       this.#activeCache.set(className, oldContent)
       return { name: oldContent.name, className }
     }
@@ -126,7 +128,7 @@ export class Cache {
   }
 
   #deleteStyles(klass) {
-    klass.indexRules?.forEach(indexRule => {
+    klass.indexRules?.forEach((indexRule) => {
       this.#stylesheet.deleteRule(indexRule)
     })
   }
@@ -145,5 +147,5 @@ export function prepareCache(cache_) {
 
 export function renderCache(cache) {
   cache.diff()
-  return new None()
+  return new gleam.Error(null)
 }

@@ -1,8 +1,14 @@
+//// Want to know more about details? Go to the
+//// [additional docs](https://hexdocs.pm/sketch/internal-details.html)!
+////
+//// ---
+////
 //// # Table of Contents
 ////
 //// - Setup and usage
 ////   - [`class`](#class)
 ////   - [`dynamic`](#dynamic)
+////   - [`memo`](#memo)
 ////   - [`to_class_name`](#to_class_name)
 ////   - [`to_lustre`](#to_lustre)
 ////
@@ -196,85 +202,10 @@
 ////   - [`first_of_type`](#first_of_type)
 ////   - [`last_of_type`](#last_of_type)
 ////   - [`only_of_type`](#only_of_type)
-////
-//// ---
-////
-//// # Internals
-////
-//// Sketch tries to be to CSS what the VDOM is to the DOM: the ultimate pain-free
-//// tool to manage the state of your CSS styles, without having to worry with CSS
-//// while leveraging CSS skills.
-////
-//// ## I don't know anything about Sketch!
-////
-//// This documentation focuses on internal and how is working Sketch under-the-hood.
-//// No worry though, just heads up to the [README](https://hexdocs.pm/sketch/index.html)
-//// to get an overview of Sketch, and to get it work with your favorite framework!
-////
-//// ## Lifecycle
-////
-//// To do this, Sketch tries to maintain a cache of styles, that can be updated
-//// between every render of the DOM, and will update the correct StyleSheet in DOM.
-//// Sketch has a lifecycle to make it work.
-//// After having created a Cache, you have to call `prepare` before every repaint,
-//// and `render` after every repaint.
-////
-//// ```txt
-////                             +--------------+
-////                             | Create Cache |
-////                             +--------------+
-////                                    |
-////                                    |
-////                                    |
-////                                    v
-////                     +-------------------------------+
-////                     | Before paint, setup the cache |  <-------+
-////                     +-------------------------------+          |
-////                                    |                           |
-////                                    |                           |
-////                                    |                           |
-////                                    v                           |
-////               +-------------------------------------------+    |
-////               |                                           |    |
-////               |      framework paints to the DOM          |    |
-////               |   and calls class and dynamic functions   |    |
-////               |            provided by sketch             |    |
-////               |                                           |    |
-////               +-------------------------------------------+    |
-////                                    |                           |
-////                                    |                           |
-////                                    |                           |
-////                                    v                           |
-////                     +-------------------------------+          |
-////                     | After paint, render the cache |  --------+
-////                     +-------------------------------+
-//// ```
-////
-//// - `prepare` setup the Cache in order to diff the old styles with the new styles.
-////   If `prepare` is not called before every repaint, the stylesheet will not diff
-////   styles, and it will continue to append styles to the stylesheet.
-////
-//// - `render` accepts the cache and will inject the stylesheet in the DOM or the
-////   document.
-////
-//// ## Some notes on side-effects
-////
-//// Unfortunately, and because of the nature of the different frameworks and of
-//// CSS, Sketch is doing some side-effects in background, to collect the styles
-//// and to push them in the browser. Maybe it could be removed in the future,
-//// but it would involve work with different maintainers of different packages,
-//// and it would take a lot of time and energy. It's not on plan right now,
-//// but rather to focus on correct UX and to find good ways of doing things.
-//// When the dust will settle and that API will be stable, then we could take
-//// some time to figure out how to get rid of side-effects.
-//// In the meantime, if you plan to integrate Sketch in your framework, and need
-//// some access to underlying and internals, open an issue with your use case,
-//// I'd more than happy to help on that point and reduce side-effects.
 
 import gleam/float
 import gleam/int
 import gleam/list
-import gleam/option.{type Option}
 import gleam/result
 import gleam/string
 import lustre/attribute.{type Attribute}
@@ -345,8 +276,15 @@ fn compile_style(styles: List(style.Style), id: String) -> Class {
   cache.compile_style(styles, id)
 }
 
+/// Memoizes a function across multiple renders. When encountered for the first time,
+/// the class will be put in long-live section of the stylesheet. Once in long-live
+/// section, the computed class will never be garbaged, and will be included in every
+/// render.
+/// This saves some time during render by skipping every memoized class. You can use it
+/// when you know that a class will be used during every render, or when you want
+/// a class to not be forgetted, because you're using it often.
 @external(javascript, "./sketch.ffi.mjs", "memo")
-fn memo(class: Class) -> Class {
+pub fn memo(class: Class) -> Class {
   cache.memo(class)
 }
 
@@ -391,10 +329,11 @@ pub fn prepare(cache: Cache) -> Nil {
 /// `render` takes a Cache, and render its content to the stylesheet, according
 /// to the choice of the Cache. `render` is idempotent, and can be called as
 /// much as you want.
-/// You can expect `render` to return Some(String) representing the stylesheet on
-/// BEAM, and None on JS.
+/// You can expect `render` to return Ok(String) representing the stylesheet on
+/// BEAM, and Error(Nil) on JS. It means there's not output String in JS, but the
+/// modification happened in the DOM!
 @external(javascript, "./cache.ffi.mjs", "renderCache")
-pub fn render(cache: Cache) -> Option(String) {
+pub fn render(cache: Cache) -> Result(String, Nil) {
   cache.render(cache)
 }
 
@@ -1161,17 +1100,19 @@ pub fn compose(class: Class) -> Style(media, pseudo) {
   |> Style()
 }
 
-/// Compiles a static class, and memoizes it.
+/// Compiles a static class, and reuses it across the same render flow.
 /// Don't use dynamic styles with it, use `dynamic` instead.
 pub fn class(styles: List(Style(media, pseudo))) -> Class {
   styles
   |> convert_styles()
   |> compile_class()
-  |> memo()
 }
 
-/// Compiles a dynamic class, and not memoizing it. It means at every render,
-/// the class will be re-computed, and a new version will be pushed in the browser.
+/// Compiles a dynamic class. It means during the render, when the class with the id
+/// is re-computed, a new version will be pushed in the browser if needed.
+/// It means you can reuse the function to output different classes with the same
+/// function and basis. With a `class`, once computed once during the render, it's
+/// not possible to change the content of the class.
 /// Be careful to add a unique ID: right now, it's not possible to push
 /// a dynamic class in the browser without defining an ID. The ID should be unique
 /// to the computed class, otherwise you could end up with some classes overlap.
@@ -1198,7 +1139,7 @@ pub fn lustre_setup(options: Options) {
     fn(model: model) {
       prepare(cache)
       let el = view(model)
-      render(cache)
+      let _ = render(cache)
       el
     }
   })

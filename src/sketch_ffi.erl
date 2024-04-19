@@ -13,8 +13,10 @@ save_current_cache(Cache) ->
 
 get_current_cache() ->
   Pid = self(),
-  [{_, Cache}] = ets:lookup(cache_manager, Pid),
-  Cache.
+  case ets:lookup(cache_manager, Pid) of
+    [{_, Cache}] -> {ok, Cache};
+    _ -> {error, nil}
+  end.
 
 stacktrace() ->
   try throw(42) catch _:_:Stk ->

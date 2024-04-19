@@ -3,9 +3,12 @@ import * as options from './sketch/options.mjs'
 export class StyleSheet {
   static for(type) {
     switch (options.stylesheet_to_string(type)) {
-      case 'node': return new NodeStyleSheet()
-      case 'document' : return new DocumentStyleSheet()
-      case 'shadow-root': return new ShadowStyleSheet(type.root)
+      case 'node':
+        return new NodeStyleSheet()
+      case 'document':
+        return new DocumentStyleSheet()
+      case 'shadow-root':
+        return new ShadowStyleSheet(type.root)
     }
   }
 }
