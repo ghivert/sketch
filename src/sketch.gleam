@@ -170,6 +170,7 @@
 ////   - [`margin_right`](#margin_right)
 ////   - [`margin_left`](#margin_left)
 ////   - [`cursor`](#cursor)
+////   - [`float`](#float)
 ////   - [`property`](#property)
 ////
 //// - Pseudo-selectors
@@ -929,6 +930,10 @@ pub fn margin_left(margin: Size) {
 
 pub fn cursor(cursor: String) {
   property("cursor", cursor)
+}
+
+pub fn float(float: String) {
+  property("float", float)
 }
 
 pub fn property(field: String, content: String) {
