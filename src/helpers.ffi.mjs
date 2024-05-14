@@ -13,7 +13,10 @@ export function getFunctionName() {
   if (!error.stack)
     throw new Error('Unable to find the stacktrace and to infer the className')
   const stack = error.stack ?? ''
-  return stack.split('\n').slice(1, 5).join('\n')
+  const parts = stack.split('\n')
+  const end = parts.findIndex((l) => l.includes('LustreClientApplication'))
+  const st = parts.slice(1, end).join('\n')
+  return st
 }
 
 // Compare two data structures to check if they're the same.
