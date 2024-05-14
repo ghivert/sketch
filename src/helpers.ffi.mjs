@@ -15,7 +15,8 @@ export function getFunctionName() {
   const stack = error.stack ?? ''
   const parts = stack.split('\n')
   const end = parts.findIndex((l) => l.includes('LustreClientApplication'))
-  const st = parts.slice(1, end).join('\n')
+  const endIndex = end === -1 ? parts.length : end
+  const st = parts.slice(1, endIndex).join('\n')
   return st
 }
 
