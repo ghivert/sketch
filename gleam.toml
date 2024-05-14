@@ -1,5 +1,5 @@
 name = "sketch"
-version = "2.2.0"
+version = "2.2.1"
 
 description = "A CSS-in-Gleam package, made to work with frontend, backend, and directly with lustre!"
 internal_modules = ["sketch/internals", "sketch/internals/*"]
