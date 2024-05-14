@@ -20,7 +20,7 @@ pub fn compose(view: fn(model) -> element, cache: Cache) {
   fn(model) {
     sketch.prepare(cache)
     let el = view(model)
-    sketch.render(cache)
+    let _ = sketch.render(cache)
     el
   }
 }
