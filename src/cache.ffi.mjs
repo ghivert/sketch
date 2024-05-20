@@ -147,5 +147,5 @@ export function prepareCache(cache_) {
 
 export function renderCache(cache) {
   cache.diff()
-  return new gleam.Error(null)
+  return new gleam.Ok(null)
 }
