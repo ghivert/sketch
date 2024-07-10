@@ -314,6 +314,59 @@ fn my_other_view(model: Bool) {
 }
 ```
 
+### Helpers for creating elements
+
+It's a common feature in CSS-in-JS to have something like
+
+```js
+const MyComponent = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+```
+
+While we can't target the exact same thing with sketch (because Gleam does not
+allow to execute code like this), we have a somewhat similar interface:
+[`sketch/lustre/element.element()`](https://hexdocs.pm/sketch/sketch/lustre.html#element).
+`sketch/lustre/element` exposes 4 functions to help you build your custom
+components easily, by leveraging on Gleam and its type-checker.
+`sketch/lustre/element.element()` forwards the attributes and children to
+`lustre/element.element()`, and adds styles along the way!
+
+```gleam
+import sketch
+import sketch/lustre/element as sketch_element
+
+/// my_component will be infered as
+///   my_component: fn (Attributes(msg), List(Element(msg))) -> Element(msg)
+fn my_component(attributes, children) {
+  sketch_element.element("div", attributes, children, [
+    sketch.display("flex"),
+    sketch.flex_direction("column"),
+  ])
+}
+```
+
+While this could feel at first too much, with lot of boilerplate, you could
+define a snippet in your favorite editor to create such elements more easily.
+It's only 2 more lines of code than a standard CSS-in-JS framework, but here you
+leverage the full power of Gleam and Lustre! Give a try, it could quickly become
+your de-facto way to define partially-applied functions!
+
+> You may wonder why there's no namespace like `sketch/lustre/element/html` like
+> Lustre does. We're still trying to figure out the best API to use for sketch
+> to integrate properly in Lustre! For sure, such an interface will be added
+> along the way! Meanwhile, you only have to type the tag name by hand, instead
+> of calling the function, and you still can leverage on the different features
+> of sketch, like `memo` & `dynamic`!
+
+> If you have some feedbacks on that interface, feel free to open a discussion,
+> or talk about it on the gleam Discord! We're constantly trying to improve it,
+> to provide a first class Developer Experience!
+
+`sketch/lustre/element` has 4 functions, mainly to be able to simply use `class`
+& `dynamic`, and putting some `memo` on them if you need it.
+
 ## Use with Shadow DOM
 
 Sketch can work with a Shadow DOM, in order to hide the compiled styles from the

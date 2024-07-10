@@ -64,7 +64,9 @@ fn put_in_head(el: Element(a), content: String) {
 }
 
 @target(erlang)
-pub fn ssr(el: Element(a), cache: Cache) {
+/// Take an Element, and overloads the content with the correct styles from sketch.
+/// Can only be used on BEAM.
+pub fn ssr(el: Element(a), cache: Cache) -> Element(a) {
   cache
   |> sketch.render()
   |> result.map(fn(content) {
