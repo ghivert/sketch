@@ -1,213 +1,12 @@
 //// Want to know more about details? Go to the
 //// [additional docs](https://hexdocs.pm/sketch/internal-details.html)!
-////
-//// ---
-////
-//// # Table of Contents
-////
-//// - Setup and usage
-////   - [`class`](#class)
-////   - [`dynamic`](#dynamic)
-////   - [`memo`](#memo)
-////   - [`compile`](#compile)
-////
-//// - Lifecycle functions
-////   - [`create_cache`](#create_cache)
-////   - [`prepare`](#prepare)
-////   - [`render`](#render)
-////
-//// - Modifiers
-////   - [`important`](#important)
-////   - [`compose`](#compose)
-////
-//// - Media Queries
-////   - [`media`](#media)
-////
-//// - Properties
-////   - [`width`](#width)
-////   - [`width_`](#width_)
-////   - [`max_width`](#max_width)
-////   - [`max_width_`](#max_width_)
-////   - [`min_width`](#min_width)
-////   - [`min_width_`](#min_width_)
-////   - [`height`](#height)
-////   - [`height_`](#height_)
-////   - [`max_height`](#max_height)
-////   - [`max_height_`](#max_height_)
-////   - [`min_height`](#min_height)
-////   - [`min_height_`](#min_height_)
-////   - [`color`](#color)
-////   - [`font_family`](#font_family)
-////   - [`font_style`](#font_style)
-////   - [`font_size`](#font_size)
-////   - [`font_size_`](#font_size_)
-////   - [`font_weight`](#font_weight)
-////   - [`letter_spacing`](#letter_spacing)
-////   - [`line_break`](#line_break)
-////   - [`line_height`](#line_height)
-////   - [`text_align`](#text_align)
-////   - [`text_decoration`](#text_decoration)
-////   - [`text_justify`](#text_justify)
-////   - [`text_overflow`](#text_overflow)
-////   - [`text_transform`](#text_transform)
-////   - [`white_space`](#white_space)
-////   - [`white_space_collapse`](#white_space_collapse)
-////   - [`word_break`](#word_break)
-////   - [`word_spacing`](#word_spacing)
-////   - [`word_wrap`](#word_wrap)
-////   - [`list_style`](#list_style)
-////   - [`list_style_image`](#list_style_image)
-////   - [`list_style_position`](#list_style_position)
-////   - [`list_style_type`](#list_style_type)
-////   - [`display`](#display)
-////   - [`z_index`](#z_index)
-////   - [`visibility`](#visibility)
-////   - [`background`](#background)
-////   - [`object_fit`](#object_fit)
-////   - [`object_position`](#object_position)
-////   - [`opacity`](#opacity)
-////   - [`pointer_events`](#pointer_events)
-////   - [`user_select`](#user_select)
-////   - [`position`](#position)
-////   - [`outline`](#outline)
-////   - [`outline_color`](#outline_color)
-////   - [`outline_offset`](#outline_offset)
-////   - [`outline_style`](#outline_style)
-////   - [`outline_width`](#outline_width)
-////   - [`offset`](#offset)
-////   - [`offset_anchor`](#offset_anchor)
-////   - [`offset_distance`](#offset_distance)
-////   - [`offset_path`](#offset_path)
-////   - [`offset_position`](#offset_position)
-////   - [`offset_rotate`](#offset_rotate)
-////   - [`gap`](#gap)
-////   - [`gap_`](#gap_)
-////   - [`column_gap`](#column_gap)
-////   - [`row_gap`](#row_gap)
-////   - [`grid_area`](#grid_area)
-////   - [`grid_column`](#grid_column)
-////   - [`grid_row`](#grid_row)
-////   - [`grid_template`](#grid_template)
-////   - [`grid_auto_columns`](#grid_auto_columns)
-////   - [`grid_auto_rows`](#grid_auto_rows)
-////   - [`grid_auto_flow`](#grid_auto_flow)
-////   - [`grid_template_areas`](#grid_template_areas)
-////   - [`grid_template_columns`](#grid_template_columns)
-////   - [`grid_template_rows`](#grid_template_rows)
-////   - [`align_content`](#align_content)
-////   - [`align_items`](#align_items)
-////   - [`align_self`](#align_self)
-////   - [`align_tracks`](#align_tracks)
-////   - [`justify_content`](#justify_content)
-////   - [`justify_items`](#justify_items)
-////   - [`justify_self`](#justify_self)
-////   - [`justify_tracks`](#justify_tracks)
-////   - [`place_content`](#place_content)
-////   - [`place_items`](#place_items)
-////   - [`place_self`](#place_self)
-////   - [`animation`](#animation)
-////   - [`animation_name`](#animation_name)
-////   - [`animation_duration`](#animation_duration)
-////   - [`animation_timing_function`](#animation_timing_function)
-////   - [`animation_delay`](#animation_delay)
-////   - [`animation_iteration_count`](#animation_iteration_count)
-////   - [`animation_direction`](#animation_direction)
-////   - [`animation_fill_mode`](#animation_fill_mode)
-////   - [`animation_play_state`](#animation_play_state)
-////   - [`transition`](#transition)
-////   - [`translate`](#translate)
-////   - [`transform`](#transform)
-////   - [`transform_box`](#transform_box)
-////   - [`transform_origin`](#transform_origin)
-////   - [`transform_style`](#transform_style)
-////   - [`appearance`](#appearance)
-////   - [`filter`](#filter)
-////   - [`aspect_ratio`](#aspect_ratio)
-////   - [`top`](#top)
-////   - [`bottom`](#bottom)
-////   - [`right`](#right)
-////   - [`left`](#left)
-////   - [`top_`](#top_)
-////   - [`bottom_`](#bottom_)
-////   - [`right_`](#right_)
-////   - [`left_`](#left_)
-////   - [`box_shadow`](#box_shadow)
-////   - [`box_sizing`](#box_sizing)
-////   - [`overflow`](#overflow)
-////   - [`overflow_x`](#overflow_x)
-////   - [`overflow_y`](#overflow_y)
-////   - [`direction`](#direction)
-////   - [`flex`](#flex)
-////   - [`flex_basis`](#flex_basis)
-////   - [`flex_direction`](#flex_direction)
-////   - [`flex_grow`](#flex_grow)
-////   - [`border`](#border)
-////   - [`border_top`](#border_top)
-////   - [`border_bottom`](#border_bottom)
-////   - [`border_right`](#border_right)
-////   - [`border_left`](#border_left)
-////   - [`border_radius`](#border_radius)
-////   - [`border_radius_`](#border_radius_)
-////   - [`border_top_right_radius`](#border_top_right_radius)
-////   - [`border_top_right_radius_`](#border_top_right_radius_)
-////   - [`border_top_left_radius`](#border_top_left_radius)
-////   - [`border_top_left_radius_`](#border_top_left_radius_)
-////   - [`border_bottom_right_radius`](#border_bottom_right_radius)
-////   - [`border_bottom_right_radius_`](#border_bottom_right_radius_)
-////   - [`border_bottom_left_radius`](#border_bottom_left_radius)
-////   - [`border_bottom_left_radius_`](#border_bottom_left_radius_)
-////   - [`padding`](#padding)
-////   - [`padding_`](#padding_)
-////   - [`padding_top`](#padding_top)
-////   - [`padding_bottom`](#padding_bottom)
-////   - [`padding_right`](#padding_right)
-////   - [`padding_left`](#padding_left)
-////   - [`margin`](#margin)
-////   - [`margin_`](#margin_)
-////   - [`margin_top`](#margin_top)
-////   - [`margin_bottom`](#margin_bottom)
-////   - [`margin_right`](#margin_right)
-////   - [`margin_left`](#margin_left)
-////   - [`cursor`](#cursor)
-////   - [`float`](#float)
-////   - [`property`](#property)
-////
-//// - Pseudo-selectors
-////   - [`placeholder`](#placeholder)
-////   - [`hover`](#hover)
-////   - [`active`](#active)
-////   - [`focus`](#focus)
-////   - [`focus_visible`](#focus_visible)
-////   - [`focus_within`](#focus_within)
-////   - [`enabled`](#enabled)
-////   - [`disabled`](#disabled)
-////   - [`read_only`](#read_only)
-////   - [`read_write`](#read_write)
-////   - [`checked`](#checked)
-////   - [`blank`](#blank)
-////   - [`valid`](#valid)
-////   - [`invalid`](#invalid)
-////   - [`required`](#required)
-////   - [`optional`](#optional)
-////   - [`link`](#link)
-////   - [`visited`](#visited)
-////   - [`target`](#target)
-////   - [`nth_child`](#nth_child)
-////   - [`nth_last_child`](#nth_last_child)
-////   - [`nth_of_type`](#nth_of_type)
-////   - [`nth_last_of_type`](#nth_last_of_type)
-////   - [`first_child`](#first_child)
-////   - [`last_child`](#last_child)
-////   - [`only_child`](#only_child)
-////   - [`first_of_type`](#first_of_type)
-////   - [`last_of_type`](#last_of_type)
-////   - [`only_of_type`](#only_of_type)
 
 import gleam/float
 import gleam/int
 import gleam/list
+import gleam/result
 import gleam/string
-import sketch/internals/class
+import sketch/internals/cache/setup as cache
 import sketch/internals/style
 import sketch/media.{type Query}
 import sketch/size.{type Size}
@@ -220,11 +19,18 @@ import sketch/size.{type Size}
 
 /// Represents a CSS class, compiled.
 pub type Class =
-  class.Class
+  style.Class
 
+@target(javascript)
 /// Manages the styles. Can be instanciated with [`create_cache`](#create_cache).
-pub type Cache =
-  style.Cache
+pub opaque type Cache {
+  JsCache(cache: style.Cache)
+}
+
+@target(erlang)
+pub opaque type Cache {
+  BeamCache(cache: cache.Cache)
+}
 
 /// Represents a Style. It can be a class composition, a media query with its
 /// sub-properties, a pseudo-selector with its sub-properties or a property
@@ -237,17 +43,27 @@ pub type Style =
 // FFI
 // Used exclusively in the package.
 // Most should not be exposed, or in a low-level way.
-fn compile_class(styles: List(style.Style)) {
-  style.compile_class(styles)
+pub fn class(styles: List(style.Style)) -> Class {
+  style.class(styles)
 }
 
+@target(javascript)
 /// Convert a `Class` to its proper class name, to use it anywhere in your
 /// application. It can have the form `class1` or `class1 class2` in case of
 /// classes composition.
-pub fn compile(class: Class) -> String {
-  class.class_name(class)
+pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
+  let JsCache(cache) = cache
+  let #(cache, class_name) = style.class_name(class, cache)
+  #(JsCache(cache), class_name)
 }
 
+@target(erlang)
+pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
+  let BeamCache(cache) = cache
+  #(BeamCache(cache), cache.class_name(class, cache))
+}
+
+@target(javascript)
 /// Create a cache manager, managing the styles for every repaint. You can
 /// instanciate as much cache manager that you want, if you want to use multiple
 /// render lifecycle.
@@ -257,8 +73,23 @@ pub fn compile(class: Class) -> String {
 /// On BEAM, this setting is ignored.
 /// If you're using Lustre, you shouldn't have to worry about it, and consider
 /// it as internal low-level.
-pub fn create_cache() -> Cache {
-  style.init()
+pub fn ephemeral() -> Result(Cache, Nil) {
+  Ok(JsCache(style.ephemeral()))
+}
+
+@target(erlang)
+pub fn ephemeral() -> Result(Cache, Nil) {
+  cache.ephemeral() |> result.map(BeamCache)
+}
+
+@target(javascript)
+pub fn persistent() -> Result(Cache, Nil) {
+  Ok(JsCache(style.persistent()))
+}
+
+@target(erlang)
+pub fn persistent() -> Result(Cache, Nil) {
+  cache.persistent() |> result.map(BeamCache)
 }
 
 // Properties
@@ -2408,12 +2239,6 @@ pub fn important(style: Style) -> Style {
 
 /// Compose styles by inheriting class, and later overrides them.
 /// Works similarly to `composes` property in CSS modules.
-pub fn compose(class: #(String, List(style.Style))) -> Style {
+pub fn compose(class) -> Style {
   class |> style.ClassName()
-}
-
-/// Compiles a static class, and reuses it across the same render flow.
-/// Don't use dynamic styles with it, use `dynamic` instead.
-pub fn class(styles: List(Style)) {
-  styles |> compile_class()
 }

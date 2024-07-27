@@ -4,11 +4,32 @@ import gleam/list
 import gleam/option.{None, Some}
 import gleam/pair
 import gleam/string
-import sketch/internals/class.{type Class}
+import sketch/internals/class
 import sketch/internals/string as sketch_string
 
+@external(erlang, "xxhash32_ffi", "hash32")
+@external(javascript, "../xxhash32.ffi.mjs", "xxHash32")
+fn xx_hash32(content: String) -> Int
+
+pub type Class {
+  Class(string_representation: String, content: List(Style))
+}
+
+pub type Cache {
+  EphemeralCache(cache: Dict(String, class.Content))
+  PersistentCache(cache: Dict(String, class.Content), current_id: Int)
+}
+
+pub fn persistent() {
+  PersistentCache(cache: dict.new(), current_id: 0)
+}
+
+pub fn ephemeral() {
+  EphemeralCache(cache: dict.new())
+}
+
 pub type Style {
-  ClassName(class_name: #(String, List(Style)))
+  ClassName(class_name: Class)
   Media(query: String, styles: List(Style))
   PseudoSelector(pseudo_selector: String, styles: List(Style))
   Property(key: String, value: String, important: Bool)
@@ -37,6 +58,8 @@ pub type PseudoProperty {
   PseudoProperty(pseudo_selector: String, properties: List(String))
 }
 
+// Computing of properties
+//
 fn compute_property(indent: Int, key: String, value: String, important: Bool) {
   let base_indent = sketch_string.indent(indent)
   let important_ = case important {
@@ -56,8 +79,6 @@ fn init_computed_properties(indent: Int) {
   )
 }
 
-// Computing of properties
-
 /// The Style data structure being a recursive data, computeProperties traverse
 /// the data structure and collect the properties with their context.
 pub fn compute_properties(
@@ -72,10 +93,9 @@ pub fn compute_properties(
     Property(_, _, _) -> #(cache, handle_property(acc, prop))
     Media(_, _) -> handle_media(cache, acc, prop)
     PseudoSelector(_, _) -> handle_pseudo_selector(cache, acc, prop)
-    ClassName(styles) -> {
-      let #(id, styles) = styles
-      let #(cache, class) = compute_class(cache, id, styles)
-      #(cache, handle_class_name(acc, class.class_name(class)))
+    ClassName(class) -> {
+      let #(cache, class) = class_name(class, cache)
+      #(cache, handle_class_name(acc, class))
     }
   }
 }
@@ -145,7 +165,7 @@ fn wrap_pseudo_selectors(
 pub fn compute_classes(
   class_name: String,
   computed_properties: ComputedProperties,
-) {
+) -> ComputedClass {
   let ComputedProperties(properties, medias, classes, pseudo_selectors, _) =
     computed_properties
   let class_def = sketch_string.wrap_class(class_name, properties, 0, None)
@@ -162,35 +182,27 @@ pub fn compute_classes(
   ComputedClass(class_def, medias_def, selectors_def, name)
 }
 
-pub fn create_cache() -> Cache {
-  init()
+pub fn class(styles: List(Style)) -> Class {
+  let string_representation = string.inspect(styles)
+  Class(string_representation: string_representation, content: styles)
 }
 
-pub fn compile_class(styles: List(Style)) -> #(String, List(Style)) {
-  let st = string.inspect(styles)
-  #(st, styles)
-  // let content = dict.get(cache.state.cache, st)
-  // case content {
-  //   Ok(class) -> class
-  //   Error(_) -> compute_class(cache.state, st, styles) |> pair.second
-  // }
+pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
+  let Class(string_representation: s, content: _) = class
+  case dict.get(cache.cache, s) {
+    Ok(content) -> #(cache, class.class_name(content))
+    Error(_) -> compute_class(cache, class) |> pair.map_second(class.class_name)
+  }
 }
 
-pub type Cache {
-  Cache(cache: Dict(String, Class), current_id: Int)
-}
-
-pub fn init() {
-  Cache(cache: dict.new(), current_id: 0)
-}
-
-pub fn compute_class(
-  cache: Cache,
-  class_id: String,
-  styles: List(Style),
-) -> #(Cache, Class) {
-  let class_name = "ccs-" <> int.to_string(cache.current_id)
-  let #(cache, properties) = compute_properties(cache, styles, 2)
+pub fn compute_class(cache: Cache, class: Class) -> #(Cache, class.Content) {
+  let Class(string_representation: s, content: c) = class
+  let class_id = case cache {
+    EphemeralCache(_) -> xx_hash32(s)
+    PersistentCache(_, cid) -> cid
+  }
+  let class_name = "ccs-" <> int.to_string(class_id)
+  let #(cache, properties) = compute_properties(cache, c, 2)
   compute_classes(class_name, properties)
   |> fn(c: ComputedClass) {
     class.create(
@@ -206,8 +218,14 @@ pub fn compute_class(
   }
   |> fn(class) {
     cache.cache
-    |> dict.insert(class_id, class)
-    |> fn(c) { Cache(cache: c, current_id: cache.current_id + 1) }
+    |> dict.insert(s, class)
+    |> fn(c) {
+      case cache {
+        EphemeralCache(_) -> EphemeralCache(c)
+        PersistentCache(_, _) ->
+          PersistentCache(cache: c, current_id: class_id + 1)
+      }
+    }
     |> pair.new(class)
   }
 }
