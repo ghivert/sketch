@@ -1,17 +1,19 @@
+import gleam/int
 import gleam/list
-import gleam/option.{type Option, None, Some}
 import gleam/pair
 import lustre/attribute.{type Attribute}
-import lustre/element as lel
+import lustre/element as el
 import lustre/internals/vdom
-import sketch
+import sketch.{type Cache}
 
 pub opaque type Element(msg) {
-  NoNode
+  Nothing
   Text(content: String)
   Fragment(key: String, children: List(Element(msg)))
+  Map(subtree: fn() -> Element(msg))
   Element(
     key: String,
+    namespace: String,
     tag: String,
     attributes: List(Attribute(msg)),
     children: List(Element(msg)),
@@ -20,7 +22,7 @@ pub opaque type Element(msg) {
 }
 
 pub fn none() {
-  NoNode
+  Nothing
 }
 
 pub fn text(content) {
@@ -33,7 +35,17 @@ pub fn element(
   children children: List(Element(msg)),
   styles styles: List(sketch.Style),
 ) {
-  Element("", tag, attributes, children, styles)
+  Element("", "", tag, attributes, children, styles)
+}
+
+pub fn namespaced(
+  namespace namespace: String,
+  tag tag: String,
+  attributes attributes: List(Attribute(msg)),
+  children children: List(Element(msg)),
+  styles styles: List(sketch.Style),
+) {
+  Element("", namespace, tag, attributes, children, styles)
 }
 
 pub fn fragment(children: List(Element(msg))) {
@@ -41,59 +53,91 @@ pub fn fragment(children: List(Element(msg))) {
 }
 
 pub fn keyed(
-  el: fn(List(Element(msg))) -> Element(msg),
+  element: fn(List(Element(msg))) -> Element(msg),
   children: List(#(String, Element(msg))),
 ) {
-  el(
-    list.map(children, fn(c) {
-      case c.1 {
-        NoNode -> NoNode
-        Text(t) -> Text(t)
-        Fragment(_, e) -> Fragment(c.0, e)
-        Element(_, t, a, c_, s) -> Element(c.0, t, a, c_, s)
-      }
-    }),
-  )
+  element({
+    use #(key, child) <- list.map(children)
+    do_keyed(child, key)
+  })
 }
 
-pub fn map(el: Element(a), f: fn(a) -> b) {
-  case el {
-    NoNode -> NoNode
-    Text(c) -> Text(c)
-    Fragment(k, c) -> Fragment(k, list.map(c, map(_, f)))
-    Element(k, t, a, c, s) ->
-      Element(k, t, list.map(a, attribute.map(_, f)), list.map(c, map(_, f)), s)
+fn do_keyed(element: Element(msg), key: String) {
+  case element {
+    Nothing -> Nothing
+    Text(content) -> Text(content)
+    Map(subtree) -> Map(fn() { do_keyed(subtree(), key) })
+    Fragment(_, children) ->
+      children
+      |> list.index_map(fn(element, idx) {
+        case element {
+          Element(el_key, _, _, _, _, _) -> {
+            let new_key = case el_key {
+              "" -> key <> "-" <> int.to_string(idx)
+              _ -> key <> "-" <> el_key
+            }
+            do_keyed(element, new_key)
+          }
+          _ -> do_keyed(element, key)
+        }
+      })
+      |> Fragment(key, _)
+    Element(_, tag, namespace, attributes, children, styles) ->
+      Element(key, tag, namespace, attributes, children, styles)
   }
 }
 
-pub fn unstylify(
-  cache: sketch.Cache,
-  element: Element(msg),
-) -> #(sketch.Cache, lel.Element(msg)) {
+pub fn map(element: Element(a), mapper: fn(a) -> b) {
   case element {
-    NoNode -> #(cache, lel.none())
-    Text(content) -> #(cache, lel.text(content))
-    Fragment(k, children) ->
-      unstylify_children(cache, children)
-      |> pair.map_second(fn(content) { vdom.Fragment(content, k) })
-    Element(k, tag, attributes, children, styles) -> {
+    Nothing -> Nothing
+    Text(content) -> Text(content)
+    Map(subtree) -> Map(fn() { map(subtree(), mapper) })
+    Fragment(key, children) -> Fragment(key, list.map(children, map(_, mapper)))
+    Element(key, tag, namespace, attributes, children, styles) -> {
+      let attributes = list.map(attributes, attribute.map(_, mapper))
+      let children = list.map(children, map(_, mapper))
+      Element(key, tag, namespace, attributes, children, styles)
+    }
+  }
+}
+
+pub fn styled(element: el.Element(msg)) {
+  case element {
+    vdom.Map(subtree) -> Map(fn() { styled(subtree()) })
+    vdom.Text(content) -> Text(content)
+    vdom.Fragment(elements, key) -> Fragment(key, list.map(elements, styled))
+    vdom.Element(key, namespace, tag, attrs, children, _, _) ->
+      Element(key, namespace, tag, attrs, list.map(children, styled), [])
+  }
+}
+
+pub fn unstyled(cache: Cache, element: Element(msg)) {
+  case element {
+    Nothing -> #(cache, el.none())
+    Text(content) -> #(cache, el.text(content))
+    Map(subtree) -> unstyled(cache, subtree())
+    Fragment(key, children) ->
+      unstyled_children(cache, children)
+      |> pair.map_second(fn(node) { vdom.Fragment(node, key) })
+    Element(key, tag, namespace, attributes, children, styles) -> {
       let class = sketch.class(styles)
       let #(cache, class_name) = sketch.class_name(class, cache)
-      let #(cache, children) = unstylify_children(cache, children)
+      let #(cache, children) = unstyled_children(cache, children)
       let class_name = attribute.class(class_name)
       let attributes = [class_name, ..attributes]
-      #(cache, case lel.element(tag, attributes, children) {
-        vdom.Element(_, n, t, a, c, s, v) -> vdom.Element(k, n, t, a, c, s, v)
+      #(cache, case el.element(tag, attributes, children) {
+        vdom.Element(_, _, t, a, c, s, v) ->
+          vdom.Element(key, namespace, t, a, c, s, v)
         e -> e
       })
     }
   }
 }
 
-fn unstylify_children(cache, children) {
+fn unstyled_children(cache, children) {
   list.fold_right(children, #(cache, []), fn(acc, child) {
     let #(cache, children) = acc
-    let #(cache, child) = unstylify(cache, child)
+    let #(cache, child) = unstyled(cache, child)
     #(cache, [child, ..children])
   })
 }
