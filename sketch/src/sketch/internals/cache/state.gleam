@@ -14,7 +14,7 @@ pub type Request {
 pub fn loop(msg: Request, cache: style.Cache) {
   case msg {
     Render(subject) -> {
-      process.send(subject, string.inspect(cache))
+      process.send(subject, style.render(cache))
       actor.continue(cache)
     }
     Fetch(class, subject) -> {

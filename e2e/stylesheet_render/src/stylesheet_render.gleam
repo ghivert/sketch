@@ -1,12 +1,10 @@
 import gleam/int
 import lustre
-import lustre/element
-import lustre/element/html
 import lustre/event
 import sketch
 import sketch/lustre as sketch_lustre
+import sketch/lustre/element
 import sketch/media
-import sketch/options as sketch_options
 import sketch/size.{px}
 
 pub type Model =
@@ -20,9 +18,7 @@ pub type Msg {
 pub fn main() {
   let init = fn(_) { 0 }
 
-  let assert Ok(cache) =
-    sketch_options.node()
-    |> sketch_lustre.setup()
+  let assert Ok(cache) = sketch.ephemeral()
 
   let assert Ok(_) =
     view
@@ -38,8 +34,8 @@ fn update(model: Model, msg: Msg) {
   }
 }
 
-fn main_class() {
-  sketch.class([
+fn main_class(attrs, children) {
+  element.element("div", attrs, children, [
     sketch.background("red"),
     sketch.display("flex"),
     sketch.flex_direction("row"),
@@ -51,51 +47,49 @@ fn main_class() {
       sketch.hover([sketch.background("white")]),
     ]),
   ])
-  |> sketch.to_lustre()
 }
 
-fn second_class() {
-  sketch.class([
+fn second_class(attrs, children) {
+  element.element("div", attrs, children, [
     sketch.background("green"),
     sketch.font_size(px(20)),
     sketch.font_family("-apple-system"),
   ])
-  |> sketch.memo()
-  |> sketch.to_lustre()
 }
 
-fn color_class(model: Model) {
-  let back = case model % 3 {
-    0 -> "blue"
-    _ -> "green"
-  }
-  let id = "color-" <> back
-  sketch.dynamic(id, [sketch.background(back)])
-  |> sketch.to_lustre()
+fn color_class(model: Model, attrs, children) {
+  element.element("div", attrs, children, [
+    sketch.background(case model % 3 {
+      0 -> "blue"
+      _ -> "green"
+    }),
+  ])
 }
 
-fn button_class() {
-  sketch.class([sketch.cursor("crosshair"), sketch.font_size(px(14))])
-  |> sketch.to_lustre()
+fn button_class(attrs, children) {
+  element.element("button", attrs, children, [
+    sketch.cursor("crosshair"),
+    sketch.font_size(px(14)),
+  ])
 }
 
 fn class_test(model: Model) {
   case model % 5 {
-    0 -> html.div([second_class()], [html.text("Class Test")])
+    0 -> second_class([], [element.text("Class Test")])
     _ -> element.none()
   }
 }
 
+pub fn main_node(attrs, children) {
+  element.element("div", attrs, children, [])
+}
+
 fn view(model: Model) {
-  html.div([], [
-    html.div([main_class()], [
-      html.button([event.on_click(Decrement), button_class()], [
-        html.text("Decrement"),
-      ]),
-      html.div([color_class(model)], [html.text(int.to_string(model))]),
-      html.button([event.on_click(Increment), button_class()], [
-        html.text("Increment"),
-      ]),
+  main_node([], [
+    main_class([], [
+      button_class([event.on_click(Decrement)], [element.text("Decrement")]),
+      color_class(model, [], [element.text(int.to_string(model))]),
+      button_class([event.on_click(Increment)], [element.text("Increment")]),
     ]),
     class_test(model),
     class_test(model),

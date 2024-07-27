@@ -24,10 +24,11 @@ pub fn persistent() -> Result(Cache, Nil) {
 }
 
 @target(erlang)
-pub fn render(cache: Cache) -> Result(String, Nil) {
+pub fn render(cache: Cache) -> String {
   let Cache(subject) = cache
   process.try_call(subject, state.Render, 1000)
   |> result.nil_error()
+  |> result.unwrap("")
 }
 
 @target(erlang)

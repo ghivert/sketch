@@ -47,6 +47,18 @@ pub fn class(styles: List(style.Style)) -> Class {
   style.class(styles)
 }
 
+@target(erlang)
+pub fn render(cache: Cache) {
+  let BeamCache(cache) = cache
+  cache.render(cache)
+}
+
+@target(javascript)
+pub fn render(cache: Cache) {
+  let JsCache(cache) = cache
+  style.render(cache)
+}
+
 @target(javascript)
 /// Convert a `Class` to its proper class name, to use it anywhere in your
 /// application. It can have the form `class1` or `class1 class2` in case of

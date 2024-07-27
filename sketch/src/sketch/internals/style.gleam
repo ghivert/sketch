@@ -8,7 +8,7 @@ import sketch/internals/class
 import sketch/internals/string as sketch_string
 
 @external(erlang, "xxhash32_ffi", "hash32")
-@external(javascript, "../xxhash32.ffi.mjs", "xxHash32")
+@external(javascript, "../../xxhash32.ffi.mjs", "xxHash32")
 fn xx_hash32(content: String) -> Int
 
 pub type Class {
@@ -18,6 +18,19 @@ pub type Class {
 pub type Cache {
   EphemeralCache(cache: Dict(String, class.Content))
   PersistentCache(cache: Dict(String, class.Content), current_id: Int)
+}
+
+pub fn render(cache: Cache) {
+  case cache {
+    EphemeralCache(cache) -> render_cache_dict(cache)
+    PersistentCache(cache, _) -> render_cache_dict(cache)
+  }
+}
+
+fn render_cache_dict(cache: Dict(String, class.Content)) {
+  dict.values(cache)
+  |> list.flat_map(class.definitions)
+  |> string.join("\n\n")
 }
 
 pub fn persistent() {
