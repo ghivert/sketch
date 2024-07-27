@@ -1,13 +1,18 @@
+import gleam/dict.{type Dict}
+import gleam/int
 import gleam/list
 import gleam/option.{None, Some}
+import gleam/pair
 import gleam/string
+import sketch/internals/class.{type Class}
 import sketch/internals/string as sketch_string
 
 pub type Style {
-  ClassName(class_name: String)
+  ClassName(class_name: #(String, List(Style)))
   Media(query: String, styles: List(Style))
   PseudoSelector(pseudo_selector: String, styles: List(Style))
   Property(key: String, value: String, important: Bool)
+  NoStyle
 }
 
 pub type ComputedProperties {
@@ -56,15 +61,22 @@ fn init_computed_properties(indent: Int) {
 /// The Style data structure being a recursive data, computeProperties traverse
 /// the data structure and collect the properties with their context.
 pub fn compute_properties(
+  cache: Cache,
   properties: List(Style),
   indent: Int,
-) -> ComputedProperties {
-  use acc, prop <- list.fold_right(properties, init_computed_properties(indent))
+) -> #(Cache, ComputedProperties) {
+  let init = init_computed_properties(indent)
+  use #(cache, acc), prop <- list.fold_right(properties, #(cache, init))
   case prop {
-    ClassName(class_name) -> handle_class_name(acc, class_name)
-    Property(_, _, _) -> handle_property(acc, prop)
-    Media(_, _) -> handle_media(acc, prop)
-    PseudoSelector(_, _) -> handle_pseudo_selector(acc, prop)
+    NoStyle -> #(cache, acc)
+    Property(_, _, _) -> #(cache, handle_property(acc, prop))
+    Media(_, _) -> handle_media(cache, acc, prop)
+    PseudoSelector(_, _) -> handle_pseudo_selector(cache, acc, prop)
+    ClassName(styles) -> {
+      let #(id, styles) = styles
+      let #(cache, class) = compute_class(cache, id, styles)
+      #(cache, handle_class_name(acc, class.class_name(class)))
+    }
   }
 }
 
@@ -80,9 +92,10 @@ fn handle_property(props: ComputedProperties, style: Style) {
   ComputedProperties(..props, properties: properties)
 }
 
-fn handle_media(props: ComputedProperties, style: Style) {
+fn handle_media(cache: Cache, props: ComputedProperties, style: Style) {
   let assert Media(query, styles) = style
-  let computed_props = compute_properties(styles, props.indent + 2)
+  let #(cache, computed_props) =
+    compute_properties(cache, styles, props.indent + 2)
   MediaProperty(
     query: query,
     properties: computed_props.properties,
@@ -90,11 +103,13 @@ fn handle_media(props: ComputedProperties, style: Style) {
   )
   |> list.prepend(props.medias, _)
   |> fn(m) { ComputedProperties(..props, medias: m) }
+  |> pair.new(cache, _)
 }
 
-fn handle_pseudo_selector(props: ComputedProperties, style: Style) {
+fn handle_pseudo_selector(cache: Cache, props: ComputedProperties, style: Style) {
   let assert PseudoSelector(pseudo_selector, styles) = style
-  let computed_props = compute_properties(styles, props.indent + 2)
+  let #(cache, computed_props) =
+    compute_properties(cache, styles, props.indent + 2)
   PseudoProperty(
     pseudo_selector: pseudo_selector,
     properties: computed_props.properties,
@@ -102,6 +117,7 @@ fn handle_pseudo_selector(props: ComputedProperties, style: Style) {
   |> list.prepend(computed_props.pseudo_selectors, _)
   |> list.append(props.pseudo_selectors)
   |> fn(p) { ComputedProperties(..props, pseudo_selectors: p) }
+  |> pair.new(cache, _)
 }
 
 // Wrapping of classes.
@@ -144,4 +160,54 @@ pub fn compute_classes(
   let selectors_def = wrap_pseudo_selectors(class_name, 0, pseudo_selectors)
   let name = string.trim(string.join(classes, " ") <> " " <> class_name)
   ComputedClass(class_def, medias_def, selectors_def, name)
+}
+
+pub fn create_cache() -> Cache {
+  init()
+}
+
+pub fn compile_class(styles: List(Style)) -> #(String, List(Style)) {
+  let st = string.inspect(styles)
+  #(st, styles)
+  // let content = dict.get(cache.state.cache, st)
+  // case content {
+  //   Ok(class) -> class
+  //   Error(_) -> compute_class(cache.state, st, styles) |> pair.second
+  // }
+}
+
+pub type Cache {
+  Cache(cache: Dict(String, Class), current_id: Int)
+}
+
+pub fn init() {
+  Cache(cache: dict.new(), current_id: 0)
+}
+
+pub fn compute_class(
+  cache: Cache,
+  class_id: String,
+  styles: List(Style),
+) -> #(Cache, Class) {
+  let class_name = "ccs-" <> int.to_string(cache.current_id)
+  let #(cache, properties) = compute_properties(cache, styles, 2)
+  compute_classes(class_name, properties)
+  |> fn(c: ComputedClass) {
+    class.create(
+      class_name: c.name,
+      class_id: class_id,
+      rules: None,
+      definitions: class.Definitions(
+        medias_def: c.medias_def,
+        selectors_def: c.selectors_def,
+        class_def: c.class_def,
+      ),
+    )
+  }
+  |> fn(class) {
+    cache.cache
+    |> dict.insert(class_id, class)
+    |> fn(c) { Cache(cache: c, current_id: cache.current_id + 1) }
+    |> pair.new(class)
+  }
 }

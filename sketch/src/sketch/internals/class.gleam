@@ -2,7 +2,6 @@
 
 import gleam/list
 import gleam/option.{type Option, None, Some}
-import sketch/internals/style
 
 pub type Definitions {
   Definitions(
@@ -18,23 +17,12 @@ pub opaque type Class {
     class_id: String,
     definitions: Definitions,
     rules: Option(List(Int)),
-    previous_styles: List(style.Style),
   )
 }
 
 pub fn no_class() {
   let defs = Definitions(medias_def: [], selectors_def: [], class_def: "")
-  Class(
-    class_name: "",
-    class_id: "",
-    definitions: defs,
-    rules: None,
-    previous_styles: [],
-  )
-}
-
-pub fn previous_styles(class: Class) {
-  class.previous_styles
+  Class(class_name: "", class_id: "", definitions: defs, rules: None)
 }
 
 pub fn class_id(class: Class) {
@@ -63,7 +51,6 @@ pub fn create(
   class_name class_name: String,
   class_id class_id: String,
   rules rules: Option(List(Int)),
-  previous_styles previous_styles: List(style.Style),
   definitions definitions: Definitions,
 ) {
   Class(
@@ -71,6 +58,5 @@ pub fn create(
     class_id: class_id,
     definitions: definitions,
     rules: rules,
-    previous_styles: previous_styles,
   )
 }
