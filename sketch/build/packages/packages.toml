@@ -1,0 +1,10 @@
+[packages]
+gleam_stdlib = "0.36.0"
+gleeunit = "1.1.2"
+plinth = "0.2.0"
+gleam_otp = "0.10.0"
+thoas = "0.4.1"
+lustre = "4.1.7"
+gleam_erlang = "0.25.0"
+gleam_javascript = "0.8.0"
+gleam_json = "1.0.0"

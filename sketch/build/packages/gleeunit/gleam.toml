@@ -1,0 +1,21 @@
+name = "gleeunit"
+version = "1.1.2"
+licences = ["Apache-2.0"]
+description = "Gleam bindings to Erlang's EUnit test framework"
+gleam = ">= 0.33.0"
+repository = { type = "github", user = "gleam-lang", repo = "gleeunit" }
+links = [
+  { title = "Sponsor", href = "https://github.com/sponsors/lpil" },
+]
+
+[javascript.deno]
+allow_read = [
+  "gleam.toml",
+  "test",
+  "build",
+]
+
+[dependencies]
+gleam_stdlib = "~> 0.32"
+
+[dev-dependencies]

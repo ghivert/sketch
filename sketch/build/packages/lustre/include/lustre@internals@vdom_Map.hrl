@@ -1,0 +1,1 @@
+-record(map, {subtree :: fun(() -> lustre@internals@vdom:element(any()))}).
