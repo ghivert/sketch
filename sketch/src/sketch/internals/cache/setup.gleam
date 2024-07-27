@@ -1,6 +1,8 @@
 //// BEAM only.
 
+import gleam/bool
 import gleam/erlang/process.{type Subject}
+import gleam/list
 import gleam/otp/actor
 import gleam/result
 import sketch/internals/cache/state
@@ -33,7 +35,9 @@ pub fn render(cache: Cache) -> String {
 
 @target(erlang)
 pub fn class_name(class: style.Class, cache: Cache) -> String {
+  let style.Class(string_representation: _, content: c) = class
   let Cache(subject) = cache
+  use <- bool.guard(when: list.is_empty(c), return: "")
   process.try_call(subject, state.Fetch(class, _), within: 100)
   |> result.unwrap("")
 }

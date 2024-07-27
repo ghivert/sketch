@@ -4,6 +4,7 @@ import lustre/event
 import sketch
 import sketch/lustre as sketch_lustre
 import sketch/lustre/element
+import sketch/lustre/element/html
 import sketch/media
 import sketch/size.{px}
 
@@ -16,14 +17,10 @@ pub type Msg {
 }
 
 pub fn main() {
-  let init = fn(_) { 0 }
-
   let assert Ok(cache) = sketch.ephemeral()
-
   let assert Ok(_) =
-    view
-    |> sketch_lustre.compose(cache)
-    |> lustre.simple(init, update, _)
+    sketch_lustre.compose(view, cache)
+    |> lustre.simple(fn(_) { 0 }, update, _)
     |> lustre.start("#app", Nil)
 }
 
@@ -34,8 +31,8 @@ fn update(model: Model, msg: Msg) {
   }
 }
 
-fn main_class(attrs, children) {
-  element.element("div", attrs, children, [
+fn body(attrs, children) {
+  html.main(attrs, children, [
     sketch.background("red"),
     sketch.display("flex"),
     sketch.flex_direction("row"),
@@ -49,16 +46,16 @@ fn main_class(attrs, children) {
   ])
 }
 
-fn second_class(attrs, children) {
-  element.element("div", attrs, children, [
+fn green_background(attrs, children) {
+  html.div(attrs, children, [
     sketch.background("green"),
     sketch.font_size(px(20)),
     sketch.font_family("-apple-system"),
   ])
 }
 
-fn color_class(model: Model, attrs, children) {
-  element.element("div", attrs, children, [
+fn colored_background(model: Model, attrs, children) {
+  html.div(attrs, children, [
     sketch.background(case model % 3 {
       0 -> "blue"
       _ -> "green"
@@ -66,8 +63,8 @@ fn color_class(model: Model, attrs, children) {
   ])
 }
 
-fn button_class(attrs, children) {
-  element.element("button", attrs, children, [
+fn increment_decrement(attrs, children) {
+  html.button(attrs, children, [
     sketch.cursor("crosshair"),
     sketch.font_size(px(14)),
   ])
@@ -75,21 +72,21 @@ fn button_class(attrs, children) {
 
 fn class_test(model: Model) {
   case model % 5 {
-    0 -> second_class([], [element.text("Class Test")])
+    0 -> green_background([], [element.text("Class Test")])
     _ -> element.none()
   }
 }
 
-pub fn main_node(attrs, children) {
-  element.element("div", attrs, children, [])
-}
-
 fn view(model: Model) {
-  main_node([], [
-    main_class([], [
-      button_class([event.on_click(Decrement)], [element.text("Decrement")]),
-      color_class(model, [], [element.text(int.to_string(model))]),
-      button_class([event.on_click(Increment)], [element.text("Increment")]),
+  html.div_([], [
+    body([], [
+      increment_decrement([event.on_click(Decrement)], [
+        element.text("Decrement"),
+      ]),
+      colored_background(model, [], [element.text(int.to_string(model))]),
+      increment_decrement([event.on_click(Increment)], [
+        element.text("Increment"),
+      ]),
     ]),
     class_test(model),
     class_test(model),

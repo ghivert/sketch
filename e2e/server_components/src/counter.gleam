@@ -1,12 +1,10 @@
 import gleam/int
-import gleam/result
 import lustre
-import lustre/element/html
 import lustre/event
 import sketch
 import sketch/lustre as sketch_lustre
+import sketch/lustre/element/html
 import sketch/media
-import sketch/options as sketch_options
 import sketch/size.{px}
 
 pub type Model =
@@ -18,27 +16,17 @@ pub type Msg {
 }
 
 pub fn main() {
-  let init = fn(_) { 0 }
-  let assert Ok(cache) =
-    sketch_options.node()
-    |> sketch_lustre.setup()
-
+  let assert Ok(cache) = sketch.persistent()
   let assert Ok(_) =
-    view
-    |> sketch_lustre.compose(cache)
-    |> lustre.simple(init, update, _)
+    sketch_lustre.compose(view, cache)
+    |> lustre.simple(fn(_) { 0 }, update, _)
     |> lustre.start("#app", Nil)
 }
 
 pub fn app() {
-  let init = fn(_) { 0 }
-  sketch_options.node()
-  |> sketch_lustre.setup()
-  |> result.map(fn(cache) {
-    view
-    |> sketch_lustre.compose(cache)
-    |> lustre.simple(init, update, _)
-  })
+  let assert Ok(cache) = sketch.persistent()
+  sketch_lustre.compose(view, cache)
+  |> lustre.simple(fn(_) { 0 }, update, _)
 }
 
 fn update(model: Model, msg: Msg) {
@@ -48,8 +36,8 @@ fn update(model: Model, msg: Msg) {
   }
 }
 
-fn main_class() {
-  sketch.class([
+fn main_class(attrs, children) {
+  html.div(attrs, children, [
     sketch.background("red"),
     sketch.display("flex"),
     sketch.flex_direction("row"),
@@ -61,32 +49,28 @@ fn main_class() {
       sketch.hover([sketch.background("white")]),
     ]),
   ])
-  |> sketch.to_lustre()
 }
 
-fn color_class(model: Model) {
-  let back = case model % 3 {
-    0 -> "blue"
-    _ -> "green"
-  }
-  let id = "color-" <> back
-  sketch.dynamic(id, [sketch.background(back)])
-  |> sketch.to_lustre()
+fn color_class(model: Model, attrs, children) {
+  html.div(attrs, children, [
+    sketch.background(case model % 3 {
+      0 -> "blue"
+      _ -> "green"
+    }),
+  ])
 }
 
-fn button_class() {
-  sketch.class([sketch.cursor("crosshair"), sketch.font_size_("14px")])
-  |> sketch.to_lustre()
+fn button_class(attrs, children) {
+  html.button(attrs, children, [
+    sketch.cursor("crosshair"),
+    sketch.font_size_("14px"),
+  ])
 }
 
 fn view(model: Model) {
-  html.div([main_class()], [
-    html.button([event.on_click(Decrement), button_class()], [
-      html.text("Decrement"),
-    ]),
-    html.div([color_class(model)], [html.text(int.to_string(model))]),
-    html.button([event.on_click(Increment), button_class()], [
-      html.text("Increment"),
-    ]),
+  main_class([], [
+    button_class([event.on_click(Decrement)], [html.text("Decrement")]),
+    color_class(model, [], [html.text(int.to_string(model))]),
+    button_class([event.on_click(Increment)], [html.text("Increment")]),
   ])
 }

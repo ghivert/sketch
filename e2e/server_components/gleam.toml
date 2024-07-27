@@ -16,7 +16,8 @@ version = "1.0.0"
 gleam_stdlib = "~> 0.34 or ~> 1.0"
 lustre = "~> 4.1"
 lustre_dev_tools = "1.1.2"
-sketch = {path = "../.."}
+sketch = { path = "../../sketch" }
+sketch_lustre = { path = "../../sketch_lustre" }
 gleam_http = "~> 3.6"
 mist = "~> 1.0"
 gleam_erlang = "~> 0.25"

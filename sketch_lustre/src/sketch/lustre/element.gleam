@@ -1,4 +1,5 @@
 import gleam/int
+import gleam/io
 import gleam/list
 import gleam/pair
 import lustre/attribute.{type Attribute}
@@ -82,8 +83,8 @@ fn do_keyed(element: Element(msg), key: String) {
         }
       })
       |> Fragment(key, _)
-    Element(_, tag, namespace, attributes, children, styles) ->
-      Element(key, tag, namespace, attributes, children, styles)
+    Element(_, namespace, tag, attributes, children, styles) ->
+      Element(key, namespace, tag, attributes, children, styles)
   }
 }
 
@@ -93,10 +94,10 @@ pub fn map(element: Element(a), mapper: fn(a) -> b) {
     Text(content) -> Text(content)
     Map(subtree) -> Map(fn() { map(subtree(), mapper) })
     Fragment(key, children) -> Fragment(key, list.map(children, map(_, mapper)))
-    Element(key, tag, namespace, attributes, children, styles) -> {
+    Element(key, namespace, tag, attributes, children, styles) -> {
       let attributes = list.map(attributes, attribute.map(_, mapper))
       let children = list.map(children, map(_, mapper))
-      Element(key, tag, namespace, attributes, children, styles)
+      Element(key, namespace, tag, attributes, children, styles)
     }
   }
 }
@@ -119,7 +120,7 @@ pub fn unstyled(cache: Cache, element: Element(msg)) {
     Fragment(key, children) ->
       unstyled_children(cache, children)
       |> pair.map_second(fn(node) { vdom.Fragment(node, key) })
-    Element(key, tag, namespace, attributes, children, styles) -> {
+    Element(key, namespace, tag, attributes, children, styles) -> {
       let class = sketch.class(styles)
       let #(cache, class_name) = sketch.class_name(class, cache)
       let #(cache, children) = unstyled_children(cache, children)

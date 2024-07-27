@@ -1,3 +1,4 @@
+import gleam/bool
 import gleam/dict.{type Dict}
 import gleam/int
 import gleam/list
@@ -7,8 +8,8 @@ import gleam/string
 import sketch/internals/class
 import sketch/internals/string as sketch_string
 
-@external(erlang, "xxhash32_ffi", "hash32")
-@external(javascript, "../../xxhash32.ffi.mjs", "xxHash32")
+@external(erlang, "xxhash", "xxh32")
+@external(javascript, "../../hash.ffi.mjs", "xxHash32")
 fn xx_hash32(content: String) -> Int
 
 pub type Class {
@@ -201,7 +202,8 @@ pub fn class(styles: List(Style)) -> Class {
 }
 
 pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
-  let Class(string_representation: s, content: _) = class
+  let Class(string_representation: s, content: c) = class
+  use <- bool.guard(when: list.is_empty(c), return: #(cache, ""))
   case dict.get(cache.cache, s) {
     Ok(content) -> #(cache, class.class_name(content))
     Error(_) -> compute_class(cache, class) |> pair.map_second(class.class_name)

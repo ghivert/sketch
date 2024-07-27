@@ -19,6 +19,7 @@ pages = [
 gleam_erlang = ">= 0.25.0 and < 1.0.0"
 gleam_otp = ">= 0.10.0 and < 1.0.0"
 gleam_stdlib = "~> 0.34 or ~> 1.0"
+xxhash = ">= 0.3.1 and < 1.0.0"
 
 [dev-dependencies]
 gleeunit = "~> 1.0"
