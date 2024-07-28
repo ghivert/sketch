@@ -14,8 +14,18 @@ pub fn compose(view: fn(model) -> element.Element(msg), cache: Cache) {
     let #(cache, node) = element.unstyled(cache, node)
     let content = sketch.render(cache)
     let style = el.element("style", [], [el.text(content)])
-    el.fragment([style, node])
+    root([style, node])
   }
+}
+
+@target(javascript)
+fn root(children) {
+  el.fragment(children)
+}
+
+@target(erlang)
+fn root(children) {
+  html.div([], children)
 }
 
 fn contains_head(el: el.Element(a)) {

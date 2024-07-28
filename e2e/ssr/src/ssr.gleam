@@ -9,7 +9,7 @@ import sketch/lustre as sketch_lustre
 import sketch/lustre/element/html
 
 pub fn main() {
-  let assert Ok(cache) = sketch.persistent()
+  let assert Ok(cache) = sketch.cache(strategy: sketch.Persistent)
   let assert Ok(_) =
     handler(cache, _)
     |> mist.new()

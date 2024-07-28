@@ -21,14 +21,9 @@ import sketch/size.{type Size}
 pub type Class =
   style.Class
 
-@target(javascript)
 /// Manages the styles. Can be instanciated with [`create_cache`](#create_cache).
 pub opaque type Cache {
   JsCache(cache: style.Cache)
-}
-
-@target(erlang)
-pub opaque type Cache {
   BeamCache(cache: cache.Cache)
 }
 
@@ -49,13 +44,13 @@ pub fn class(styles: List(style.Style)) -> Class {
 
 @target(erlang)
 pub fn render(cache: Cache) {
-  let BeamCache(cache) = cache
+  let assert BeamCache(cache) = cache
   cache.render(cache)
 }
 
 @target(javascript)
 pub fn render(cache: Cache) {
-  let JsCache(cache) = cache
+  let assert JsCache(cache) = cache
   style.render(cache)
 }
 
@@ -64,15 +59,20 @@ pub fn render(cache: Cache) {
 /// application. It can have the form `class1` or `class1 class2` in case of
 /// classes composition.
 pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
-  let JsCache(cache) = cache
+  let assert JsCache(cache) = cache
   let #(cache, class_name) = style.class_name(class, cache)
   #(JsCache(cache), class_name)
 }
 
 @target(erlang)
 pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
-  let BeamCache(cache) = cache
+  let assert BeamCache(cache) = cache
   #(BeamCache(cache), cache.class_name(class, cache))
+}
+
+pub type Strategy {
+  Ephemeral
+  Persistent
 }
 
 @target(javascript)
@@ -85,22 +85,15 @@ pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
 /// On BEAM, this setting is ignored.
 /// If you're using Lustre, you shouldn't have to worry about it, and consider
 /// it as internal low-level.
-pub fn ephemeral() -> Result(Cache, Nil) {
-  Ok(JsCache(style.ephemeral()))
+pub fn cache(strategy strategy: Strategy) {
+  Ok(case strategy {
+    Ephemeral -> JsCache(style.ephemeral())
+    Persistent -> JsCache(style.persistent())
+  })
 }
 
 @target(erlang)
-pub fn ephemeral() -> Result(Cache, Nil) {
-  cache.ephemeral() |> result.map(BeamCache)
-}
-
-@target(javascript)
-pub fn persistent() -> Result(Cache, Nil) {
-  Ok(JsCache(style.persistent()))
-}
-
-@target(erlang)
-pub fn persistent() -> Result(Cache, Nil) {
+pub fn cache(strategy _strategy: Strategy) {
   cache.persistent() |> result.map(BeamCache)
 }
 
@@ -2252,5 +2245,5 @@ pub fn important(style: Style) -> Style {
 /// Compose styles by inheriting class, and later overrides them.
 /// Works similarly to `composes` property in CSS modules.
 pub fn compose(class) -> Style {
-  class |> style.ClassName()
+  style.ClassName(class)
 }

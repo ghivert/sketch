@@ -8,9 +8,10 @@ import gleam/string
 import sketch/internals/class
 import sketch/internals/string as sketch_string
 
-@external(erlang, "xxhash", "xxh32")
-@external(javascript, "../../hash.ffi.mjs", "xxHash32")
-fn xx_hash32(content: String) -> Int
+@external(javascript, "../../xxhash.ffi.mjs", "xxHash32")
+fn xx_hash32(content: String) -> Int {
+  0
+}
 
 pub type Class {
   Class(string_representation: String, content: List(Style))

@@ -16,7 +16,7 @@ pub type Msg {
 }
 
 pub fn main() {
-  let assert Ok(cache) = sketch.persistent()
+  let assert Ok(cache) = sketch.cache(strategy: sketch.Persistent)
   let assert Ok(_) =
     sketch_lustre.compose(view, cache)
     |> lustre.simple(fn(_) { 0 }, update, _)
@@ -24,7 +24,7 @@ pub fn main() {
 }
 
 pub fn app() {
-  let assert Ok(cache) = sketch.persistent()
+  let assert Ok(cache) = sketch.cache(strategy: sketch.Persistent)
   sketch_lustre.compose(view, cache)
   |> lustre.simple(fn(_) { 0 }, update, _)
 }

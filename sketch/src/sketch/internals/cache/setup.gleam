@@ -14,12 +14,6 @@ pub opaque type Cache {
 }
 
 @target(erlang)
-pub fn ephemeral() -> Result(Cache, Nil) {
-  let assert Ok(subject) = actor.start(style.ephemeral(), state.loop)
-  Ok(Cache(subject))
-}
-
-@target(erlang)
 pub fn persistent() -> Result(Cache, Nil) {
   let assert Ok(subject) = actor.start(style.persistent(), state.loop)
   Ok(Cache(subject))

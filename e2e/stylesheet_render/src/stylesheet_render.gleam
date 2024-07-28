@@ -17,7 +17,7 @@ pub type Msg {
 }
 
 pub fn main() {
-  let assert Ok(cache) = sketch.ephemeral()
+  let assert Ok(cache) = sketch.cache(strategy: sketch.Ephemeral)
   let assert Ok(_) =
     sketch_lustre.compose(view, cache)
     |> lustre.simple(fn(_) { 0 }, update, _)

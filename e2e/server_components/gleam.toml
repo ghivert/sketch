@@ -14,7 +14,6 @@ version = "1.0.0"
 
 [dependencies]
 gleam_stdlib = "~> 0.34 or ~> 1.0"
-lustre = "~> 4.1"
 lustre_dev_tools = "1.1.2"
 sketch = { path = "../../sketch" }
 sketch_lustre = { path = "../../sketch_lustre" }
@@ -23,6 +22,7 @@ mist = "~> 1.0"
 gleam_erlang = "~> 0.25"
 gleam_json = "~> 1.0"
 gleam_otp = "~> 0.10"
+lustre = ">= 4.3.1 and < 5.0.0"
 
 [dev-dependencies]
 gleeunit = "~> 1.0"

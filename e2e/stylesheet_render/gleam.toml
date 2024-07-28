@@ -21,4 +21,4 @@ sketch_lustre = { path = "../../sketch_lustre" }
 
 [dev-dependencies]
 gleeunit = "~> 1.0"
-lustre_dev_tools = "1.1.2"
+lustre_dev_tools = ">= 1.4.2 and < 2.0.0"
