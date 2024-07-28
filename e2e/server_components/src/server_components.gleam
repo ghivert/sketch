@@ -1,4 +1,3 @@
-import counter
 import gleam/bytes_builder
 import gleam/erlang
 import gleam/erlang/process.{type Selector, type Subject}
@@ -17,6 +16,7 @@ import mist.{
   type Connection, type ResponseData, type WebsocketConnection,
   type WebsocketMessage,
 }
+import shared_view
 
 pub fn main() {
   let assert Ok(_) =
@@ -61,9 +61,23 @@ pub fn main() {
                 html.link([
                   attribute.rel("stylesheet"),
                   attribute.href(
-                    "https://cdn.jsdelivr.net/gh/lustre-labs/ui/priv/styles.css",
+                    "https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Zain:wght@200;300;400;700;800;900&display=swap",
                   ),
                 ]),
+                html.style(
+                  [],
+                  "body {
+                    margin: 0;
+                    font-family: Zain;
+                  }
+                  :root {
+                    --atomic-tangerine: #f79256;
+                    --aquamarine: #acfcd9;
+                    --turquoise: #5dd9c1;
+                    --periwinkle: #a6b1e1;
+                    --purple: #dcd6f7;
+                  }",
+                ),
                 html.script(
                   [
                     attribute.type_("module"),
@@ -95,14 +109,14 @@ pub fn main() {
 
 //
 
-type Counter =
-  Subject(lustre.Action(counter.Msg, lustre.ServerComponent))
+type App =
+  Subject(lustre.Action(shared_view.Msg, lustre.ServerComponent))
 
 fn socket_init(
   conn: WebsocketConnection,
-) -> #(Counter, Option(Selector(lustre.Patch(counter.Msg)))) {
+) -> #(App, Option(Selector(lustre.Patch(shared_view.Msg)))) {
   let self = process.new_subject()
-  let app = counter.app()
+  let app = shared_view.app()
   let assert Ok(counter) = lustre.start_actor(app, 0)
 
   process.send(
@@ -131,9 +145,9 @@ fn socket_init(
 }
 
 fn socket_update(
-  counter: Counter,
+  counter: App,
   conn: WebsocketConnection,
-  msg: WebsocketMessage(lustre.Patch(counter.Msg)),
+  msg: WebsocketMessage(lustre.Patch(shared_view.Msg)),
 ) {
   case msg {
     mist.Text(json) -> {
@@ -163,6 +177,6 @@ fn socket_update(
   }
 }
 
-fn socket_close(counter: Counter) {
+fn socket_close(counter: App) {
   process.send(counter, lustre.shutdown())
 }

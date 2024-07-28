@@ -1,6 +1,7 @@
 import gleam/int
 import gleam/io
 import gleam/list
+import gleam/option
 import gleam/pair
 import lustre/attribute.{type Attribute}
 import lustre/element as el
@@ -121,11 +122,21 @@ pub fn unstyled(cache: Cache, element: Element(msg)) {
       unstyled_children(cache, children)
       |> pair.map_second(fn(node) { vdom.Fragment(node, key) })
     Element(key, namespace, tag, attributes, children, styles) -> {
-      let class = sketch.class(styles)
-      let #(cache, class_name) = sketch.class_name(class, cache)
+      let class = case list.is_empty(styles) {
+        True -> option.None
+        False -> option.Some(sketch.class(styles))
+      }
+      let class = option.map(class, sketch.class_name(_, cache))
+      let class_name = option.map(class, pair.second)
+      let cache = option.map(class, pair.first) |> option.unwrap(cache)
       let #(cache, children) = unstyled_children(cache, children)
-      let class_name = attribute.class(class_name)
-      let attributes = [class_name, ..attributes]
+      let attributes = case class_name {
+        option.None -> attributes
+        option.Some(class_name) -> {
+          let class_name = attribute.class(class_name)
+          [class_name, ..attributes]
+        }
+      }
       #(cache, case el.element(tag, attributes, children) {
         vdom.Element(_, _, t, a, c, s, v) ->
           vdom.Element(key, namespace, t, a, c, s, v)

@@ -213,12 +213,12 @@ pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
 
 pub fn compute_class(cache: Cache, class: Class) -> #(Cache, class.Content) {
   let Class(string_representation: s, content: c) = class
+  let #(cache, properties) = compute_properties(cache, c, 2)
   let class_id = case cache {
     EphemeralCache(_) -> xx_hash32(s)
     PersistentCache(_, cid) -> cid
   }
-  let class_name = "ccs-" <> int.to_string(class_id)
-  let #(cache, properties) = compute_properties(cache, c, 2)
+  let class_name = "css-" <> int.to_string(class_id)
   compute_classes(class_name, properties)
   |> fn(c: ComputedClass) {
     class.create(

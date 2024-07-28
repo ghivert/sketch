@@ -1,8 +1,8 @@
 //// Defines sizes directly with functions, to avoid conversions between int, float
 //// and strings.
 
-import gleam/int
 import gleam/float
+import gleam/int
 import gleam/string
 
 /// Size defines a CSS Unit. It can be either `px`, `pt`, `vh`, `vw`, `em`,
@@ -62,35 +62,19 @@ pub fn vw_(value: Float) {
   Vw(value)
 }
 
-pub fn em(value: Int) {
-  Em(int.to_float(value))
-}
-
-pub fn em_(value: Float) {
+pub fn em(value: Float) {
   Em(value)
 }
 
-pub fn rem(value: Int) {
-  Rem(int.to_float(value))
-}
-
-pub fn rem_(value: Float) {
+pub fn rem(value: Float) {
   Rem(value)
 }
 
-pub fn lh(value: Int) {
-  Lh(int.to_float(value))
-}
-
-pub fn lh_(value: Float) {
+pub fn lh(value: Float) {
   Lh(value)
 }
 
-pub fn rlh(value: Int) {
-  Rlh(int.to_float(value))
-}
-
-pub fn rlh_(value: Float) {
+pub fn rlh(value: Float) {
   Rlh(value)
 }
 
