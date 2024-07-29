@@ -1,24 +1,15 @@
-# shared_view
+# Shared View
 
-[![Package Version](https://img.shields.io/hexpm/v/shared_view)](https://hex.pm/packages/shared_view)
-[![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/shared_view/)
+Base package used in server components, SSR & application rendering. Everything
+in here is generic, and can be used in the exact same way, whether it's on web,
+or anywhere else. Just import the package, and start to use it. Take a look in
+the siblings folder to get your head around that idea.
 
-```sh
-gleam add shared_view@1
-```
-```gleam
-import shared_view
+## Using it in siblings folder
 
-pub fn main() {
-  // TODO: An example of the project in use
-}
-```
-
-Further documentation can be found at <https://hexdocs.pm/shared_view>.
-
-## Development
-
-```sh
-gleam run   # Run the project
-gleam test  # Run the tests
+```toml
+# In gleam.toml.
+# Leverage on compiler path resolution.
+[dependencies]
+shared_view = { path = "../shared_view" }
 ```

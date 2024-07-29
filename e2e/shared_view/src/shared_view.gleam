@@ -6,6 +6,7 @@ import lustre/event as e
 import sketch
 import sketch/lustre as sketch_lustre
 import sketch/lustre/element/html as h
+import styles
 
 pub type Model =
   Int
@@ -15,11 +16,27 @@ pub type Msg {
   Decrement
 }
 
+/// Defines the standard app, used everywhere in Lustre applications.
+/// For cross-technologies applications, only persistent cache can be used,
+/// because BEAM does not support ephemeral cache at the moment.
 pub fn app() {
   let assert Ok(cache) = sketch.cache(strategy: sketch.Persistent)
   sketch_lustre.node()
   |> sketch_lustre.compose(view, cache)
   |> lustre.simple(fn(_) { 0 }, update, _)
+}
+
+/// Function used specifically in SSR, in order to send the correct HTML
+/// before hydrating it. It can also be an example of HTML server-side
+/// generation, Sketch improved.
+pub fn ssr(model: Model) {
+  h.html([], [
+    h.head([], [
+      h.link([a.rel("stylesheet"), a.href(styles.fonts)]),
+      h.style([], styles.default_style),
+    ]),
+    h.body_([], [view(model)]),
+  ])
 }
 
 fn update(model: Model, msg: Msg) {
@@ -29,7 +46,10 @@ fn update(model: Model, msg: Msg) {
   }
 }
 
-pub fn view(model: Model) {
+/// Main view function, used to render HTML, whether it is on server components,
+/// on web render, with SSR, or even simple server-side generation HTML, like a
+/// blog engine.
+fn view(model: Model) {
   components.body([], [
     components.topbar([], [h.text("Sketch")]),
     components.headline(model, [], [
@@ -50,7 +70,7 @@ pub fn view(model: Model) {
       components.card_title([], [h.text("See it in action")]),
     ]),
     components.showcase([], [
-      components.showcase_body([], [h.text("Coming soon…")]),
+      components.showcase_body([], [h.text("Coming soon...")]),
       components.card_title([], [h.text("Showcase")]),
     ]),
   ])

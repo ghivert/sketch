@@ -1,7 +1,16 @@
+//// Defines the base components used in the shared view. Think copmonents as in
+//// functions that simply returns the HTML correctly formatted.
+//// Every component accepts two arrays, attributes and children, to follow the
+//// same convention as Lustre standard HTML. That way, you could leverage on
+//// your knowledge of Lustre, and behaves exactly as expected.
+
 import sketch
 import sketch/lustre/element/html
 import sketch/size.{px, rem}
 
+/// Standard class defining a card component. Can be used with `sketch.compose`
+/// everywhere a card is needed. Properties will be overriden if redefined in a
+/// composed class or element.
 fn card() {
   sketch.class([
     sketch.display("flex"),
@@ -13,6 +22,9 @@ fn card() {
   ])
 }
 
+/// Standard class defining a card body component. Can be used with `sketch.compose`
+/// everywhere a card need a body. Properties will be overriden if redefined in a
+/// composed class or element.
 fn card_body() {
   sketch.class([
     sketch.flex("1"),

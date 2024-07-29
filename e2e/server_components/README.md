@@ -1,25 +1,11 @@
-# server_components
+# Server Components
 
-[![Package Version](https://img.shields.io/hexpm/v/server_components)](https://hex.pm/packages/server_components)
-[![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/server_components/)
+Server component rendering of the application. Because the server will act as
+the client, nothing is needed here to make it work. Launch the server, heads up
+to [`localhost:1234`](http://localhost:1234) and let the magic happen.
 
-```sh
-gleam add server_components
-```
-```gleam
-import server_components
-
-pub fn main() {
-  // TODO: An example of the project in use
-}
-```
-
-Further documentation can be found at <https://hexdocs.pm/server_components>.
-
-## Development
+## Getting started
 
 ```sh
-gleam run   # Run the project
-gleam test  # Run the tests
-gleam shell # Run an Erlang shell
+gleam run
 ```

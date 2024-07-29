@@ -22,8 +22,8 @@ pub fn meta(attributes) {
   element("meta", attributes, [], [])
 }
 
-pub fn style(attributes, children) {
-  element("style", attributes, children, [])
+pub fn style(attributes, child) {
+  element("style", attributes, [text(child)], [])
 }
 
 pub fn title(attributes, title: String) {

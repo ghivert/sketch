@@ -1,25 +1,11 @@
-# ssr
+# Server Side Rendering
 
-[![Package Version](https://img.shields.io/hexpm/v/ssr)](https://hex.pm/packages/ssr)
-[![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/ssr/)
+SSR rendering of the application. Because it's simply a server serving HTML in
+the classical way, nothing is needed here to make it work. Launch the server,
+heads up to [`localhost:1234`](http://localhost:1234) and let the magic happen.
 
-```sh
-gleam add ssr
-```
-```gleam
-import ssr
-
-pub fn main() {
-  // TODO: An example of the project in use
-}
-```
-
-Further documentation can be found at <https://hexdocs.pm/ssr>.
-
-## Development
+## Getting started
 
 ```sh
-gleam run   # Run the project
-gleam test  # Run the tests
-gleam shell # Run an Erlang shell
+gleam run
 ```
