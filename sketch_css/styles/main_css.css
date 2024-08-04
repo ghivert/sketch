@@ -1,0 +1,24 @@
+.card {
+  background: [Field(None, String("#ddd"))];
+  background: [Field(None, String("red"))];
+  display: [Field(None, String("block"))];
+}
+
+.card-body {
+  background: [Field(None, String("#ddd"))];
+  background: [Field(None, String("red"))];
+  display: [Field(None, String("block"))];
+}
+
+.block {
+  background: [Field(None, String("#ccc"))];
+  display: [Field(None, String("flex"))];
+}
+
+.body {
+
+}
+
+.main {
+  background: [Field(None, String("#ddd"))];
+}
