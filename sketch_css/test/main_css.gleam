@@ -24,6 +24,7 @@ pub fn card(custom) {
     ]),
     s.media(media.max_width(px(700)) |> media.or(media.min_width(400 |> px)), [
       s.background("blue"),
+      s.hover([s.background("red")]),
     ]),
   ])
 }

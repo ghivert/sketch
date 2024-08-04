@@ -137,55 +137,74 @@ fn function_definition(
   use _ <- result.try(keep_valid_class(imports, exposed, call))
   let name = string.replace(function.name, each: "_", with: "-")
   let #(all_classes, medias) = split_body(imports, properties, body)
-  let body =
-    list.map(all_classes, fn(class) {
-      let #(selector, body) = class
-      let body = class_body(imports, properties, body) |> string.join("\n")
-      let head = "." <> name <> selector <> " {\n"
-      head <> body <> "\n}"
-    })
-    |> string.join("\n\n")
-  let body =
-    body
-    <> "\n\n"
-    <> {
+  let body = compile_classes(imports, properties, name, all_classes, "")
+  let body = {
+    let medias =
       list.map(medias, fn(media) {
-        let #(media, body) = media
-        let body =
-          class_body(imports, properties, body)
-          |> list.map(fn(s) { "  " <> s })
-          |> string.join("\n")
+        let #(media, all_classes) = media
+        let body = compile_classes(imports, properties, name, all_classes, "  ")
         let head = "@media " <> media <> " {\n"
-        let head = head <> "  ." <> name <> " {\n"
-        head <> body <> "\n  }\n}"
+        head <> body <> "\n}"
       })
       |> string.join("\n\n")
-    }
+    use <- bool.guard(when: medias == "", return: body)
+    body <> "\n\n" <> medias
+  }
   Ok(#(function.name, name, body))
+}
+
+fn compile_classes(imports, properties, name, all_classes, prefix: String) {
+  list.map(all_classes, fn(class) {
+    let #(selector, body) = class
+    let body =
+      class_body(imports, properties, body)
+      |> list.map(fn(s) { prefix <> s })
+      |> string.join("\n")
+    let head = prefix <> "." <> name <> selector <> " {\n"
+    head <> body <> "\n" <> prefix <> "}"
+  })
+  |> string.join("\n\n")
 }
 
 fn split_body(
   imports,
   properties,
   body,
-) -> #(List(#(String, List(Expression))), List(#(String, List(Expression)))) {
+) -> #(
+  List(#(String, List(Expression))),
+  List(#(String, List(#(String, List(Expression))))),
+) {
   use results, item <- list.fold(body, #([], []))
   case item {
     Call(Variable(name), param) ->
-      push_in_subclass(results, item, name, param, properties, True)
+      push_in_subclass(imports, results, item, name, param, properties, True)
     Call(FieldAccess(Variable(module_name), name), param) -> {
       let is_sketch = list.contains(imports, module_name)
       use <- bool.guard(when: !is_sketch, return: Error(Nil))
-      push_in_subclass(results, item, name, param, properties, False)
+      push_in_subclass(imports, results, item, name, param, properties, False)
     }
     _ -> Error(Nil)
   }
   |> result.unwrap(results)
 }
 
-fn push_in_subclass(results, item, name, param, properties, unqualified) {
+fn push_in_subclass(
+  imports,
+  results,
+  item,
+  name,
+  param,
+  properties,
+  unqualified,
+) -> Result(
+  #(
+    List(#(String, List(Expression))),
+    List(#(String, List(#(String, List(Expression))))),
+  ),
+  Nil,
+) {
   let is_media = name == "media"
-  let add_media = add_media(properties, results, param)
+  let add_media = add_media(imports, properties, results, param)
   use <- bool.lazy_guard(when: is_media, return: add_media)
   use name <- result.try(case unqualified {
     True -> list.key_find(properties, name)
@@ -229,10 +248,11 @@ fn push_in_subclass(results, item, name, param, properties, unqualified) {
 }
 
 fn add_media(
+  imports,
   properties,
   results: #(
     List(#(String, List(Expression))),
-    List(#(String, List(Expression))),
+    List(#(String, List(#(String, List(Expression))))),
   ),
   param,
 ) {
@@ -241,6 +261,7 @@ fn add_media(
     case param {
       [Field(None, media), Field(None, List(content, _))] -> {
         use media <- result.try(media_to_string(properties, media))
+        let #(content, _) = split_body(imports, properties, content)
         Ok(#(results, list.key_set(medias, media, content)))
       }
       _ -> Ok(#(results, medias))
@@ -406,7 +427,7 @@ fn string_to_string(param) {
 fn property_body(param) {
   case param {
     [Field(None, p)] -> {
-      case rewrite_pipe(p) |> io.debug {
+      case rewrite_pipe(p) {
         Call(FieldAccess(Variable(_), size), [Field(None, value)]) ->
           size_to_string(value) <> size
         Call(Variable(size), [Field(None, value)]) ->

@@ -30,6 +30,10 @@
   .card {
     background: blue;
   }
+
+  .card:hover {
+    background: red;
+  }
 }
 
 .card-body {
@@ -38,22 +42,15 @@
   display: block;
 }
 
-
-
 .block {
   background: #ccc;
   display: flex;
 }
 
-
-
 .body {
 
 }
 
-
-
 .main {
   background: #ddd;
 }
-
