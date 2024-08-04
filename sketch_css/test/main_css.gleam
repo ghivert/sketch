@@ -1,5 +1,6 @@
 import sketch
 import sketch.{background, class as t} as s
+import sketch/media
 import sketch/size.{px}
 
 fn custom_color(custom) {
@@ -16,6 +17,14 @@ pub fn card(custom) {
     custom_color(custom),
     s.grid_template_areas(["muf", "muf"]),
     s.property("muf", "mumuf"),
+    s.hover([s.background(custom)]),
+    s.media(media.max_width(px(700)), [s.background("blue")]),
+    s.media(media.max_width(px(700)) |> media.or(media.min_width(px(600))), [
+      s.background("blue"),
+    ]),
+    s.media(media.max_width(px(700)) |> media.or(media.min_width(400 |> px)), [
+      s.background("blue"),
+    ]),
   ])
 }
 

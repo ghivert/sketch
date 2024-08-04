@@ -136,16 +136,202 @@ fn function_definition(
   use #(call, body) <- result.try(keep_fn_call(function))
   use _ <- result.try(keep_valid_class(imports, exposed, call))
   let name = string.replace(function.name, each: "_", with: "-")
-  let body = class_body(imports, properties, body) |> string.join("\n")
-  let head = "." <> name <> " {\n"
-  let body = head <> body <> "\n}"
+  let #(all_classes, medias) = split_body(imports, properties, body)
+  let body =
+    list.map(all_classes, fn(class) {
+      let #(selector, body) = class
+      let body = class_body(imports, properties, body) |> string.join("\n")
+      let head = "." <> name <> selector <> " {\n"
+      head <> body <> "\n}"
+    })
+    |> string.join("\n\n")
+  let body =
+    body
+    <> "\n\n"
+    <> {
+      list.map(medias, fn(media) {
+        let #(media, body) = media
+        let body =
+          class_body(imports, properties, body)
+          |> list.map(fn(s) { "  " <> s })
+          |> string.join("\n")
+        let head = "@media " <> media <> " {\n"
+        let head = head <> "  ." <> name <> " {\n"
+        head <> body <> "\n  }\n}"
+      })
+      |> string.join("\n\n")
+    }
   Ok(#(function.name, name, body))
 }
 
+fn split_body(
+  imports,
+  properties,
+  body,
+) -> #(List(#(String, List(Expression))), List(#(String, List(Expression)))) {
+  use results, item <- list.fold(body, #([], []))
+  case item {
+    Call(Variable(name), param) ->
+      push_in_subclass(results, item, name, param, properties, True)
+    Call(FieldAccess(Variable(module_name), name), param) -> {
+      let is_sketch = list.contains(imports, module_name)
+      use <- bool.guard(when: !is_sketch, return: Error(Nil))
+      push_in_subclass(results, item, name, param, properties, False)
+    }
+    _ -> Error(Nil)
+  }
+  |> result.unwrap(results)
+}
+
+fn push_in_subclass(results, item, name, param, properties, unqualified) {
+  let is_media = name == "media"
+  let add_media = add_media(properties, results, param)
+  use <- bool.lazy_guard(when: is_media, return: add_media)
+  use name <- result.try(case unqualified {
+    True -> list.key_find(properties, name)
+    False -> Ok(name)
+  })
+  let is_pseudo = list.key_find(pseudo, name)
+  let add_body = fn() { Ok(add_expressions(results, "", [item])) }
+  use <- bool.lazy_guard(when: result.is_error(is_pseudo), return: add_body)
+  let assert Ok(name) = is_pseudo
+  case name, param {
+    ":pseudo-selector",
+      [Field(None, String(selector)), Field(None, List(expressions, _))]
+    -> {
+      Ok(add_expressions(results, selector, expressions))
+    }
+    ":nth-child",
+      [Field(None, String(selector)), Field(None, List(expressions, _))]
+    -> {
+      Ok(add_expressions(results, name <> "(" <> selector <> ")", expressions))
+    }
+    ":nth-last-child",
+      [Field(None, String(selector)), Field(None, List(expressions, _))]
+    -> {
+      Ok(add_expressions(results, name <> "(" <> selector <> ")", expressions))
+    }
+    ":nth-of-type",
+      [Field(None, String(selector)), Field(None, List(expressions, _))]
+    -> {
+      Ok(add_expressions(results, name <> "(" <> selector <> ")", expressions))
+    }
+    ":nth-last-of-type",
+      [Field(None, String(selector)), Field(None, List(expressions, _))]
+    -> {
+      Ok(add_expressions(results, name <> "(" <> selector <> ")", expressions))
+    }
+    _, [Field(None, List(expressions, _))] -> {
+      Ok(add_expressions(results, name, expressions))
+    }
+    _, _ -> Error(Nil)
+  }
+}
+
+fn add_media(
+  properties,
+  results: #(
+    List(#(String, List(Expression))),
+    List(#(String, List(Expression))),
+  ),
+  param,
+) {
+  fn() {
+    let #(results, medias) = results
+    case param {
+      [Field(None, media), Field(None, List(content, _))] -> {
+        use media <- result.try(media_to_string(properties, media))
+        Ok(#(results, list.key_set(medias, media, content)))
+      }
+      _ -> Ok(#(results, medias))
+    }
+  }
+}
+
+fn media_to_string(properties, media) -> Result(String, Nil) {
+  case rewrite_pipe(media) {
+    Call(Variable(media), p) -> {
+      use name <- result.try(list.key_find(properties, media))
+      use <- bool.guard(when: name != "max_width", return: Error(Nil))
+      Ok("(max-width: " <> property_body(p))
+    }
+    Call(FieldAccess(Variable(_), media), p) -> {
+      case media {
+        "max_width" | "min_width" | "max_height" | "min_height" -> {
+          Ok(
+            "("
+            <> string.replace(media, "_", "-")
+            <> ": "
+            <> property_body(p)
+            <> ")",
+          )
+        }
+        "not" ->
+          case p {
+            [Field(None, m)] -> {
+              use left <- result.try(media_to_string(properties, m))
+              Ok("not(" <> left <> ")")
+            }
+            _ -> Error(Nil)
+          }
+        "and" | "or" ->
+          case p {
+            [Field(None, m), Field(None, n)] -> {
+              use left <- result.try(media_to_string(properties, m))
+              use right <- result.try(media_to_string(properties, n))
+              Ok(left <> " " <> media <> " " <> right)
+            }
+            _ -> Error(Nil)
+          }
+        "landscape" | "portait" -> Ok("(orientation: " <> media <> ")")
+        "dark_theme" | "light_theme" ->
+          Ok(
+            "(prefers-color-scheme: " <> string.replace(media, "_", "-") <> ")",
+          )
+        _ -> Error(Nil)
+      }
+    }
+    _ -> Error(Nil)
+  }
+}
+
+fn add_expressions(results, name, expressions) {
+  let #(results, medias) = results
+  #(
+    list.key_find(results, name)
+      |> result.unwrap([])
+      |> list.append(expressions)
+      |> list.key_set(results, name, _),
+    medias,
+  )
+}
+
+const pseudo = [
+  #("placeholder", "::placeholder"), #("hover", ":hover"),
+  #("active", ":active"), #("focus", ":focus"),
+  #("focus_visible", ":focus_visible"), #("focus_within", ":focus-within"),
+  #("enabled", ":enabled"), #("disabled", ":disabled"),
+  #("read_only", ":read-only"), #("read_write", ":read-write"),
+  #("checked", ":checked"), #("blank", ":blank"), #("valid", ":valid"),
+  #("invalid", ":invalid"), #("required", ":required"),
+  #("optional", ":optional"), #("link", ":link"), #("visited", ":visited"),
+  #("target", ":target"), #("nth_child", ":nth-child"),
+  #("nth_last_child", ":nth-last-child"), #("nth_of_type", ":nth-of-type"),
+  #("nth_last_of_type", ":nth-last-of-type"), #("first_child", ":first-child"),
+  #("last_child", ":last-child"), #("only_child", ":only-child"),
+  #("first_of_type", ":first-of-type"), #("last_of_type", ":last-of-type"),
+  #("only_of_type", ":only-of-type"), #("pseudo_selector", ":pseudo-selector"),
+]
+
+const skippable = ["compose", "none", "media"]
+
 fn skip_not_css_properties(name) {
-  use <- bool.guard(when: name == "compose", return: Error(Nil))
-  use <- bool.guard(when: name == "none", return: Error(Nil))
-  Ok(name)
+  case
+    list.contains(skippable, name) || result.is_ok(list.key_find(pseudo, name))
+  {
+    True -> Error(Nil)
+    False -> Ok(name)
+  }
 }
 
 fn class_body(
@@ -157,26 +343,24 @@ fn class_body(
   case property {
     Call(Variable(name), param) -> {
       use name <- result.try(list.key_find(properties, name))
-      use name <- result.try(skip_not_css_properties(name))
-      let is_property = name == "property"
-      let is_areas = name == "grid_template_areas"
-      use <- bool.guard(when: is_property, return: property_to_string(param))
-      use <- bool.guard(when: is_areas, return: template_areas_to_string(param))
-      css_property(name, param)
+      compute_css_property(name, param)
     }
     Call(FieldAccess(Variable(module_name), name), param) -> {
       let is_sketch = list.contains(imports, module_name)
       use <- bool.guard(when: !is_sketch, return: Error(Nil))
-      let should_skip = result.is_error(skip_not_css_properties(name))
-      use <- bool.guard(when: should_skip, return: Error(Nil))
-      let is_property = name == "property"
-      let is_areas = name == "grid_template_areas"
-      use <- bool.guard(when: is_property, return: property_to_string(param))
-      use <- bool.guard(when: is_areas, return: template_areas_to_string(param))
-      css_property(name, param)
+      compute_css_property(name, param)
     }
     _ -> Error(Nil)
   }
+}
+
+fn compute_css_property(name, param) {
+  use name <- result.try(skip_not_css_properties(name))
+  let is_property = name == "property"
+  let is_areas = name == "grid_template_areas"
+  use <- bool.guard(when: is_property, return: property_to_string(param))
+  use <- bool.guard(when: is_areas, return: template_areas_to_string(param))
+  css_property(name, param)
 }
 
 fn css_property(name, param) {
@@ -190,8 +374,8 @@ fn css_property(name, param) {
 
 fn property_to_string(param) {
   case param {
-    [Field(None, String(param)), Field(None, String(content))] ->
-      Ok("  " <> param <> ": " <> content <> ";")
+    [Field(None, String(param)), Field(None, p)] ->
+      Ok("  " <> param <> ": " <> string_to_string(p) <> ";")
     _ -> Error(Nil)
   }
 }
@@ -213,23 +397,29 @@ fn template_areas_to_string(param) {
 fn string_to_string(param) {
   case param {
     glance.String(m) -> m
+    glance.Variable(v) ->
+      "var(--" <> string.replace(v, each: "_", with: "-") <> ")"
     _ -> ""
   }
 }
 
 fn property_body(param) {
   case param {
-    [Field(None, String(content))] -> content
-    [Field(None, Call(FieldAccess(Variable(_), size), [Field(None, value)]))] ->
-      size_to_string(value) <> size
-    [Field(None, Call(Variable(size), [Field(None, value)]))] ->
-      size_to_string(value) <> size
+    [Field(None, p)] -> {
+      case rewrite_pipe(p) |> io.debug {
+        Call(FieldAccess(Variable(_), size), [Field(None, value)]) ->
+          size_to_string(value) <> size
+        Call(Variable(size), [Field(None, value)]) ->
+          size_to_string(value) <> size
+        p -> string_to_string(p)
+      }
+    }
     _ -> string.inspect(param)
   }
 }
 
 fn size_to_string(value) {
-  case value {
+  case rewrite_pipe(value) {
     glance.Int(i) -> i
     glance.Float(f) -> f
     _ -> ""
@@ -256,4 +446,17 @@ pub fn generate_stylesheets(src: String, dst: String) {
     |> string.join("/")
   let _ = simplifile.create_directory_all(parent_dst_path)
   let _ = simplifile.write(dst_path, string.join(css_module.content, "\n\n"))
+}
+
+fn rewrite_pipe(expression) {
+  case expression {
+    glance.BinaryOperator(glance.Pipe, left, right) -> {
+      case right {
+        Call(f, args) -> Call(f, list.prepend(args, Field(None, left)))
+        Variable(v) -> glance.Call(Variable(v), [Field(None, left)])
+        _ -> expression
+      }
+    }
+    _ -> expression
+  }
 }

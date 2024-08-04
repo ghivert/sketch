@@ -10,21 +10,50 @@
   muf: mumuf;
 }
 
+.card:hover {
+  background: var(--custom);
+}
+
+@media (max-width: 700px) {
+  .card {
+    background: blue;
+  }
+}
+
+@media (max-width: 700px) or (min-width: 600px) {
+  .card {
+    background: blue;
+  }
+}
+
+@media (max-width: 700px) or (min-width: 400px) {
+  .card {
+    background: blue;
+  }
+}
+
 .card-body {
   background: #ddd;
   background: red;
   display: block;
 }
 
+
+
 .block {
   background: #ccc;
   display: flex;
 }
 
+
+
 .body {
 
 }
 
+
+
 .main {
   background: #ddd;
 }
+
