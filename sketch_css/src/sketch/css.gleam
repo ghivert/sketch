@@ -1,17 +1,16 @@
+import argv
 import glance.{
   type Expression, Call, Discarded, Expression, Field, FieldAccess, List, Module,
   Named, String, Variable,
 }
 import gleam/bool
-import gleam/float
-import gleam/function
-import gleam/int
 import gleam/io
 import gleam/list
 import gleam/option.{type Option, None, Some}
 import gleam/pair
 import gleam/result
 import gleam/string
+import glint
 import simplifile
 import sketch/css/error
 
@@ -44,9 +43,12 @@ fn parse_modules(modules: List(Module)) {
 
 fn select_css_files(modules: List(Module)) {
   use module <- list.filter(modules)
-  string.ends_with(module.path, "_styles.gleam")
-  || string.ends_with(module.path, "_css.gleam")
-  || string.ends_with(module.path, "_sketch.gleam")
+  !string.contains(module.path, "/sketch/styles")
+  && {
+    string.ends_with(module.path, "_styles.gleam")
+    || string.ends_with(module.path, "_css.gleam")
+    || string.ends_with(module.path, "_sketch.gleam")
+  }
 }
 
 fn find_sketch_imports(imports: List(glance.Definition(glance.Import))) {
@@ -89,7 +91,7 @@ fn parse_css_modules(
           use css, function <- list.fold(ast.functions, Css([], []))
           function_definition(imports, exposed, properties, function.definition)
           |> result.map(fn(content) {
-            let classes = list.prepend(css.classes, #(content.0, content.1))
+            let classes = list.key_set(css.classes, content.0, content.1)
             let content = list.prepend(css.content, content.2)
             Css(classes:, content:)
           })
@@ -138,6 +140,10 @@ fn function_definition(
   let name = string.replace(function.name, each: "_", with: "-")
   let #(all_classes, medias) = split_body(imports, properties, body)
   let body = compile_classes(imports, properties, name, all_classes, "")
+  let composes =
+    all_classes
+    |> list.flat_map(pair.second)
+    |> select_composes(properties, _)
   let body = {
     let medias =
       list.map(medias, fn(media) {
@@ -150,7 +156,31 @@ fn function_definition(
     use <- bool.guard(when: medias == "", return: body)
     body <> "\n\n" <> medias
   }
+  let name =
+    [name, ..composes]
+    |> list.reverse
+    |> string.join(" ")
   Ok(#(function.name, name, body))
+}
+
+fn select_composes(properties, expressions: List(Expression)) {
+  use classes, expression <- list.fold(expressions, [])
+  case rewrite_pipe(expression) {
+    Call(Variable(v), [Field(None, Call(Variable(t), _))])
+    | Call(Variable(v), [Field(None, Call(FieldAccess(_, t), _))]) -> {
+      let f = list.key_find(properties, v) |> result.unwrap("")
+      use <- bool.guard(when: f != "compose", return: classes)
+      string.replace(t, "_", "-")
+      |> list.prepend(classes, _)
+    }
+    Call(FieldAccess(_, f), [Field(None, Call(Variable(t), _))])
+    | Call(FieldAccess(_, f), [Field(None, Call(FieldAccess(_, t), _))]) -> {
+      use <- bool.guard(when: f != "compose", return: classes)
+      string.replace(t, "_", "-")
+      |> list.prepend(classes, _)
+    }
+    _ -> classes
+  }
 }
 
 fn compile_classes(imports, properties, name, all_classes, prefix: String) {
@@ -447,7 +477,7 @@ fn size_to_string(value) {
   }
 }
 
-pub fn generate_stylesheets(src: String, dst: String) {
+pub fn generate_stylesheets(src: String, dst: String, src_interfaces: String) {
   use is_dir <- result.try(simplifile.is_directory(src) |> error.simplifile)
   use <- bool.guard(when: !is_dir, return: error.not_a_directory(src))
   use modules <- result.map(recursive_modules_read(src) |> error.simplifile)
@@ -458,15 +488,29 @@ pub fn generate_stylesheets(src: String, dst: String) {
   use #(module, css_module) <- list.each(css_modules)
   let dst_path = string.replace(module.path, each: src, with: dst)
   let dst_path = string.replace(dst_path, each: ".gleam", with: ".css")
-  let parent_dst_path =
-    dst_path
-    |> string.split("/")
-    |> list.reverse
-    |> list.drop(1)
-    |> list.reverse()
-    |> string.join("/")
+  let parent_dst_path = remove_file(dst_path)
   let _ = simplifile.create_directory_all(parent_dst_path)
   let _ = simplifile.write(dst_path, string.join(css_module.content, "\n\n"))
+  let src_styles_path =
+    string.replace(module.path, each: src, with: src_interfaces)
+  let parent_src_styles_path = remove_file(src_styles_path)
+  let _ = simplifile.create_directory_all(parent_src_styles_path)
+  let _ =
+    simplifile.write(src_styles_path, {
+      list.map(css_module.classes, fn(c) {
+        "pub const " <> c.0 <> " = \"" <> c.1 <> "\""
+      })
+      |> string.join("\n\n")
+    })
+}
+
+fn remove_file(dst_path) {
+  dst_path
+  |> string.split("/")
+  |> list.reverse
+  |> list.drop(1)
+  |> list.reverse()
+  |> string.join("/")
 }
 
 fn rewrite_pipe(expression) {
@@ -480,4 +524,55 @@ fn rewrite_pipe(expression) {
     }
     _ -> expression
   }
+}
+
+fn dst_flag() {
+  glint.string_flag("dest")
+  |> glint.flag_default("styles")
+  |> glint.flag_help("Define the directory in which styles should be output.")
+}
+
+fn src_flag() {
+  glint.string_flag("src")
+  |> glint.flag_default("src")
+  |> glint.flag_help(
+    "Define the directory in which styles should be read. Default to src.",
+  )
+}
+
+fn interface_flag() {
+  glint.string_flag("interface")
+  |> glint.flag_default("src/sketch/styles")
+  |> glint.flag_help(
+    "Define the directory in which interfaces should be output. Default to src/sketch/styles.",
+  )
+}
+
+fn css() -> glint.Command(Nil) {
+  use <- glint.command_help("Generate CSS for your gleam_styles.gleam files!")
+  use dst <- glint.flag(dst_flag())
+  use src <- glint.flag(src_flag())
+  use interface <- glint.flag(interface_flag())
+  use _, _, flags <- glint.command()
+  let assert Ok(dst) = dst(flags)
+  let assert Ok(src) = src(flags)
+  let assert Ok(interface) = interface(flags)
+  let assert Ok(cwd) = simplifile.current_directory()
+  let src_folder = string.join([cwd, src], "/")
+  let dst_folder = string.join([cwd, dst], "/")
+  let interface_folder = string.join([cwd, interface], "/")
+  io.println("Compiling Gleam styles files in " <> src_folder)
+  io.println("Writing CSS files to " <> dst_folder)
+  io.println("Writing interfaces files to " <> interface_folder)
+  let _ = generate_stylesheets(src_folder, dst_folder, interface)
+  io.println("Done!")
+  Nil
+}
+
+pub fn main() {
+  glint.new()
+  |> glint.with_name("Sketch CSS")
+  |> glint.pretty_help(glint.default_pretty_help())
+  |> glint.add(at: ["generate"], do: css())
+  |> glint.run(argv.load().arguments)
 }

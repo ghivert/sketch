@@ -15,5 +15,6 @@ pub fn read_test() {
   let assert Ok(cwd) = simplifile.current_directory()
   let src_folder = string.join([cwd, "test"], "/")
   let dst_folder = string.join([cwd, "styles"], "/")
-  css.generate_stylesheets(src_folder, dst_folder)
+  let interface_folder = string.join([cwd, "test/sketch/styles"], "/")
+  css.generate_stylesheets(src_folder, dst_folder, interface_folder)
 }
