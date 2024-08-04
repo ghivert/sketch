@@ -1,5 +1,6 @@
 import sketch
 import sketch.{background, class as t} as s
+import sketch/size.{px}
 
 fn custom_color(custom) {
   sketch.color(custom)
@@ -10,7 +11,11 @@ pub fn card(custom) {
     sketch.background("#ddd"),
     background("red"),
     s.display("block"),
+    s.padding(size.pt(12)),
+    s.padding(px(12)),
     custom_color(custom),
+    s.grid_template_areas(["muf", "muf"]),
+    s.property("muf", "mumuf"),
   ])
 }
 

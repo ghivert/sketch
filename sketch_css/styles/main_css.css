@@ -1,18 +1,24 @@
 .card {
-  background: [Field(None, String("#ddd"))];
-  background: [Field(None, String("red"))];
-  display: [Field(None, String("block"))];
+  background: #ddd;
+  background: red;
+  display: block;
+  padding: 12pt;
+  padding: 12px;
+  grid-template-areas:
+    "muf"
+    "muf";
+  muf: mumuf;
 }
 
 .card-body {
-  background: [Field(None, String("#ddd"))];
-  background: [Field(None, String("red"))];
-  display: [Field(None, String("block"))];
+  background: #ddd;
+  background: red;
+  display: block;
 }
 
 .block {
-  background: [Field(None, String("#ccc"))];
-  display: [Field(None, String("flex"))];
+  background: #ccc;
+  display: flex;
 }
 
 .body {
@@ -20,5 +26,5 @@
 }
 
 .main {
-  background: [Field(None, String("#ddd"))];
+  background: #ddd;
 }

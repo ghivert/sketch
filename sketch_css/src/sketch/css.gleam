@@ -1,12 +1,14 @@
 import glance.{
   type Expression, Call, Discarded, Expression, Field, FieldAccess, List, Module,
-  Named, Variable,
+  Named, String, Variable,
 }
 import gleam/bool
+import gleam/float
 import gleam/function
+import gleam/int
 import gleam/io
 import gleam/list
-import gleam/option
+import gleam/option.{type Option, None, Some}
 import gleam/pair
 import gleam/result
 import gleam/string
@@ -14,7 +16,7 @@ import simplifile
 import sketch/css/error
 
 pub type Module {
-  Module(path: String, content: String, ast: option.Option(glance.Module))
+  Module(path: String, content: String, ast: Option(glance.Module))
 }
 
 pub type Css {
@@ -30,14 +32,14 @@ fn recursive_modules_read(dir: String) {
     use is_dir <- result.try(simplifile.is_directory(path))
     use <- bool.guard(when: is_dir, return: recursive_modules_read(path))
     use content <- result.map(simplifile.read(path))
-    [Module(path: path, content: content, ast: option.None)]
+    [Module(path: path, content: content, ast: None)]
   })
 }
 
 fn parse_modules(modules: List(Module)) {
   use module <- list.filter_map(modules)
   use ast <- result.map(glance.module(module.content) |> error.glance)
-  Module(..module, ast: option.Some(ast))
+  Module(..module, ast: Some(ast))
 }
 
 fn select_css_files(modules: List(Module)) {
@@ -52,9 +54,9 @@ fn find_sketch_imports(imports: List(glance.Definition(glance.Import))) {
   let aliases =
     list.map(imports, fn(i) {
       case i.definition.alias {
-        option.None -> i.definition.module
-        option.Some(Discarded(_)) -> i.definition.module
-        option.Some(Named(s)) -> s
+        None -> i.definition.module
+        Some(Discarded(_)) -> i.definition.module
+        Some(Named(s)) -> s
       }
     })
     |> list.unique
@@ -79,8 +81,8 @@ fn parse_css_modules(
 ) -> List(#(Module, Css)) {
   use styles_module <- list.filter_map(styles_modules)
   case styles_module.ast {
-    option.None -> Error(Nil)
-    option.Some(ast) ->
+    None -> Error(Nil)
+    Some(ast) ->
       Ok({
         #(styles_module, {
           let #(imports, exposed, properties) = find_sketch_imports(ast.imports)
@@ -140,8 +142,9 @@ fn function_definition(
   Ok(#(function.name, name, body))
 }
 
-fn skip(name) {
+fn skip_not_css_properties(name) {
   use <- bool.guard(when: name == "compose", return: Error(Nil))
+  use <- bool.guard(when: name == "none", return: Error(Nil))
   Ok(name)
 }
 
@@ -152,31 +155,85 @@ fn class_body(
 ) -> List(String) {
   use property <- list.filter_map(body)
   case property {
-    Call(Variable(name), param) ->
-      list.key_find(properties, name)
-      |> result.map(property_name)
-      |> result.try(skip)
-      |> result.map(fn(v) { "  " <> v <> ": " <> property_body(param) <> ";" })
+    Call(Variable(name), param) -> {
+      use name <- result.try(list.key_find(properties, name))
+      use name <- result.try(skip_not_css_properties(name))
+      let is_property = name == "property"
+      let is_areas = name == "grid_template_areas"
+      use <- bool.guard(when: is_property, return: property_to_string(param))
+      use <- bool.guard(when: is_areas, return: template_areas_to_string(param))
+      css_property(name, param)
+    }
     Call(FieldAccess(Variable(module_name), name), param) -> {
       let is_sketch = list.contains(imports, module_name)
       use <- bool.guard(when: !is_sketch, return: Error(Nil))
-      use <- bool.guard(when: result.is_error(skip(name)), return: Error(Nil))
-      let prop = property_name(name)
-      Ok("  " <> prop <> ": " <> property_body(param) <> ";")
+      let should_skip = result.is_error(skip_not_css_properties(name))
+      use <- bool.guard(when: should_skip, return: Error(Nil))
+      let is_property = name == "property"
+      let is_areas = name == "grid_template_areas"
+      use <- bool.guard(when: is_property, return: property_to_string(param))
+      use <- bool.guard(when: is_areas, return: template_areas_to_string(param))
+      css_property(name, param)
     }
     _ -> Error(Nil)
   }
 }
 
-fn property_name(name) {
-  name
-  |> string.split("-")
-  |> list.filter(fn(a) { a != "" })
-  |> string.join("-")
+fn css_property(name, param) {
+  let prop =
+    string.split(name, "-")
+    |> list.filter(fn(a) { a != "" })
+    |> string.join("-")
+  let body = property_body(param)
+  Ok("  " <> prop <> ": " <> body <> ";")
+}
+
+fn property_to_string(param) {
+  case param {
+    [Field(None, String(param)), Field(None, String(content))] ->
+      Ok("  " <> param <> ": " <> content <> ";")
+    _ -> Error(Nil)
+  }
+}
+
+fn template_areas_to_string(param) {
+  case param {
+    [Field(None, List(content, _))] ->
+      Ok(
+        "  grid-template-areas:\n"
+        <> list.map(content, string_to_string)
+        |> list.map(fn(a) { "    \"" <> a <> "\"" })
+        |> string.join("\n")
+        <> ";",
+      )
+    _ -> Error(Nil)
+  }
+}
+
+fn string_to_string(param) {
+  case param {
+    glance.String(m) -> m
+    _ -> ""
+  }
 }
 
 fn property_body(param) {
-  string.inspect(param)
+  case param {
+    [Field(None, String(content))] -> content
+    [Field(None, Call(FieldAccess(Variable(_), size), [Field(None, value)]))] ->
+      size_to_string(value) <> size
+    [Field(None, Call(Variable(size), [Field(None, value)]))] ->
+      size_to_string(value) <> size
+    _ -> string.inspect(param)
+  }
+}
+
+fn size_to_string(value) {
+  case value {
+    glance.Int(i) -> i
+    glance.Float(f) -> f
+    _ -> ""
+  }
 }
 
 pub fn generate_stylesheets(src: String, dst: String) {
