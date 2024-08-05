@@ -35,8 +35,8 @@ fn card_body() {
   ])
 }
 
-pub fn body(attrs, children) {
-  html.div(attrs, children, [
+fn body_style() {
+  sketch.class([
     sketch.line_height("0.75"),
     sketch.display("grid"),
     sketch.gap(px(10)),
@@ -50,8 +50,12 @@ pub fn body(attrs, children) {
   ])
 }
 
-pub fn topbar(attrs, children) {
-  html.div(attrs, children, [
+pub fn body(attrs, children) {
+  html.div(body_style(), attrs, children)
+}
+
+fn topbar_style() {
+  sketch.class([
     sketch.display("flex"),
     sketch.grid_area("topbar"),
     sketch.font_size(rem(1.2)),
@@ -60,12 +64,16 @@ pub fn topbar(attrs, children) {
   ])
 }
 
-pub fn headline(value, attrs, children) {
+pub fn topbar(attrs, children) {
+  html.div(topbar_style(), attrs, children)
+}
+
+fn headline_style(value) {
   let background = case value % 2 == 1 {
     True -> "var(--atomic-tangerine)"
     False -> "var(--periwinkle)"
   }
-  html.main(attrs, children, [
+  sketch.class([
     sketch.grid_area("headline"),
     sketch.background(background),
     sketch.text_align("center"),
@@ -76,42 +84,56 @@ pub fn headline(value, attrs, children) {
   ])
 }
 
+pub fn headline(value, attrs, children) {
+  html.main(headline_style(value), attrs, children)
+}
+
+fn headline_subtitle_style() {
+  sketch.class([sketch.font_size(rem(1.2)), sketch.font_weight("normal")])
+}
+
 pub fn headline_subtitle(attrs, children) {
-  html.div(attrs, children, [
-    sketch.font_size(rem(1.2)),
-    sketch.font_weight("normal"),
-  ])
+  html.div(headline_subtitle_style(), attrs, children)
+}
+
+fn headline_emphasize_style() {
+  sketch.class([sketch.font_size(rem(3.0)), sketch.font_weight("900")])
 }
 
 pub fn headline_emphasize(attrs, children) {
-  html.div(attrs, children, [
-    sketch.font_size(rem(3.0)),
-    sketch.font_weight("900"),
-  ])
+  html.div(headline_emphasize_style(), attrs, children)
 }
 
-pub fn counter(attrs, children) {
-  html.div(attrs, children, [
+fn counter_style() {
+  sketch.class([
     sketch.grid_area("counter"),
     sketch.background("var(--aquamarine)"),
     sketch.compose(card()),
   ])
 }
 
-pub fn counter_title(attrs, children) {
-  html.div(attrs, children, [])
+pub fn counter(attrs, children) {
+  html.div(counter_style(), attrs, children)
 }
 
-pub fn counter_subtitle(attrs, children) {
-  html.div(attrs, children, [
+pub fn counter_title(attrs, children) {
+  html.div_(attrs, children)
+}
+
+fn counter_subtitle_style() {
+  sketch.class([
     sketch.font_weight("normal"),
     sketch.font_size(rem(0.9)),
     sketch.first_child([sketch.padding_top(px(5))]),
   ])
 }
 
-pub fn button(attrs, children) {
-  html.button(attrs, children, [
+pub fn counter_subtitle(attrs, children) {
+  html.div(counter_subtitle_style(), attrs, children)
+}
+
+fn button_style() {
+  sketch.class([
     sketch.appearance("none"),
     sketch.border("none"),
     sketch.font_family("Lexend"),
@@ -128,8 +150,12 @@ pub fn button(attrs, children) {
   ])
 }
 
-pub fn value(attrs, children) {
-  html.div(attrs, children, [
+pub fn button(attrs, children) {
+  html.button(button_style(), attrs, children)
+}
+
+fn value_style() {
+  sketch.class([
     sketch.background("var(--turquoise)"),
     sketch.height(size.percent(100)),
     sketch.display("flex"),
@@ -139,38 +165,52 @@ pub fn value(attrs, children) {
   ])
 }
 
-pub fn value_content(attrs, children) {
-  html.div(attrs, children, [
-    sketch.width(size.ch(7)),
-    sketch.text_align("center"),
-  ])
+pub fn value(attrs, children) {
+  html.div(value_style(), attrs, children)
 }
 
-pub fn showcase(attrs, children) {
-  html.div(attrs, children, [
+fn value_content_style() {
+  sketch.class([sketch.width(size.ch(7)), sketch.text_align("center")])
+}
+
+pub fn value_content(attrs, children) {
+  html.div(value_content_style(), attrs, children)
+}
+
+fn showcase_style() {
+  sketch.class([
     sketch.grid_area("showcase"),
     sketch.background("var(--turquoise)"),
     sketch.compose(card()),
   ])
 }
 
-pub fn counter_body(attrs, children) {
-  html.div(attrs, children, [
-    sketch.compose(card_body()),
-    sketch.padding_bottom(px(40)),
-  ])
+pub fn showcase(attrs, children) {
+  html.div(showcase_style(), attrs, children)
 }
 
-pub fn counter_body_title(attrs, children) {
-  html.div(attrs, children, [
+fn counter_body_style() {
+  sketch.class([sketch.compose(card_body()), sketch.padding_bottom(px(40))])
+}
+
+pub fn counter_body(attrs, children) {
+  html.div(counter_body_style(), attrs, children)
+}
+
+fn counter_body_title_style() {
+  sketch.class([
     sketch.display("flex"),
     sketch.flex_direction("column"),
     sketch.gap(px(20)),
   ])
 }
 
-pub fn counter_counter(attrs, children) {
-  html.div(attrs, children, [
+pub fn counter_body_title(attrs, children) {
+  html.div(counter_body_title_style(), attrs, children)
+}
+
+fn counter_counter_style() {
+  sketch.class([
     sketch.display("grid"),
     sketch.align_items("center"),
     sketch.grid_template_columns("repeat(3, auto)"),
@@ -180,10 +220,18 @@ pub fn counter_counter(attrs, children) {
   ])
 }
 
+pub fn counter_counter(attrs, children) {
+  html.div(counter_counter_style(), attrs, children)
+}
+
+fn showcase_body_style() {
+  sketch.class([sketch.compose(card_body()), sketch.opacity(0.5)])
+}
+
 pub fn showcase_body(attrs, children) {
-  html.div(attrs, children, [sketch.compose(card_body()), sketch.opacity(0.5)])
+  html.div(showcase_body_style(), attrs, children)
 }
 
 pub fn card_title(attrs, children) {
-  html.div(attrs, children, [])
+  html.div_(attrs, children)
 }

@@ -1,5 +1,4 @@
 import gleam/int
-import gleam/io
 import gleam/list
 import gleam/option
 import gleam/pair
@@ -17,9 +16,9 @@ pub opaque type Element(msg) {
     key: String,
     namespace: String,
     tag: String,
+    class: option.Option(sketch.Class),
     attributes: List(Attribute(msg)),
     children: List(Element(msg)),
-    styles: List(sketch.Style),
   )
 }
 
@@ -33,21 +32,40 @@ pub fn text(content) {
 
 pub fn element(
   tag tag: String,
+  class class: sketch.Class,
   attributes attributes: List(Attribute(msg)),
   children children: List(Element(msg)),
-  styles styles: List(sketch.Style),
 ) {
-  Element("", "", tag, attributes, children, styles)
+  let class = option.Some(class)
+  Element("", "", tag, class, attributes, children)
+}
+
+pub fn element_(
+  tag tag: String,
+  attributes attributes: List(Attribute(msg)),
+  children children: List(Element(msg)),
+) {
+  Element("", "", tag, option.None, attributes, children)
 }
 
 pub fn namespaced(
   namespace namespace: String,
   tag tag: String,
+  class class: sketch.Class,
   attributes attributes: List(Attribute(msg)),
   children children: List(Element(msg)),
-  styles styles: List(sketch.Style),
 ) {
-  Element("", namespace, tag, attributes, children, styles)
+  let class = option.Some(class)
+  Element("", namespace, tag, class, attributes, children)
+}
+
+pub fn namespaced_(
+  namespace namespace: String,
+  tag tag: String,
+  attributes attributes: List(Attribute(msg)),
+  children children: List(Element(msg)),
+) {
+  Element("", namespace, tag, option.None, attributes, children)
 }
 
 pub fn fragment(children: List(Element(msg))) {
@@ -95,10 +113,10 @@ pub fn map(element: Element(a), mapper: fn(a) -> b) {
     Text(content) -> Text(content)
     Map(subtree) -> Map(fn() { map(subtree(), mapper) })
     Fragment(key, children) -> Fragment(key, list.map(children, map(_, mapper)))
-    Element(key, namespace, tag, attributes, children, styles) -> {
+    Element(key, namespace, tag, class, attributes, children) -> {
       let attributes = list.map(attributes, attribute.map(_, mapper))
       let children = list.map(children, map(_, mapper))
-      Element(key, namespace, tag, attributes, children, styles)
+      Element(key, namespace, tag, class, attributes, children)
     }
   }
 }
@@ -108,8 +126,10 @@ pub fn styled(element: el.Element(msg)) {
     vdom.Map(subtree) -> Map(fn() { styled(subtree()) })
     vdom.Text(content) -> Text(content)
     vdom.Fragment(elements, key) -> Fragment(key, list.map(elements, styled))
-    vdom.Element(key, namespace, tag, attrs, children, _, _) ->
-      Element(key, namespace, tag, attrs, list.map(children, styled), [])
+    vdom.Element(key, namespace, tag, attrs, children, _, _) -> {
+      let class = option.None
+      Element(key, namespace, tag, class, attrs, list.map(children, styled))
+    }
   }
 }
 
@@ -121,11 +141,7 @@ pub fn unstyled(cache: Cache, element: Element(msg)) {
     Fragment(key, children) ->
       unstyled_children(cache, children)
       |> pair.map_second(fn(node) { vdom.Fragment(node, key) })
-    Element(key, namespace, tag, attributes, children, styles) -> {
-      let class = case list.is_empty(styles) {
-        True -> option.None
-        False -> option.Some(sketch.class(styles))
-      }
+    Element(key, namespace, tag, class, attributes, children) -> {
       let class = option.map(class, sketch.class_name(_, cache))
       let class_name = option.map(class, pair.second)
       let cache = option.map(class, pair.first) |> option.unwrap(cache)
