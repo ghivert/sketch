@@ -5,20 +5,16 @@ some differences exists, and should be taken in consideration. Contrarily to JS,
 BEAM is a runtime which is actor oriented, and synchronous.
 
 To generate the real stylesheet the application will use, sketch uses an
-intermediate virtual stylesheet, called "cache". In BEAM, each process needs to
-create cache.
+intermediate virtual stylesheet, called "cache". In BEAM, a cache is a process,
+storing its own state.
 
 Just like with any app, creating a cache relies on
-[`create_cache`](https://hexdocs.pm/sketch/sketch.html#create_cache). Once
-created, a cache will live as long as you keep a reference on it. The strategy
-is to prepare and render the cache before and after every HTML generation. You
-can use [`prepare`](https://hexdocs.pm/sketch/sketch.html#prepare) and
-[`render`](https://hexdocs.pm/sketch/sketch.html#render) respectively before and
-after HTML generation. `prepare` will setup the cache as being the default cache
-for the current process, and `render` will turn the cache into a proper
-stylesheet, i.e. it will returns a `String`, containing the stylesheet content.
-All you have to do then is to embed the resulting string in your output HTML,
-and voilà!
+[`cache`](https://hexdocs.pm/sketch/sketch.html#cache). Once created, a cache
+will live as long as you not destroy it. To access the generated stylesheet,
+[`render`](https://hexdocs.pm/sketch/sketch.html#render) will turn the cache
+into a proper stylesheet, i.e. it will returns a `String`, containing the
+stylesheet content. All you have to do then is to embed the resulting string in
+your output HTML, and voilà!
 
 ## Example
 
@@ -39,9 +35,7 @@ import sketch/options as sketch_options
 pub fn main() {
   // Creates the cache here. A global cache will be used here, because the SSR
   // only uses one process.
-  let assert Ok(cache) =
-    sketch_options.node()
-    |> sketch.create_cache()
+  let assert Ok(cache) = sketch.cache(strategy: sketch.Persistent)
 
   // Helpers for mist server.
   let empty_body = mist.Bytes(bytes_builder.new())
@@ -51,10 +45,9 @@ pub fn main() {
     fn(req: Request(Connection)) -> Response(ResponseData) {
       // Before every request, prepare the cache, to wipe it from old data, and
       // mark it as "default" cache for the following render.
-      sketch.prepare(cache)
       case request.path_segments(req) {
         // Send the cache to your render function. It will be used before
-        // returing the HTML.
+        // returning the HTML.
         ["greet", name] -> greet(name, cache)
         _ -> not_found
       }
@@ -67,10 +60,10 @@ pub fn main() {
 }
 
 // Defines a class, here with simple class name.
-fn main_class() {
+fn main_class(cache) {
   [sketch.color("red")]
   |> sketch.class()
-  |> sketch.to_class_name()
+  |> sketch.to_class_name(cache)
 }
 
 fn greet(name: String, cache: sketch.Cache) -> Response(ResponseData) {
@@ -78,9 +71,10 @@ fn greet(name: String, cache: sketch.Cache) -> Response(ResponseData) {
   let greetings = "<div>Hey there, " <> name <> "!</div>"
 
   // Create your body, with the classes computed.
+  let #(class_name, cache) = main_class(cache)
   let body =
     [
-      "<div class=" <> main_class() <> ">",
+      "<div class=" <> class_name <> ">",
       "  <div>Hello World!</div>",
       greetings,
       "</div>",

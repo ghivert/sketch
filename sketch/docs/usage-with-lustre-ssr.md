@@ -1,5 +1,7 @@
 # Usage with Lustre SSR
 
+> Outdated documentation, should be rewritten.
+
 To use sketch with lustre SSR, little modifications are necessary. Sketch
 bundles helpers to work with lustre SSR right out-of-the-box. Just use them, and
 you'll be good to go. Like every lustre application, it has to be setuped with

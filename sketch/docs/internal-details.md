@@ -1,5 +1,7 @@
 # Internal details
 
+> Outdated documentation, should be rewritten.
+
 Sketch tries to be to CSS what the VDOM is to the DOM: the ultimate pain-free
 tool to manage the state of your CSS styles, without having to worry with CSS
 while leveraging CSS skills.

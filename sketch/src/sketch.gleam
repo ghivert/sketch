@@ -12,16 +12,12 @@ import sketch/media.{type Query}
 import sketch/size.{type Size}
 
 // Types
-// Most of them are opaque because they're just JS types from the FFI.
-// No one should use them directly outside of this package.
-// If you end up here reading this because you want to access internals,
-// consider forking the repo and working on it on your own, or submit a PR!
 
 /// Represents a CSS class, compiled.
 pub type Class =
   style.Class
 
-/// Manages the styles. Can be instanciated with [`create_cache`](#create_cache).
+/// Manages the styles. Can be instanciated with [`cache`](#cache).
 pub opaque type Cache {
   JsCache(cache: style.Cache)
   BeamCache(cache: cache.Cache)
@@ -30,19 +26,15 @@ pub opaque type Cache {
 /// Represents a Style. It can be a class composition, a media query with its
 /// sub-properties, a pseudo-selector with its sub-properties or a property
 /// directly.
-/// It's not possible to put a media query in a media query, and a pseudo-selector
-/// in a pseudo-selector.
 pub type Style =
   style.Style
 
-// FFI
-// Used exclusively in the package.
-// Most should not be exposed, or in a low-level way.
 pub fn class(styles: List(style.Style)) -> Class {
   style.class(styles)
 }
 
 @target(erlang)
+/// Render the content in the cache in proper CSS stylesheet.
 pub fn render(cache: Cache) {
   let assert BeamCache(cache) = cache
   cache.render(cache)
@@ -70,21 +62,20 @@ pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
   #(BeamCache(cache), cache.class_name(class, cache))
 }
 
+/// Strategy for the Cache. Two strategies are available as of now: ephemeral
+/// and persistent. In the first case, the cache is throwable, and every class
+/// generation wil rely on hashing function. It means two class names will be
+/// identical if their content are identical.
+/// In the second case, the cache is persistent, meaning it will keep the
+/// memories of the generated classes. On BEAM, only Persistent is allowed.
 pub type Strategy {
   Ephemeral
   Persistent
 }
 
 @target(javascript)
-/// Create a cache manager, managing the styles for every repaint. You can
-/// instanciate as much cache manager that you want, if you want to use multiple
-/// render lifecycle.
-/// You can output the styles directly in a node style in the DOM, or by pushing
-/// them directly in a CSSStyleSheet, at the document level. The choice is up to
-/// you at the initialization of the Cache.
-/// On BEAM, this setting is ignored.
-/// If you're using Lustre, you shouldn't have to worry about it, and consider
-/// it as internal low-level.
+/// Create a cache, managing the styles. You can instanciate as much cache as
+/// you want, if you need to manage different stylesheets.
 pub fn cache(strategy strategy: Strategy) {
   Ok(case strategy {
     Ephemeral -> JsCache(style.ephemeral())

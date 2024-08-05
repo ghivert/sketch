@@ -1,7 +1,7 @@
 name = "sketch_lustre"
 version = "1.0.0"
 
-description = "A CSS-in-Gleam package, made to work with frontend, backend, and directly with lustre!"
+description = "A Sketch runtime package, made to work with Lustre!"
 internal_modules = ["sketch/internals", "sketch/internals/*"]
 licences = ["MIT"]
 links = [{title = "Sponsor", href = "https://github.com/sponsors/ghivert"}]
