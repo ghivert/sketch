@@ -19,24 +19,26 @@ fn set_stylesheet(content: String, stylesheet: Dynamic) -> Nil {
   Nil
 }
 
-/// Internal use.
-pub opaque type StyleSheet {
+type StyleSheetOption {
   Node
   Document
   Shadow(root: ShadowRoot)
 }
 
+/// Options to indicate where to output the StyleSheet.
+/// Can be a Node in DOM, a `CSSStyleSheet` in `document` or in a shadow root.
 pub opaque type Options {
-  Options(stylesheet: StyleSheet)
+  Options(stylesheet: StyleSheetOption)
 }
 
-type Stylesheet {
+type StyleSheet {
   CssStyleSheet(Dynamic)
   NodeStyleSheet
 }
 
 /// Wrap the view function in lustre. Be careful, on BEAM, sketch will add an
-/// additional `div` at the root of the HTML tree, to inject the styles in the app.
+/// additional `div` at the root of the HTML tree, to inject the styles in the
+/// app, currently due to a fragment bug.
 /// This should have no impact on your app.
 pub fn compose(
   options: Options,
@@ -123,16 +125,19 @@ pub fn ssr(el: element.Element(a), cache: Cache) -> el.Element(a) {
   }
 }
 
+/// Output the StyleSheet in a `style` tag in DOM.
 pub fn node() -> Options {
   Options(stylesheet: Node)
 }
 
-/// document cannot be used on server.
+/// Output the StyleSheet in a `CSSStyleSheet` in `document`.
+/// `document` cannot be used on server.
 pub fn document() -> Options {
   Options(stylesheet: Document)
 }
 
-/// shadow cannot be used on server.
+/// Output the StyleSheet in a `CSSStyleSheet` in a shadow root.
+/// `shadow` cannot be used on server.
 pub fn shadow(root: ShadowRoot) -> Options {
   Options(stylesheet: Shadow(root: root))
 }

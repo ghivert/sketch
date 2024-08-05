@@ -1,3 +1,9 @@
+//// This module has no vocation to be used programmatically currently. Any PR
+//// to add programmatic support would be helpful!
+////
+//// In case you're looking to use it programmatically, heads up to
+//// `generate_stylesheets`, that should work as expected!
+
 import argv
 import glance.{
   type Expression, Call, Discarded, Expression, Field, FieldAccess, List, Module,
@@ -14,11 +20,11 @@ import glint
 import simplifile
 import sketch/css/error
 
-pub type Module {
+type Module {
   Module(path: String, content: String, ast: Option(glance.Module))
 }
 
-pub type Css {
+type Css {
   Css(classes: List(#(String, String)), content: List(String))
 }
 
@@ -477,7 +483,18 @@ fn size_to_string(value) {
   }
 }
 
-pub fn generate_stylesheets(src: String, dst: String, src_interfaces: String) {
+/// Generate stylesheets from Gleam style definitions files. Recursively extract
+/// all files ending with `_styles.gleam`, `_css.gleam` or `_sketch.gleam` to
+/// proper stylesheets, and output some files interfaces to interact with them.
+///
+/// `src` should be a relative path containing the source files.
+/// `dst` should be a relative path where to output CSS files.
+/// `interface` should be a relative path where to output Gleam files.
+pub fn generate_stylesheets(
+  src src: String,
+  dst dst: String,
+  interface src_interfaces: String,
+) {
   use is_dir <- result.try(simplifile.is_directory(src) |> error.simplifile)
   use <- bool.guard(when: !is_dir, return: error.not_a_directory(src))
   use modules <- result.map(recursive_modules_read(src) |> error.simplifile)
@@ -558,13 +575,13 @@ fn css() -> glint.Command(Nil) {
   let assert Ok(src) = src(flags)
   let assert Ok(interface) = interface(flags)
   let assert Ok(cwd) = simplifile.current_directory()
-  let src_folder = string.join([cwd, src], "/")
-  let dst_folder = string.join([cwd, dst], "/")
-  let interface_folder = string.join([cwd, interface], "/")
-  io.println("Compiling Gleam styles files in " <> src_folder)
-  io.println("Writing CSS files to " <> dst_folder)
-  io.println("Writing interfaces files to " <> interface_folder)
-  let _ = generate_stylesheets(src_folder, dst_folder, interface)
+  let src = string.join([cwd, src], "/")
+  let dst = string.join([cwd, dst], "/")
+  let interface = string.join([cwd, interface], "/")
+  io.println("Compiling Gleam styles files in " <> src)
+  io.println("Writing CSS files to " <> dst)
+  io.println("Writing interfaces files to " <> interface)
+  let _ = generate_stylesheets(src:, dst:, interface:)
   io.println("Done!")
   Nil
 }
