@@ -12,7 +12,7 @@ packages = [
   { name = "gleeunit", version = "1.2.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleeunit", source = "hex", outer_checksum = "F7A7228925D3EE7D0813C922E062BFD6D7E9310F0BEE585D3A42F3307E3CFD13" },
   { name = "lustre", version = "4.3.1", build_tools = ["gleam"], requirements = ["gleam_erlang", "gleam_json", "gleam_otp", "gleam_stdlib"], otp_app = "lustre", source = "hex", outer_checksum = "A0010C17CE8C847A2B979CE9FE68FB94AE9D75247D1173594C10B7C2FD3C83F2" },
   { name = "plinth", version = "0.4.9", build_tools = ["gleam"], requirements = ["conversation", "gleam_javascript", "gleam_json", "gleam_stdlib"], otp_app = "plinth", source = "hex", outer_checksum = "663C788C00FF908662B47B78B1CEBE1260AB814B45531AA42EBAEE974CDC7E27" },
-  { name = "sketch", version = "2.3.0", build_tools = ["gleam"], requirements = ["gleam_erlang", "gleam_otp", "gleam_stdlib"], source = "local", path = "../sketch" },
+  { name = "sketch", version = "3.0.0", build_tools = ["gleam"], requirements = ["gleam_erlang", "gleam_otp", "gleam_stdlib"], otp_app = "sketch", source = "hex", outer_checksum = "6D851AECDB2DF4EFC4E93AA11AF91B7F443C044CA01AA47703B41A73730FC6C5" },
   { name = "thoas", version = "1.2.1", build_tools = ["rebar3"], requirements = [], otp_app = "thoas", source = "hex", outer_checksum = "E38697EDFFD6E91BD12CEA41B155115282630075C2A727E7A6B2947F5408B86A" },
 ]
 
@@ -20,5 +20,5 @@ packages = [
 gleam_stdlib = { version = ">= 0.34.0 and < 2.0.0" }
 gleeunit = { version = ">= 1.0.0 and < 2.0.0" }
 lustre = { version = ">= 4.3.1 and < 5.0.0" }
-plinth = { version = ">= 0.4.9 and < 1.0.0"}
-sketch = { path = "../sketch" }
+plinth = { version = ">= 0.4.9 and < 1.0.0" }
+sketch = { version = ">= 3.0.0 and < 4.0.0" }
