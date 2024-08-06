@@ -43,7 +43,7 @@ pub fn percent(value: Int) {
 }
 
 pub fn percent_(value: Float) {
-  Px(value)
+  Pct(value)
 }
 
 pub fn vh(value: Int) {
