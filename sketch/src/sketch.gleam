@@ -11,6 +11,7 @@ import sketch/internals/cache/setup as cache
 import sketch/internals/style
 import sketch/media.{type Query}
 import sketch/size.{type Size}
+import sketch/transform.{type Transform}
 
 // Types
 
@@ -1983,8 +1984,8 @@ pub fn touch_action(value: String) {
   property("touch-action", value)
 }
 
-pub fn transform(transform: String) {
-  property("transform", transform)
+pub fn transform(transform: Transform) {
+  property("transform", transform.to_string(transform))
 }
 
 pub fn transform_box(transform_box: String) {
