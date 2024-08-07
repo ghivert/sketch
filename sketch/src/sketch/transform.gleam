@@ -74,6 +74,10 @@ pub fn scale_y(y: Float) {
   ScaleY(y)
 }
 
+pub fn rotate(value: Angle) {
+	Rotate(value)
+}
+
 pub fn skew_x(x: Angle) {
   SkewX(x)
 }
