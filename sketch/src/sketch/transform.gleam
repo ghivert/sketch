@@ -77,7 +77,7 @@ pub fn scale_y(y: Float) {
 }
 
 pub fn rotate(value: Angle) {
-	Rotate(value)
+  Rotate(value)
 }
 
 pub fn skew_x(x: Angle) {
@@ -89,7 +89,7 @@ pub fn skew_y(x: Angle) {
 }
 
 pub fn none() {
-	None
+  None
 }
 
 pub fn list(values: List(TransformFunction)) {
