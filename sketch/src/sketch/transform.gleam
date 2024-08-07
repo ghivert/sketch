@@ -46,6 +46,7 @@ pub fn translate2(x: Size, y: Size) {
   Translate(x, y)
 }
 
+/// translate(x) is translate2(x, size.percent(0))
 pub fn translate(x: Size) {
   translate2(x, size.percent(0))
 }
@@ -62,8 +63,9 @@ pub fn scale2(x: Float, y: Float) {
   Scale(x, y)
 }
 
-pub fn scale(x: Float, ) {
-  Scale(x, x)
+/// scale(x) is scale2(x, x)
+pub fn scale(x: Float) {
+  scale2(x, x)
 }
 
 pub fn scale_x(x: Float) {
