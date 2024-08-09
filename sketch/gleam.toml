@@ -1,5 +1,5 @@
 name = "sketch"
-version = "3.0.0"
+version = "3.0.1"
 
 description = "A CSS-in-Gleam package, foundation for CSS packages!"
 internal_modules = ["sketch/internals", "sketch/internals/*"]
@@ -9,10 +9,8 @@ repository = {type = "github", user = "ghivert", repo = "sketch"}
 
 [documentation]
 pages = [
-  {title = " ", path = "#", source = ""},
-  # {title = "Internal Details", path = "internal-details.html", source = "./docs/internal-details.md"},
-  {title = "Usage with BEAM", path = "usage-with-beam.html", source = "./docs/usage-with-beam.md"},
-  # {title = "Usage with Lustre SSR", path = "usage-with-lustre-ssr.html", source = "./docs/usage-with-lustre-ssr.md"},
+  {title = " ", path = "#", source = ""}, # {title = "Internal Details", path = "internal-details.html", source = "./docs/internal-details.md"},
+  {title = "Usage with BEAM", path = "usage-with-beam.html", source = "./docs/usage-with-beam.md"}, # {title = "Usage with Lustre SSR", path = "usage-with-lustre-ssr.html", source = "./docs/usage-with-lustre-ssr.md"},
 ]
 
 [dependencies]
