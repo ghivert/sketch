@@ -4,6 +4,7 @@
 import gleam/float
 import gleam/int
 import gleam/list
+import gleam/pair
 import gleam/result
 import gleam/string
 import sketch/internals/cache/setup as cache
@@ -33,33 +34,22 @@ pub fn class(styles: List(style.Style)) -> Class {
   style.class(styles)
 }
 
-@target(erlang)
 /// Render the content in the cache in proper CSS stylesheet.
 pub fn render(cache: Cache) {
-  let assert BeamCache(cache) = cache
-  cache.render(cache)
+  case cache {
+    BeamCache(cache:) -> cache.render(cache)
+    JsCache(cache:) -> style.render(cache)
+  }
 }
 
-@target(javascript)
-pub fn render(cache: Cache) {
-  let assert JsCache(cache) = cache
-  style.render(cache)
-}
-
-@target(javascript)
 /// Convert a `Class` to its proper class name, to use it anywhere in your
 /// application. It can have the form `class1` or `class1 class2` in case of
 /// classes composition.
 pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
-  let assert JsCache(cache) = cache
-  let #(cache, class_name) = style.class_name(class, cache)
-  #(JsCache(cache), class_name)
-}
-
-@target(erlang)
-pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
-  let assert BeamCache(cache) = cache
-  #(BeamCache(cache), cache.class_name(class, cache))
+  case cache {
+    JsCache(c) -> style.class_name(class, c) |> pair.map_first(JsCache)
+    BeamCache(c) -> cache.class_name(class, c) |> pair.map_first(BeamCache)
+  }
 }
 
 /// Strategy for the Cache. Two strategies are available as of now: ephemeral
@@ -67,7 +57,7 @@ pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
 /// generation wil rely on hashing function. It means two class names will be
 /// identical if their content are identical.
 /// In the second case, the cache is persistent, meaning it will keep the
-/// memories of the generated classes. On BEAM, only Persistent is allowed.
+/// memories of the generated classes.
 pub type Strategy {
   Ephemeral
   Persistent
@@ -76,6 +66,7 @@ pub type Strategy {
 @target(javascript)
 /// Create a cache, managing the styles. You can instanciate as much cache as
 /// you want, if you need to manage different stylesheets.
+/// Instanciating an `Ephemeral` _always_ succeed.
 pub fn cache(strategy strategy: Strategy) {
   Ok(case strategy {
     Ephemeral -> JsCache(style.ephemeral())
@@ -84,8 +75,13 @@ pub fn cache(strategy strategy: Strategy) {
 }
 
 @target(erlang)
-pub fn cache(strategy _strategy: Strategy) {
-  cache.persistent() |> result.map(BeamCache)
+pub fn cache(strategy strategy: Strategy) {
+  case strategy {
+    Ephemeral -> Ok(BeamCache(cache.ephemeral()))
+    Persistent ->
+      cache.persistent()
+      |> result.map(BeamCache)
+  }
 }
 
 // Properties

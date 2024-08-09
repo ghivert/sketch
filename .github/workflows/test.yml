@@ -8,16 +8,53 @@ on:
   pull_request:
 
 jobs:
-  test:
+  test-sketch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: "26.0.2"
-          gleam-version: "1.0.0"
-          rebar3-version: "3"
+          otp-version: '26.0.2'
+          gleam-version: '1.4.1'
+          rebar3-version: '3'
           # elixir-version: "1.15.4"
       - run: gleam deps download
+        working-directory: sketch
       - run: gleam test
+        working-directory: sketch
       - run: gleam format --check src test
+        working-directory: sketch
+
+  test-sketch-css:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: '26.0.2'
+          gleam-version: '1.4.1'
+          rebar3-version: '3'
+          # elixir-version: "1.15.4"
+      - run: gleam deps download
+        working-directory: sketch_css
+      - run: gleam test
+        working-directory: sketch_css
+      - run: gleam format --check src test
+        working-directory: sketch_css
+
+  test-sketch-lustr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: '26.0.2'
+          gleam-version: '1.4.1'
+          rebar3-version: '3'
+          # elixir-version: "1.15.4"
+      - run: gleam deps download
+        working-directory: sketch_lustre
+      - run: gleam test
+        working-directory: sketch_lustre
+      - run: gleam format --check src test
+        working-directory: sketch_lustre

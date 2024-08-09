@@ -8,7 +8,7 @@ import sketch
 import sketch/lustre as sketch_lustre
 
 pub fn main() {
-  let assert Ok(cache) = sketch.cache(strategy: sketch.Persistent)
+  let assert Ok(cache) = sketch.cache(strategy: sketch.Ephemeral)
   let assert Ok(_) =
     fn(_) { greet(cache) }
     |> mist.new()

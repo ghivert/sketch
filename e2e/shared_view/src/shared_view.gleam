@@ -17,10 +17,8 @@ pub type Msg {
 }
 
 /// Defines the standard app, used everywhere in Lustre applications.
-/// For cross-technologies applications, only persistent cache can be used,
-/// because BEAM does not support ephemeral cache at the moment.
 pub fn app() {
-  let assert Ok(cache) = sketch.cache(strategy: sketch.Persistent)
+  let assert Ok(cache) = sketch.cache(strategy: sketch.Ephemeral)
   sketch_lustre.node()
   |> sketch_lustre.compose(view, cache)
   |> lustre.simple(fn(_) { 0 }, update, _)

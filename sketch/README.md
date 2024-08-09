@@ -60,8 +60,7 @@ import sketch
 import sketch/lustre as sketch_lustre
 
 pub fn main() {
-  // Initialise the cache. Two strategies can be used in browser, only one
-  // on server-side.
+  // Initialise the cache. Two strategies can be used. Ephemeral caches are designed as throw-away caches.
   let assert Ok(cache) = sketch.cache(strategy: sketch.Ephemeral)
   // Select the output of the generated stylesheet.
   sketch_lustre.node()
