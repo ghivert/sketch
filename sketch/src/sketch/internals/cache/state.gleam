@@ -2,7 +2,6 @@
 
 import gleam/erlang/process.{type Subject}
 import gleam/otp/actor
-import gleam/string
 import sketch/internals/style
 
 pub type Request {
