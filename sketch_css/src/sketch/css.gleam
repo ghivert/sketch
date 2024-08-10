@@ -6,8 +6,8 @@
 
 import argv
 import glance.{
-  type Expression, Call, Discarded, Expression, Field, FieldAccess, List, Module,
-  Named, String, Variable,
+  type Expression, Call, Discarded, Expression, Field, FieldAccess, List, Named,
+  String, Variable,
 }
 import gleam/bool
 import gleam/io
