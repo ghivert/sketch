@@ -34,22 +34,32 @@ pub fn class(styles: List(style.Style)) -> Class {
   style.class(styles)
 }
 
+@target(javascript)
 /// Render the content in the cache in proper CSS stylesheet.
 pub fn render(cache: Cache) {
-  case cache {
-    BeamCache(cache:) -> cache.render(cache)
-    JsCache(cache:) -> style.render(cache)
-  }
+  let assert JsCache(cache:) = cache
+  style.render(cache)
 }
 
+@target(erlang)
+pub fn render(cache: Cache) {
+  let assert BeamCache(cache:) = cache
+  cache.render(cache)
+}
+
+@target(javascript)
 /// Convert a `Class` to its proper class name, to use it anywhere in your
 /// application. It can have the form `class1` or `class1 class2` in case of
 /// classes composition.
 pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
-  case cache {
-    JsCache(c) -> style.class_name(class, c) |> pair.map_first(JsCache)
-    BeamCache(c) -> cache.class_name(class, c) |> pair.map_first(BeamCache)
-  }
+  let assert JsCache(c) = cache
+  style.class_name(class, c) |> pair.map_first(JsCache)
+}
+
+@target(erlang)
+pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
+  let assert BeamCache(c) = cache
+  cache.class_name(class, c) |> pair.map_first(BeamCache)
 }
 
 /// Strategy for the Cache. Two strategies are available as of now: ephemeral
