@@ -1,16 +1,10 @@
 import gleam/float
 import gleam/list
-import gleam/option.{type Option}
 import gleam/string
 import sketch/angle.{type Angle}
 import sketch/size.{type Size}
 
 pub opaque type Transform {
-  None
-  TransformList(List(TransformFunction))
-}
-
-pub opaque type TransformFunction {
   Translate(Size, Size)
   TranslateX(Size)
   TranslateY(Size)
@@ -22,7 +16,7 @@ pub opaque type TransformFunction {
   SkewY(Angle)
 }
 
-fn transform_function_to_string(value: TransformFunction) {
+fn transform_to_string(value: Transform) {
   case value {
     Translate(x, y) ->
       "translate("
@@ -46,7 +40,7 @@ pub fn translate2(x: Size, y: Size) {
   Translate(x, y)
 }
 
-/// translate(x) is translate2(x, size.percent(0))
+/// `translate(x)` is `translate2(x, size.percent(0))`
 pub fn translate(x: Size) {
   translate2(x, size.percent(0))
 }
@@ -63,7 +57,7 @@ pub fn scale2(x: Float, y: Float) {
   Scale(x, y)
 }
 
-/// scale(x) is scale2(x, x)
+/// `scale(x)` is `scale2(x, x)`
 pub fn scale(x: Float) {
   scale2(x, x)
 }
@@ -88,19 +82,11 @@ pub fn skew_y(x: Angle) {
   SkewY(x)
 }
 
-pub fn none() {
-  None
-}
-
-pub fn list(values: List(TransformFunction)) {
-  TransformList(values)
-}
-
-pub fn to_string(value: Transform) {
+pub fn to_string(value: List(Transform)) {
   let content = case value {
-    None -> "none"
-    TransformList(transform_list) ->
-      list.map(transform_list, transform_function_to_string) |> string.join(" ")
+    [] -> "none"
+    transform_list ->
+      list.map(transform_list, transform_to_string) |> string.join(" ")
   }
 
   "transform: " <> content
