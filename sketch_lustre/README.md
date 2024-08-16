@@ -7,12 +7,6 @@
 
 ## Setup
 
-Sketch focuses on the concept of generating CSS in a performant way. To do it,
-Sketch needs to use a cache. The cache allows to avoid repeating unneeded
-computations, and ensure consistency across repaints. Because the browser likes
-static CSS, using a cache make sure the browser will not undergo unneeded
-computations to recompute styles at every repaint.
-
 If you're using Lustre (which is strongly recommended), `sketch_lustre` got you.
 `sketch_lustre` exposes one entrypoint, `sketch/lustre`, containing everything
 needed to get started.
@@ -74,7 +68,7 @@ fn main_style() {
 
 fn view(model: Int) {
   html.div(main_style(), [], [
-    html.div_([], [h.text(int.to_string(model)]),
+    html.div_([], [h.text(int.to_string(model))]),
   ])
 }
 ```

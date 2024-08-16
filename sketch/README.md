@@ -39,15 +39,17 @@ gleam add sketch sketch_lustre
 gleam add sketch sketch_css
 ```
 
-## Sketch Lustre
-
-### Setup
+## Core concept
 
 Sketch focuses on the concept of generating CSS in a performant way. To do it,
 Sketch needs to use a cache. The cache allows to avoid repeating unneeded
 computations, and ensure consistency across repaints. Because the browser likes
 static CSS, using a cache make sure the browser will not undergo unneeded
 computations to recompute styles at every repaint.
+
+## Sketch Lustre
+
+### Setup
 
 If you're using Lustre (which is strongly recommended), `sketch_lustre` got you.
 `sketch_lustre` exposes one entrypoint, `sketch/lustre`, containing everything
@@ -109,7 +111,7 @@ fn main_style() {
 
 fn view(model: Int) {
   html.div(main_style(), [], [
-    html.div_([], [h.text(int.to_string(model)]),
+    html.div_([], [h.text(int.to_string(model))]),
   ])
 }
 ```
@@ -136,6 +138,68 @@ styles from the rest of the application. To do it, you can use
 [`sketch/options.shadow_root()`](https://hexdocs.pm/sketch/sketch/options.html#shadow_root).
 In the same way you can initialize the cache to render in document or in a
 `style` node, you can now use a Shadow Root to paint styles in your application!
+
+## Sketch Redraw
+
+### Setup
+
+When you're using Redraw, `sketch_redraw` covers you. `sketch_redraw` exposes
+one entrypoint, `sketch/redraw`, containing everything needed to get started.
+
+```gleam
+// main.gleam
+import redraw
+import sketch
+import sketch/redraw as sketch_redraw
+
+pub fn main() {
+  let root = client.create_root("root")
+  client.render(root, redraw.strict_mode([
+    // Initialise the cache. Sketch Redraw handles the details for you.
+    sr.provider([
+      // Here comes your components!
+    ])
+  ]))
+}
+```
+
+### Usage
+
+`sketch_redraw` exposes one module to help you build your site, similarly to
+redraw: `sketch/redraw/html`. `html` is simply a supercharged component,
+accepting a `sketch.Class` as first argument, and applies that style to the
+node. Because it's a simple component, `sketch/redraw/html` and `redraw/html`
+can be mixed in the same code without issue! Because of that property,
+`sketch_redraw` _does not_ expose `text` and `none` function at that time.
+
+```gleam
+import redraw/html as h
+import sketch
+import sketch/redraw/html
+import sketch/size.{px}
+
+fn main_style() {
+  sketch.class([
+    sketch.background("red"),
+    sketch.font_size(px(16)),
+  ])
+}
+
+fn view(model: Int) {
+  html.div(main_style(), [], [
+    h.div([], [
+      h.text(int.to_string(model))
+    ]),
+  ])
+}
+```
+
+And you're done! Enjoy your Redraw app, Sketch-enhanced!
+
+### Final notes
+
+Sketch Redraw tries to integrate nicely with React Devtools! In case you're
+seeing something weird, signal the bug!
 
 ## Sketch CSS
 
