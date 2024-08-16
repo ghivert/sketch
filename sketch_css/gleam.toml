@@ -1,5 +1,5 @@
 name = "sketch_css"
-version = "1.0.0"
+version = "1.1.0"
 
 description = "A Sketch runtime package, made to generate CSS!"
 internal_modules = ["sketch/internals", "sketch/internals/*"]
@@ -8,12 +8,12 @@ links = [{title = "Sponsor", href = "https://github.com/sponsors/ghivert"}]
 repository = {type = "github", user = "ghivert", repo = "sketch"}
 
 [dependencies]
-gleam_stdlib = ">= 0.34.0 and < 2.0.0"
-glance = ">= 0.11.0 and < 1.0.0"
-simplifile = ">= 2.0.1 and < 3.0.0"
-gleam_erlang = ">= 0.25.0 and < 1.0.0"
-glint = ">= 1.0.1 and < 2.0.0"
 argv = ">= 1.0.2 and < 2.0.0"
+glance = ">= 0.11.0 and < 1.0.0"
+gleam_erlang = ">= 0.25.0 and < 1.0.0"
+gleam_stdlib = ">= 0.34.0 and < 2.0.0"
+glint = ">= 1.0.1 and < 2.0.0"
+simplifile = ">= 2.0.1 and < 3.0.0"
 sketch = ">= 3.0.0 and < 4.0.0"
 
 [dev-dependencies]

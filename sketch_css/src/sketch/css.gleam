@@ -1,9 +1,3 @@
-//// This module has no vocation to be used programmatically currently. Any PR
-//// to add programmatic support would be helpful!
-////
-//// In case you're looking to use it programmatically, heads up to
-//// `generate_stylesheets`, that should work as expected!
-
 import argv
 import glance.{
   type Expression, Call, Discarded, Expression, Field, FieldAccess, List, Named,
@@ -20,11 +14,15 @@ import glint
 import simplifile
 import sketch/css/error
 
-type Module {
+/// Definition of a Gleam styles definitions file. `path` is up to you, to
+/// retrieve your module easily. `content` should be a valid Gleam source file.
+pub type Module {
   Module(path: String, content: String, ast: Option(glance.Module))
 }
 
-type Css {
+/// Definition of a StyleSheet. `classes` ensures a mapping between functions
+/// and class names. `content` is the corresponding CSS classes.
+pub type Css {
   Css(classes: List(#(String, String)), content: List(String))
 }
 
@@ -47,9 +45,9 @@ fn parse_modules(modules: List(Module)) {
   Module(..module, ast: Some(ast))
 }
 
-fn select_css_files(modules: List(Module)) {
+fn select_css_files(modules: List(Module), interface: String) {
   use module <- list.filter(modules)
-  !string.contains(module.path, "/sketch/styles")
+  !string.contains(module.path, interface)
   && {
     string.ends_with(module.path, "_styles.gleam")
     || string.ends_with(module.path, "_css.gleam")
@@ -498,9 +496,7 @@ pub fn generate_stylesheets(
   use is_dir <- result.try(simplifile.is_directory(src) |> error.simplifile)
   use <- bool.guard(when: !is_dir, return: error.not_a_directory(src))
   use modules <- result.map(recursive_modules_read(src) |> error.simplifile)
-  let modules = parse_modules(modules)
-  let styles_modules = select_css_files(modules)
-  let css_modules = parse_css_modules(styles_modules, modules)
+  let css_modules = compute_styles_modules(modules, src_interfaces)
   let _ = simplifile.create_directory_all(dst)
   use #(module, css_module) <- list.each(css_modules)
   let dst_path = string.replace(module.path, each: src, with: dst)
@@ -519,6 +515,20 @@ pub fn generate_stylesheets(
       })
       |> string.join("\n\n")
     })
+}
+
+/// Compute the content of a bunch of Gleam Styles modules.
+/// This function is designed to be used outside of the CLI, if you need it in
+/// your frontend for example.
+pub fn compute_modules(modules: List(Module)) {
+  let styles_modules = parse_modules(modules)
+  parse_css_modules(styles_modules, modules)
+}
+
+fn compute_styles_modules(modules: List(Module), interface: String) {
+  let modules = parse_modules(modules)
+  let styles_modules = select_css_files(modules, interface)
+  parse_css_modules(styles_modules, modules)
 }
 
 fn remove_file(dst_path) {
@@ -586,6 +596,13 @@ fn css() -> glint.Command(Nil) {
   Nil
 }
 
+/// The `main` function is used as an entrypoint for Sketch CSS. That function
+/// not meant to be used in your code, but is called when you use `gleam run`
+/// from the command line.
+///
+/// ```
+/// gleam run -m sketch/css
+/// ```
 pub fn main() {
   glint.new()
   |> glint.with_name("Sketch CSS")
