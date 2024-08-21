@@ -1,5 +1,5 @@
 {
-  "name": "sketch_landing",
+  "name": "redraw_example",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -15,7 +15,6 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@chouqueth/gleam": "^1.4.1",
     "@eslint/js": "^9.9.0",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/react": "^18.3.3",

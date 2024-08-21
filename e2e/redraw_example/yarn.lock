@@ -162,18 +162,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chouqueth/gleam@npm:^1.4.1":
-  version: 1.4.1
-  resolution: "@chouqueth/gleam@npm:1.4.1"
-  dependencies:
-    cachedir: "npm:^2.4.0"
-    tar: "npm:^7.1.0"
-  bin:
-    gleam: bin/cli.mjs
-  checksum: 10c0/d7238a489c699ff1fdab1701603e3066132826eb005926b1e3f2ed4fae0a894c34016cf8b32ac88495c2359a6ec4d447697a09fe3680ddd6b441611b4f42efb4
-  languageName: node
-  linkType: hard
-
 "@esbuild/aix-ppc64@npm:0.21.5":
   version: 0.21.5
   resolution: "@esbuild/aix-ppc64@npm:0.21.5"
@@ -574,15 +562,6 @@ __metadata:
     wrap-ansi: "npm:^8.1.0"
     wrap-ansi-cjs: "npm:wrap-ansi@^7.0.0"
   checksum: 10c0/b1bf42535d49f11dc137f18d5e4e63a28c5569de438a221c369483731e9dac9fb797af554e8bf02b6192d1e5eba6e6402cf93900c3d0ac86391d00d04876789e
-  languageName: node
-  linkType: hard
-
-"@isaacs/fs-minipass@npm:^4.0.0":
-  version: 4.0.1
-  resolution: "@isaacs/fs-minipass@npm:4.0.1"
-  dependencies:
-    minipass: "npm:^7.0.4"
-  checksum: 10c0/c25b6dc1598790d5b55c0947a9b7d111cfa92594db5296c3b907e2f533c033666f692a3939eadac17b1c7c40d362d0b0635dc874cbfe3e70db7c2b07cc97a5d2
   languageName: node
   linkType: hard
 
@@ -1240,13 +1219,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cachedir@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "cachedir@npm:2.4.0"
-  checksum: 10c0/76bff9009f2c446cd3777a4aede99af634a89670a67012b8041f65e951d3d36cefe8940341ea80c72219ee9913fa1f6146824cd9dfe9874a4bded728af7e6d76
-  languageName: node
-  linkType: hard
-
 "call-bind@npm:^1.0.2, call-bind@npm:^1.0.5, call-bind@npm:^1.0.6, call-bind@npm:^1.0.7":
   version: 1.0.7
   resolution: "call-bind@npm:1.0.7"
@@ -1292,13 +1264,6 @@ __metadata:
   version: 2.0.0
   resolution: "chownr@npm:2.0.0"
   checksum: 10c0/594754e1303672171cc04e50f6c398ae16128eb134a88f801bf5354fd96f205320f23536a045d9abd8b51024a149696e51231565891d4efdab8846021ecf88e6
-  languageName: node
-  linkType: hard
-
-"chownr@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "chownr@npm:3.0.0"
-  checksum: 10c0/43925b87700f7e3893296c8e9c56cc58f926411cce3a6e5898136daaf08f08b9a8eb76d37d3267e707d0dcc17aed2e2ebdf5848c0c3ce95cf910a919935c1b10
   languageName: node
   linkType: hard
 
@@ -2153,7 +2118,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^10.2.2, glob@npm:^10.3.10, glob@npm:^10.3.7":
+"glob@npm:^10.2.2, glob@npm:^10.3.10":
   version: 10.4.5
   resolution: "glob@npm:10.4.5"
   dependencies:
@@ -2890,7 +2855,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minipass@npm:^5.0.0 || ^6.0.2 || ^7.0.0, minipass@npm:^7.0.2, minipass@npm:^7.0.3, minipass@npm:^7.0.4, minipass@npm:^7.1.2":
+"minipass@npm:^5.0.0 || ^6.0.2 || ^7.0.0, minipass@npm:^7.0.2, minipass@npm:^7.0.3, minipass@npm:^7.1.2":
   version: 7.1.2
   resolution: "minipass@npm:7.1.2"
   checksum: 10c0/b0fd20bb9fb56e5fa9a8bfac539e8915ae07430a619e4b86ff71f5fc757ef3924b23b2c4230393af1eda647ed3d75739e4e0acb250a6b1eb277cf7f8fe449557
@@ -2907,31 +2872,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minizlib@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "minizlib@npm:3.0.1"
-  dependencies:
-    minipass: "npm:^7.0.4"
-    rimraf: "npm:^5.0.5"
-  checksum: 10c0/82f8bf70da8af656909a8ee299d7ed3b3372636749d29e105f97f20e88971be31f5ed7642f2e898f00283b68b701cc01307401cdc209b0efc5dd3818220e5093
-  languageName: node
-  linkType: hard
-
 "mkdirp@npm:^1.0.3":
   version: 1.0.4
   resolution: "mkdirp@npm:1.0.4"
   bin:
     mkdirp: bin/cmd.js
   checksum: 10c0/46ea0f3ffa8bc6a5bc0c7081ffc3907777f0ed6516888d40a518c5111f8366d97d2678911ad1a6882bf592fa9de6c784fea32e1687bb94e1f4944170af48a5cf
-  languageName: node
-  linkType: hard
-
-"mkdirp@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "mkdirp@npm:3.0.1"
-  bin:
-    mkdirp: dist/cjs/src/bin.js
-  checksum: 10c0/9f2b975e9246351f5e3a40dcfac99fcd0baa31fbfab615fe059fb11e51f10e4803c63de1f384c54d656e4db31d000e4767e9ef076a22e12a641357602e31d57d
   languageName: node
   linkType: hard
 
@@ -3262,6 +3208,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"redraw_example@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "redraw_example@workspace:."
+  dependencies:
+    "@eslint/js": "npm:^9.9.0"
+    "@trivago/prettier-plugin-sort-imports": "npm:^4.3.0"
+    "@types/react": "npm:^18.3.3"
+    "@types/react-dom": "npm:^18.3.0"
+    "@vitejs/plugin-react-swc": "npm:^3.5.0"
+    dotenv: "npm:^16.4.5"
+    eslint: "npm:^9.9.0"
+    eslint-plugin-react: "npm:^7.35.0"
+    eslint-plugin-react-hooks: "npm:^5.1.0-rc.0"
+    eslint-plugin-react-refresh: "npm:^0.4.9"
+    globals: "npm:^15.9.0"
+    prettier: "npm:^3.3.3"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    vite: "npm:^5.4.1"
+    vite-gleam: "npm:^0.4.3"
+  languageName: unknown
+  linkType: soft
+
 "reflect.getprototypeof@npm:^1.0.4":
   version: 1.0.6
   resolution: "reflect.getprototypeof@npm:1.0.6"
@@ -3333,17 +3302,6 @@ __metadata:
   version: 1.0.4
   resolution: "reusify@npm:1.0.4"
   checksum: 10c0/c19ef26e4e188f408922c46f7ff480d38e8dfc55d448310dfb518736b23ed2c4f547fb64a6ed5bdba92cd7e7ddc889d36ff78f794816d5e71498d645ef476107
-  languageName: node
-  linkType: hard
-
-"rimraf@npm:^5.0.5":
-  version: 5.0.10
-  resolution: "rimraf@npm:5.0.10"
-  dependencies:
-    glob: "npm:^10.3.7"
-  bin:
-    rimraf: dist/esm/bin.mjs
-  checksum: 10c0/7da4fd0e15118ee05b918359462cfa1e7fe4b1228c7765195a45b55576e8c15b95db513b8466ec89129666f4af45ad978a3057a02139afba1a63512a2d9644cc
   languageName: node
   linkType: hard
 
@@ -3551,30 +3509,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sketch_landing@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "sketch_landing@workspace:."
-  dependencies:
-    "@chouqueth/gleam": "npm:^1.4.1"
-    "@eslint/js": "npm:^9.9.0"
-    "@trivago/prettier-plugin-sort-imports": "npm:^4.3.0"
-    "@types/react": "npm:^18.3.3"
-    "@types/react-dom": "npm:^18.3.0"
-    "@vitejs/plugin-react-swc": "npm:^3.5.0"
-    dotenv: "npm:^16.4.5"
-    eslint: "npm:^9.9.0"
-    eslint-plugin-react: "npm:^7.35.0"
-    eslint-plugin-react-hooks: "npm:^5.1.0-rc.0"
-    eslint-plugin-react-refresh: "npm:^0.4.9"
-    globals: "npm:^15.9.0"
-    prettier: "npm:^3.3.3"
-    react: "npm:^18.3.1"
-    react-dom: "npm:^18.3.1"
-    vite: "npm:^5.4.1"
-    vite-gleam: "npm:^0.4.3"
-  languageName: unknown
-  linkType: soft
-
 "smart-buffer@npm:^4.2.0":
   version: 4.2.0
   resolution: "smart-buffer@npm:4.2.0"
@@ -3780,20 +3714,6 @@ __metadata:
     mkdirp: "npm:^1.0.3"
     yallist: "npm:^4.0.0"
   checksum: 10c0/a5eca3eb50bc11552d453488344e6507156b9193efd7635e98e867fab275d527af53d8866e2370cd09dfe74378a18111622ace35af6a608e5223a7d27fe99537
-  languageName: node
-  linkType: hard
-
-"tar@npm:^7.1.0":
-  version: 7.4.3
-  resolution: "tar@npm:7.4.3"
-  dependencies:
-    "@isaacs/fs-minipass": "npm:^4.0.0"
-    chownr: "npm:^3.0.0"
-    minipass: "npm:^7.1.2"
-    minizlib: "npm:^3.0.1"
-    mkdirp: "npm:^3.0.1"
-    yallist: "npm:^5.0.0"
-  checksum: 10c0/d4679609bb2a9b48eeaf84632b6d844128d2412b95b6de07d53d8ee8baf4ca0857c9331dfa510390a0727b550fd543d4d1a10995ad86cdf078423fbb8d99831d
   languageName: node
   linkType: hard
 
@@ -4126,13 +4046,6 @@ __metadata:
   version: 4.0.0
   resolution: "yallist@npm:4.0.0"
   checksum: 10c0/2286b5e8dbfe22204ab66e2ef5cc9bbb1e55dfc873bbe0d568aa943eb255d131890dfd5bf243637273d31119b870f49c18fcde2c6ffbb7a7a092b870dc90625a
-  languageName: node
-  linkType: hard
-
-"yallist@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "yallist@npm:5.0.0"
-  checksum: 10c0/a499c81ce6d4a1d260d4ea0f6d49ab4da09681e32c3f0472dee16667ed69d01dae63a3b81745a24bd78476ec4fcf856114cb4896ace738e01da34b2c42235416
   languageName: node
   linkType: hard
 

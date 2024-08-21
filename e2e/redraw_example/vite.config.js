@@ -2,7 +2,6 @@ import react from '@vitejs/plugin-react-swc'
 import 'dotenv/config'
 import { createLogger, defineConfig } from 'vite'
 import gleam from 'vite-gleam'
-// import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 const customLogger = createLogger()
 const loggerWarn = customLogger.warn

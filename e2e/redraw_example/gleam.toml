@@ -1,4 +1,4 @@
-name = "sketch_landing"
+name = "redraw_example"
 target = "javascript"
 version = "1.0.0"
 
@@ -9,10 +9,10 @@ repository = {type = "github", user = "ghivert", repo = "sketch"}
 
 [dependencies]
 gleam_stdlib = ">= 0.34.0 and < 2.0.0"
+redraw = ">= 1.1.0 and < 2.0.0"
 redraw_dom = ">= 1.1.0 and < 2.0.0"
 sketch = ">= 3.0.2 and < 4.0.0"
 sketch_redraw = {path = "../../sketch_redraw"}
-redraw = ">= 1.1.0 and < 2.0.0"
 
 [dev-dependencies]
 gleeunit = ">= 1.0.0 and < 2.0.0"
