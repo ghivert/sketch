@@ -11,11 +11,11 @@ and multiple runtimes to get CSS in Gleam correctly executed.
 
 - [`sketch_css`](https://hexdocs.pm/sketch_css)
 - [`sketch_lustre`](https://hexdocs.pm/sketch_lustre)
+- [`sketch_redraw`](https://hexdocs.pm/sketch_redraw)
 
 ## Future integrations
 
 - `sketch_nakai`
-- `sketch_redraw`
 
 ## Integrating the Sketch list
 
