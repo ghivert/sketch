@@ -83,11 +83,9 @@ pub fn skew_y(x: Angle) {
 }
 
 pub fn to_string(value: List(Transform)) {
-  let content = case value {
+  case value {
     [] -> "none"
     transform_list ->
       list.map(transform_list, transform_to_string) |> string.join(" ")
   }
-
-  "transform: " <> content
 }
