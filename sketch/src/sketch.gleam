@@ -11,6 +11,7 @@ import sketch/internals/cache/setup as cache
 import sketch/internals/style
 import sketch/media.{type Query}
 import sketch/size.{type Size}
+import sketch/transform.{type Transform}
 
 // Types
 
@@ -1983,8 +1984,15 @@ pub fn touch_action(value: String) {
   property("touch-action", value)
 }
 
+/// `transform` will be turned into `transform_` in 4.0.0
 pub fn transform(transform: String) {
   property("transform", transform)
+}
+
+/// `transform_` uses `sketch.transform` to offer an enhanced API for CSS transforms
+pub fn transform_(transform_args: List(Transform)) {
+  let transform_string = transform.to_string(transform_args)
+  property("transform", transform_string)
 }
 
 pub fn transform_box(transform_box: String) {
