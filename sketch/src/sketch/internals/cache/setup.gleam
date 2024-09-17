@@ -6,6 +6,7 @@ import gleam/list
 import gleam/otp/actor
 import gleam/pair
 import gleam/result
+import sketch/error.{type SketchError}
 import sketch/internals/cache/state
 import sketch/internals/style
 
@@ -21,9 +22,11 @@ pub fn ephemeral() {
 }
 
 @target(erlang)
-pub fn persistent() -> Result(Cache, Nil) {
-  let assert Ok(subject) = actor.start(style.persistent(), state.loop)
-  Ok(PersistentCache(subject))
+pub fn persistent() -> Result(Cache, SketchError) {
+  let subject = actor.start(style.persistent(), state.loop)
+  subject
+  |> result.map(PersistentCache)
+  |> result.map_error(error.OtpError)
 }
 
 @target(erlang)
