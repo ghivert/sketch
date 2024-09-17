@@ -163,7 +163,7 @@ pub fn unstyled(cache: Cache, element: Element(msg)) {
 }
 
 fn unstyled_children(cache, children) {
-  list.fold_right(children, #(cache, []), fn(acc, child) {
+  list.fold(list.reverse(children), #(cache, []), fn(acc, child) {
     let #(cache, children) = acc
     let #(cache, child) = unstyled(cache, child)
     #(cache, [child, ..children])
