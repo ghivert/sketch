@@ -101,7 +101,7 @@ pub fn compute_properties(
   indent: Int,
 ) -> #(Cache, ComputedProperties) {
   let init = init_computed_properties(indent)
-  use #(cache, acc), prop <- list.fold_right(properties, #(cache, init))
+  use #(cache, acc), prop <- list.fold(list.reverse(properties), #(cache, init))
   case prop {
     NoStyle -> #(cache, acc)
     Property(_, _, _) -> #(cache, handle_property(acc, prop))
