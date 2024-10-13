@@ -1,4 +1,4 @@
-import sketch/lustre/element.{element, element_}
+import sketch/lustre/element.{element, element_, namespaced, namespaced_}
 
 //
 
@@ -767,11 +767,11 @@ pub fn sup_(attributes, children) {
 }
 
 pub fn svg(class, attributes, children) {
-  element("svg", class, attributes, children)
+  namespaced("http://www.w3.org/2000/svg", "svg", class, attributes, children)
 }
 
 pub fn svg_(attributes, children) {
-  element_("svg", attributes, children)
+  namespaced_("http://www.w3.org/2000/svg", "svg", attributes, children)
 }
 
 pub fn table(class, attributes, children) {
