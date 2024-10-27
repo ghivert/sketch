@@ -465,9 +465,9 @@ fn property_body(param) {
     [Field(None, p)] -> {
       case rewrite_pipe(p) {
         Call(FieldAccess(Variable(_), size), [Field(None, value)]) ->
-          size_to_string(value) <> size
+          size_value_to_string(value) <> size_to_string(size)
         Call(Variable(size), [Field(None, value)]) ->
-          size_to_string(value) <> size
+          size_value_to_string(value) <> size_to_string(size)
         p -> string_to_string(p)
       }
     }
@@ -475,7 +475,14 @@ fn property_body(param) {
   }
 }
 
-fn size_to_string(value) {
+fn size_to_string(size: String) -> String {
+  case size {
+    "percent" -> "%"
+    _ -> size
+  }
+}
+
+fn size_value_to_string(value) {
   case rewrite_pipe(value) {
     glance.Int(i) -> i
     glance.Float(f) -> f
