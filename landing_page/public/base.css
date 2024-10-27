@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'Lexend';
+  src: url('./Lexend.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fira Code';
+  src: url('FiraCode.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: normal;
+}
+
+code {
+  font-family: 'Fira Code';
+  font-feature-settings: 'calt' 1; /* Enable ligatures for IE 10+, Edge */
+  text-rendering: optimizeLegibility; /* Force ligatures for Webkit, Blink, Gecko */
+  white-space: pre;
+  line-height: 1.5;
+  font-size: 0.8rem;
+}

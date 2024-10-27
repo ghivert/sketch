@@ -6,3 +6,5 @@ erl_crash.dump
 Thumbs.db
 src/sketch/styles
 styles/
+node_modules/
+.yarn
