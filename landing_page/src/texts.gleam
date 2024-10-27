@@ -164,6 +164,7 @@ pub const gap_row = \"row gap_row\"
 "
 
 pub const sketch_ssr_example = "import lustre/element
+import mist
 import sketch
 import sketch/lustre as sketch_lustre
 import sketch/lustre/html
