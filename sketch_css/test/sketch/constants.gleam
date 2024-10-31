@@ -10,6 +10,9 @@ pub const card = \"card\""
 
 pub const css = ".card {
   background: #ddd;
+  z-index: 100;
+  opacity: 1.0;
+  width: 100%;
   background: red;
   display: block;
   padding: 12pt;

@@ -1,7 +1,7 @@
 import sketch
 import sketch.{background, class as t} as s
 import sketch/media
-import sketch/size.{px}
+import sketch/size.{percent, px}
 
 fn custom_color(custom) {
   sketch.color(custom)
@@ -10,6 +10,9 @@ fn custom_color(custom) {
 pub fn card(custom) {
   sketch.class([
     sketch.background("#ddd"),
+    sketch.z_index(100),
+    sketch.opacity(1.0),
+    sketch.width(percent(100)),
     background("red"),
     s.display("block"),
     s.padding(size.pt(12)),

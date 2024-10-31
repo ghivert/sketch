@@ -420,7 +420,7 @@ fn compute_css_property(name, param) {
 
 fn css_property(name, param) {
   let prop =
-    string.split(name, "-")
+    string.split(name, "_")
     |> list.filter(fn(a) { a != "" })
     |> string.join("-")
   let body = property_body(param)
@@ -452,6 +452,8 @@ fn template_areas_to_string(param) {
 fn string_to_string(param) {
   case param {
     glance.String(m) -> m
+    glance.Int(i) -> i
+    glance.Float(f) -> f
     glance.Variable(v) ->
       "var(--" <> string.replace(v, each: "_", with: "-") <> ")"
     _ -> ""
@@ -463,9 +465,9 @@ fn property_body(param) {
     [Field(None, p)] -> {
       case rewrite_pipe(p) {
         Call(FieldAccess(Variable(_), size), [Field(None, value)]) ->
-          size_to_string(value) <> size
+          size_value_to_string(value) <> size_to_string(size)
         Call(Variable(size), [Field(None, value)]) ->
-          size_to_string(value) <> size
+          size_value_to_string(value) <> size_to_string(size)
         p -> string_to_string(p)
       }
     }
@@ -473,7 +475,14 @@ fn property_body(param) {
   }
 }
 
-fn size_to_string(value) {
+fn size_to_string(size: String) -> String {
+  case size {
+    "percent" -> "%"
+    _ -> size
+  }
+}
+
+fn size_value_to_string(value) {
   case rewrite_pipe(value) {
     glance.Int(i) -> i
     glance.Float(f) -> f
