@@ -5,6 +5,7 @@
 //// your knowledge of Lustre, and behaves exactly as expected.
 
 import sketch
+import sketch/lustre/element
 import sketch/lustre/element/html
 import sketch/size.{px, rem}
 
@@ -51,7 +52,11 @@ fn body_style() {
 }
 
 pub fn body(attrs, children) {
-  html.div(body_style(), attrs, children)
+  // demonstrate ability to merge fragment at root
+  element.fragment([
+    html.div(body_style(), attrs, children),
+    html.footer_([], []),
+  ])
 }
 
 fn topbar_style() {
