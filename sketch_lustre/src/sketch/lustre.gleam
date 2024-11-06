@@ -8,17 +8,6 @@ import sketch.{type Cache}
 import sketch/internals/ffi
 import sketch/lustre/element
 
-@external(javascript, "../sketch_lustre.ffi.mjs", "createCssStyleSheet")
-fn create_document_stylesheet() -> Dynamic
-
-@external(javascript, "../sketch_lustre.ffi.mjs", "createCssStyleSheet")
-fn create_shadow_root_stylesheet(root: ShadowRoot) -> Dynamic
-
-@external(javascript, "../sketch_lustre.ffi.mjs", "setStylesheet")
-fn set_stylesheet(content: String, stylesheet: Dynamic) -> Nil {
-  Nil
-}
-
 type StyleSheetOption {
   Node
   Document
@@ -57,7 +46,7 @@ pub fn compose(
 }
 
 @target(erlang)
-fn to_stylesheet(options) {
+fn to_stylesheet(_options) {
   NodeStyleSheet
 }
 
@@ -65,8 +54,9 @@ fn to_stylesheet(options) {
 fn to_stylesheet(options) {
   case options {
     Options(Node) -> NodeStyleSheet
-    Options(Document) -> CssStyleSheet(create_document_stylesheet())
-    Options(Shadow(root)) -> CssStyleSheet(create_shadow_root_stylesheet(root))
+    Options(Document) -> CssStyleSheet(ffi.create_document_stylesheet())
+    Options(Shadow(root)) ->
+      CssStyleSheet(ffi.create_shadow_root_stylesheet(root))
   }
 }
 
@@ -81,7 +71,7 @@ fn render_stylesheet(content, node, stylesheet) {
       }
     }
     CssStyleSheet(stylesheet) -> {
-      set_stylesheet(content, stylesheet)
+      ffi.set_stylesheet(content, stylesheet)
       node
     }
   }
