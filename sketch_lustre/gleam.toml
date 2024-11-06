@@ -1,5 +1,5 @@
 name = "sketch_lustre"
-version = "1.0.2"
+version = "1.0.3"
 
 description = "A Sketch runtime package, made to work with Lustre!"
 internal_modules = ["sketch/internals", "sketch/internals/*"]
