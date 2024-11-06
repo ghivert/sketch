@@ -3,16 +3,15 @@ version = "1.0.0"
 
 [dependencies]
 gleam_stdlib = "~> 0.34 or ~> 1.0"
-lustre_dev_tools = "1.1.2"
 sketch = { path = "../../sketch" }
 sketch_lustre = { path = "../../sketch_lustre" }
 gleam_http = "~> 3.6"
-mist = "~> 1.0"
-gleam_erlang = "~> 0.25"
-gleam_json = "~> 1.0"
-gleam_otp = "~> 0.10"
-lustre = ">= 4.3.1 and < 5.0.0"
+mist = "~> 3.0"
+lustre = ">= 4.6.0 and < 5.0.0"
 shared_view = { path = "../shared_view" }
+gleam_otp = ">= 0.13.0 and < 1.0.0"
+gleam_json = ">= 2.0.0 and < 3.0.0"
+gleam_erlang = ">= 0.28.0 and < 1.0.0"
 
 [dev-dependencies]
 gleeunit = "~> 1.0"

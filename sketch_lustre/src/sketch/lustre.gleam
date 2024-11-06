@@ -72,22 +72,19 @@ fn to_stylesheet(options) {
 
 fn render_stylesheet(content, node, stylesheet) {
   case stylesheet {
-    NodeStyleSheet -> root([el.element("style", [], [el.text(content)]), node])
+    NodeStyleSheet -> {
+      case node {
+        vdom.Element(_, _, "lustre-fragment", _, children, _, _) -> {
+          el.fragment([el.element("style", [], [el.text(content)]), ..children])
+        }
+        _ -> el.fragment([el.element("style", [], [el.text(content)]), node])
+      }
+    }
     CssStyleSheet(stylesheet) -> {
       set_stylesheet(content, stylesheet)
       node
     }
   }
-}
-
-@target(javascript)
-fn root(children) {
-  el.fragment(children)
-}
-
-@target(erlang)
-fn root(children) {
-  html.div([], children)
 }
 
 fn contains_head(el: el.Element(a)) {

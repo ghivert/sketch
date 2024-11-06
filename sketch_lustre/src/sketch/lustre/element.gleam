@@ -125,7 +125,6 @@ pub fn styled(element: el.Element(msg)) {
   case element {
     vdom.Map(subtree) -> Map(fn() { styled(subtree()) })
     vdom.Text(content) -> Text(content)
-    vdom.Fragment(elements, key) -> Fragment(key, list.map(elements, styled))
     vdom.Element(key, namespace, tag, attrs, children, _, _) -> {
       let class = option.None
       Element(key, namespace, tag, class, attrs, list.map(children, styled))
@@ -138,9 +137,9 @@ pub fn unstyled(cache: Cache, element: Element(msg)) {
     Nothing -> #(cache, el.none())
     Text(content) -> #(cache, el.text(content))
     Map(subtree) -> unstyled(cache, subtree())
-    Fragment(key, children) ->
+    Fragment(_, children) ->
       unstyled_children(cache, children)
-      |> pair.map_second(fn(node) { vdom.Fragment(node, key) })
+      |> pair.map_second(fn(node) { el.fragment(node) })
     Element(key, namespace, tag, class, attributes, children) -> {
       let class = option.map(class, sketch.class_name(_, cache))
       let class_name = option.map(class, pair.second)

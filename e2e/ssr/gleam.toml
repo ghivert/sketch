@@ -5,8 +5,8 @@ version = "1.0.0"
 gleam_erlang = ">= 0.25.0 and < 1.0.0"
 gleam_http = ">= 3.6.0 and < 4.0.0"
 gleam_stdlib = ">= 0.34.0 and < 2.0.0"
-lustre = ">= 4.1.8 and < 5.0.0"
-mist = ">= 1.0.0 and < 2.0.0"
+lustre = ">= 4.6.0 and < 5.0.0"
+mist = "~> 3.0.0"
 sketch = { path = "../../sketch" }
 sketch_lustre = { path = "../../sketch_lustre" }
 shared_view = { path = "../shared_view" }

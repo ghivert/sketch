@@ -9,7 +9,7 @@ repository = {type = "github", user = "ghivert", repo = "sketch"}
 
 [dependencies]
 gleam_stdlib = ">= 0.34.0 and < 2.0.0"
-lustre = ">= 4.3.1 and < 5.0.0"
+lustre = ">= 4.6.0 and < 5.0.0"
 plinth = ">= 0.4.9 and < 1.0.0"
 sketch = ">= 3.0.0 and < 4.0.0"
 
