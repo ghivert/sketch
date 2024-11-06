@@ -1,6 +1,3 @@
-//// Want to know more about details? Go to the
-//// [additional docs](https://hexdocs.pm/sketch/internal-details.html)!
-
 import gleam/float
 import gleam/int
 import gleam/list
