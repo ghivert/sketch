@@ -17,8 +17,8 @@ pub type Msg {
 }
 
 /// Defines the standard app, used everywhere in Lustre applications.
-pub fn app() {
-  let assert Ok(cache) = sketch.cache(strategy: sketch.Ephemeral)
+pub fn app(strategy: sketch.Strategy) {
+  let assert Ok(cache) = sketch.cache(strategy:)
   sketch_lustre.node()
   |> sketch_lustre.compose(view, cache)
   |> lustre.simple(fn(_) { 0 }, update, _)

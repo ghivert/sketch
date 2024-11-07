@@ -12,13 +12,15 @@ packages = [
   { name = "gleeunit", version = "1.2.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleeunit", source = "hex", outer_checksum = "F7A7228925D3EE7D0813C922E062BFD6D7E9310F0BEE585D3A42F3307E3CFD13" },
   { name = "lustre", version = "4.6.1", build_tools = ["gleam"], requirements = ["gleam_erlang", "gleam_json", "gleam_otp", "gleam_stdlib"], otp_app = "lustre", source = "hex", outer_checksum = "486C3CFBD126939CAD2CA8B92A979A2DAADA5BABAA62BF2B163CD21E257BD4A1" },
   { name = "plinth", version = "0.5.0", build_tools = ["gleam"], requirements = ["conversation", "gleam_javascript", "gleam_json", "gleam_stdlib"], otp_app = "plinth", source = "hex", outer_checksum = "9B0ECC110316F55432DC544847B7F4E98B73D3F598CB3EE844570FB1EFB3F8BE" },
+  { name = "shared_styles", version = "1.0.0", build_tools = ["gleam"], requirements = ["gleam_stdlib", "sketch"], source = "local", path = "../shared_styles" },
   { name = "sketch", version = "3.1.0", build_tools = ["gleam"], requirements = ["gleam_erlang", "gleam_otp", "gleam_stdlib"], source = "local", path = "../../sketch" },
-  { name = "sketch_lustre", version = "1.0.2", build_tools = ["gleam"], requirements = ["gleam_stdlib", "lustre", "plinth", "sketch"], source = "local", path = "../../sketch_lustre" },
+  { name = "sketch_lustre", version = "1.0.3", build_tools = ["gleam"], requirements = ["gleam_stdlib", "lustre", "plinth", "sketch"], source = "local", path = "../../sketch_lustre" },
 ]
 
 [requirements]
 gleam_stdlib = { version = ">= 0.34.0 and < 2.0.0" }
 gleeunit = { version = ">= 1.0.0 and < 2.0.0" }
 lustre = { version = ">= 4.3.1 and < 5.0.0" }
+shared_styles = { path = "../shared_styles" }
 sketch = { path = "../../sketch" }
 sketch_lustre = { path = "../../sketch_lustre" }

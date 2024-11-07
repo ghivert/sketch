@@ -4,15 +4,16 @@
 //// same convention as Lustre standard HTML. That way, you could leverage on
 //// your knowledge of Lustre, and behaves exactly as expected.
 
+import redraw
+import redraw/html as h
 import shared_styles as styles
-import sketch/lustre/element
-import sketch/lustre/element/html
+import sketch/redraw/html
 
 pub fn body(attrs, children) {
   // demonstrate ability to merge fragment at root
-  element.fragment([
+  redraw.fragment([
     html.div(styles.body_style(), attrs, children),
-    html.footer_([], []),
+    h.footer([], []),
   ])
 }
 
@@ -37,7 +38,7 @@ pub fn counter(attrs, children) {
 }
 
 pub fn counter_title(attrs, children) {
-  html.div_(attrs, children)
+  h.div(attrs, children)
 }
 
 pub fn counter_subtitle(attrs, children) {
@@ -77,5 +78,5 @@ pub fn showcase_body(attrs, children) {
 }
 
 pub fn card_title(attrs, children) {
-  html.div_(attrs, children)
+  h.div(attrs, children)
 }

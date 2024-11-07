@@ -17,6 +17,7 @@ import mist.{
   type WebsocketMessage,
 }
 import shared_view
+import sketch
 
 pub fn main() {
   let assert Ok(_) =
@@ -113,10 +114,10 @@ type App =
   Subject(lustre.Action(shared_view.Msg, lustre.ServerComponent))
 
 fn socket_init(
-  conn: WebsocketConnection,
+  _conn: WebsocketConnection,
 ) -> #(App, Option(Selector(lustre.Patch(shared_view.Msg)))) {
   let self = process.new_subject()
-  let app = shared_view.app()
+  let app = shared_view.app(sketch.Ephemeral)
   let assert Ok(counter) = lustre.start_actor(app, 0)
 
   process.send(
