@@ -345,10 +345,10 @@ The example above will be compiled to the following CSS.
 ## Composition
 
 Because we oftentimes need to compose CSS classes, Sketch provides a `compose`
-function, acting like CSS Modules `compose` property. This allow you to reuse
-CSS properties from another class, without having the burden of copy-pasting the
-styles, or having to think on the class names to put in your nodes! Of course,
-this remains totally optional. An example:
+function. This allow you to reuse CSS properties from another class, without
+having the burden of copy-pasting the styles, or having to think on the class
+names to put in your nodes! Of course, this remains totally optional. An
+example:
 
 ```gleam
 fn button_style() {

@@ -2245,7 +2245,7 @@ pub fn important(style: Style) -> Style {
 }
 
 /// Compose styles by inheriting class, and later overrides them.
-/// Works similarly to `composes` property in CSS modules.
+/// Every styles from the class will be composed in the resulting class.
 pub fn compose(class) -> Style {
   style.ClassName(class)
 }
