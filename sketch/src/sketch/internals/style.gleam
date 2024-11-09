@@ -198,7 +198,7 @@ pub fn compute_classes(
     let selectors_def = wrap_pseudo_selectors(class_name, 2, pseudo_selectors)
     [query <> " {", sketch_string.wrap_class(class_name, properties, 2, None)]
     |> list.prepend([selectors_def, ["}"]], _)
-    |> list.concat()
+    |> list.flatten()
     |> string.join("\n")
   }
   let selectors_def = wrap_pseudo_selectors(class_name, 0, pseudo_selectors)
