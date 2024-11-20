@@ -5,7 +5,12 @@ description = "A Sketch runtime package, made to work with Lustre!"
 internal_modules = ["sketch/internals", "sketch/internals/*"]
 licences = ["MIT"]
 links = [{title = "Sponsor", href = "https://github.com/sponsors/ghivert"}]
-repository = {type = "github", user = "ghivert", repo = "sketch"}
+
+[repository]
+type = "github"
+user = "ghivert"
+repo = "sketch"
+path = "sketch_lustre"
 
 [dependencies]
 gleam_stdlib = ">= 0.34.0 and < 2.0.0"

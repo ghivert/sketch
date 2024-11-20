@@ -6,7 +6,12 @@ description = "A Sketch runtime package, made to work with Redraw!"
 internal_modules = ["sketch/redraw/internals", "sketch/redraw/internals/*"]
 licences = ["MIT"]
 links = [{title = "Sponsor", href = "https://github.com/sponsors/ghivert"}]
-repository = {type = "github", user = "ghivert", repo = "sketch"}
+
+[repository]
+type = "github"
+user = "ghivert"
+repo = "sketch"
+path = "sketch_redraw"
 
 [dependencies]
 gleam_stdlib = ">= 0.34.0 and < 2.0.0"
