@@ -9,7 +9,7 @@ pub fn footer() {
   use <- redraw.component__("Footer")
   footer_([], [
     column([
-      footer_details([h.text("Made with 💜 by Chou Corp.")]),
+      footer_details([h.text("Made with 💜 at Chou Corp.")]),
       footer_details([
         h.text("With the help of "),
         link("https://gaspard.design", "gaspard.design"),
