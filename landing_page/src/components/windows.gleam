@@ -5,13 +5,11 @@ import sketch as s
 import sketch/redraw/html as sh
 import sketch/size.{percent, px}
 
-const border = "rgb(223, 234, 255)"
-
 pub fn scaffold(children) {
   s.class([
-    s.background("rgb(241, 246, 255)"),
+    s.background("var(--window-bg)"),
     s.border_radius(px(10)),
-    s.border("1px solid " <> border),
+    s.border("1px solid var(--window-border)"),
     s.overflow("hidden"),
     s.flex("1"),
     s.display("flex"),
@@ -24,9 +22,9 @@ pub fn scaffold(children) {
 
 pub fn render(children) {
   s.class([
-    s.background("rgb(241, 246, 255)"),
+    s.background("var(--window-bg)"),
     s.border_radius(px(10)),
-    s.border("1px solid " <> border),
+    s.border("1px solid var(--window-border)"),
     s.overflow("hidden"),
     s.flex("1"),
     s.margin(px(24)),
@@ -44,7 +42,7 @@ pub fn traffic_lights() {
     s.display("flex"),
     s.gap(px(5)),
     s.padding(px(10)),
-    s.border_bottom("1px solid " <> border),
+    s.border_bottom("1px solid var(--window-border)"),
   ])
   |> sh.div([], [
     traffic_light(Red),
@@ -77,7 +75,7 @@ fn traffic_light(color) {
 pub fn editor(content) {
   let content = a.inner_html(ffi.highlight(content))
   s.class([
-    s.background("#fff"),
+    s.background("var(--background)"),
     s.padding(px(10)),
     s.display("flex"),
     s.overflow("auto"),
@@ -89,7 +87,7 @@ pub fn editor(content) {
 pub fn css(content) {
   let content = a.inner_html(ffi.highlight_css(content))
   s.class([
-    s.background("#fff"),
+    s.background("var(--background)"),
     s.padding(px(10)),
     s.display("flex"),
     s.max_height(px(400)),
@@ -102,7 +100,7 @@ pub fn css(content) {
 pub fn html(content) {
   let content = a.inner_html(ffi.highlight_xml(content))
   s.class([
-    s.background("#fff"),
+    s.background("var(--background)"),
     s.padding(px(10)),
     s.display("flex"),
     s.max_height(px(400)),

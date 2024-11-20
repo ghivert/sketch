@@ -8,7 +8,7 @@ fn primary_class() {
   s.class([
     s.display("block"),
     s.text_decoration("none"),
-    s.background("#eee"),
+    s.background("var(--dark-background)"),
     s.border_radius(px(6)),
     s.padding_("9px 16px"),
     s.font_size(rem(1.0)),
@@ -55,8 +55,8 @@ pub fn example(color, text) {
 pub fn link(link, content) {
   s.class([
     s.compose(primary_class()),
-    s.background("#fff"),
-    s.border("1px solid #ccc"),
+    s.background("var(--background)"),
+    s.border("1px solid var(--border-color)"),
   ])
   |> sh.a([a.href(link)], [h.text(content)])
 }

@@ -33,7 +33,7 @@ fn footer_details(children) {
     s.font_size(rem(0.8)),
     s.line_height("1.4"),
     s.font_weight("500"),
-    s.color("#888"),
+    s.color("var(--text-grey)"),
   ])
   |> sh.div([], children)
 }

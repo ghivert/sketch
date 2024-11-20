@@ -25,11 +25,11 @@ pub fn nav(attributes, children) {
     s.padding(px(18)),
     s.margin(px(18)),
     s.gap(px(36)),
-    s.background("rgba(255, 255, 255, 0.9)"),
+    s.background("var(--navbar-background)"),
     s.position("sticky"),
     s.border_radius(px(10)),
     s.top(px(18)),
-    s.border("1px solid #eee"),
+    s.border("1px solid var(--dark-background)"),
     s.backdrop_filter("blur(8px)"),
   ])
   |> sh.nav(attributes, children)
@@ -39,7 +39,7 @@ fn external_icon(url, icon) {
   s.class([
     s.color("#aaa"),
     s.transition("all .3s"),
-    s.hover([s.color("#000000")]),
+    s.hover([s.color("var(--text-color)")]),
   ])
   |> sh.a([a.href(url)], [icons.small(icon)])
 }

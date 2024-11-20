@@ -39,7 +39,7 @@ fn on_copy(text, set_copied) {
 
 fn code_install() {
   s.class([
-    s.border("1px solid #ccc"),
+    s.border("1px solid var(--border-color)"),
     s.border_radius(px(8)),
     s.display("flex"),
     s.align_items("center"),
@@ -48,14 +48,20 @@ fn code_install() {
     s.gap(px(9)),
     s.font_size(rem(0.7)),
     s.font_weight("450"),
-    s.background("white"),
+    s.background("var(--background)"),
     s.cursor("pointer"),
-    s.hover([s.background("#f5f5f5")]),
+    s.color("var(--text-color)"),
+    s.hover([s.background("var(--button-hover)")]),
   ])
 }
 
 fn sm_button_class() {
-  s.class([s.background("#eee"), s.border_radius(px(6)), s.padding(px(4))])
+  s.class([
+    s.background("var(--dark-background)"),
+    s.border_radius(px(6)),
+    s.padding(px(4)),
+    s.color("inherit"),
+  ])
 }
 
 pub fn title(text) {
