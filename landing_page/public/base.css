@@ -29,7 +29,7 @@ code {
   --text-color: #000000;
   --text-grey: #888888;
   --icon-hover: #000000;
-  --navbar-background: rgba(255, 255, 255, 0.9);
+  --navbar-background: rgba(250, 250, 250, 0.9);
 
   --window-border: rgb(223, 234, 255);
   --window-bg: rgb(241, 246, 255);
@@ -44,7 +44,7 @@ code {
     --text-color: #ffffff;
     --text-grey: #888888;
     --icon-hover: #ffffff;
-    --navbar-background: rgba(34, 34, 34, 0.9);
+    --navbar-background: rgba(25, 25, 25, 0.9);
 
     --window-bg: rgb(45, 46, 50);
     --window-border: rgb(109, 110, 112);
