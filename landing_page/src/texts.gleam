@@ -4,6 +4,24 @@ pub const explanation_snd = "Sketch does not try to hide CSS nor add abstraction
 
 pub const explanation_trd = "CSS is already the framework you need for your designs. Stop learning yet another framework you'll fight with. If you know how to write CSS, you already know how to write styles with Sketch."
 
+pub const bring_me_docs = "Documentation"
+
+pub const sketch_lustre_fst = "Lustre being the most popular frontend framework in Gleam, Sketch has an implementation working with it!"
+
+pub const sketch_lustre_snd = "Simply add the package, and start using Lustre elements, Sketch enhanced! Put some styles directly on elements, and watch them automatically applied in your resulting HTML!"
+
+pub const sketch_redraw_fst = "Redraw is a React bindings to Gleam. And as such, Redraw deserves a correct CSS-in-Gleam package. That's where Sketch comes into play!"
+
+pub const sketch_redraw_snd = "If you're used to styled components or emotion, then you already know how to use sketch_redraw! If you're used to Lustre, you shouldn't be suprised neither! In any case, install the package, and start styling your components!"
+
+pub const sketch_css_fst = "Sketch is a thinner layer over CSS. Because of this, targeting CSS from Sketch seemed natural!"
+
+pub const sketch_css_snd = "Contrarily to most CSS-in-JS package, Sketch also allows you to generate CSS. And as such, it's easy to share your styles written in Sketch in any project! Everything is all Sketch classes all the way, and they can be used in any situation!"
+
+pub const sketch_wisp_fst = "CSS-in-Gleam is great, but sometimes, you just need to output some CSS from your server. Sketch got you cover too."
+
+pub const sketch_wisp_snd = "Sketch can be used with Lustre, but also with any way to generate HMTL and CSS. All you need is creating a StyleSheet, and putting some styles inside. Once it's done, render the stylesheet as string, and you have a valid CSS file! And of course, because Lustre can also handle SSR for you, Sketch can integrate in Lustre's SSR!"
+
 pub const sketch_lustre_example = "import sketch
 import sketch/lustre/html
 import sketch/size.{px, percent}

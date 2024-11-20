@@ -23,3 +23,13 @@ export function highlightCss(code) {
 export function highlightXml(code) {
   return hljs.highlight(code, { language: 'xml' }).value
 }
+
+export function scrollTo(id) {
+  const node = document.getElementById(id)
+  const nav = document.getElementById('navbar')
+  if (!node || !nav) return
+  const nodeRect = node.getBoundingClientRect()
+  const navRect = nav.getBoundingClientRect()
+  const top = nodeRect.top - navRect.bottom - 18
+  window.scrollTo({ top, behavior: 'smooth' })
+}

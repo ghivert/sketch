@@ -17,3 +17,6 @@ pub fn highlight_css(code: String) -> String
 
 @external(javascript, "./landing_page.ffi.mjs", "highlightXml")
 pub fn highlight_xml(code: String) -> String
+
+@external(javascript, "./landing_page.ffi.mjs", "scrollTo")
+pub fn scroll_to(id: String) -> Nil

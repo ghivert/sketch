@@ -1,14 +1,21 @@
 import components/button
 import components/copy_button
+import components/footer
 import components/navbar
 import components/windows
-import layout.{body_container, main_title, row, section, title, title_container}
+import ffi
+import layout.{
+  body_container, column, main_title, row, section, section_explanation, title,
+  title_container,
+}
 import redraw
+import redraw/handler
 import redraw/html as h
 import redraw_dom/client
 import sketch as s
 import sketch/redraw as sr
 import sketch/redraw/html as sh
+import sketch/size.{px}
 import texts
 
 pub fn main() {
@@ -23,6 +30,7 @@ fn app() {
   let plain_css_section = plain_css_section()
   let wisp_section = wisp_section()
   let navbar = navbar.navbar()
+  let footer = footer.footer()
   use <- redraw.component__("App")
   sh.div(s.class([s.font_family("Lexend")]), [], [
     navbar(),
@@ -31,6 +39,7 @@ fn app() {
     redraw_section(),
     plain_css_section(),
     wisp_section(),
+    footer(),
   ])
 }
 
@@ -39,7 +48,7 @@ fn description_section() {
     title_container([
       main_title("Leverage on your CSS knowledge."),
       main_title("Create your own styles."),
-      main_title("Make your application Gleam."),
+      main_title("Make your application Gleaming."),
     ]),
     body_container([], [
       title("Sketch, CSS for anywhere"),
@@ -51,24 +60,34 @@ fn description_section() {
       h.div([], [h.text(texts.explanation_trd)]),
       h.div([], [h.text("Show me an example with…")]),
       row([], [
-        button.primary("Lustre"),
-        button.primary("Redraw"),
-        button.primary("Plain CSS"),
-        button.primary("SSR"),
+        button.primary([scroll_to("lustre-section")], "Lustre"),
+        button.primary([scroll_to("redraw-section")], "Redraw"),
+        button.primary([scroll_to("plain-css-section")], "Plain CSS"),
+        button.primary([scroll_to("wisp-section")], "SSR"),
       ]),
     ]),
   ])
 }
 
+fn scroll_to(id: String) {
+  use _event <- handler.on_click()
+  ffi.scroll_to(id)
+}
+
 fn lustre_section() {
   let copy_button = copy_button.copy_button()
   use <- redraw.component__("LustreSection")
-  section("#eee", [
-    row([], [
+  section("lustre-section", "#eee", [
+    column([], [
       copy_button.title("Sketch Lustre"),
       copy_button(#("gleam add sketch sketch_lustre")),
     ]),
-    layout.windows_wrapper([
+    layout.windows_wrapper(px(1000), [
+      column([], [
+        section_explanation([], [h.text(texts.sketch_lustre_fst)]),
+        section_explanation([], [h.text(texts.sketch_lustre_snd)]),
+        button.link("https://hexdocs.pm/sketch_lustre", texts.bring_me_docs),
+      ]),
       layout.windows_row([
         windows.scaffold([
           windows.menu_bar([windows.traffic_lights()]),
@@ -89,12 +108,17 @@ fn lustre_section() {
 fn redraw_section() {
   let copy_button = copy_button.copy_button()
   use <- redraw.component__("RedrawSection")
-  section("#fff", [
-    row([], [
+  section("redraw-section", "#fff", [
+    column([], [
       copy_button.title("Sketch Redraw"),
       copy_button(#("gleam add sketch sketch_redraw")),
     ]),
-    layout.windows_wrapper([
+    layout.windows_wrapper(px(1000), [
+      column([], [
+        section_explanation([], [h.text(texts.sketch_redraw_fst)]),
+        section_explanation([], [h.text(texts.sketch_redraw_snd)]),
+        button.link("https://hexdocs.pm/sketch_redraw", texts.bring_me_docs),
+      ]),
       layout.windows_row([
         windows.scaffold([
           windows.menu_bar([windows.traffic_lights()]),
@@ -115,12 +139,17 @@ fn redraw_section() {
 fn plain_css_section() {
   let copy_button = copy_button.copy_button()
   use <- redraw.component__("PlainCssSection")
-  section("#eee", [
-    row([], [
+  section("plain-css-section", "#eee", [
+    column([], [
       copy_button.title("Sketch CSS"),
       copy_button(#("gleam add sketch sketch_css")),
     ]),
-    layout.windows_wrapper([
+    layout.windows_wrapper(px(1400), [
+      column([], [
+        section_explanation([], [h.text(texts.sketch_css_fst)]),
+        section_explanation([], [h.text(texts.sketch_css_snd)]),
+        button.link("https://hexdocs.pm/sketch_css", texts.bring_me_docs),
+      ]),
       layout.windows_row([
         windows.scaffold([
           windows.menu_bar([windows.traffic_lights()]),
@@ -142,12 +171,17 @@ fn plain_css_section() {
 fn wisp_section() {
   let copy_button = copy_button.copy_button()
   use <- redraw.component__("WispSection")
-  section("#fff", [
-    row([], [
+  section("wisp-section", "#fff", [
+    column([], [
       copy_button.title("Sketch SSR"),
       copy_button(#("gleam add sketch")),
     ]),
-    layout.windows_wrapper([
+    layout.windows_wrapper(px(1400), [
+      column([], [
+        section_explanation([], [h.text(texts.sketch_wisp_fst)]),
+        section_explanation([], [h.text(texts.sketch_wisp_snd)]),
+        button.link("https://hexdocs.pm/sketch_lustre", texts.bring_me_docs),
+      ]),
       layout.windows_row([
         windows.scaffold([
           windows.menu_bar([windows.traffic_lights()]),

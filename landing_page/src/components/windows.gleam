@@ -3,7 +3,7 @@ import redraw/attribute as a
 import redraw/html as h
 import sketch as s
 import sketch/redraw/html as sh
-import sketch/size.{px}
+import sketch/size.{percent, px}
 
 const border = "rgb(223, 234, 255)"
 
@@ -16,6 +16,8 @@ pub fn scaffold(children) {
     s.flex("1"),
     s.display("flex"),
     s.flex_direction("column"),
+    s.max_height(px(400)),
+    s.max_width(percent(100)),
   ])
   |> sh.div([], children)
 }
@@ -78,7 +80,6 @@ pub fn editor(content) {
     s.background("#fff"),
     s.padding(px(10)),
     s.display("flex"),
-    s.max_height(px(400)),
     s.overflow("auto"),
     s.flex_grow(1),
   ])

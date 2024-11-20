@@ -1,16 +1,24 @@
+import redraw/attribute as a
 import redraw/html as h
 import sketch as s
 import sketch/redraw/html as sh
 import sketch/size.{px, rem}
 
-pub fn primary(content: String) {
+fn primary_class() {
   s.class([
+    s.display("block"),
+    s.text_decoration("none"),
     s.background("#eee"),
     s.border_radius(px(6)),
     s.padding_("9px 16px"),
     s.font_size(rem(1.0)),
+    s.color("inherit"),
   ])
-  |> sh.button([], [h.text(content)])
+}
+
+pub fn primary(attributes, content: String) {
+  primary_class()
+  |> sh.button(attributes, [h.text(content)])
 }
 
 pub type Color {
@@ -42,4 +50,13 @@ pub fn example(color, text) {
     s.hover([s.opacity(0.7)]),
   ])
   |> sh.button([], [h.text(text)])
+}
+
+pub fn link(link, content) {
+  s.class([
+    s.compose(primary_class()),
+    s.background("#fff"),
+    s.border("1px solid #ccc"),
+  ])
+  |> sh.a([a.href(link)], [h.text(content)])
 }

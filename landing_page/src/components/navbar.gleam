@@ -1,14 +1,16 @@
 import icons
 import redraw
 import redraw/attribute as a
+import redraw/html as h
 import sketch as s
 import sketch/redraw/html as sh
 import sketch/size.{px}
 
 pub fn navbar() {
   use <- redraw.component__("Navbar")
-  nav([], [
-    icons.small(icons.home()),
+  nav([a.id("navbar")], [
+    // icons.small(icons.home()),
+    h.div([], []),
     sh.div(s.class([s.display("flex"), s.gap(px(24))]), [], [
       external_icon("https://hexdocs.pm/sketch", icons.book_open()),
       external_icon("https://github.com/ghivert/sketch", icons.github()),

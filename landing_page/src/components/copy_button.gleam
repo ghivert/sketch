@@ -39,12 +39,12 @@ fn on_copy(text, set_copied) {
 
 fn code_install() {
   s.class([
-    s.border("1px solid black"),
+    s.border("1px solid #ccc"),
     s.border_radius(px(8)),
     s.display("flex"),
     s.align_items("center"),
     s.padding(px(2)),
-    s.padding_left(px(6)),
+    s.padding_left(px(8)),
     s.gap(px(9)),
     s.font_size(rem(0.7)),
     s.font_weight("450"),

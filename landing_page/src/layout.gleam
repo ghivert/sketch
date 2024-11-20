@@ -1,10 +1,12 @@
+import redraw/attribute as a
 import redraw/html as h
 import sketch as s
+import sketch/media
 import sketch/redraw/html as sh
 import sketch/size.{px, rem}
 
 pub fn title_container(children) {
-  s.class([s.padding(px(36)), s.gap(px(36)), s.margin_bottom(px(60))])
+  s.class([s.padding(px(36)), s.gap(px(36))])
   |> sh.h1([], children)
 }
 
@@ -19,7 +21,22 @@ pub fn main_title(text) {
 }
 
 pub fn row(attributes, children) {
-  s.class([s.display("flex"), s.gap(px(12)), s.align_items("end")])
+  s.class([
+    s.display("flex"),
+    s.gap(px(12)),
+    s.align_items("end"),
+    s.flex_wrap("wrap"),
+  ])
+  |> sh.div(attributes, children)
+}
+
+pub fn column(attributes, children) {
+  s.class([
+    s.display("flex"),
+    s.gap(px(12)),
+    s.align_items("start"),
+    s.flex_direction("column"),
+  ])
   |> sh.div(attributes, children)
 }
 
@@ -35,7 +52,7 @@ pub fn body_container(attributes, children) {
   |> sh.div(attributes, children)
 }
 
-pub fn section(background, children) {
+pub fn section(id, background, children) {
   s.class([
     s.background(background),
     s.padding(px(36)),
@@ -43,16 +60,35 @@ pub fn section(background, children) {
     s.flex_direction("column"),
     s.gap(px(36)),
   ])
-  |> sh.section([], children)
+  |> sh.section([a.id(id)], children)
+}
+
+pub fn section_explanation(attributes, children) {
+  s.class([s.max_width(px(400)), s.line_height("1.4")])
+  |> sh.div(attributes, children)
 }
 
 pub fn windows_row(children) {
-  s.class([s.display("flex"), s.gap(px(36)), s.max_width(px(1000)), s.flex("1")])
+  s.class([
+    s.display("flex"),
+    s.gap(px(36)),
+    s.max_width(px(1000)),
+    s.flex("1"),
+    s.media(media.max_width(px(800)), [
+      s.flex_direction("column"),
+      s.align_items("center"),
+    ]),
+  ])
   |> sh.div([], children)
 }
 
-pub fn windows_wrapper(children) {
-  s.class([s.display("flex"), s.justify_content("center")])
+pub fn windows_wrapper(breakpoint, children) {
+  s.class([
+    s.display("flex"),
+    s.flex_direction("row"),
+    s.gap(px(36)),
+    s.media(media.max_width(breakpoint), [s.flex_direction("column")]),
+  ])
   |> sh.div([], children)
 }
 
@@ -64,6 +100,7 @@ pub fn buttons_row(children) {
     s.flex_direction("column"),
     s.align_items("center"),
     s.justify_content("center"),
+    s.media(media.max_width(px(800)), [s.padding(px(36))]),
   ])
   |> sh.div([], children)
 }
