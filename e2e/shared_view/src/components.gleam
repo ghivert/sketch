@@ -1,7 +1,7 @@
 //// Defines the base components used in the shared view. Think copmonents as in
 //// functions that simply returns the HTML correctly formatted.
 //// Every component accepts two arrays, attributes and children, to follow the
-//// same convention as Lustre standard HTML. That way, you could leverage on
+//// same convention as Lustre standard HTML. That way, you could leverage
 //// your knowledge of Lustre, and behaves exactly as expected.
 
 import shared_styles as styles

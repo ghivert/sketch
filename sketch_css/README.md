@@ -10,7 +10,7 @@ CSS generation is straightforward, `sketch_css` does not need a cache to
 generate correct CSS files. Instead, `sketch_css` ships with a CLI tool, able to
 read your Gleam styles files, and output corresponding your CSS automagically,
 while providing an abstraction layer written in Gleam, to make sure you're using
-the right classes! It's an other way to leverage on Sketch core and enjoy the
+the right classes! It's an other way to leverage Sketch core and enjoy the
 styling in Gleam, while taking advantage of all the static CSS power!
 
 To run the generator, you have to use the command

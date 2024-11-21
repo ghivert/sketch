@@ -46,7 +46,7 @@ fn app() {
 fn description_section() {
   redraw.fragment([
     title_container([
-      main_title("Leverage on your CSS knowledge."),
+      main_title("Leverage your CSS knowledge."),
       main_title("Create your own styles."),
       main_title("Make your application Gleaming."),
     ]),

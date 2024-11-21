@@ -13,11 +13,11 @@ to maximise performance in the browser and on BEAM.
 ## Distributions
 
 Sketch is thought as bare package, built as a foundation for every CSS packages
-that want to leverage on it. In the Sketch package, you'll find all CSS
-properties accessible, as well as low level generation functions, to go from
-Sketch to CSS. Sketch package is also made for framework developers, to provide
-a common basement, reusable across the entire Gleam ecosystem, letting users
-reuse their knowledge no matter what they are coding.
+that want to leverage it. In the Sketch package, you'll find all CSS properties
+accessible, as well as low level generation functions, to go from Sketch to CSS.
+Sketch package is also made for framework developers, to provide a common
+basement, reusable across the entire Gleam ecosystem, letting users reuse their
+knowledge no matter what they are coding.
 
 Sketch already supports two compilation target:
 [Lustre](https://hexdocs.pm/lustre/), with
@@ -207,9 +207,9 @@ Because pure CSS generation is straightforward, `sketch_css` does not need a
 cache to generate correct CSS files. Instead, `sketch_css` ships with a CLI
 tool, able to read your Gleam styles files, and output corresponding your CSS
 automagically, while providing an abstraction layer written in Gleam, to make
-sure you're using the right classes! It's an other way to leverage on Sketch
-core and enjoy the styling in Gleam, while taking advantage of all the static
-CSS power!
+sure you're using the right classes! It's an other way to leverage Sketch core
+and enjoy the styling in Gleam, while taking advantage of all the static CSS
+power!
 
 To run the generator, you have to use the command
 `gleam run -m sketch/css generate` at the root of your project. By default,
@@ -291,9 +291,9 @@ module. Build your classes, and use them across your codebase!
 
 ## Using media queries and pseudo-selectors
 
-Because we're building CSS, we can leverage on its full power, contrarily to
-inline styling. This mean we can use media queries and pseudo-selectors! You
-only need to call the proper functions, and Sketch will take care of the rest.
+Because we're building CSS, we can leverage its full power, contrarily to inline
+styling. This mean we can use media queries and pseudo-selectors! You only need
+to call the proper functions, and Sketch will take care of the rest.
 
 ```gleam
 import sketch

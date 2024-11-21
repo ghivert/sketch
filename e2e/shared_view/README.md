@@ -9,7 +9,7 @@ the siblings folder to get your head around that idea.
 
 ```toml
 # In gleam.toml.
-# Leverage on compiler path resolution.
+# Leverage compiler path resolution.
 [dependencies]
 shared_view = { path = "../shared_view" }
 ```
