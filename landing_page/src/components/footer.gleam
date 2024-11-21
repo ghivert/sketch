@@ -12,7 +12,7 @@ pub fn footer() {
       footer_details([h.text("Made with 💜 at Chou Corp.")]),
       footer_details([
         h.text("With the help of "),
-        link("https://gaspard.design", "gaspard.design"),
+        link("https://gaspardbuffet.com", "Gaspard Buffet"),
       ]),
     ]),
   ])
