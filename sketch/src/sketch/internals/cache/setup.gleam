@@ -35,7 +35,7 @@ pub fn render(cache: Cache) -> String {
     EphemeralCache(cache:) -> style.render(cache)
     PersistentCache(subject:) -> {
       process.try_call(subject, state.Render, 1000)
-      |> result.nil_error()
+      |> result.replace_error(Nil)
       |> result.unwrap("")
     }
   }
