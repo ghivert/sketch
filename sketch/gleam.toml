@@ -1,5 +1,5 @@
 name = "sketch"
-version = "3.1.1"
+version = "3.1.2"
 
 description = "A CSS-in-Gleam package, foundation for CSS packages!"
 internal_modules = ["sketch/internals", "sketch/internals/*"]
