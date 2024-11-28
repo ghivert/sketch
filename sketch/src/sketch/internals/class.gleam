@@ -40,7 +40,7 @@ pub fn rules(class: Content) {
 pub fn definitions(class: Content) {
   let Definitions(medias, selectors, class) = class.definitions
   [[class], selectors, medias]
-  |> list.concat()
+  |> list.flatten()
 }
 
 pub fn set_rules(class: Content, rules: List(Int)) {
