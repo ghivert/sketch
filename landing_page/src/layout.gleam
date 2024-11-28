@@ -3,10 +3,26 @@ import redraw/html as h
 import sketch as s
 import sketch/media
 import sketch/redraw/html as sh
-import sketch/size.{px, rem}
+import sketch/size.{percent, px, rem}
+
+fn max_width() {
+  s.class([
+    s.max_width(px(1500)),
+    s.margin_("auto"),
+    s.width(percent(100)),
+    s.padding(px(36)),
+    s.display("inherit"),
+    s.flex_direction("inherit"),
+    s.gap_("inherit"),
+  ])
+}
+
+pub fn width_container(children) {
+  sh.div(max_width(), [], children)
+}
 
 pub fn title_container(children) {
-  s.class([s.padding(px(36)), s.gap(px(36))])
+  s.class([s.gap(px(36)), s.compose(max_width())])
   |> sh.h1([], children)
 }
 
@@ -42,7 +58,6 @@ pub fn column(attributes, children) {
 
 pub fn body_container(attributes, children) {
   s.class([
-    s.padding(px(36)),
     s.line_height("1.4"),
     s.max_width(px(700)),
     s.display("flex"),
@@ -55,7 +70,6 @@ pub fn body_container(attributes, children) {
 pub fn section(id, background, children) {
   s.class([
     s.background(background),
-    s.padding(px(36)),
     s.display("flex"),
     s.flex_direction("column"),
     s.gap(px(36)),
