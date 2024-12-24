@@ -29,51 +29,51 @@ pub opaque type Query {
   Orientation(String)
 }
 
-pub fn dark_theme() {
+pub fn dark_theme() -> Query {
   ColorScheme(Dark)
 }
 
-pub fn light_theme() {
+pub fn light_theme() -> Query {
   ColorScheme(Light)
 }
 
-pub fn max_width(size) {
+pub fn max_width(size: Size) -> Query {
   MaxWidth(size)
 }
 
-pub fn min_width(size) {
+pub fn min_width(size) -> Query {
   MinWidth(size)
 }
 
-pub fn max_height(size) {
+pub fn max_height(size) -> Query {
   MaxHeight(size)
 }
 
-pub fn min_height(size) {
+pub fn min_height(size) -> Query {
   MinHeight(size)
 }
 
-pub fn and(first: Query, second: Query) {
+pub fn and(first: Query, second: Query) -> Query {
   And(first, second)
 }
 
-pub fn or(first: Query, second: Query) {
+pub fn or(first: Query, second: Query) -> Query {
   Or(first, second)
 }
 
-pub fn not(query: Query) {
+pub fn not(query: Query) -> Query {
   Not(query)
 }
 
-pub fn landscape() {
+pub fn landscape() -> Query {
   Orientation("landscape")
 }
 
-pub fn portrait() {
+pub fn portrait() -> Query {
   Orientation("portrait")
 }
 
-fn q_to_str(query: Query) {
+fn q_to_str(query: Query) -> String {
   case query {
     ColorScheme(Dark) -> "(prefers-color-scheme: dark)"
     ColorScheme(Light) -> "(prefers-color-scheme: light)"
@@ -90,7 +90,7 @@ fn q_to_str(query: Query) {
 
 /// Internal function, can be used if you need to go from a media query to a String
 /// in case you're building on top of sketch.
-pub fn to_string(query: Query) {
+pub fn to_string(query: Query) -> String {
   let content = q_to_str(query)
   string.append("@media ", content)
 }

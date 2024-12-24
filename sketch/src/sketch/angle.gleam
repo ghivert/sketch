@@ -7,23 +7,23 @@ pub opaque type Angle {
   Turn(Float)
 }
 
-pub fn deg(value: Float) {
+pub fn deg(value: Float) -> Angle {
   Deg(value)
 }
 
-pub fn rad(value: Float) {
+pub fn rad(value: Float) -> Angle {
   Rad(value)
 }
 
-pub fn grad(value: Float) {
+pub fn grad(value: Float) -> Angle {
   Grad(value)
 }
 
-pub fn turn(value: Float) {
+pub fn turn(value: Float) -> Angle {
   Turn(value)
 }
 
-pub fn to_string(angle: Angle) {
+pub fn to_string(angle: Angle) -> String {
   case angle {
     Deg(value) -> float.to_string(value) <> "deg"
     Rad(value) -> float.to_string(value) <> "rad"

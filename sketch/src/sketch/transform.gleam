@@ -1,3 +1,4 @@
+import gleam/bool
 import gleam/float
 import gleam/list
 import gleam/string
@@ -16,7 +17,7 @@ pub opaque type Transform {
   SkewY(Angle)
 }
 
-fn transform_to_string(value: Transform) {
+fn transform_to_string(value: Transform) -> String {
   case value {
     Translate(x, y) ->
       "translate("
@@ -36,56 +37,54 @@ fn transform_to_string(value: Transform) {
   }
 }
 
-pub fn translate2(x: Size, y: Size) {
+pub fn translate2(x: Size, y: Size) -> Transform {
   Translate(x, y)
 }
 
 /// `translate(x)` is `translate2(x, size.percent(0))`
-pub fn translate(x: Size) {
+pub fn translate(x: Size) -> Transform {
   translate2(x, size.percent(0))
 }
 
-pub fn translate_x(x: Size) {
+pub fn translate_x(x: Size) -> Transform {
   TranslateX(x)
 }
 
-pub fn translate_y(y: Size) {
+pub fn translate_y(y: Size) -> Transform {
   TranslateY(y)
 }
 
-pub fn scale2(x: Float, y: Float) {
+pub fn scale2(x: Float, y: Float) -> Transform {
   Scale(x, y)
 }
 
 /// `scale(x)` is `scale2(x, x)`
-pub fn scale(x: Float) {
+pub fn scale(x: Float) -> Transform {
   scale2(x, x)
 }
 
-pub fn scale_x(x: Float) {
+pub fn scale_x(x: Float) -> Transform {
   ScaleX(x)
 }
 
-pub fn scale_y(y: Float) {
+pub fn scale_y(y: Float) -> Transform {
   ScaleY(y)
 }
 
-pub fn rotate(value: Angle) {
+pub fn rotate(value: Angle) -> Transform {
   Rotate(value)
 }
 
-pub fn skew_x(x: Angle) {
+pub fn skew_x(x: Angle) -> Transform {
   SkewX(x)
 }
 
-pub fn skew_y(x: Angle) {
+pub fn skew_y(x: Angle) -> Transform {
   SkewY(x)
 }
 
-pub fn to_string(value: List(Transform)) {
-  case value {
-    [] -> "none"
-    transform_list ->
-      list.map(transform_list, transform_to_string) |> string.join(" ")
-  }
+pub fn to_string(value: List(Transform)) -> String {
+  use <- bool.guard(when: list.is_empty(value), return: "none")
+  list.map(value, transform_to_string)
+  |> string.join(" ")
 }

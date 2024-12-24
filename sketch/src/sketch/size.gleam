@@ -22,73 +22,73 @@ pub opaque type Size {
   Pct(Float)
 }
 
-pub fn px(value: Int) {
+pub fn px(value: Int) -> Size {
   Px(int.to_float(value))
 }
 
-pub fn px_(value: Float) {
+pub fn px_(value: Float) -> Size {
   Px(value)
 }
 
-pub fn pt(value: Int) {
+pub fn pt(value: Int) -> Size {
   Pt(int.to_float(value))
 }
 
-pub fn pt_(value: Float) {
+pub fn pt_(value: Float) -> Size {
   Pt(value)
 }
 
-pub fn percent(value: Int) {
+pub fn percent(value: Int) -> Size {
   Pct(int.to_float(value))
 }
 
-pub fn percent_(value: Float) {
+pub fn percent_(value: Float) -> Size {
   Pct(value)
 }
 
-pub fn vh(value: Int) {
+pub fn vh(value: Int) -> Size {
   Vh(int.to_float(value))
 }
 
-pub fn vh_(value: Float) {
+pub fn vh_(value: Float) -> Size {
   Vh(value)
 }
 
-pub fn vw(value: Int) {
+pub fn vw(value: Int) -> Size {
   Vw(int.to_float(value))
 }
 
-pub fn vw_(value: Float) {
+pub fn vw_(value: Float) -> Size {
   Vw(value)
 }
 
-pub fn em(value: Float) {
+pub fn em(value: Float) -> Size {
   Em(value)
 }
 
-pub fn rem(value: Float) {
+pub fn rem(value: Float) -> Size {
   Rem(value)
 }
 
-pub fn lh(value: Float) {
+pub fn lh(value: Float) -> Size {
   Lh(value)
 }
 
-pub fn rlh(value: Float) {
+pub fn rlh(value: Float) -> Size {
   Rlh(value)
 }
 
-pub fn ch(value: Int) {
+pub fn ch(value: Int) -> Size {
   Ch(int.to_float(value))
 }
 
-pub fn ch_(value: Float) {
+pub fn ch_(value: Float) -> Size {
   Ch(value)
 }
 
 /// Internal function, can be used if you need to go from a Size to a String
 /// in case you're building on top of sketch.
-pub fn to_string(size) {
+pub fn to_string(size) -> String {
   case size {
     Px(value) -> string.append(float.to_string(value), "px")
     Pt(value) -> string.append(float.to_string(value), "pt")

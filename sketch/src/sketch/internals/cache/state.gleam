@@ -1,24 +1,25 @@
 //// BEAM only.
 
 import gleam/erlang/process.{type Subject}
+@target(erlang)
 import gleam/otp/actor
 import sketch/internals/style
 
 pub type Request {
-  Render(stylesheet: Subject(String))
-  Fetch(styles: style.Class, subject: Subject(String))
+  Render(response: Subject(String))
+  Fetch(class: style.Class, response: Subject(String))
 }
 
 @target(erlang)
-pub fn loop(msg: Request, cache: style.Cache) {
+pub fn loop(msg: Request, cache: style.Cache) -> actor.Next(a, style.Cache) {
   case msg {
-    Render(subject) -> {
-      process.send(subject, style.render(cache))
+    Render(response:) -> {
+      process.send(response, style.render(cache))
       actor.continue(cache)
     }
-    Fetch(class, subject) -> {
+    Fetch(class:, response:) -> {
       let #(cache, class_name) = style.class_name(class, cache)
-      process.send(subject, class_name)
+      process.send(response, class_name)
       actor.continue(cache)
     }
   }

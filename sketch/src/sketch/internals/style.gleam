@@ -16,33 +16,23 @@ pub type Class {
   Class(string_representation: String, content: List(Style))
 }
 
-pub type KeyValueCache =
-  Dict(String, #(class.Content, ComputedProperties))
-
 pub type Cache {
-  EphemeralCache(cache: KeyValueCache)
-  PersistentCache(cache: KeyValueCache, current_id: Int)
+  Ephemeral(cache: Dict(String, #(class.Content, Properties)))
+  Persistent(cache: Dict(String, #(class.Content, Properties)), current_id: Int)
 }
 
-pub fn render(cache: Cache) {
-  case cache {
-    EphemeralCache(cache) -> render_cache_dict(cache)
-    PersistentCache(cache, _) -> render_cache_dict(cache)
-  }
-}
-
-fn render_cache_dict(cache: KeyValueCache) {
-  dict.values(cache)
+pub fn render(cache: Cache) -> String {
+  dict.values(cache.cache)
   |> list.flat_map(fn(c) { class.definitions(c.0) })
   |> string.join("\n\n")
 }
 
-pub fn persistent() {
-  PersistentCache(cache: dict.new(), current_id: 0)
+pub fn persistent() -> Cache {
+  Persistent(cache: dict.new(), current_id: 0)
 }
 
-pub fn ephemeral() {
-  EphemeralCache(cache: dict.new())
+pub fn ephemeral() -> Cache {
+  Ephemeral(cache: dict.new())
 }
 
 pub type Style {
@@ -53,12 +43,12 @@ pub type Style {
   NoStyle
 }
 
-pub type ComputedProperties {
-  ComputedProperties(
+pub type Properties {
+  Properties(
     properties: List(String),
     medias: List(MediaProperty),
     pseudo_selectors: List(PseudoProperty),
-    indent: Int,
+    indentation: Int,
   )
 }
 
@@ -75,8 +65,13 @@ pub type PseudoProperty {
 }
 
 // Computing of properties
-//
-fn compute_property(indent: Int, key: String, value: String, important: Bool) {
+
+fn compute_property(
+  indent: Int,
+  key: String,
+  value: String,
+  important: Bool,
+) -> String {
   let base_indent = sketch_string.indent(indent)
   let important_ = case important {
     True -> " !important"
@@ -85,16 +80,12 @@ fn compute_property(indent: Int, key: String, value: String, important: Bool) {
   base_indent <> key <> ": " <> value <> important_ <> ";"
 }
 
-fn init_computed_properties(indent: Int) {
-  ComputedProperties(properties: [], medias: [], pseudo_selectors: [], indent:)
-}
-
 fn merge_computed_properties(
-  target: ComputedProperties,
-  argument: ComputedProperties,
-) {
-  ComputedProperties(
-    indent: target.indent,
+  target: Properties,
+  argument: Properties,
+) -> Properties {
+  Properties(
+    indentation: target.indentation,
     properties: list.append(argument.properties, target.properties),
     medias: list.append(argument.medias, target.medias),
     pseudo_selectors: list.append(
@@ -109,9 +100,10 @@ fn merge_computed_properties(
 pub fn compute_properties(
   cache: Cache,
   properties: List(Style),
-  indent: Int,
-) -> #(Cache, ComputedProperties) {
-  let init = init_computed_properties(indent)
+  indentation: Int,
+) -> #(Cache, Properties) {
+  let init =
+    Properties(properties: [], medias: [], pseudo_selectors: [], indentation:)
   use #(cache, acc), prop <- list.fold(list.reverse(properties), #(cache, init))
   case prop {
     NoStyle -> #(cache, acc)
@@ -122,45 +114,47 @@ pub fn compute_properties(
       case dict.get(cache.cache, class.string_representation) {
         Ok(#(_, props)) -> #(cache, merge_computed_properties(acc, props))
         Error(_) ->
-          compute_properties(cache, class.content, indent)
+          compute_properties(cache, class.content, indentation)
           |> pair.map_second(merge_computed_properties(acc, _))
       }
     }
   }
 }
 
-fn handle_property(props: ComputedProperties, style: Style) {
-  let assert Property(key, value, important) = style
-  let css_property = compute_property(props.indent, key, value, important)
+fn handle_property(props: Properties, style: Style) -> Properties {
+  let assert Property(key:, value:, important:) = style
+  let css_property = compute_property(props.indentation, key, value, important)
   let properties = [css_property, ..props.properties]
-  ComputedProperties(..props, properties: properties)
+  Properties(..props, properties:)
 }
 
-fn handle_media(cache: Cache, props: ComputedProperties, style: Style) {
-  let assert Media(query, styles) = style
-  let #(cache, computed_props) =
-    compute_properties(cache, styles, props.indent + 2)
-  MediaProperty(
-    query: query,
-    properties: computed_props.properties,
-    pseudo_selectors: computed_props.pseudo_selectors,
-  )
+fn handle_media(
+  cache: Cache,
+  props: Properties,
+  style: Style,
+) -> #(Cache, Properties) {
+  let assert Media(query:, styles:) = style
+  let indentation = props.indentation + 2
+  let #(cache, properties) = compute_properties(cache, styles, indentation)
+  let Properties(properties:, pseudo_selectors:, ..) = properties
+  MediaProperty(query:, properties:, pseudo_selectors:)
   |> list.prepend(props.medias, _)
-  |> fn(m) { ComputedProperties(..props, medias: m) }
+  |> fn(medias) { Properties(..props, medias:) }
   |> pair.new(cache, _)
 }
 
-fn handle_pseudo_selector(cache: Cache, props: ComputedProperties, style: Style) {
-  let assert PseudoSelector(pseudo_selector, styles) = style
-  let #(cache, computed_props) =
-    compute_properties(cache, styles, props.indent + 2)
-  PseudoProperty(
-    pseudo_selector: pseudo_selector,
-    properties: computed_props.properties,
-  )
-  |> list.prepend(computed_props.pseudo_selectors, _)
+fn handle_pseudo_selector(
+  cache: Cache,
+  props: Properties,
+  style: Style,
+) -> #(Cache, Properties) {
+  let assert PseudoSelector(pseudo_selector:, styles:) = style
+  let indentation = props.indentation + 2
+  let #(cache, properties) = compute_properties(cache, styles, indentation)
+  PseudoProperty(pseudo_selector:, properties: properties.properties)
+  |> list.prepend(properties.pseudo_selectors, _)
   |> list.append(props.pseudo_selectors)
-  |> fn(p) { ComputedProperties(..props, pseudo_selectors: p) }
+  |> fn(pseudo_selectors) { Properties(..props, pseudo_selectors:) }
   |> pair.new(cache, _)
 }
 
@@ -177,44 +171,39 @@ pub type ComputedClass {
 
 fn wrap_pseudo_selectors(
   id: String,
-  indent: Int,
+  indentation: Int,
   pseudo_selectors: List(PseudoProperty),
-) {
-  use p <- list.map(pseudo_selectors)
-  sketch_string.wrap_class(id, p.properties, indent, Some(p.pseudo_selector))
+) -> List(String) {
+  use pseudo_selector <- list.map(pseudo_selectors)
+  let PseudoProperty(pseudo_selector:, properties:) = pseudo_selector
+  sketch_string.wrap_class(id, properties, indentation, Some(pseudo_selector))
 }
 
 // Compute classes by using the class definitions, and by wrapping them in the
 // correct class declarations, to be CSS compliant.
-pub fn compute_classes(
-  class_name: String,
-  computed_properties: ComputedProperties,
-) -> ComputedClass {
-  let ComputedProperties(properties, medias, pseudo_selectors, _) =
-    computed_properties
-  let class_def = sketch_string.wrap_class(class_name, properties, 0, None)
-  let medias_def = {
+pub fn compute_classes(name: String, properties: Properties) -> ComputedClass {
+  let Properties(properties:, medias:, pseudo_selectors:, ..) = properties
+  let class_def = sketch_string.wrap_class(name, properties, 0, None)
+  let selectors_def = wrap_pseudo_selectors(name, 0, pseudo_selectors)
+  ComputedClass(class_def:, selectors_def:, name:, medias_def: {
     use MediaProperty(query, properties, pseudo_selectors) <- list.map(medias)
-    let selectors_def = wrap_pseudo_selectors(class_name, 2, pseudo_selectors)
-    [query <> " {", sketch_string.wrap_class(class_name, properties, 2, None)]
+    let selectors_def = wrap_pseudo_selectors(name, 2, pseudo_selectors)
+    [query <> " {", sketch_string.wrap_class(name, properties, 2, None)]
     |> list.prepend([selectors_def, ["}"]], _)
     |> list.flatten()
     |> string.join("\n")
-  }
-  let selectors_def = wrap_pseudo_selectors(class_name, 0, pseudo_selectors)
-  let name = class_name
-  ComputedClass(class_def, medias_def, selectors_def, name)
+  })
 }
 
-pub fn class(styles: List(Style)) -> Class {
-  let string_representation = string.inspect(styles)
-  Class(string_representation: string_representation, content: styles)
+pub fn class(content: List(Style)) -> Class {
+  let string_representation = string.inspect(content)
+  Class(string_representation:, content:)
 }
 
 pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
-  let Class(string_representation: s, content: c) = class
-  use <- bool.guard(when: list.is_empty(c), return: #(cache, ""))
-  case dict.get(cache.cache, s) {
+  let Class(string_representation:, content:) = class
+  use <- bool.guard(when: list.is_empty(content), return: #(cache, ""))
+  case dict.get(cache.cache, string_representation) {
     Ok(#(content, _)) -> #(cache, class.class_name(content))
     Error(_) -> compute_class(cache, class) |> pair.map_second(class.class_name)
   }
@@ -223,31 +212,31 @@ pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
 pub fn compute_class(cache: Cache, class: Class) -> #(Cache, class.Content) {
   let Class(string_representation:, content:) = class
   let #(cache, properties) = compute_properties(cache, content, 2)
-  let class_id = case cache {
-    EphemeralCache(_) -> xx_hash32(string_representation)
-    PersistentCache(_, cid) -> cid
-  }
+  let class_id = select_cache_id(cache, string_representation)
   let class_name = "css-" <> int.to_string(class_id)
-  compute_classes(class_name, properties)
-  |> fn(c: ComputedClass) {
-    class.create(
-      class_name: c.name,
-      class_id: class_id,
+  let class = compute_classes(class_name, properties)
+  let class =
+    class.new(
+      class_name: class.name,
+      class_id:,
       rules: None,
       definitions: class.Definitions(
-        medias_def: c.medias_def,
-        selectors_def: c.selectors_def,
-        class_def: c.class_def,
+        medias_def: class.medias_def,
+        selectors_def: class.selectors_def,
+        class_def: class.class_def,
       ),
     )
+  let c = dict.insert(cache.cache, string_representation, #(class, properties))
+  case cache {
+    Ephemeral(..) -> Ephemeral(c)
+    Persistent(..) -> Persistent(cache: c, current_id: class_id + 1)
   }
-  |> fn(class) {
-    let c =
-      dict.insert(cache.cache, string_representation, #(class, properties))
-    case cache {
-      EphemeralCache(..) -> EphemeralCache(c)
-      PersistentCache(..) -> PersistentCache(cache: c, current_id: class_id + 1)
-    }
-    |> pair.new(class)
+  |> pair.new(class)
+}
+
+fn select_cache_id(cache: Cache, string_representation: String) -> Int {
+  case cache {
+    Ephemeral(..) -> xx_hash32(string_representation)
+    Persistent(current_id:, ..) -> current_id
   }
 }
