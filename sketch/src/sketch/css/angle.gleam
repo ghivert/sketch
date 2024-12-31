@@ -23,6 +23,7 @@ pub fn turn(value: Float) -> Angle {
   Turn(value)
 }
 
+@internal
 pub fn to_string(angle: Angle) -> String {
   case angle {
     Deg(value) -> float.to_string(value) <> "deg"

@@ -90,6 +90,7 @@ fn q_to_str(query: Query) -> String {
 
 /// Internal function, can be used if you need to go from a media query to a String
 /// in case you're building on top of sketch.
+@internal
 pub fn to_string(query: Query) -> String {
   let content = q_to_str(query)
   string.append("@media ", content)

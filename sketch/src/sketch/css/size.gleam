@@ -88,6 +88,7 @@ pub fn ch_(value: Float) -> Size {
 
 /// Internal function, can be used if you need to go from a Size to a String
 /// in case you're building on top of sketch.
+@internal
 pub fn to_string(size) -> String {
   case size {
     Px(value) -> string.append(float.to_string(value), "px")

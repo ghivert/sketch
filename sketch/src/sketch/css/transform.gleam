@@ -83,6 +83,7 @@ pub fn skew_y(x: Angle) -> Transform {
   SkewY(x)
 }
 
+@internal
 pub fn to_string(value: List(Transform)) -> String {
   use <- bool.guard(when: list.is_empty(value), return: "none")
   list.map(value, transform_to_string)
