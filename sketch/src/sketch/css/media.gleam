@@ -10,7 +10,7 @@
 //// `or` or `not` functions.
 
 import gleam/string
-import sketch/size.{type Size, to_string as to_str}
+import sketch/css/size.{type Size, to_string as to_str}
 
 pub opaque type ColorMode {
   Dark

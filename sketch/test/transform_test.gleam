@@ -1,7 +1,7 @@
 import gleeunit/should
-import sketch/angle
-import sketch/size
-import sketch/transform
+import sketch/css/angle
+import sketch/css/size
+import sketch/css/transform
 
 pub fn translate_test() {
   [transform.translate(size.px(10))]

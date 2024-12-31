@@ -2,8 +2,8 @@ import gleam/bool
 import gleam/float
 import gleam/list
 import gleam/string
-import sketch/angle.{type Angle}
-import sketch/size.{type Size}
+import sketch/css/angle.{type Angle}
+import sketch/css/size.{type Size}
 
 pub opaque type Transform {
   Translate(Size, Size)

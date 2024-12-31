@@ -2,10 +2,10 @@ import gleam/float
 import gleam/int
 import gleam/list
 import gleam/string
-import sketch/internals/style
-import sketch/media.{type Query}
-import sketch/size.{type Size}
-import sketch/transform.{type Transform}
+import sketch/css/media.{type Query}
+import sketch/css/size.{type Size}
+import sketch/css/transform.{type Transform}
+import sketch/internals/cache/cache as style
 
 /// Represents a Style. It can be a class composition, a media query with its
 /// sub-properties, a pseudo-selector with its sub-properties or a property
@@ -2040,124 +2040,125 @@ pub fn media(query: Query, styles: List(Style)) -> Style {
 
 // Pseudo-selectors
 // Contains pseudo-classes and pseudo-elements.
+
 pub fn placeholder(styles: List(Style)) -> Style {
-  pseudo_selector("::placeholder", styles)
+  selector("::placeholder", styles)
 }
 
 pub fn hover(styles: List(Style)) -> Style {
-  pseudo_selector(":hover", styles)
+  selector(":hover", styles)
 }
 
 pub fn active(styles: List(Style)) -> Style {
-  pseudo_selector(":active", styles)
+  selector(":active", styles)
 }
 
 pub fn focus(styles: List(Style)) -> Style {
-  pseudo_selector(":focus", styles)
+  selector(":focus", styles)
 }
 
 pub fn focus_visible(styles: List(Style)) -> Style {
-  pseudo_selector(":focus-visible", styles)
+  selector(":focus-visible", styles)
 }
 
 pub fn focus_within(styles: List(Style)) -> Style {
-  pseudo_selector(":focus-within", styles)
+  selector(":focus-within", styles)
 }
 
 pub fn enabled(styles: List(Style)) -> Style {
-  pseudo_selector(":enabled", styles)
+  selector(":enabled", styles)
 }
 
 pub fn disabled(styles: List(Style)) -> Style {
-  pseudo_selector(":disabled", styles)
+  selector(":disabled", styles)
 }
 
 pub fn read_only(styles: List(Style)) -> Style {
-  pseudo_selector(":read-only", styles)
+  selector(":read-only", styles)
 }
 
 pub fn read_write(styles: List(Style)) -> Style {
-  pseudo_selector(":read-write", styles)
+  selector(":read-write", styles)
 }
 
 pub fn checked(styles: List(Style)) -> Style {
-  pseudo_selector(":checked", styles)
+  selector(":checked", styles)
 }
 
 pub fn blank(styles: List(Style)) -> Style {
-  pseudo_selector(":blank", styles)
+  selector(":blank", styles)
 }
 
 pub fn valid(styles: List(Style)) -> Style {
-  pseudo_selector(":valid", styles)
+  selector(":valid", styles)
 }
 
 pub fn invalid(styles: List(Style)) -> Style {
-  pseudo_selector(":invalid", styles)
+  selector(":invalid", styles)
 }
 
 pub fn required(styles: List(Style)) -> Style {
-  pseudo_selector(":required", styles)
+  selector(":required", styles)
 }
 
 pub fn optional(styles: List(Style)) -> Style {
-  pseudo_selector(":optional", styles)
+  selector(":optional", styles)
 }
 
 pub fn link(styles: List(Style)) -> Style {
-  pseudo_selector(":link", styles)
+  selector(":link", styles)
 }
 
 pub fn visited(styles: List(Style)) -> Style {
-  pseudo_selector(":visited", styles)
+  selector(":visited", styles)
 }
 
 pub fn target(styles: List(Style)) -> Style {
-  pseudo_selector(":target", styles)
+  selector(":target", styles)
 }
 
-pub fn nth_child(selector: String, styles: List(Style)) -> Style {
-  pseudo_selector(string.append(":nth-child", selector), styles)
+pub fn nth_child(sel: String, styles: List(Style)) -> Style {
+  selector(string.append(":nth-child", sel), styles)
 }
 
-pub fn nth_last_child(selector: String, styles: List(Style)) -> Style {
-  pseudo_selector(string.append(":nth-last-child", selector), styles)
+pub fn nth_last_child(sel: String, styles: List(Style)) -> Style {
+  selector(string.append(":nth-last-child", sel), styles)
 }
 
-pub fn nth_of_type(selector: String, styles: List(Style)) -> Style {
-  pseudo_selector(string.append(":nth-of-type", selector), styles)
+pub fn nth_of_type(sel: String, styles: List(Style)) -> Style {
+  selector(string.append(":nth-of-type", sel), styles)
 }
 
-pub fn nth_last_of_type(selector: String, styles: List(Style)) -> Style {
-  pseudo_selector(string.append(":nth-last-of-type", selector), styles)
+pub fn nth_last_of_type(sel: String, styles: List(Style)) -> Style {
+  selector(string.append(":nth-last-of-type", sel), styles)
 }
 
 pub fn first_child(styles: List(Style)) -> Style {
-  pseudo_selector(":first-child", styles)
+  selector(":first-child", styles)
 }
 
 pub fn last_child(styles: List(Style)) -> Style {
-  pseudo_selector(":last-child", styles)
+  selector(":last-child", styles)
 }
 
 pub fn only_child(styles: List(Style)) -> Style {
-  pseudo_selector(":only-child", styles)
+  selector(":only-child", styles)
 }
 
 pub fn first_of_type(styles: List(Style)) -> Style {
-  pseudo_selector(":first-of-type", styles)
+  selector(":first-of-type", styles)
 }
 
 pub fn last_of_type(styles: List(Style)) -> Style {
-  pseudo_selector(":last-of-type", styles)
+  selector(":last-of-type", styles)
 }
 
 pub fn only_of_type(styles: List(Style)) -> Style {
-  pseudo_selector(":only-of-type", styles)
+  selector(":only-of-type", styles)
 }
 
-pub fn pseudo_selector(value: String, styles: List(Style)) -> Style {
-  style.PseudoSelector(value, styles)
+pub fn selector(value: String, styles: List(Style)) -> Style {
+  style.Selector(value, styles)
 }
 
 /// Add an `!important` flag to any CSS property.
