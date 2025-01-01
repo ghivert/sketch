@@ -1,4 +1,3 @@
-import gleam/pair
 @target(erlang)
 import gleam/result
 import sketch/css.{type Class}
@@ -11,7 +10,7 @@ import sketch/internals/cache/cache
 @target(javascript)
 /// Manages the styles. Can be instanciated with [`cache`](#cache).
 pub opaque type StyleSheet {
-  StyleSheet(cache: cache.Cache)
+  StyleSheet(cache: cache.Cache, is_persistent: Bool)
 }
 
 @target(erlang)
@@ -35,14 +34,14 @@ pub fn render(cache: StyleSheet) -> String {
 /// application. It can have the form `class1` or `class1 class2` in case of
 /// classes composition.
 pub fn class_name(class: Class, stylesheet: StyleSheet) -> #(StyleSheet, String) {
-  cache.class_name(class, stylesheet.cache)
-  |> pair.map_first(StyleSheet)
+  let #(cache, class_name) = cache.class_name(class, stylesheet.cache)
+  #(StyleSheet(..stylesheet, cache:), class_name)
 }
 
 @target(erlang)
 pub fn class_name(class: Class, stylesheet: StyleSheet) -> #(StyleSheet, String) {
-  actor.class_name(class, stylesheet.cache)
-  |> pair.map_first(StyleSheet)
+  let #(cache, class_name) = actor.class_name(class, stylesheet.cache)
+  #(StyleSheet(cache:), class_name)
 }
 
 /// Strategy for the Cache. Two strategies are available as of now: ephemeral
@@ -61,15 +60,16 @@ pub type Strategy {
 /// you want, if you need to manage different stylesheets.
 /// Instanciating an `Ephemeral` _always_ succeed.
 pub fn stylesheet(
-  strategy _strategy: Strategy,
+  strategy strategy: Strategy,
 ) -> Result(StyleSheet, error.SketchError) {
-  cache.new()
-  |> StyleSheet
-  |> Ok
+  Ok(case strategy {
+    Ephemeral -> StyleSheet(cache: cache.new(), is_persistent: False)
+    Persistent -> StyleSheet(cache: cache.new(), is_persistent: True)
+  })
 }
 
 @target(erlang)
-pub fn cache(
+pub fn stylesheet(
   strategy strategy: Strategy,
 ) -> Result(StyleSheet, error.SketchError) {
   case strategy {

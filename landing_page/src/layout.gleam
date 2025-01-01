@@ -22,7 +22,12 @@ pub fn width_container(children) {
 }
 
 pub fn title_container(children) {
-  s.class([s.gap(px(36)), s.compose(max_width())])
+  s.class([s.compose(max_width()), s.gap(px(36)), s.display("flex")])
+  |> sh.h1([], children)
+}
+
+pub fn title_container_inside(children) {
+  s.class([s.gap(px(36))])
   |> sh.h1([], children)
 }
 

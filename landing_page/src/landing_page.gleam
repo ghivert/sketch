@@ -6,9 +6,10 @@ import components/windows
 import ffi
 import layout.{
   body_container, column, main_title, row, section, section_explanation, title,
-  title_container, width_container,
+  title_container, title_container_inside, width_container,
 }
 import redraw
+import redraw/attribute as a
 import redraw/handler
 import redraw/html as h
 import redraw_dom/client
@@ -46,9 +47,19 @@ fn app() {
 fn description_section() {
   redraw.fragment([
     title_container([
-      main_title("Leverage your CSS knowledge."),
-      main_title("Create your own styles."),
-      main_title("Make your application Gleaming."),
+      h.img([
+        a.src("/logo.png"),
+        a.style([
+          #("width", "150px"),
+          #("height", "150px"),
+          #("transform", "rotate(-10deg)"),
+        ]),
+      ]),
+      title_container_inside([
+        main_title("Leverage your CSS knowledge."),
+        main_title("Create your own styles."),
+        main_title("Make your application Gleaming."),
+      ]),
     ]),
     width_container([
       body_container([], [

@@ -18,16 +18,20 @@ pub type Msg {
 
 /// Defines the standard app, used everywhere in Lustre applications.
 pub fn app(strategy: sketch.Strategy) {
-  let assert Ok(cache) = sketch.cache(strategy:)
-  sketch_lustre.node()
-  |> sketch_lustre.compose(view, cache)
-  |> lustre.simple(fn(_) { 0 }, update, _)
+  let assert Ok(stylesheet) = sketch.stylesheet(strategy:)
+  use model <- lustre.simple(init, update)
+  let options = sketch_lustre.node()
+  use <- sketch_lustre.render(options, stylesheet)
+  view(model)
 }
 
 /// Function used specifically in SSR, in order to send the correct HTML
 /// before hydrating it. It can also be an example of HTML server-side
 /// generation, Sketch improved.
 pub fn ssr(model: Model) {
+  let options = sketch_lustre.node()
+  let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Ephemeral)
+  use <- sketch_lustre.render(options, stylesheet)
   h.html([], [
     h.head([], [
       h.link([a.rel("stylesheet"), a.href(styles.fonts)]),
@@ -35,6 +39,10 @@ pub fn ssr(model: Model) {
     ]),
     h.body_([], [view(model)]),
   ])
+}
+
+fn init(_flags) {
+  0
 }
 
 fn update(model: Model, msg: Msg) {

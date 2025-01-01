@@ -3,15 +3,15 @@ import gleam/list
 import lustre/element as el
 import lustre/element/html
 import lustre/internals/vdom
-import plinth/browser/shadow.{type ShadowRoot}
-import sketch.{type Cache}
-import sketch/internals/ffi
+import sketch
+import sketch/internals/css_stylesheet as stylesheet
+import sketch/internals/mutable
 import sketch/lustre/element
 
 type StyleSheetOption {
   Node
   Document
-  Shadow(root: ShadowRoot)
+  Shadow(root: Dynamic)
 }
 
 /// Options to indicate where to output the StyleSheet.
@@ -25,42 +25,61 @@ type StyleSheet {
   NodeStyleSheet
 }
 
-/// Wrap the view function in lustre. Be careful, on BEAM, sketch will add an
-/// additional `div` at the root of the HTML tree, to inject the styles in the
-/// app, currently due to a fragment bug.
-/// This should have no impact on your app.
-pub fn compose(
+/// Use `render` as a view middleware. Like in Wisp, `sketch_lustre` adopts the
+/// middleware philosophy in Lustre, and allows you to call `render` directly
+/// in your view function, by using `use`. No need to wrap your view function.
+///
+/// ```gleam
+/// import lustre
+/// import sketch
+/// import sketch/lustre as sketch_lustre
+/// import sketch/lustre/element/html
+///
+/// pub fn main() {
+///   lustre.simple(init, update, view)
+///   |> lustre.start("#root", Nil)
+/// }
+///
+/// fn view(model) {
+///   let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Persistent)
+///   let options = sketch_lustre.node()
+///   use <- skech_lustre.render(options, stylesheet)
+///   html.div([], [])
+/// }
+/// ```
+pub fn render(
   options: Options,
-  view: fn(model) -> element.Element(msg),
-  cache: Cache,
-) {
-  let cache = ffi.wrap(cache)
-  let stylesheet = to_stylesheet(options)
-  fn(model: model) -> el.Element(msg) {
-    let node = view(model)
-    let #(result, node) = element.unstyled(ffi.get(cache), node)
-    let content = sketch.render(result)
-    ffi.set(cache, result)
-    render_stylesheet(content, node, stylesheet)
-  }
+  stylesheet: sketch.StyleSheet,
+  view: fn() -> element.Element(msg),
+) -> el.Element(msg) {
+  let stylesheet = mutable.wrap(stylesheet)
+  let node = view()
+  let #(result, node) = element.unstyled(mutable.get(stylesheet), node)
+  let content = sketch.render(result)
+  mutable.set(stylesheet, result)
+  render_stylesheet(content, node, to_lustre_stylesheet(options))
 }
 
 @target(erlang)
-fn to_stylesheet(_options) {
+fn to_lustre_stylesheet(_options: Options) -> StyleSheet {
   NodeStyleSheet
 }
 
 @target(javascript)
-fn to_stylesheet(options) {
+fn to_lustre_stylesheet(options: Options) -> StyleSheet {
+  let Options(options) = options
   case options {
-    Options(Node) -> NodeStyleSheet
-    Options(Document) -> CssStyleSheet(ffi.create_document_stylesheet())
-    Options(Shadow(root)) ->
-      CssStyleSheet(ffi.create_shadow_root_stylesheet(root))
+    Node -> NodeStyleSheet
+    Document -> CssStyleSheet(stylesheet.create(stylesheet.Document))
+    Shadow(r) -> CssStyleSheet(stylesheet.create(stylesheet.ShadowRoot(r)))
   }
 }
 
-fn render_stylesheet(content, node, stylesheet) {
+fn render_stylesheet(
+  content: String,
+  node: el.Element(b),
+  stylesheet: StyleSheet,
+) -> el.Element(b) {
   case stylesheet {
     NodeStyleSheet -> {
       case node {
@@ -71,13 +90,13 @@ fn render_stylesheet(content, node, stylesheet) {
       }
     }
     CssStyleSheet(stylesheet) -> {
-      ffi.set_stylesheet(content, stylesheet)
+      stylesheet.replace(content, stylesheet)
       node
     }
   }
 }
 
-fn contains_head(el: el.Element(a)) {
+fn contains_head(el: el.Element(a)) -> Bool {
   case el {
     vdom.Element(_, _, "head", _, _, _, _) -> True
     vdom.Element(_, _, _, _, children, _, _) ->
@@ -86,7 +105,7 @@ fn contains_head(el: el.Element(a)) {
   }
 }
 
-fn put_in_head(el: el.Element(a), content: String) {
+fn put_in_head(el: el.Element(a), content: String) -> el.Element(a) {
   case el {
     vdom.Element(k, n, "head", a, children, s, v) ->
       children
@@ -102,10 +121,13 @@ fn put_in_head(el: el.Element(a), content: String) {
 
 @target(erlang)
 /// Take an Element, and overloads the content with the correct styles from sketch.
-/// Can only be used on BEAM.
-pub fn ssr(el: element.Element(a), cache: Cache) -> el.Element(a) {
-  let #(cache, el) = element.unstyled(cache, el)
-  let stylesheet = sketch.render(cache)
+/// Can only be used on BEAM as of now.
+pub fn ssr(
+  el: element.Element(a),
+  stylesheet: sketch.StyleSheet,
+) -> el.Element(a) {
+  let #(stylesheet, el) = element.unstyled(stylesheet, el)
+  let stylesheet = sketch.render(stylesheet)
   case contains_head(el) {
     True -> put_in_head(el, stylesheet)
     False -> el.fragment([html.style([], stylesheet), el])
@@ -125,6 +147,6 @@ pub fn document() -> Options {
 
 /// Output the StyleSheet in a `CSSStyleSheet` in a shadow root.
 /// `shadow` cannot be used on server.
-pub fn shadow(root: ShadowRoot) -> Options {
-  Options(stylesheet: Shadow(root: root))
+pub fn shadow(root: Dynamic) -> Options {
+  Options(stylesheet: Shadow(root:))
 }
