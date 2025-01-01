@@ -135,7 +135,7 @@ fn insert_class_in_cache(cache: Cache, class: Class) -> #(Cache, String) {
 }
 
 @external(erlang, "erlang", "phash2")
-@external(javascript, "../../xxhash.ffi.mjs", "xxHash32")
+@external(javascript, "../../../xxhash.ffi.mjs", "xxHash32")
 fn compute_hash(content: String) -> Int
 
 fn wrap_selectors(
