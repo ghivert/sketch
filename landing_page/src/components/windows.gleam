@@ -1,48 +1,48 @@
 import ffi
-import redraw/attribute as a
-import redraw/html as h
-import sketch as s
+import redraw/dom/attribute as a
+import redraw/dom/html as h
+import sketch/css
+import sketch/css/size.{percent, px}
 import sketch/redraw/html as sh
-import sketch/size.{percent, px}
 
 pub fn scaffold(children) {
-  s.class([
-    s.background("var(--window-bg)"),
-    s.border_radius(px(10)),
-    s.border("1px solid var(--window-border)"),
-    s.overflow("hidden"),
-    s.flex("1"),
-    s.display("flex"),
-    s.flex_direction("column"),
-    s.max_height(px(400)),
-    s.max_width(percent(100)),
+  css.class([
+    css.background("var(--window-bg)"),
+    css.border_radius(px(10)),
+    css.border("1px solid var(--window-border)"),
+    css.overflow("hidden"),
+    css.flex("1"),
+    css.display("flex"),
+    css.flex_direction("column"),
+    css.max_height(px(400)),
+    css.max_width(percent(100)),
   ])
   |> sh.div([], children)
 }
 
 pub fn render(children) {
-  s.class([
-    s.background("var(--window-bg)"),
-    s.border_radius(px(10)),
-    s.border("1px solid var(--window-border)"),
-    s.overflow("hidden"),
-    s.flex("1"),
-    s.margin(px(24)),
+  css.class([
+    css.background("var(--window-bg)"),
+    css.border_radius(px(10)),
+    css.border("1px solid var(--window-border)"),
+    css.overflow("hidden"),
+    css.flex("1"),
+    css.margin(px(24)),
   ])
   |> sh.div([], children)
 }
 
 pub fn menu_bar(children) {
-  s.class([])
+  css.class([])
   |> sh.div([], children)
 }
 
 pub fn traffic_lights() {
-  s.class([
-    s.display("flex"),
-    s.gap(px(5)),
-    s.padding(px(10)),
-    s.border_bottom("1px solid var(--window-border)"),
+  css.class([
+    css.display("flex"),
+    css.gap(px(5)),
+    css.padding(px(10)),
+    css.border_bottom("1px solid var(--window-border)"),
   ])
   |> sh.div([], [
     traffic_light(Red),
@@ -63,49 +63,49 @@ fn traffic_light(color) {
     Orange -> "rgb(254, 188, 46)"
     Green -> "rgb(40, 202, 65)"
   }
-  s.class([
-    s.width(px(10)),
-    s.height(px(10)),
-    s.background(color),
-    s.border_radius(px(5)),
+  css.class([
+    css.width(px(10)),
+    css.height(px(10)),
+    css.background(color),
+    css.border_radius(px(5)),
   ])
   |> sh.div([], [])
 }
 
 pub fn editor(content) {
   let content = a.inner_html(ffi.highlight(content))
-  s.class([
-    s.background("var(--background)"),
-    s.padding(px(10)),
-    s.display("flex"),
-    s.overflow("auto"),
-    s.flex_grow(1),
+  css.class([
+    css.background("var(--background)"),
+    css.padding(px(10)),
+    css.display("flex"),
+    css.overflow("auto"),
+    css.flex_grow(1),
   ])
   |> sh.div([], [h.code([a.dangerously_set_inner_html(content)], [])])
 }
 
 pub fn css(content) {
   let content = a.inner_html(ffi.highlight_css(content))
-  s.class([
-    s.background("var(--background)"),
-    s.padding(px(10)),
-    s.display("flex"),
-    s.max_height(px(400)),
-    s.overflow("auto"),
-    s.flex_grow(1),
+  css.class([
+    css.background("var(--background)"),
+    css.padding(px(10)),
+    css.display("flex"),
+    css.max_height(px(400)),
+    css.overflow("auto"),
+    css.flex_grow(1),
   ])
   |> sh.div([], [h.code([a.dangerously_set_inner_html(content)], [])])
 }
 
 pub fn html(content) {
   let content = a.inner_html(ffi.highlight_xml(content))
-  s.class([
-    s.background("var(--background)"),
-    s.padding(px(10)),
-    s.display("flex"),
-    s.max_height(px(400)),
-    s.overflow("auto"),
-    s.flex_grow(1),
+  css.class([
+    css.background("var(--background)"),
+    css.padding(px(10)),
+    css.display("flex"),
+    css.max_height(px(400)),
+    css.overflow("auto"),
+    css.flex_grow(1),
   ])
   |> sh.div([], [h.code([a.dangerously_set_inner_html(content)], [])])
 }

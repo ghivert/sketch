@@ -1,9 +1,9 @@
 import redraw
-import redraw/attribute as a
-import redraw/html as h
-import sketch as s
+import redraw/dom/attribute as a
+import redraw/dom/html as h
+import sketch/css
+import sketch/css/size.{px, rem}
 import sketch/redraw/html as sh
-import sketch/size.{px, rem}
 
 pub fn footer() {
   use <- redraw.component__("Footer")
@@ -19,35 +19,35 @@ pub fn footer() {
 }
 
 fn footer_(attributes, children) {
-  s.class([
-    s.margin_top(px(120)),
-    s.padding(px(36)),
-    s.display("flex"),
-    s.justify_content("center"),
+  css.class([
+    css.margin_top(px(120)),
+    css.padding(px(36)),
+    css.display("flex"),
+    css.justify_content("center"),
   ])
   |> sh.div(attributes, children)
 }
 
 fn footer_details(children) {
-  s.class([
-    s.font_size(rem(0.8)),
-    s.line_height("1.4"),
-    s.font_weight("500"),
-    s.color("var(--text-grey)"),
+  css.class([
+    css.font_size(rem(0.8)),
+    css.line_height("1.4"),
+    css.font_weight("500"),
+    css.color("var(--text-grey)"),
   ])
   |> sh.div([], children)
 }
 
 fn column(children) {
-  s.class([
-    s.display("flex"),
-    s.flex_direction("column"),
-    s.align_items("center"),
+  css.class([
+    css.display("flex"),
+    css.flex_direction("column"),
+    css.align_items("center"),
   ])
   |> sh.div([], children)
 }
 
 fn link(href, content) {
-  s.class([s.color("#ffaff3")])
+  css.class([css.color("#ffaff3")])
   |> sh.a([a.href(href)], [h.text(content)])
 }

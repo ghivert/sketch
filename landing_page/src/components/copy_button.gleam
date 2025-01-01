@@ -2,11 +2,11 @@ import ffi
 import gleam/bool
 import icons
 import redraw
-import redraw/handler
-import redraw/html as h
-import sketch as s
+import redraw/dom/events
+import redraw/dom/html as h
+import sketch/css
+import sketch/css/size.{px, rem}
 import sketch/redraw/html as sh
-import sketch/size.{px, rem}
 
 pub fn copy_button() {
   use #(text) <- redraw.component_("CopyButton")
@@ -32,39 +32,39 @@ pub fn copy_button() {
 }
 
 fn on_copy(text, set_copied) {
-  use _ <- handler.on_click
+  use _ <- events.on_click
   ffi.clipboard_copy(text)
   set_copied(True)
 }
 
 fn code_install() {
-  s.class([
-    s.border("1px solid var(--border-color)"),
-    s.border_radius(px(8)),
-    s.display("flex"),
-    s.align_items("center"),
-    s.padding(px(2)),
-    s.padding_left(px(8)),
-    s.gap(px(9)),
-    s.font_size(rem(0.7)),
-    s.font_weight("450"),
-    s.background("var(--background)"),
-    s.cursor("pointer"),
-    s.color("var(--text-color)"),
-    s.hover([s.background("var(--button-hover)")]),
+  css.class([
+    css.border("1px solid var(--border-color)"),
+    css.border_radius(px(8)),
+    css.display("flex"),
+    css.align_items("center"),
+    css.padding(px(2)),
+    css.padding_left(px(8)),
+    css.gap(px(9)),
+    css.font_size(rem(0.7)),
+    css.font_weight("450"),
+    css.background("var(--background)"),
+    css.cursor("pointer"),
+    css.color("var(--text-color)"),
+    css.hover([css.background("var(--button-hover)")]),
   ])
 }
 
 fn sm_button_class() {
-  s.class([
-    s.background("var(--dark-background)"),
-    s.border_radius(px(6)),
-    s.padding(px(4)),
-    s.color("inherit"),
+  css.class([
+    css.background("var(--dark-background)"),
+    css.border_radius(px(6)),
+    css.padding(px(4)),
+    css.color("inherit"),
   ])
 }
 
 pub fn title(text) {
-  s.class([s.font_size(rem(1.8)), s.font_weight("600")])
+  css.class([css.font_size(rem(1.8)), css.font_weight("600")])
   |> sh.h3([], [h.text(text)])
 }

@@ -9,19 +9,19 @@ import layout.{
   title_container, title_container_inside, width_container,
 }
 import redraw
-import redraw/attribute as a
-import redraw/handler
-import redraw/html as h
-import redraw_dom/client
-import sketch as s
+import redraw/dom/attribute as a
+import redraw/dom/client
+import redraw/dom/events
+import redraw/dom/html as h
+import sketch/css
+import sketch/css/size.{px}
 import sketch/redraw as sr
 import sketch/redraw/html as sh
-import sketch/size.{px}
 import texts
 
 pub fn main() {
   let app = app()
-  let root = client.create_root("app")
+  let assert Ok(root) = client.create_root("app")
   client.render(root, redraw.strict_mode([sr.provider([app()])]))
 }
 
@@ -33,7 +33,7 @@ fn app() {
   let navbar = navbar.navbar()
   let footer = footer.footer()
   use <- redraw.component__("App")
-  sh.div(s.class([s.font_family("Lexend")]), [], [
+  sh.div(css.class([css.font_family("Lexend")]), [], [
     navbar(),
     description_section(),
     lustre_section(),
@@ -85,7 +85,7 @@ fn description_section() {
 }
 
 fn scroll_to(id: String) {
-  use _event <- handler.on_click()
+  use _event <- events.on_click()
   ffi.scroll_to(id)
 }
 

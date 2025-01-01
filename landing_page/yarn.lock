@@ -5,15 +5,15 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@chouqueth/gleam@npm:^1.6.1":
-  version: 1.6.1
-  resolution: "@chouqueth/gleam@npm:1.6.1"
+"@chouqueth/gleam@npm:^1.6.3":
+  version: 1.6.3
+  resolution: "@chouqueth/gleam@npm:1.6.3"
   dependencies:
     cachedir: "npm:^2.4.0"
     tar: "npm:^7.1.0"
   bin:
     gleam: bin/cli.mjs
-  checksum: 10c0/e589f620b6ff08dee2ee1668272c13cea43c091a613b798d728480b9a44cb30ed45e7c3c9288f2bb91cd4e36d0dcb2f7498cc8961d3f7e995a6dab17b9eb958b
+  checksum: 10c0/1582f7205fc0c56578e71cc80c600a0090c622f7f90012b4fb1a35b4824619695799729792c19218fb8fdfbf1420d11e8ccf67eac50e0388c5df1a2355d72320
   languageName: node
   linkType: hard
 
@@ -1223,7 +1223,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "landing_page@workspace:."
   dependencies:
-    "@chouqueth/gleam": "npm:^1.6.1"
+    "@chouqueth/gleam": "npm:^1.6.3"
     "@gleam-lang/highlight.js-gleam": "npm:^1.5.0"
     "@vitejs/plugin-react-swc": "npm:^3.7.1"
     highlight.js: "npm:^11.10.0"
