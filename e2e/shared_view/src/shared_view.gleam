@@ -20,8 +20,7 @@ pub type Msg {
 pub fn app(strategy: sketch.Strategy) {
   let assert Ok(stylesheet) = sketch.stylesheet(strategy:)
   use model <- lustre.simple(init, update)
-  let options = sketch_lustre.node()
-  use <- sketch_lustre.render(options, stylesheet)
+  use <- sketch_lustre.render(stylesheet, [sketch_lustre.node()])
   view(model)
 }
 
@@ -29,9 +28,8 @@ pub fn app(strategy: sketch.Strategy) {
 /// before hydrating it. It can also be an example of HTML server-side
 /// generation, Sketch improved.
 pub fn ssr(model: Model) {
-  let options = sketch_lustre.node()
   let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Ephemeral)
-  use <- sketch_lustre.render(options, stylesheet)
+  use <- sketch_lustre.render(stylesheet, [sketch_lustre.node()])
   h.html([], [
     h.head([], [
       h.link([a.rel("stylesheet"), a.href(styles.fonts)]),

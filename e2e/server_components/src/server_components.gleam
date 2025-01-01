@@ -1,4 +1,4 @@
-import gleam/bytes_builder
+import gleam/bytes_tree
 import gleam/erlang
 import gleam/erlang/process.{type Selector, type Subject}
 import gleam/http/request.{type Request}
@@ -47,7 +47,7 @@ pub fn main() {
           })
           |> result.lazy_unwrap(fn() {
             response.new(404)
-            |> response.set_body(mist.Bytes(bytes_builder.new()))
+            |> response.set_body(mist.Bytes(bytes_tree.new()))
           })
         }
 
@@ -96,7 +96,7 @@ pub fn main() {
               ]),
             ])
             |> element.to_document_string_builder
-            |> bytes_builder.from_string_builder
+            |> bytes_tree.from_string_tree
             |> mist.Bytes,
           )
       }

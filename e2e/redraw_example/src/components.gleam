@@ -5,7 +5,7 @@
 //// your knowledge of Lustre, and behaves exactly as expected.
 
 import redraw
-import redraw/html as h
+import redraw/dom/html as h
 import shared_styles as styles
 import sketch/redraw/html
 
