@@ -1,6 +1,6 @@
 pub const explanation_fst = "Sketch is a universal CSS library built for Gleam. Whether you prefer CSS-in-Gleam or plain CSS, if you render your stylings on your server, or if you use node.js, bun or Erlang, Sketch covers them all!"
 
-pub const explanation_snd = "Sketch does not try to hide CSS nor add abstraction layer on top of it. Instead, it deliberately leverages on CSS, and fills the gap between CSS and your favorite framework, be it Lustre, Wisp or even Redraw!"
+pub const explanation_snd = "Sketch does not try to hide CSS nor add abstraction layer on top of it. Instead, it deliberately leverages on CSS, and fills the gap between CSS and your favorite framework, be it Lustre, Wisp or even Redraw! "
 
 pub const explanation_trd = "CSS is already the framework you need for your designs. Stop learning yet another framework you'll fight with. If you know how to write CSS, you already know how to write styles with Sketch."
 
