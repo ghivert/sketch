@@ -2045,8 +2045,56 @@ pub fn placeholder(styles: List(Style)) -> Style {
   selector("::placeholder", styles)
 }
 
+pub fn selection(styles: List(Style)) -> Style {
+  selector("::selection", styles)
+}
+
+pub fn before(styles: List(Style)) -> Style {
+  selector("::before", styles)
+}
+
+pub fn after(styles: List(Style)) -> Style {
+  selector("::after", styles)
+}
+
+pub fn backdrop(styles: List(Style)) -> Style {
+  selector("::backdrop", styles)
+}
+
+pub fn cue(styles: List(Style)) -> Style {
+  selector("::cue", styles)
+}
+
+pub fn first_line(styles: List(Style)) -> Style {
+  selector("::first-line", styles)
+}
+
+pub fn grammar_error(styles: List(Style)) -> Style {
+  selector("::grammar-error", styles)
+}
+
+pub fn spelling_error(styles: List(Style)) -> Style {
+  selector("::spelling-error", styles)
+}
+
+pub fn marker(styles: List(Style)) -> Style {
+  selector("::marker", styles)
+}
+
+pub fn first_letter(styles: List(Style)) -> Style {
+  selector("::first-letter", styles)
+}
+
+pub fn file_selector_button(styles: List(Style)) -> Style {
+  selector("::file-selector-button", styles)
+}
+
 pub fn hover(styles: List(Style)) -> Style {
   selector(":hover", styles)
+}
+
+pub fn any_link(styles: List(Style)) -> Style {
+  selector(":any-link", styles)
 }
 
 pub fn active(styles: List(Style)) -> Style {
@@ -2055,6 +2103,87 @@ pub fn active(styles: List(Style)) -> Style {
 
 pub fn focus(styles: List(Style)) -> Style {
   selector(":focus", styles)
+}
+
+pub fn autofill(styles: List(Style)) -> Style {
+  selector(":autofill", styles)
+}
+
+pub fn buffering(styles: List(Style)) -> Style {
+  selector(":buffering", styles)
+}
+
+pub fn default(styles: List(Style)) -> Style {
+  selector(":default", styles)
+}
+
+pub fn defined(styles: List(Style)) -> Style {
+  selector(":defined", styles)
+}
+
+pub fn empty(styles: List(Style)) -> Style {
+  selector(":empty", styles)
+}
+
+pub fn fullscreen(styles: List(Style)) -> Style {
+  selector(":fullscreen", styles)
+}
+
+pub fn in_range(styles: List(Style)) -> Style {
+  selector(":in-range", styles)
+}
+
+pub fn indeterminate(styles: List(Style)) -> Style {
+  selector(":indeterminate", styles)
+}
+
+pub fn muted(styles: List(Style)) -> Style {
+  selector(":muted", styles)
+}
+
+pub fn paused(styles: List(Style)) -> Style {
+  selector(":paused", styles)
+}
+
+pub fn playing(styles: List(Style)) -> Style {
+  selector(":playing", styles)
+}
+
+pub fn seeking(styles: List(Style)) -> Style {
+  selector(":seeking", styles)
+}
+
+pub fn stalled(styles: List(Style)) -> Style {
+  selector(":stalled", styles)
+}
+
+pub fn state(content: String, styles: List(Style)) -> Style {
+  selector(":state(" <> content <> ")", styles)
+}
+
+pub fn user_invalid(styles: List(Style)) -> Style {
+  selector(":user-invalid", styles)
+}
+
+pub fn user_valid(styles: List(Style)) -> Style {
+  selector(":user-valid", styles)
+}
+
+pub fn volume_locked(styles: List(Style)) -> Style {
+  selector(":volume-locked", styles)
+}
+
+pub fn placeholder_shown(styles: List(Style)) -> Style {
+  selector(":placeholder-shown", styles)
+}
+
+pub fn out_of_range(styles: List(Style)) -> Style {
+  selector(":out-of-range", styles)
+}
+
+/// `direction` should be `ltr` or `rtl`.
+pub fn dir(direction: String, styles: List(Style)) -> Style {
+  selector(":dir(" <> direction <> ")", styles)
 }
 
 pub fn focus_visible(styles: List(Style)) -> Style {
@@ -2161,6 +2290,24 @@ pub fn selector(value: String, styles: List(Style)) -> Style {
   style.Selector(value, styles)
 }
 
+// Combinators
+
+pub fn child(class: Class, styles: List(Style)) -> Style {
+  style.Combinator(" > ", class, styles)
+}
+
+pub fn descendant(class: Class, styles: List(Style)) -> Style {
+  style.Combinator(" ", class, styles)
+}
+
+pub fn next_sibling(class: Class, styles: List(Style)) -> Style {
+  style.Combinator(" + ", class, styles)
+}
+
+pub fn subsequent_sibling(class: Class, styles: List(Style)) -> Style {
+  style.Combinator(" ~ ", class, styles)
+}
+
 /// Add an `!important` flag to any CSS property.
 /// It won't have any effect on non-property style, like media, etc. It will
 /// then act as the `identity` function.
@@ -2173,6 +2320,6 @@ pub fn important(style: Style) -> Style {
 
 /// Compose styles by inheriting class, and later overrides them.
 /// Every styles from the class will be composed in the resulting class.
-pub fn compose(class) -> Style {
+pub fn compose(class: Class) -> Style {
   style.ClassName(class)
 }

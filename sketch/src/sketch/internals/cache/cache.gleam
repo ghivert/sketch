@@ -28,9 +28,10 @@ pub fn new() {
 }
 
 pub type Style {
-  ClassName(class_name: Class)
+  ClassName(class: Class)
   Media(query: String, styles: List(Style))
   Selector(selector: String, styles: List(Style))
+  Combinator(selector: String, class: Class, styles: List(Style))
   Property(key: String, value: String, important: Bool)
   NoStyle
 }
@@ -83,19 +84,21 @@ fn compute_properties(
   cache: Cache,
   properties: List(Style),
   indentation: Int,
+  existing_selector: String,
 ) -> #(Cache, Properties) {
   let init = Properties(properties: [], medias: [], selectors: [], indentation:)
   use #(cache, acc), p <- list.fold(list.reverse(properties), #(cache, init))
   case p {
     NoStyle -> #(cache, acc)
-    Property(..) -> #(cache, handle_property(acc, p.key, p.value, p.important))
-    Media(..) -> handle_media(cache, acc, p.query, p.styles)
-    Selector(..) -> handle_selector(cache, acc, p.selector, p.styles)
+    Property(..) -> #(cache, handle_property(acc, p))
+    Media(..) -> handle_media(cache, acc, p)
+    Selector(..) -> handle_selector(cache, acc, p, existing_selector)
+    Combinator(..) -> handle_combinator(cache, acc, p, existing_selector)
     ClassName(class) -> {
       case dict.get(cache.cache, class.as_string) {
         Ok(#(_, props)) -> #(cache, merge_computed_properties(acc, props))
         Error(..) ->
-          compute_properties(cache, class.content, indentation)
+          compute_properties(cache, class.content, indentation, "")
           |> pair.map_second(merge_computed_properties(acc, _))
       }
     }
@@ -122,7 +125,7 @@ fn compute_classes(id: Int, properties: Properties) -> ComputedClass {
 }
 
 fn insert_class_in_cache(cache: Cache, class: Class) -> #(Cache, String) {
-  let #(cache, properties) = compute_properties(cache, class.content, 2)
+  let #(cache, properties) = compute_properties(cache, class.content, 2, "")
   let class_ =
     class.as_string
     |> compute_hash
@@ -148,12 +151,8 @@ fn wrap_selectors(
   sketch_string.wrap_class(id, properties, indentation, Some(selector))
 }
 
-fn handle_property(
-  props: Properties,
-  key: String,
-  value: String,
-  important: Bool,
-) -> Properties {
+fn handle_property(props: Properties, property: Style) -> Properties {
+  let assert Property(key:, value:, important:) = property
   let css_property = compute_property(props.indentation, key, value, important)
   let properties = [css_property, ..props.properties]
   Properties(..props, properties:)
@@ -162,11 +161,11 @@ fn handle_property(
 fn handle_media(
   cache: Cache,
   props: Properties,
-  query: String,
-  styles: List(Style),
+  media: Style,
 ) -> #(Cache, Properties) {
+  let assert Media(query:, styles:) = media
   let indentation = props.indentation + 2
-  let #(cache, properties) = compute_properties(cache, styles, indentation)
+  let #(cache, properties) = compute_properties(cache, styles, indentation, "")
   let Properties(properties:, selectors:, ..) = properties
   MediaProperty(query:, properties:, selectors:)
   |> list.prepend(props.medias, _)
@@ -177,11 +176,33 @@ fn handle_media(
 fn handle_selector(
   cache: Cache,
   props: Properties,
-  selector: String,
-  styles: List(Style),
+  selector: Style,
+  existing_selector: String,
 ) -> #(Cache, Properties) {
+  let assert Selector(selector:, styles:) = selector
   let indentation = props.indentation + 2
-  let #(cache, properties) = compute_properties(cache, styles, indentation)
+  let selector = existing_selector <> selector
+  let #(cache, properties) =
+    compute_properties(cache, styles, indentation, selector)
+  SelectorProperty(selector:, properties: properties.properties)
+  |> list.prepend(properties.selectors, _)
+  |> list.append(props.selectors)
+  |> fn(selectors) { Properties(..props, selectors:) }
+  |> pair.new(cache, _)
+}
+
+fn handle_combinator(
+  cache: Cache,
+  props: Properties,
+  combinator: Style,
+  existing_selector: String,
+) -> #(Cache, Properties) {
+  let assert Combinator(selector:, class:, styles:) = combinator
+  let indentation = props.indentation + 2
+  let #(cache, class_name) = class_name(class, cache)
+  let selector = existing_selector <> selector <> class_name
+  let #(cache, properties) =
+    compute_properties(cache, styles, indentation, selector)
   SelectorProperty(selector:, properties: properties.properties)
   |> list.prepend(properties.selectors, _)
   |> list.append(props.selectors)
