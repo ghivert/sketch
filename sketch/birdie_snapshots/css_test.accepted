@@ -20,12 +20,12 @@ test_name: css_test
     background: blue;
 }
 
-.css-6675211:hover > css-8772105 {
+.css-6675211:hover > .css-8772105 {
       background: red;
       font-family: Verdana;
 }
 
-.css-6675211 > css-8772105 {
+.css-6675211 > .css-8772105 {
     background: blue !important;
     font-size: 2.0rem;
 }

@@ -200,7 +200,7 @@ fn handle_combinator(
   let assert Combinator(selector:, class:, styles:) = combinator
   let indentation = props.indentation + 2
   let #(cache, class_name) = class_name(class, cache)
-  let selector = existing_selector <> selector <> class_name
+  let selector = existing_selector <> selector <> "." <> class_name
   let #(cache, properties) =
     compute_properties(cache, styles, indentation, selector)
   SelectorProperty(selector:, properties: properties.properties)
