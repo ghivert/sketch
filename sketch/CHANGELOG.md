@@ -22,7 +22,8 @@ always pushing the boundaries of what can be achieved with it!
 
 - Every CSS property, selectors & combinators now live in `sketch/css`.
 - Every other modules, like `media`, `size` or `angle` now live in `sketch/css`.
-- Every CSS property now points to its MDN documentation.
+- Every CSS property now display the headline of the documentation, and points
+  to its MDN documentation.
 - Every CSS pseudo-classes & pseudo-elements now points to its MDN documentation
   and have a fragment of the page to simplify understanding.
 - `to_string` functions have been hidden from user in documentation. While they
