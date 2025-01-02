@@ -17,26 +17,6 @@ pub opaque type Transform {
   SkewY(Angle)
 }
 
-fn transform_to_string(value: Transform) -> String {
-  case value {
-    Translate(x, y) ->
-      "translate("
-      <> string.join([size.to_string(x), size.to_string(y)], ",")
-      <> ")"
-    TranslateX(x) -> "translateX(" <> size.to_string(x) <> ")"
-    TranslateY(y) -> "translateY(" <> size.to_string(y) <> ")"
-    Scale(x, y) ->
-      "scale("
-      <> string.join([float.to_string(x), float.to_string(y)], ",")
-      <> ")"
-    ScaleX(x) -> "scaleX(" <> float.to_string(x) <> ")"
-    ScaleY(y) -> "scaleY(" <> float.to_string(y) <> ")"
-    Rotate(ang) -> "rotate(" <> angle.to_string(ang) <> ")"
-    SkewX(x) -> "skewX(" <> angle.to_string(x) <> ")"
-    SkewY(y) -> "skewY(" <> angle.to_string(y) <> ")"
-  }
-}
-
 pub fn translate2(x: Size, y: Size) -> Transform {
   Translate(x, y)
 }
@@ -88,4 +68,24 @@ pub fn to_string(value: List(Transform)) -> String {
   use <- bool.guard(when: list.is_empty(value), return: "none")
   list.map(value, transform_to_string)
   |> string.join(" ")
+}
+
+fn transform_to_string(value: Transform) -> String {
+  case value {
+    Translate(x, y) ->
+      "translate("
+      <> string.join([size.to_string(x), size.to_string(y)], ",")
+      <> ")"
+    TranslateX(x) -> "translateX(" <> size.to_string(x) <> ")"
+    TranslateY(y) -> "translateY(" <> size.to_string(y) <> ")"
+    Scale(x, y) ->
+      "scale("
+      <> string.join([float.to_string(x), float.to_string(y)], ",")
+      <> ")"
+    ScaleX(x) -> "scaleX(" <> float.to_string(x) <> ")"
+    ScaleY(y) -> "scaleY(" <> float.to_string(y) <> ")"
+    Rotate(ang) -> "rotate(" <> angle.to_string(ang) <> ")"
+    SkewX(x) -> "skewX(" <> angle.to_string(x) <> ")"
+    SkewY(y) -> "skewY(" <> angle.to_string(y) <> ")"
+  }
 }

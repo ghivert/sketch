@@ -4,8 +4,8 @@
 //// ## Advanced usage
 ////
 //// Media queries can be rather complex, and the module tries to give all
-//// features in a usable way. A media query takes form (property: value) and
-//// can be combined, like (orientation: landscape) or (min-width: 1000px).
+//// features in a usable way. A media query takes form `(property: value)` and
+//// can be combined, like `(orientation: landscape) or (min-width: 1000px)`.
 //// Those media queries can be created by using the corresponding `and`,
 //// `or` or `not` functions.
 

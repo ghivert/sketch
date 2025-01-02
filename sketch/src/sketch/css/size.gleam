@@ -5,8 +5,8 @@ import gleam/float
 import gleam/int
 import gleam/string
 
-/// Size defines a CSS Unit. It can be either `px`, `pt`, `vh`, `vw`, `em`,
-/// `rem`, `lh`, `rlh`, `ch`, `%`. To instanciate a Size, use the corresponding
+/// `Size` defines a CSS Unit. It can be either `px`, `pt`, `vh`, `vw`, `em`,
+/// `rem`, `lh`, `rlh`, `ch`, `%`. To instanciate a `Size`, use the corresponding
 /// functions. Every unit exposes two functions: the Int function (like `px(0)`)
 /// and the Float version suffixed by an underscore (like `px_(0.0)`).
 pub opaque type Size {

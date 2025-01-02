@@ -8,7 +8,7 @@ import sketch/internals/cache/actor
 import sketch/internals/cache/cache
 
 @target(javascript)
-/// Manages the styles. Can be instanciated with [`cache`](#cache).
+/// Manages the styles. Can be instanciated with [`stylesheet`](#stylesheet).
 pub opaque type StyleSheet {
   StyleSheet(cache: cache.Cache, is_persistent: Bool)
 }
@@ -19,7 +19,7 @@ pub opaque type StyleSheet {
 }
 
 @target(javascript)
-/// Render the content in the cache in proper CSS stylesheet.
+/// Render the content in the stylesheet in proper CSS stylesheet.
 pub fn render(cache: StyleSheet) -> String {
   cache.render_sheet(cache.cache)
 }
@@ -30,9 +30,9 @@ pub fn render(cache: StyleSheet) -> String {
 }
 
 @target(javascript)
-/// Convert a `Class` to its proper class name, to use it anywhere in your
-/// application. It can have the form `class1` or `class1 class2` in case of
-/// classes composition.
+/// Convert a `Class` to its class name, to use it anywhere in your application.
+/// It always returns the StyleSheet, because the class can have been pushed
+/// in the StyleSheet itself.
 pub fn class_name(class: Class, stylesheet: StyleSheet) -> #(StyleSheet, String) {
   let #(cache, class_name) = cache.class_name(class, stylesheet.cache)
   #(StyleSheet(..stylesheet, cache:), class_name)
@@ -44,12 +44,13 @@ pub fn class_name(class: Class, stylesheet: StyleSheet) -> #(StyleSheet, String)
   #(StyleSheet(cache:), class_name)
 }
 
-/// Strategy for the Cache. Two strategies are available as of now: ephemeral
-/// and persistent. In the first case, the cache is throwable, and every class
-/// generation wil rely on hashing function. It means two class names will be
-/// identical if their content are identical.
-/// In the second case, the cache is persistent, meaning it will keep the
-/// memories of the generated classes.
+/// Strategy for the StyleSheet. Two strategies are available as of now: ephemeral
+/// and persistent. In the first case, the stylesheet is throwable, and it is
+/// not expected to be persisted across renders. A class name is always generated
+/// according to its content. Two classes with the exact same properties will
+/// always have the exact same name. \
+/// The second case is designed to be persisted across renders, and uses an
+/// actor to save its content on the BEAM.
 pub type Strategy {
   Ephemeral
   Persistent
