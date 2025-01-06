@@ -1,8 +1,8 @@
 ---
 version: 1.2.5
-title: css_test
+title: erlang_css_test
 file: ./test/sketch_test.gleam
-test_name: css_test
+test_name: erlang_css_test
 ---
 .css-8772105 {
   appearance: none;

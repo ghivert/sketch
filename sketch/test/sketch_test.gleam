@@ -2,6 +2,7 @@ import birdie
 import gleam/string
 import gleeunit
 import gleeunit/should
+import helpers
 import sketch
 import sketch/css
 import sketch/css/media
@@ -16,7 +17,7 @@ pub fn css_test() {
   let #(stylesheet, class_name) = sketch.class_name(dummy_class(), stylesheet)
   let content = sketch.render(stylesheet)
   content |> string.contains(class_name) |> should.be_true
-  birdie.snap(title: "css_test", content:)
+  birdie.snap(title: helpers.multitarget_title("css_test"), content:)
 }
 
 fn dummy_class() {
