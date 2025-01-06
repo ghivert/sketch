@@ -7,7 +7,8 @@ import lustre/internals/vdom
 import sketch.{type StyleSheet}
 import sketch/css
 
-/// 1:1 representation of a `lustre/element.Element`. \
+/// 1:1 representation of a `lustre/element.Element`.
+///
 /// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#Element)
 pub opaque type Element(msg) {
   Nothing
