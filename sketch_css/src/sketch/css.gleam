@@ -12,47 +12,28 @@ import gleam/result
 import gleam/string
 import glint
 import simplifile
+import sketch/css/commands/generate
 import sketch/css/error
 
-/// Definition of a Gleam styles definitions file. `path` is up to you, to
-/// retrieve your module easily. `content` should be a valid Gleam source file.
-pub type Module {
-  Module(path: String, content: String, ast: Option(glance.Module))
+/// The `main` function is used as an entrypoint for Sketch CSS. That function
+/// not meant to be used in your code, but is called when you use `gleam run`
+/// from the command line.
+///
+/// ```
+/// gleam run -m sketch/css
+/// ```
+pub fn main() {
+  glint.new()
+  |> glint.with_name("Sketch CSS")
+  |> glint.pretty_help(glint.default_pretty_help())
+  |> glint.add(at: ["generate"], do: generate.css())
+  |> glint.run(argv.load().arguments)
 }
 
 /// Definition of a StyleSheet. `classes` ensures a mapping between functions
 /// and class names. `content` is the corresponding CSS classes.
 pub type Css {
   Css(classes: List(#(String, String)), content: List(String))
-}
-
-/// Assumes dir is a directory. Should be checked before calling the function.
-fn recursive_modules_read(dir: String) {
-  use dir_content <- result.map(simplifile.read_directory(dir))
-  list.flatten({
-    use path <- list.filter_map(dir_content)
-    let path = string.join([dir, path], "/")
-    use is_dir <- result.try(simplifile.is_directory(path))
-    use <- bool.guard(when: is_dir, return: recursive_modules_read(path))
-    use content <- result.map(simplifile.read(path))
-    [Module(path: path, content: content, ast: None)]
-  })
-}
-
-fn parse_modules(modules: List(Module)) {
-  use module <- list.filter_map(modules)
-  use ast <- result.map(glance.module(module.content) |> error.glance)
-  Module(..module, ast: Some(ast))
-}
-
-fn select_css_files(modules: List(Module), interface: String) {
-  use module <- list.filter(modules)
-  !string.contains(module.path, interface)
-  && {
-    string.ends_with(module.path, "_styles.gleam")
-    || string.ends_with(module.path, "_css.gleam")
-    || string.ends_with(module.path, "_sketch.gleam")
-  }
 }
 
 fn find_sketch_imports(imports: List(glance.Definition(glance.Import))) {
@@ -362,20 +343,36 @@ fn add_expressions(results, name, expressions) {
 }
 
 const pseudo = [
-  #("placeholder", "::placeholder"), #("hover", ":hover"),
-  #("active", ":active"), #("focus", ":focus"),
-  #("focus_visible", ":focus_visible"), #("focus_within", ":focus-within"),
-  #("enabled", ":enabled"), #("disabled", ":disabled"),
-  #("read_only", ":read-only"), #("read_write", ":read-write"),
-  #("checked", ":checked"), #("blank", ":blank"), #("valid", ":valid"),
-  #("invalid", ":invalid"), #("required", ":required"),
-  #("optional", ":optional"), #("link", ":link"), #("visited", ":visited"),
-  #("target", ":target"), #("nth_child", ":nth-child"),
-  #("nth_last_child", ":nth-last-child"), #("nth_of_type", ":nth-of-type"),
-  #("nth_last_of_type", ":nth-last-of-type"), #("first_child", ":first-child"),
-  #("last_child", ":last-child"), #("only_child", ":only-child"),
-  #("first_of_type", ":first-of-type"), #("last_of_type", ":last-of-type"),
-  #("only_of_type", ":only-of-type"), #("pseudo_selector", ":pseudo-selector"),
+  #("placeholder", "::placeholder"),
+  #("hover", ":hover"),
+  #("active", ":active"),
+  #("focus", ":focus"),
+  #("focus_visible", ":focus_visible"),
+  #("focus_within", ":focus-within"),
+  #("enabled", ":enabled"),
+  #("disabled", ":disabled"),
+  #("read_only", ":read-only"),
+  #("read_write", ":read-write"),
+  #("checked", ":checked"),
+  #("blank", ":blank"),
+  #("valid", ":valid"),
+  #("invalid", ":invalid"),
+  #("required", ":required"),
+  #("optional", ":optional"),
+  #("link", ":link"),
+  #("visited", ":visited"),
+  #("target", ":target"),
+  #("nth_child", ":nth-child"),
+  #("nth_last_child", ":nth-last-child"),
+  #("nth_of_type", ":nth-of-type"),
+  #("nth_last_of_type", ":nth-last-of-type"),
+  #("first_child", ":first-child"),
+  #("last_child", ":last-child"),
+  #("only_child", ":only-child"),
+  #("first_of_type", ":first-of-type"),
+  #("last_of_type", ":last-of-type"),
+  #("only_of_type", ":only-of-type"),
+  #("pseudo_selector", ":pseudo-selector"),
 ]
 
 const skippable = ["compose", "none", "media"]
@@ -490,49 +487,13 @@ fn size_value_to_string(value) {
   }
 }
 
-/// Generate stylesheets from Gleam style definitions files. Recursively extract
-/// all files ending with `_styles.gleam`, `_css.gleam` or `_sketch.gleam` to
-/// proper stylesheets, and output some files interfaces to interact with them.
-///
-/// `src` should be a relative path containing the source files.
-/// `dst` should be a relative path where to output CSS files.
-/// `interface` should be a relative path where to output Gleam files.
-pub fn generate_stylesheets(
-  src src: String,
-  dst dst: String,
-  interface src_interfaces: String,
-) {
-  use is_dir <- result.try(simplifile.is_directory(src) |> error.simplifile)
-  use <- bool.guard(when: !is_dir, return: error.not_a_directory(src))
-  use modules <- result.map(recursive_modules_read(src) |> error.simplifile)
-  let css_modules = compute_styles_modules(modules, src_interfaces)
-  let _ = simplifile.create_directory_all(dst)
-  use #(module, css_module) <- list.each(css_modules)
-  let dst_path = string.replace(module.path, each: src, with: dst)
-  let dst_path = string.replace(dst_path, each: ".gleam", with: ".css")
-  let parent_dst_path = remove_file(dst_path)
-  let _ = simplifile.create_directory_all(parent_dst_path)
-  let _ = simplifile.write(dst_path, string.join(css_module.content, "\n\n"))
-  let src_styles_path =
-    string.replace(module.path, each: src, with: src_interfaces)
-  let parent_src_styles_path = remove_file(src_styles_path)
-  let _ = simplifile.create_directory_all(parent_src_styles_path)
-  let _ =
-    simplifile.write(src_styles_path, {
-      list.map(css_module.classes, fn(c) {
-        "pub const " <> c.0 <> " = \"" <> c.1 <> "\""
-      })
-      |> string.join("\n\n")
-    })
-}
-
-/// Compute the content of a bunch of Gleam Styles modules.
-/// This function is designed to be used outside of the CLI, if you need it in
-/// your frontend for example.
-pub fn compute_modules(modules: List(Module)) {
-  let styles_modules = parse_modules(modules)
-  parse_css_modules(styles_modules, modules)
-}
+// /// Compute the content of a bunch of Gleam Styles modules.
+// /// This function is designed to be used outside of the CLI, if you need it in
+// /// your frontend for example.
+// pub fn compute_modules(modules: List(Module)) {
+//   let styles_modules = parse_modules(modules)
+//   parse_css_modules(styles_modules, modules)
+// }
 
 fn compute_styles_modules(modules: List(Module), interface: String) {
   let modules = parse_modules(modules)
@@ -560,62 +521,4 @@ fn rewrite_pipe(expression) {
     }
     _ -> expression
   }
-}
-
-fn dst_flag() {
-  glint.string_flag("dest")
-  |> glint.flag_default("styles")
-  |> glint.flag_help("Define the directory in which styles should be output.")
-}
-
-fn src_flag() {
-  glint.string_flag("src")
-  |> glint.flag_default("src")
-  |> glint.flag_help(
-    "Define the directory in which styles should be read. Default to src.",
-  )
-}
-
-fn interface_flag() {
-  glint.string_flag("interface")
-  |> glint.flag_default("src/sketch/styles")
-  |> glint.flag_help(
-    "Define the directory in which interfaces should be output. Default to src/sketch/styles.",
-  )
-}
-
-fn css() -> glint.Command(Nil) {
-  use <- glint.command_help("Generate CSS for your gleam_styles.gleam files!")
-  use dst <- glint.flag(dst_flag())
-  use src <- glint.flag(src_flag())
-  use interface <- glint.flag(interface_flag())
-  use _, _, flags <- glint.command()
-  let assert Ok(dst) = dst(flags)
-  let assert Ok(src) = src(flags)
-  let assert Ok(interface) = interface(flags)
-  let assert Ok(cwd) = simplifile.current_directory()
-  let src = string.join([cwd, src], "/")
-  let dst = string.join([cwd, dst], "/")
-  let interface = string.join([cwd, interface], "/")
-  io.println("Compiling Gleam styles files in " <> src)
-  io.println("Writing CSS files to " <> dst)
-  io.println("Writing interfaces files to " <> interface)
-  let _ = generate_stylesheets(src:, dst:, interface:)
-  io.println("Done!")
-  Nil
-}
-
-/// The `main` function is used as an entrypoint for Sketch CSS. That function
-/// not meant to be used in your code, but is called when you use `gleam run`
-/// from the command line.
-///
-/// ```
-/// gleam run -m sketch/css
-/// ```
-pub fn main() {
-  glint.new()
-  |> glint.with_name("Sketch CSS")
-  |> glint.pretty_help(glint.default_pretty_help())
-  |> glint.add(at: ["generate"], do: css())
-  |> glint.run(argv.load().arguments)
 }
