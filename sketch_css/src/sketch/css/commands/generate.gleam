@@ -1,5 +1,4 @@
 import gleam/io
-import gleam/result
 import glint
 import sketch/css/generate
 import sketch/css/utils

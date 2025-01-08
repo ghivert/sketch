@@ -26,3 +26,10 @@ pub fn dirname(path: String) -> snag.Result(String) {
   |> list.reverse
   |> string.join("/")
 }
+
+/// Join path segments. Remove extraneous `/`.
+pub fn join(path: String, segment: String) -> String {
+  [path, segment]
+  |> string.join(with: "/")
+  |> string.replace(each: "//", with: "/")
+}

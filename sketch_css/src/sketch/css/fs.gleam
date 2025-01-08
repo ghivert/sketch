@@ -5,6 +5,12 @@ import gleam/string
 import simplifile
 import snag
 
+pub fn cwd() {
+  simplifile.current_directory()
+  |> snag.map_error(string.inspect)
+  |> snag.context("Impossible to get current directory")
+}
+
 /// Assumes dir is a directory. Should be checked before calling the function.
 /// Returns a list of file paths.
 pub fn readdir(

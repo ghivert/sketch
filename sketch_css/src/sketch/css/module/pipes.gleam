@@ -8,71 +8,71 @@ pub fn remove(module: g.Module) {
     g.Definition(..function, definition: {
       g.Function(..function.definition, body: {
         use statement <- list.map(function.definition.body)
-        in_statement(statement)
+        remove_statement(statement)
       })
     })
   })
 }
 
-fn in_statement(stat: g.Statement) -> g.Statement {
+fn remove_statement(stat: g.Statement) -> g.Statement {
   case stat {
-    g.Use(..) -> g.Use(..stat, function: in_expr(stat.function))
-    g.Expression(e) -> g.Expression(in_expr(e))
-    g.Assignment(..) -> g.Assignment(..stat, value: in_expr(stat.value))
+    g.Use(..) -> g.Use(..stat, function: remove_expr(stat.function))
+    g.Expression(e) -> g.Expression(remove_expr(e))
+    g.Assignment(..) -> g.Assignment(..stat, value: remove_expr(stat.value))
   }
 }
 
-fn in_expr(expr: g.Expression) -> g.Expression {
+fn remove_expr(expr: g.Expression) -> g.Expression {
   case expr {
     // Deeply rewrites.
-    g.NegateInt(expr) -> g.NegateInt(in_expr(expr))
-    g.NegateBool(expr) -> g.NegateBool(in_expr(expr))
-    g.Block(stat) -> g.Block(list.map(stat, in_statement))
-    g.Todo(stat) -> g.Todo(option.map(stat, in_expr))
-    g.Panic(stat) -> g.Panic(option.map(stat, in_expr))
-    g.Tuple(stat) -> g.Tuple(list.map(stat, in_expr))
-    g.Fn(..) -> g.Fn(..expr, body: list.map(expr.body, in_statement))
-    g.TupleIndex(..) -> g.TupleIndex(..expr, tuple: in_expr(expr.tuple))
+    g.NegateInt(expr) -> g.NegateInt(remove_expr(expr))
+    g.NegateBool(expr) -> g.NegateBool(remove_expr(expr))
+    g.Block(stat) -> g.Block(list.map(stat, remove_statement))
+    g.Todo(stat) -> g.Todo(option.map(stat, remove_expr))
+    g.Panic(stat) -> g.Panic(option.map(stat, remove_expr))
+    g.Tuple(stat) -> g.Tuple(list.map(stat, remove_expr))
+    g.Fn(..) -> g.Fn(..expr, body: list.map(expr.body, remove_statement))
+    g.TupleIndex(..) -> g.TupleIndex(..expr, tuple: remove_expr(expr.tuple))
 
     g.List(elements, rest) -> {
-      let elements = list.map(elements, in_expr)
-      let rest = option.map(rest, in_expr)
+      let elements = list.map(elements, remove_expr)
+      let rest = option.map(rest, remove_expr)
       g.List(elements:, rest:)
     }
 
     g.RecordUpdate(..) -> {
-      let record = in_expr(expr.record)
+      let record = remove_expr(expr.record)
       g.RecordUpdate(..expr, record:, fields: {
         use field <- list.map(expr.fields)
-        let item = option.map(field.item, in_expr)
+        let item = option.map(field.item, remove_expr)
         g.RecordUpdateField(..field, item:)
       })
     }
 
     g.FieldAccess(..) -> {
-      let container = in_expr(expr.container)
+      let container = remove_expr(expr.container)
       g.FieldAccess(..expr, container:)
     }
 
     g.Call(..) -> {
-      let function = in_expr(expr.function)
+      let function = remove_expr(expr.function)
       g.Call(function:, arguments: {
         use argument <- list.map(expr.arguments)
         case argument {
-          g.UnlabelledField(e) -> g.UnlabelledField(in_expr(e))
+          g.UnlabelledField(e) -> g.UnlabelledField(remove_expr(e))
           g.ShorthandField(label:) -> g.ShorthandField(label:)
           g.LabelledField(label:, item:) ->
-            g.LabelledField(label:, item: in_expr(item))
+            g.LabelledField(label:, item: remove_expr(item))
         }
       })
     }
 
     g.Case(..) -> {
-      let subjects = list.map(expr.subjects, in_expr)
+      let subjects = list.map(expr.subjects, remove_expr)
       g.Case(subjects:, clauses: {
         use clause <- list.map(expr.clauses)
-        let guard = option.map(clause.guard, in_expr)
-        let body = in_expr(clause.body)
+        let guard = option.map(clause.guard, remove_expr)
+        let body = remove_expr(clause.body)
         g.Clause(..clause, guard:, body:)
       })
     }

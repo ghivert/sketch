@@ -2,6 +2,7 @@ import glance as g
 import gleam/result
 import gleam/string
 import sketch/css/fs
+import sketch/css/module/imports
 import sketch/css/module/pipes
 import snag
 
@@ -21,6 +22,11 @@ pub fn from_path(path: String) -> snag.Result(Module) {
 
 pub fn remove_pipes(module: Module) {
   let ast = pipes.remove(module.ast)
+  Module(..module, ast:)
+}
+
+pub fn rewrite_imports(module: Module) {
+  let ast = imports.rewrite(module.ast)
   Module(..module, ast:)
 }
 

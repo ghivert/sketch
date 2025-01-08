@@ -3,7 +3,10 @@ import gleeunit
 import gleeunit/should
 import simplifile
 import sketch/constants
-import sketch/css
+import sketch/css/fs
+import sketch/css/generate
+import sketch/css/path
+import sketch/css/utils
 
 pub fn main() {
   gleeunit.main()
@@ -11,18 +14,22 @@ pub fn main() {
 
 // gleeunit test functions end in `_test`
 pub fn read_test() {
-  let assert Ok(cwd) = simplifile.current_directory()
-  let src_folder = string.join([cwd, "test"], "/")
-  let dst_folder = string.join([cwd, "styles"], "/")
-  let interface_folder = string.join([cwd, "src/sketch/styles"], "/")
-  css.generate_stylesheets(src_folder, dst_folder, interface_folder)
+  let assert Ok(cwd) = fs.cwd()
+  let src = path.join(cwd, "test")
+  let dst = path.join(cwd, "styles")
+  let interface = path.join(cwd, "src/sketch/styles")
+
+  utils.Directories(src:, dst:, interface:)
+  |> generate.stylesheets
   |> should.be_ok
-  string.join([cwd, "src", "sketch", "styles", "main_css.gleam"], "/")
-  |> simplifile.read
+
+  path.join(cwd, "src/sketch/styles/main_css.gleam")
+  |> fs.read_file
   |> should.be_ok
   |> should.equal(constants.content)
-  string.join([cwd, "styles", "main_css.css"], "/")
-  |> simplifile.read
+
+  path.join(cwd, "styles/main_css.css")
+  |> fs.read_file
   |> should.be_ok
   |> should.equal(constants.css)
 }
