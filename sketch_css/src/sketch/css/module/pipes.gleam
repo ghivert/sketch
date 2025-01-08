@@ -6,14 +6,20 @@ import gleam/option
 /// operator that disappears at runtime, it's useless to keep it in the AST.
 pub fn remove(module: g.Module) -> g.Module {
   g.Module(..module, functions: {
-    use function <- list.map(module.functions)
-    g.Definition(..function, definition: {
-      g.Function(..function.definition, body: {
-        use statement <- list.map(function.definition.body)
+    use g.Definition(attributes:, definition:) <- list.map(module.functions)
+    let attributes = list.map(attributes, remove_attribute)
+    g.Definition(attributes:, definition: {
+      g.Function(..definition, body: {
+        use statement <- list.map(definition.body)
         remove_statement(statement)
       })
     })
   })
+}
+
+fn remove_attribute(attribute: g.Attribute) -> g.Attribute {
+  let arguments = list.map(attribute.arguments, remove_expr)
+  g.Attribute(..attribute, arguments:)
 }
 
 fn remove_statement(stat: g.Statement) -> g.Statement {

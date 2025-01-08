@@ -7,27 +7,35 @@ import gleam/string
 /// Rewrites every module call from partially qualified to fully qualified.
 /// Every `module.function` will be renamed to `fully/qualified/module.function`.
 /// Handles plain modules and aliases.
-pub fn rewrite(module: g.Module) -> g.Module {
-  let imports = list.map(module.imports, fn(import_) { import_.definition })
-  let functions = list.map(module.functions, rewrite_function(_, imports))
-  let constants = list.map(module.constants, rewrite_constant(_, imports))
-  let custom_types =
-    list.map(module.custom_types, rewrite_custom_type(_, imports))
-  let type_aliases =
-    list.map(module.type_aliases, rewrite_type_alias(_, imports))
-  g.Module(..module, functions:, constants:, custom_types:, type_aliases:)
+pub fn rewrite(mod: g.Module) -> g.Module {
+  let imports = list.map(mod.imports, fn(import_) { import_.definition })
+  let functions = list.map(mod.functions, rewrite_function(_, imports))
+  let constants = list.map(mod.constants, rewrite_constant(_, imports))
+  let custom_types = list.map(mod.custom_types, rewrite_custom_type(_, imports))
+  let type_aliases = list.map(mod.type_aliases, rewrite_type_alias(_, imports))
+  g.Module(..mod, functions:, constants:, custom_types:, type_aliases:)
+}
+
+fn remove_attribute(
+  attribute: g.Attribute,
+  imports: List(g.Import),
+) -> g.Attribute {
+  let arguments = list.map(attribute.arguments, rewrite_expr(_, imports))
+  g.Attribute(..attribute, arguments:)
 }
 
 fn rewrite_function(
   function: g.Definition(g.Function),
   imports: List(g.Import),
 ) -> g.Definition(g.Function) {
-  g.Definition(..function, definition: {
-    let g.Function(parameters:, return:, body:, ..) = function.definition
+  let g.Definition(attributes:, definition:) = function
+  let attributes = list.map(attributes, remove_attribute(_, imports))
+  g.Definition(attributes:, definition: {
+    let g.Function(parameters:, return:, body:, ..) = definition
     let parameters = list.map(parameters, rewrite_parameters(_, imports))
     let return = option.map(return, rewrite_type(_, imports))
     let body = list.map(body, rewrite_statement(_, imports))
-    g.Function(..function.definition, parameters:, return:, body:)
+    g.Function(..definition, parameters:, return:, body:)
   })
 }
 
@@ -35,11 +43,13 @@ fn rewrite_constant(
   constant: g.Definition(g.Constant),
   imports: List(g.Import),
 ) -> g.Definition(g.Constant) {
-  g.Definition(..constant, definition: {
-    let g.Constant(annotation:, value:, ..) = constant.definition
+  let g.Definition(attributes:, definition:) = constant
+  let attributes = list.map(attributes, remove_attribute(_, imports))
+  g.Definition(attributes:, definition: {
+    let g.Constant(annotation:, value:, ..) = definition
     let annotation = option.map(annotation, rewrite_type(_, imports))
     let value = rewrite_expr(value, imports)
-    g.Constant(..constant.definition, annotation:, value:)
+    g.Constant(..definition, annotation:, value:)
   })
 }
 
@@ -47,9 +57,11 @@ fn rewrite_custom_type(
   custom_type: g.Definition(g.CustomType),
   imports: List(g.Import),
 ) -> g.Definition(g.CustomType) {
-  g.Definition(..custom_type, definition: {
-    g.CustomType(..custom_type.definition, variants: {
-      use variant <- list.map(custom_type.definition.variants)
+  let g.Definition(attributes:, definition:) = custom_type
+  let attributes = list.map(attributes, remove_attribute(_, imports))
+  g.Definition(attributes:, definition: {
+    g.CustomType(..definition, variants: {
+      use variant <- list.map(definition.variants)
       g.Variant(..variant, fields: {
         use field <- list.map(variant.fields)
         let item = rewrite_type(field.item, imports)
@@ -66,9 +78,11 @@ fn rewrite_type_alias(
   type_alias: g.Definition(g.TypeAlias),
   imports: List(g.Import),
 ) -> g.Definition(g.TypeAlias) {
-  g.Definition(..type_alias, definition: {
-    let aliased = rewrite_type(type_alias.definition.aliased, imports)
-    g.TypeAlias(..type_alias.definition, aliased:)
+  let g.Definition(attributes:, definition:) = type_alias
+  let attributes = list.map(attributes, remove_attribute(_, imports))
+  g.Definition(attributes:, definition: {
+    let aliased = rewrite_type(definition.aliased, imports)
+    g.TypeAlias(..definition, aliased:)
   })
 }
 
