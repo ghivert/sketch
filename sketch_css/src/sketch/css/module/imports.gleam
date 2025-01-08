@@ -4,21 +4,75 @@ import gleam/option
 import gleam/result
 import gleam/string
 
-pub fn rewrite(module: g.Module) {
-  g.Module(..module, functions: {
-    use function <- list.map(module.functions)
-    g.Definition(..function, definition: {
-      let g.Function(parameters:, return:, body:, ..) = function.definition
-      let imports = list.map(module.imports, fn(import_) { import_.definition })
-      let parameters = list.map(parameters, rewrite_parameters(_, imports))
-      let return = option.map(return, rewrite_type(_, imports))
-      let body = list.map(body, rewrite_statement(_, imports))
-      g.Function(..function.definition, parameters:, return:, body:)
+/// Rewrites every module call from partially qualified to fully qualified.
+/// Every `module.function` will be renamed to `fully/qualified/module.function`.
+/// Handles plain modules and aliases.
+pub fn rewrite(module: g.Module) -> g.Module {
+  let imports = list.map(module.imports, fn(import_) { import_.definition })
+  let functions = list.map(module.functions, rewrite_function(_, imports))
+  let constants = list.map(module.constants, rewrite_constant(_, imports))
+  let custom_types =
+    list.map(module.custom_types, rewrite_custom_type(_, imports))
+  let type_aliases =
+    list.map(module.type_aliases, rewrite_type_alias(_, imports))
+  g.Module(..module, functions:, constants:, custom_types:, type_aliases:)
+}
+
+fn rewrite_function(
+  function: g.Definition(g.Function),
+  imports: List(g.Import),
+) -> g.Definition(g.Function) {
+  g.Definition(..function, definition: {
+    let g.Function(parameters:, return:, body:, ..) = function.definition
+    let parameters = list.map(parameters, rewrite_parameters(_, imports))
+    let return = option.map(return, rewrite_type(_, imports))
+    let body = list.map(body, rewrite_statement(_, imports))
+    g.Function(..function.definition, parameters:, return:, body:)
+  })
+}
+
+fn rewrite_constant(
+  constant: g.Definition(g.Constant),
+  imports: List(g.Import),
+) -> g.Definition(g.Constant) {
+  g.Definition(..constant, definition: {
+    let g.Constant(annotation:, value:, ..) = constant.definition
+    let annotation = option.map(annotation, rewrite_type(_, imports))
+    let value = rewrite_expr(value, imports)
+    g.Constant(..constant.definition, annotation:, value:)
+  })
+}
+
+fn rewrite_custom_type(
+  custom_type: g.Definition(g.CustomType),
+  imports: List(g.Import),
+) -> g.Definition(g.CustomType) {
+  g.Definition(..custom_type, definition: {
+    g.CustomType(..custom_type.definition, variants: {
+      use variant <- list.map(custom_type.definition.variants)
+      g.Variant(..variant, fields: {
+        use field <- list.map(variant.fields)
+        let item = rewrite_type(field.item, imports)
+        case field {
+          g.LabelledVariantField(..) -> g.LabelledVariantField(..field, item:)
+          g.UnlabelledVariantField(..) -> g.UnlabelledVariantField(item:)
+        }
+      })
     })
   })
 }
 
-fn replace_import(name: String, imports: List(g.Import)) {
+fn rewrite_type_alias(
+  type_alias: g.Definition(g.TypeAlias),
+  imports: List(g.Import),
+) -> g.Definition(g.TypeAlias) {
+  g.Definition(..type_alias, definition: {
+    let aliased = rewrite_type(type_alias.definition.aliased, imports)
+    g.TypeAlias(..type_alias.definition, aliased:)
+  })
+}
+
+fn replace_import(name: String, imports: List(g.Import)) -> String {
   let by_alias = fn(i: g.Import) { i.alias == option.Some(g.Named(name)) }
   let by_name = fn(i: g.Import) { string.ends_with(i.module, name) }
   list.find(imports, by_alias)
@@ -27,13 +81,16 @@ fn replace_import(name: String, imports: List(g.Import)) {
   |> result.unwrap(name)
 }
 
-fn rewrite_parameters(parameter: g.FunctionParameter, imports: List(g.Import)) {
+fn rewrite_parameters(
+  parameter: g.FunctionParameter,
+  imports: List(g.Import),
+) -> g.FunctionParameter {
   let rewrite_type = rewrite_type(_, imports)
   let type_ = option.map(parameter.type_, rewrite_type)
   g.FunctionParameter(..parameter, type_:)
 }
 
-fn rewrite_type(type_: g.Type, imports: List(g.Import)) {
+fn rewrite_type(type_: g.Type, imports: List(g.Import)) -> g.Type {
   let rewrite_type = rewrite_type(_, imports)
   case type_ {
     g.TupleType(..) -> {
@@ -57,7 +114,7 @@ fn rewrite_type(type_: g.Type, imports: List(g.Import)) {
   }
 }
 
-fn rewrite_statement(stat: g.Statement, imports: List(g.Import)) {
+fn rewrite_statement(stat: g.Statement, imports: List(g.Import)) -> g.Statement {
   let rewrite_expr = rewrite_expr(_, imports)
   case stat {
     g.Expression(e) -> g.Expression(rewrite_expr(e))
@@ -71,7 +128,7 @@ fn rewrite_statement(stat: g.Statement, imports: List(g.Import)) {
   }
 }
 
-fn rewrite_pattern(pattern: g.Pattern, imports: List(g.Import)) {
+fn rewrite_pattern(pattern: g.Pattern, imports: List(g.Import)) -> g.Pattern {
   let rewrite_pattern = rewrite_pattern(_, imports)
   case pattern {
     g.PatternTuple(elems:) -> g.PatternTuple(list.map(elems, rewrite_pattern))
@@ -108,7 +165,7 @@ fn rewrite_pattern(pattern: g.Pattern, imports: List(g.Import)) {
   }
 }
 
-fn rewrite_field(field: g.Field(a), mapper: fn(a) -> a) {
+fn rewrite_field(field: g.Field(a), mapper: fn(a) -> a) -> g.Field(a) {
   case field {
     g.LabelledField(item:, ..) -> g.LabelledField(..field, item: mapper(item))
     g.UnlabelledField(item:) -> g.UnlabelledField(item: mapper(item))
@@ -116,7 +173,7 @@ fn rewrite_field(field: g.Field(a), mapper: fn(a) -> a) {
   }
 }
 
-fn rewrite_expr(expr: g.Expression, imports: List(g.Import)) {
+fn rewrite_expr(expr: g.Expression, imports: List(g.Import)) -> g.Expression {
   let rewrite_expr = rewrite_expr(_, imports)
   let rewrite_type = rewrite_type(_, imports)
   let rewrite_statement = rewrite_statement(_, imports)

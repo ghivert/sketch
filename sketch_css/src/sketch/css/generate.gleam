@@ -6,7 +6,6 @@ import pprint
 import simplifile
 import sketch/css/fs
 import sketch/css/module
-import sketch/css/path
 import sketch/css/utils
 import snag
 

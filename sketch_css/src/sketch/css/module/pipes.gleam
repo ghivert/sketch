@@ -2,7 +2,9 @@ import glance as g
 import gleam/list
 import gleam/option
 
-pub fn remove(module: g.Module) {
+/// Rewrites every pipe (`|>`) to the proper function call. Because pipe is an
+/// operator that disappears at runtime, it's useless to keep it in the AST.
+pub fn remove(module: g.Module) -> g.Module {
   g.Module(..module, functions: {
     use function <- list.map(module.functions)
     g.Definition(..function, definition: {
