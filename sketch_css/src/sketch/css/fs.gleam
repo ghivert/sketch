@@ -60,9 +60,15 @@ fn read_directory(dir: String) {
   |> snag.context("dir: " <> dir)
 }
 
-fn is_directory(dir: String) {
+pub fn is_directory(dir: String) {
   simplifile.is_directory(dir)
   |> snag.map_error(string.inspect)
   |> snag.context("Impossible to test the directory")
   |> snag.context("dir: " <> dir)
+}
+
+pub fn current_directory() {
+  simplifile.current_directory()
+  |> snag.map_error(string.inspect)
+  |> snag.context("Impossible to read current directory")
 }

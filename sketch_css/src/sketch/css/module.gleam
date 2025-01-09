@@ -7,9 +7,10 @@ import sketch/css/module/imports
 import sketch/css/module/pipes
 import snag
 
-/// Definition of a Gleam styles definitions file. `path` is up to you, to
-/// retrieve your module easily. `content` should be a valid Gleam source file.
-/// Definition of
+/// Definition of a Gleam styles definitions file.
+/// - `path` points to a valid Gleam source file on disk.
+/// - `content` is the file content pointed by `path`.
+/// - `ast` contains the AST of the Gleam module.
 pub type Module {
   Module(path: String, content: String, ast: g.Module)
 }
@@ -31,13 +32,15 @@ pub fn remove_pipes(module: Module) -> Module {
 }
 
 /// Rewrites every module call from partially qualified to fully qualified.
-/// Every `module.function` will be renamed to `fully/qualified/module.function`.
+/// Every `module.function` will be rewrote to `fully/qualified/module.function`.
 /// Handles plain modules and aliases.
 pub fn rewrite_imports(module: Module) -> Module {
   let ast = imports.rewrite(module.ast)
   Module(..module, ast:)
 }
 
+/// Rewrites every exposed functions, constants and types to their fully
+/// qualified equivalent. `function` will be rewrote to `fully/qualified/module.function`.
 pub fn rewrite_exposings(module: Module) -> Module {
   let ast = exposings.rewrite(module.ast)
   Module(..module, ast:)

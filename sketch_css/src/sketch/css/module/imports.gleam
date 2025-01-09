@@ -5,6 +5,8 @@ import gleam/pair
 import gleam/result
 import gleam/string
 
+/// Associate module names (including aliases) to fully qualified name.
+/// [#("css", option.Some("sketch/css")), #("s", option.Some("sketch"))]
 type Environment =
   List(#(String, Option(g.Import)))
 
