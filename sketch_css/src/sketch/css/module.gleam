@@ -5,6 +5,7 @@ import sketch/css/fs
 import sketch/css/module/exposings
 import sketch/css/module/imports
 import sketch/css/module/pipes
+import sketch/css/utils
 import snag
 
 /// Definition of a Gleam styles definitions file.
@@ -12,7 +13,7 @@ import snag
 /// - `content` is the file content pointed by `path`.
 /// - `ast` contains the AST of the Gleam module.
 pub type Module {
-  Module(path: String, content: String, ast: g.Module)
+  Module(path: String, content: String, ast: g.Module, name: String)
 }
 
 /// Read the file located at `path`, and turns it into a `Module`. No
@@ -20,8 +21,17 @@ pub type Module {
 /// Gleam file, an error is returned.
 pub fn from_path(path: String) -> snag.Result(Module) {
   use content <- result.try(fs.read_file(path))
-  use ast <- result.map(parse_module(content))
-  Module(path:, content:, ast:)
+  use ast <- result.try(parse_module(content))
+  let dir = utils.remove_last_segment(path)
+  use dir <- result.map(utils.find_parent_gleam_toml_directory(dir))
+  let src = string.join([dir, "src/"], with: "/")
+  let test_ = string.join([dir, "test/"], with: "/")
+  Module(path:, content:, ast:, name: {
+    path
+    |> string.replace(each: src, with: "")
+    |> string.replace(each: test_, with: "")
+    |> string.replace(each: ".gleam", with: "")
+  })
 }
 
 /// Rewrites every pipe (`|>`) to the proper function call. Because pipe is an

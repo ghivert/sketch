@@ -1,3 +1,5 @@
+import gleam/bool
+import gleam/list
 import gleam/option.{type Option}
 import gleam/pair
 import gleam/result
@@ -55,4 +57,22 @@ fn read_config_directory(
   |> tom.get_string([key])
   |> option.from_result
   |> option.map(pair.new(config.directory, _))
+}
+
+pub fn remove_last_segment(path: String) {
+  let segments = string.split(path, on: "/")
+  let segments = list.take(segments, list.length(segments) - 1)
+  string.join(segments, with: "/")
+}
+
+pub fn find_parent_gleam_toml_directory(path: String) {
+  let error = "No gleam.toml parent directory"
+  use <- bool.guard(when: string.is_empty(path), return: snag.error(error))
+  let filename = string.join([path, "gleam.toml"], with: "/")
+  fs.read_file(filename)
+  |> result.replace(path)
+  |> result.try_recover(fn(_) {
+    let path = remove_last_segment(path)
+    find_parent_gleam_toml_directory(path)
+  })
 }
