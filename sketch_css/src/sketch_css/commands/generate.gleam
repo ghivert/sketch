@@ -4,6 +4,9 @@ import glint
 import sketch/css/generate
 import sketch/css/utils
 
+type Flag =
+  Option(String)
+
 pub fn css() -> glint.Command(Nil) {
   use src, dst, interface <- run_glint()
   let assert Ok(directories) = utils.directories(src, dst, interface)
@@ -15,9 +18,7 @@ pub fn css() -> glint.Command(Nil) {
   Nil
 }
 
-fn run_glint(
-  continuation: fn(Option(String), Option(String), Option(String)) -> Nil,
-) {
+fn run_glint(continuation: fn(Flag, Flag, Flag) -> Nil) {
   use <- glint.command_help("Generate CSS for your gleam_styles.gleam files!")
   use dst <- glint.flag(dst_flag())
   use src <- glint.flag(src_flag())
@@ -30,20 +31,19 @@ fn run_glint(
 }
 
 fn dst_flag() {
+  let msg = "Define the directory in which styles should be output."
   glint.string_flag("dest")
-  |> glint.flag_help("Define the directory in which styles should be output.")
+  |> glint.flag_help(msg)
 }
 
 fn src_flag() {
+  let msg = "Define the directory in which styles should be read."
   glint.string_flag("src")
-  |> glint.flag_help(
-    "Define the directory in which styles should be read. Default to src.",
-  )
+  |> glint.flag_help(msg)
 }
 
 fn interface_flag() {
+  let msg = "Define the directory in which interfaces should be output."
   glint.string_flag("interface")
-  |> glint.flag_help(
-    "Define the directory in which interfaces should be output. Default to src/sketch/styles.",
-  )
+  |> glint.flag_help(msg)
 }
