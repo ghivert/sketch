@@ -1,10 +1,15 @@
 import glance as g
+import gleam/list
+import gleam/order
+import gleam/pair
 import gleam/result
 import gleam/string
 import sketch/css/fs
+import sketch/css/module/dependencies
 import sketch/css/module/exposings
 import sketch/css/module/imports
 import sketch/css/module/pipes
+import sketch/css/module/stylesheet
 import sketch/css/utils
 import snag
 
@@ -56,8 +61,44 @@ pub fn rewrite_exposings(module: Module) -> Module {
   Module(..module, ast:)
 }
 
+/// Identify cycles and continue if no cycles are found.
+pub fn reject_cycles(modules: List(Module)) -> snag.Result(List(Module)) {
+  let modules_ = list.map(modules, to_assoc)
+  list.try_map(modules_, dependencies.reject_cycles(_, [], modules_))
+  |> result.replace(modules)
+}
+
+/// Sort modules by order of dependencies. If a module depends on another, it
+/// will be placed later in the list, guaranteeing the dependency will be
+/// compiled earlier.
+pub fn by_dependent(modules: List(Module)) {
+  fn(a: Module, b: Module) {
+    let a = to_assoc(a)
+    let b = to_assoc(b)
+    let modules = list.map(modules, to_assoc)
+    case dependencies.is_dependency(a, of: b, modules:) {
+      True -> order.Lt
+      False -> order.Gt
+    }
+  }
+}
+
+/// Convert every style module to CSS stylesheet.
+pub fn convert_styles(modules: List(Module)) -> List(#(Module, stylesheet.CSS)) {
+  list.map(modules, to_assoc)
+  |> list.fold([], stylesheet.convert)
+  |> list.filter_map(fn(module) {
+    list.find(modules, fn(mod) { mod.name == module.0 })
+    |> result.map(pair.new(_, module.1))
+  })
+}
+
 fn parse_module(source: String) -> snag.Result(g.Module) {
   g.module(source)
   |> snag.map_error(string.inspect)
   |> snag.context("Illegal Gleam file")
+}
+
+fn to_assoc(module: Module) {
+  #(module.name, module.ast)
 }

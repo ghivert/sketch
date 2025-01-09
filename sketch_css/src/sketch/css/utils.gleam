@@ -4,7 +4,6 @@ import gleam/option.{type Option}
 import gleam/pair
 import gleam/result
 import gleam/string
-import pprint
 import sketch/css/fs
 import snag
 import tom
@@ -53,7 +52,6 @@ fn read_config_directory(
   key: String,
 ) -> Option(#(String, String)) {
   config.config
-  |> pprint.debug
   |> tom.get_string([key])
   |> option.from_result
   |> option.map(pair.new(config.directory, _))
