@@ -26,13 +26,13 @@ pub fn stylesheets(
   })
   use <- bool.guard(when: !is_dir, return: snag.error("Not a directory"))
   use source_files <- result.map(fs.readdir(directories.src, recursive: True))
-  let modules =
+  let _modules =
     source_files
     |> list.filter(is_css_file)
     |> list.filter_map(module.from_path)
     |> list.map(module.remove_pipes)
     |> list.map(module.rewrite_imports)
-    // |> list.map(module.rewrite_exposings)
+    |> list.map(module.rewrite_exposings)
     |> pprint.debug
   Nil
   // let modules = compute_styles_modules(modules, src_interfaces)

@@ -2,6 +2,7 @@ import glance as g
 import gleam/result
 import gleam/string
 import sketch/css/fs
+import sketch/css/module/exposings
 import sketch/css/module/imports
 import sketch/css/module/pipes
 import snag
@@ -34,6 +35,11 @@ pub fn remove_pipes(module: Module) -> Module {
 /// Handles plain modules and aliases.
 pub fn rewrite_imports(module: Module) -> Module {
   let ast = imports.rewrite(module.ast)
+  Module(..module, ast:)
+}
+
+pub fn rewrite_exposings(module: Module) -> Module {
+  let ast = exposings.rewrite(module.ast)
   Module(..module, ast:)
 }
 

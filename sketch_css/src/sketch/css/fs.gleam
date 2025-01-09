@@ -17,12 +17,13 @@ pub fn readdir(
   dir: String,
   recursive recursive: Bool,
 ) -> snag.Result(List(String)) {
-  use content <- result.map(simplifile.read_directory(dir) |> directory_error)
+  use content <- result.map(read_directory(dir))
+  let dir = dir <> "/"
+  let content = list.map(content, string.append(dir, _))
   use <- bool.guard(when: !recursive, return: content)
   list.flatten({
     use path <- list.filter_map(content)
-    let path = string.join([dir, path], "/")
-    use is_dir <- result.try(simplifile.is_directory(path) |> directory_error)
+    use is_dir <- result.try(is_directory(path))
     use <- bool.guard(when: is_dir, return: readdir(path, recursive:))
     Ok([path])
   })
@@ -32,12 +33,14 @@ pub fn read_file(path: String) -> snag.Result(String) {
   simplifile.read(path)
   |> snag.map_error(string.inspect)
   |> snag.context("Impossible to read file")
+  |> snag.context("file: " <> path)
 }
 
 pub fn write_file(path: String, content: String) -> snag.Result(Nil) {
   simplifile.write(path, content)
   |> snag.map_error(string.inspect)
   |> snag.context("Impossible to write file")
+  |> snag.context("file: " <> path)
 }
 
 pub fn mkdir(dir: String, recursive recursive: Bool) -> snag.Result(Nil) {
@@ -47,9 +50,19 @@ pub fn mkdir(dir: String, recursive recursive: Bool) -> snag.Result(Nil) {
   }
   |> snag.map_error(string.inspect)
   |> snag.context("Impossible to create directory")
+  |> snag.context("dir: " <> dir)
 }
 
-fn directory_error(response: Result(a, b)) -> snag.Result(a) {
-  snag.map_error(response, string.inspect)
+fn read_directory(dir: String) {
+  simplifile.read_directory(dir)
+  |> snag.map_error(string.inspect)
   |> snag.context("Impossible to read the directory")
+  |> snag.context("dir: " <> dir)
+}
+
+fn is_directory(dir: String) {
+  simplifile.is_directory(dir)
+  |> snag.map_error(string.inspect)
+  |> snag.context("Impossible to test the directory")
+  |> snag.context("dir: " <> dir)
 }
