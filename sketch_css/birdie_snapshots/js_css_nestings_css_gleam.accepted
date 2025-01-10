@@ -1,0 +1,37 @@
+---
+version: 1.2.5
+title: js_css_nestings_css.gleam
+---
+.css-1377303339 {
+}
+
+.css-1377303339 > .css-1783369628 {
+    background: red;
+}
+
+.css-1377303339 > .css-1783369628:hover {
+      background: blue;
+}
+
+@media (max-width: 700.0px) or (min-width: 400.0px) {
+  .css-1377303339 {
+    background: blue;
+  }
+  .css-1377303339:hover {
+      background: red;
+  }
+  .css-1377303339:hover {
+  }
+  .css-1377303339:hover > .css-1783369628 {
+        background: blue;
+  }
+  .css-1377303339:hover > .css-1783369628:hover {
+          background: red;
+  }
+}
+
+.css-1783369628 {
+  color: var(--custom);
+  background: green;
+  padding: 12.0px;
+}

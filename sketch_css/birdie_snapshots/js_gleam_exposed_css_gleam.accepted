@@ -1,0 +1,7 @@
+---
+version: 1.2.5
+title: js_gleam_exposed_css.gleam
+---
+pub const exposed_class = "css-63449814"
+
+pub const exposed_property = "css-63449814"

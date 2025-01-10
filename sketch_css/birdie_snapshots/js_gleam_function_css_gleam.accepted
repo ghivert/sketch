@@ -1,0 +1,7 @@
+---
+version: 1.2.5
+title: js_gleam_function_css.gleam
+---
+pub const class = "css-3298552384"
+
+pub const property = "css-398343280"
