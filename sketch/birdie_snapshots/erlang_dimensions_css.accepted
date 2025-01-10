@@ -1,0 +1,9 @@
+---
+version: 1.2.5
+title: erlang_dimensions_css
+---
+.css-103944017 {
+  padding: 12.0px;
+  margin: 12.0px;
+  transform: rotate(1.0rad) skew(1.0deg, 2.0deg);
+}

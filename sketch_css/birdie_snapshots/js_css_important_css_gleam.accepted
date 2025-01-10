@@ -1,0 +1,8 @@
+---
+version: 1.2.5
+title: js_css_important_css.gleam
+---
+.css-1493592667 {
+  color: blue;
+  background: #ccc !important;
+}

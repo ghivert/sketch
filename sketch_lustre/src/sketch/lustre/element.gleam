@@ -1,3 +1,6 @@
+//// This module is a drop-in replacement for `lustre/element`. Just
+//// use the new functions, and everything will automagically be styled.
+
 import gleam/list
 import gleam/option
 import gleam/pair

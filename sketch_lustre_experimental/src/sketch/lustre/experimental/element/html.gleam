@@ -15,7 +15,7 @@ import sketch/lustre/experimental/element.{type Element} as el
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/html)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/html)
 pub fn html(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -32,7 +32,7 @@ pub fn html(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/base)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/base)
 pub fn base(attributes: List(Attribute(a))) -> Element(a) {
   el.element_("base", attributes, [])
 }
@@ -47,7 +47,7 @@ pub fn base(attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/head)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/head)
 pub fn head(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -63,7 +63,7 @@ pub fn head(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/link)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/link)
 pub fn link(attributes: List(Attribute(a))) -> Element(a) {
   el.element_("link", attributes, [])
 }
@@ -86,7 +86,7 @@ pub fn link(attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/meta)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/meta)
 pub fn meta(attributes: List(Attribute(a))) -> Element(a) {
   el.element_("meta", attributes, [])
 }
@@ -97,7 +97,7 @@ pub fn meta(attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/style)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/style)
 pub fn style(attributes: List(Attribute(a)), child: String) -> Element(a) {
   el.element_("style", attributes, [text(child)])
 }
@@ -108,7 +108,7 @@ pub fn style(attributes: List(Attribute(a)), child: String) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/title)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/title)
 pub fn title(attributes: List(Attribute(a)), title: String) -> Element(a) {
   el.element_("title", attributes, [text(title)])
 }
@@ -117,12 +117,12 @@ pub fn title(attributes: List(Attribute(a)), title: String) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/API/Text)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/API/Text)
 pub fn text(content: String) -> Element(a) {
   el.text(content)
 }
 
-/// The `<a>` HTML element (or anchor element), with [its `href` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href),
+/// The `<a>` HTML element (or anchor element), with [its `href` attribute](https://developer.mozilla.org/docs/Web/HTML/Element/a#href),
 /// creates a hyperlink to web pages, files, email addresses, locations in the
 /// same page, or anything else a URL can address.
 ///
@@ -135,7 +135,7 @@ pub fn text(content: String) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/a)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/a)
 pub fn a(
   class: Class,
   attributes: List(Attribute(a)),
@@ -144,7 +144,7 @@ pub fn a(
   el.element("a", class, attributes, children)
 }
 
-/// The `<a>` HTML element (or anchor element), with [its `href` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href),
+/// The `<a>` HTML element (or anchor element), with [its `href` attribute](https://developer.mozilla.org/docs/Web/HTML/Element/a#href),
 /// creates a hyperlink to web pages, files, email addresses, locations in the
 /// same page, or anything else a URL can address.
 ///
@@ -157,7 +157,7 @@ pub fn a(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/a)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/a)
 pub fn a_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -179,7 +179,7 @@ pub fn a_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/abbr)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/abbr)
 pub fn abbr(
   class: Class,
   attributes: List(Attribute(a)),
@@ -202,7 +202,7 @@ pub fn abbr(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/abbr)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/abbr)
 pub fn abbr_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -226,7 +226,7 @@ pub fn abbr_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/address)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/address)
 pub fn address(
   class: Class,
   attributes: List(Attribute(a)),
@@ -251,7 +251,7 @@ pub fn address(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/address)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/address)
 pub fn address_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -267,7 +267,7 @@ pub fn address_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/area)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/area)
 pub fn area(class: Class, attributes: List(Attribute(a))) -> Element(a) {
   el.element("area", class, attributes, [])
 }
@@ -280,7 +280,7 @@ pub fn area(class: Class, attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/area)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/area)
 pub fn area_(attributes: List(Attribute(a))) -> Element(a) {
   el.element_("area", attributes, [])
 }
@@ -299,7 +299,7 @@ pub fn area_(attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/article)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/article)
 pub fn article(
   class: Class,
   attributes: List(Attribute(a)),
@@ -322,7 +322,7 @@ pub fn article(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/article)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/article)
 pub fn article_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -336,7 +336,7 @@ pub fn article_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/aside)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/aside)
 pub fn aside(
   class: Class,
   attributes: List(Attribute(a)),
@@ -351,7 +351,7 @@ pub fn aside(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/aside)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/aside)
 pub fn aside_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -366,7 +366,7 @@ pub fn aside_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/audio)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/audio)
 pub fn audio(
   class: Class,
   attributes: List(Attribute(a)),
@@ -382,7 +382,7 @@ pub fn audio(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/audio)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/audio)
 pub fn audio_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -400,7 +400,7 @@ pub fn audio_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/b)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/b)
 pub fn b(
   class: Class,
   attributes: List(Attribute(a)),
@@ -419,7 +419,7 @@ pub fn b(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/b)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/b)
 pub fn b_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -434,7 +434,7 @@ pub fn b_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/bdi)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/bdi)
 pub fn bdi(
   class: Class,
   attributes: List(Attribute(a)),
@@ -450,7 +450,7 @@ pub fn bdi(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/bdi)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/bdi)
 pub fn bdi_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -463,7 +463,7 @@ pub fn bdi_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/bdo)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/bdo)
 pub fn bdo(
   class: Class,
   attributes: List(Attribute(a)),
@@ -477,7 +477,7 @@ pub fn bdo(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/bdo)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/bdo)
 pub fn bdo_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -492,7 +492,7 @@ pub fn bdo_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/blockquote)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/blockquote)
 pub fn blockquote(
   class: Class,
   attributes: List(Attribute(a)),
@@ -508,7 +508,7 @@ pub fn blockquote(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/blockquote)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/blockquote)
 pub fn blockquote_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -521,7 +521,7 @@ pub fn blockquote_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/body)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/body)
 pub fn body(
   class: Class,
   attributes: List(Attribute(a)),
@@ -535,7 +535,7 @@ pub fn body(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/body)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/body)
 pub fn body_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -549,7 +549,7 @@ pub fn body_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/br)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/br)
 pub fn br(class: Class, attributes: List(Attribute(a))) -> Element(a) {
   el.element("br", class, attributes, [])
 }
@@ -560,7 +560,7 @@ pub fn br(class: Class, attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/br)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/br)
 pub fn br_(attributes: List(Attribute(a))) -> Element(a) {
   el.element_("br", attributes, [])
 }
@@ -575,7 +575,7 @@ pub fn br_(attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/button)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/button)
 pub fn button(
   class: Class,
   attributes: List(Attribute(a)),
@@ -594,7 +594,7 @@ pub fn button(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/button)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/button)
 pub fn button_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -603,13 +603,13 @@ pub fn button_(
 }
 
 /// Use the HTML `<canvas>` element with either the
-/// [canvas scripting API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) or the
-/// [WebGL API](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API)
+/// [canvas scripting API](https://developer.mozilla.org/docs/Web/API/Canvas_API) or the
+/// [WebGL API](https://developer.mozilla.org/docs/Web/API/WebGL_API)
 /// to draw graphics and animations.
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/canvas)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/canvas)
 pub fn canvas(
   class: Class,
   attributes: List(Attribute(a)),
@@ -619,13 +619,13 @@ pub fn canvas(
 }
 
 /// Use the HTML `<canvas>` element with either the
-/// [canvas scripting API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) or the
-/// [WebGL API](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API)
+/// [canvas scripting API](https://developer.mozilla.org/docs/Web/API/Canvas_API) or the
+/// [WebGL API](https://developer.mozilla.org/docs/Web/API/WebGL_API)
 /// to draw graphics and animations.
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/canvas)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/canvas)
 pub fn canvas_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -634,11 +634,11 @@ pub fn canvas_(
 }
 
 /// The `<caption>` HTML element specifies the caption (or title) of a table, p
-/// roviding the table an [accessible description](https://developer.mozilla.org/en-US/docs/Glossary/Accessible_description).
+/// roviding the table an [accessible description](https://developer.mozilla.org/docs/Glossary/Accessible_description).
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/caption)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/caption)
 pub fn caption(
   class: Class,
   attributes: List(Attribute(a)),
@@ -648,11 +648,11 @@ pub fn caption(
 }
 
 /// The `<caption>` HTML element specifies the caption (or title) of a table, p
-/// roviding the table an [accessible description](https://developer.mozilla.org/en-US/docs/Glossary/Accessible_description).
+/// roviding the table an [accessible description](https://developer.mozilla.org/docs/Glossary/Accessible_description).
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/caption)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/caption)
 pub fn caption_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -666,7 +666,7 @@ pub fn caption_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/cite)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/cite)
 pub fn cite(
   class: Class,
   attributes: List(Attribute(a)),
@@ -681,7 +681,7 @@ pub fn cite(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/cite)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/cite)
 pub fn cite_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -695,7 +695,7 @@ pub fn cite_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/code)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/code)
 pub fn code(
   class: Class,
   attributes: List(Attribute(a)),
@@ -710,7 +710,7 @@ pub fn code(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/code)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/code)
 pub fn code_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -725,7 +725,7 @@ pub fn code_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/col)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/col)
 pub fn col(class: Class, attributes: List(Attribute(a))) -> Element(a) {
   el.element("col", class, attributes, [])
 }
@@ -737,7 +737,7 @@ pub fn col(class: Class, attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/col)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/col)
 pub fn col_(attributes: List(Attribute(a))) -> Element(a) {
   el.element_("col", attributes, [])
 }
@@ -746,7 +746,7 @@ pub fn col_(attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/colgroup)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/colgroup)
 pub fn colgroup(
   class: Class,
   attributes: List(Attribute(a)),
@@ -759,7 +759,7 @@ pub fn colgroup(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/colgroup)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/colgroup)
 pub fn colgroup_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -773,7 +773,7 @@ pub fn colgroup_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/data)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/data)
 pub fn data(
   class: Class,
   attributes: List(Attribute(a)),
@@ -788,7 +788,7 @@ pub fn data(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/data)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/data)
 pub fn data_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -802,7 +802,7 @@ pub fn data_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/datalist)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/datalist)
 pub fn datalist(
   class: Class,
   attributes: List(Attribute(a)),
@@ -817,7 +817,7 @@ pub fn datalist(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/datalist)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/datalist)
 pub fn datalist_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -830,7 +830,7 @@ pub fn datalist_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dd)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dd)
 pub fn dd(
   class: Class,
   attributes: List(Attribute(a)),
@@ -844,7 +844,7 @@ pub fn dd(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dd)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dd)
 pub fn dd_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -862,7 +862,7 @@ pub fn dd_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/del)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/del)
 pub fn del(
   class: Class,
   attributes: List(Attribute(a)),
@@ -881,7 +881,7 @@ pub fn del(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/del)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/del)
 pub fn del_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -901,7 +901,7 @@ pub fn del_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/details)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/details)
 pub fn details(
   class: Class,
   attributes: List(Attribute(a)),
@@ -922,7 +922,7 @@ pub fn details(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/details)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/details)
 pub fn details_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -940,7 +940,7 @@ pub fn details_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dfn)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dfn)
 pub fn dfn(
   class: Class,
   attributes: List(Attribute(a)),
@@ -959,7 +959,7 @@ pub fn dfn(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dfn)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dfn)
 pub fn dfn_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -985,7 +985,7 @@ pub fn dfn_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dialog)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dialog)
 pub fn dialog(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1012,7 +1012,7 @@ pub fn dialog(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dialog)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dialog)
 pub fn dialog_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1033,7 +1033,7 @@ pub fn dialog_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/div)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/div)
 pub fn div(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1055,7 +1055,7 @@ pub fn div(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/div)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/div)
 pub fn div_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1070,7 +1070,7 @@ pub fn div_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dl)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dl)
 pub fn dl(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1086,7 +1086,7 @@ pub fn dl(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dl)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dl)
 pub fn dl_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1104,7 +1104,7 @@ pub fn dl_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dt)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dt)
 pub fn dt(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1123,7 +1123,7 @@ pub fn dt(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dt)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dt)
 pub fn dt_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1137,7 +1137,7 @@ pub fn dt_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/em)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/em)
 pub fn em(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1152,7 +1152,7 @@ pub fn em(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/em)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/em)
 pub fn em_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1166,7 +1166,7 @@ pub fn em_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/embed)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/embed)
 pub fn embed(class: Class, attributes: List(Attribute(a))) -> Element(a) {
   el.element("embed", class, attributes, [])
 }
@@ -1177,7 +1177,7 @@ pub fn embed(class: Class, attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/embed)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/embed)
 pub fn embed_(attributes: List(Attribute(a))) -> Element(a) {
   el.element_("embed", attributes, [])
 }
@@ -1187,7 +1187,7 @@ pub fn embed_(attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/fieldset)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/fieldset)
 pub fn fieldset(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1201,7 +1201,7 @@ pub fn fieldset(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/fieldset)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/fieldset)
 pub fn fieldset_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1211,11 +1211,11 @@ pub fn fieldset_(
 
 /// The `<figcaption>` HTML element represents a caption or legend describing
 /// the rest of the contents of its parent `<figure>` element, providing the
-/// `<figure>` an [accessible description](https://developer.mozilla.org/en-US/docs/Glossary/Accessible_description).
+/// `<figure>` an [accessible description](https://developer.mozilla.org/docs/Glossary/Accessible_description).
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/figcaption)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/figcaption)
 pub fn figcaption(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1226,11 +1226,11 @@ pub fn figcaption(
 
 /// The `<figcaption>` HTML element represents a caption or legend describing
 /// the rest of the contents of its parent `<figure>` element, providing the
-/// `<figure>` an [accessible description](https://developer.mozilla.org/en-US/docs/Glossary/Accessible_description).
+/// `<figure>` an [accessible description](https://developer.mozilla.org/docs/Glossary/Accessible_description).
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/figcaption)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/figcaption)
 pub fn figcaption_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1245,7 +1245,7 @@ pub fn figcaption_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/figure)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/figure)
 pub fn figure(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1261,7 +1261,7 @@ pub fn figure(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/figure)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/figure)
 pub fn figure_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1270,14 +1270,14 @@ pub fn figure_(
 }
 
 /// The `<footer>` HTML element represents a footer for its nearest ancestor
-/// [sectioning content](https://developer.mozilla.org/en-US/docs/Web/HTML/Content_categories#sectioning_content)
-/// or [sectioning root](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#labeling_section_content)
+/// [sectioning content](https://developer.mozilla.org/docs/Web/HTML/Content_categories#sectioning_content)
+/// or [sectioning root](https://developer.mozilla.org/docs/Web/HTML/Element/Heading_Elements#labeling_section_content)
 /// element. A `<footer>` typically contains information about the author of
 /// the section, copyright data or links to related documents.
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/footer)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/footer)
 pub fn footer(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1287,14 +1287,14 @@ pub fn footer(
 }
 
 /// The `<footer>` HTML element represents a footer for its nearest ancestor
-/// [sectioning content](https://developer.mozilla.org/en-US/docs/Web/HTML/Content_categories#sectioning_content)
-/// or [sectioning root](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#labeling_section_content)
+/// [sectioning content](https://developer.mozilla.org/docs/Web/HTML/Content_categories#sectioning_content)
+/// or [sectioning root](https://developer.mozilla.org/docs/Web/HTML/Element/Heading_Elements#labeling_section_content)
 /// element. A `<footer>` typically contains information about the author of
 /// the section, copyright data or links to related documents.
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/footer)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/footer)
 pub fn footer_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1311,7 +1311,7 @@ pub fn footer_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/form)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/form)
 pub fn form(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1329,7 +1329,7 @@ pub fn form(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/form)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/form)
 pub fn form_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1344,7 +1344,7 @@ pub fn form_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h1)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h1)
 pub fn h1(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1360,7 +1360,7 @@ pub fn h1(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h1)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h1)
 pub fn h1_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1375,7 +1375,7 @@ pub fn h1_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h2)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h2)
 pub fn h2(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1391,7 +1391,7 @@ pub fn h2(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h2)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h2)
 pub fn h2_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1406,7 +1406,7 @@ pub fn h2_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h3)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h3)
 pub fn h3(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1422,7 +1422,7 @@ pub fn h3(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h3)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h3)
 pub fn h3_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1437,7 +1437,7 @@ pub fn h3_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h4)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h4)
 pub fn h4(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1453,7 +1453,7 @@ pub fn h4(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h4)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h4)
 pub fn h4_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1468,7 +1468,7 @@ pub fn h4_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h5)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h5)
 pub fn h5(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1484,7 +1484,7 @@ pub fn h5(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h5)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h5)
 pub fn h5_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1499,7 +1499,7 @@ pub fn h5_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h6)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h6)
 pub fn h6(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1515,7 +1515,7 @@ pub fn h6(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h6)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h6)
 pub fn h6_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1529,7 +1529,7 @@ pub fn h6_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/header)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/header)
 pub fn header(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1544,7 +1544,7 @@ pub fn header(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/header)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/header)
 pub fn header_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1557,7 +1557,7 @@ pub fn header_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/hgroup)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/hgroup)
 pub fn hgroup(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1571,7 +1571,7 @@ pub fn hgroup(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/hgroup)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/hgroup)
 pub fn hgroup_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1585,7 +1585,7 @@ pub fn hgroup_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/hr)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/hr)
 pub fn hr(class: Class, attributes: List(Attribute(a))) -> Element(a) {
   el.element("hr", class, attributes, [])
 }
@@ -1596,7 +1596,7 @@ pub fn hr(class: Class, attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/hr)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/hr)
 pub fn hr_(attributes: List(Attribute(a))) -> Element(a) {
   el.element_("hr", attributes, [])
 }
@@ -1609,7 +1609,7 @@ pub fn hr_(attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/i)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/i)
 pub fn i(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1626,7 +1626,7 @@ pub fn i(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/i)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/i)
 pub fn i_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1639,7 +1639,7 @@ pub fn i_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/iframe)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/iframe)
 pub fn iframe(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1653,7 +1653,7 @@ pub fn iframe(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/iframe)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/iframe)
 pub fn iframe_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1665,7 +1665,7 @@ pub fn iframe_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/img)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/img)
 pub fn img(class: Class, attributes: List(Attribute(a))) -> Element(a) {
   el.element("img", class, attributes, [])
 }
@@ -1674,7 +1674,7 @@ pub fn img(class: Class, attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/img)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/img)
 pub fn img_(attributes: List(Attribute(a))) -> Element(a) {
   el.element_("img", attributes, [])
 }
@@ -1688,7 +1688,7 @@ pub fn img_(attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/input)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/input)
 pub fn input(class: Class, attributes: List(Attribute(a))) -> Element(a) {
   el.element("input", class, attributes, [])
 }
@@ -1702,7 +1702,7 @@ pub fn input(class: Class, attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/input)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/input)
 pub fn input_(attributes: List(Attribute(a))) -> Element(a) {
   el.element_("input", attributes, [])
 }
@@ -1713,7 +1713,7 @@ pub fn input_(attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/ins)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/ins)
 pub fn ins(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1728,7 +1728,7 @@ pub fn ins(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/ins)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/ins)
 pub fn ins_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1744,7 +1744,7 @@ pub fn ins_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/kbd)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/kbd)
 pub fn kbd(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1761,7 +1761,7 @@ pub fn kbd(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/kbd)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/kbd)
 pub fn kbd_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1774,7 +1774,7 @@ pub fn kbd_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/label)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/label)
 pub fn label(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1788,7 +1788,7 @@ pub fn label(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/label)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/label)
 pub fn label_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1801,7 +1801,7 @@ pub fn label_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/legend)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/legend)
 pub fn legend(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1815,7 +1815,7 @@ pub fn legend(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/legend)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/legend)
 pub fn legend_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1831,7 +1831,7 @@ pub fn legend_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/li)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/li)
 pub fn li(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1848,7 +1848,7 @@ pub fn li(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/li)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/li)
 pub fn li_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1863,7 +1863,7 @@ pub fn li_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/main)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/main)
 pub fn main(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1879,7 +1879,7 @@ pub fn main(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/main)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/main)
 pub fn main_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1892,7 +1892,7 @@ pub fn main_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/map)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/map)
 pub fn map(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1906,7 +1906,7 @@ pub fn map(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/map)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/map)
 pub fn map_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1920,7 +1920,7 @@ pub fn map_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/mark)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/mark)
 pub fn mark(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1935,7 +1935,7 @@ pub fn mark(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/mark)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/mark)
 pub fn mark_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1947,14 +1947,14 @@ pub fn mark_(
 /// a single mathematical formula. It can be placed in HTML content where flow
 /// content is permitted.
 ///
-/// > See the [Authoring MathML page](https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring#using_mathml)
+/// > See the [Authoring MathML page](https://developer.mozilla.org/docs/Web/MathML/Authoring#using_mathml)
 /// > for tips to properly integrate MathML formulas in your web pages and the
-/// > [Examples](https://developer.mozilla.org/en-US/docs/Web/MathML/Examples)
+/// > [Examples](https://developer.mozilla.org/docs/Web/MathML/Examples)
 /// > page for more demos.
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/MathML/Element/math)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/MathML/Element/math)
 pub fn math(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1967,14 +1967,14 @@ pub fn math(
 /// a single mathematical formula. It can be placed in HTML content where flow
 /// content is permitted.
 ///
-/// > See the [Authoring MathML page](https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring#using_mathml)
+/// > See the [Authoring MathML page](https://developer.mozilla.org/docs/Web/MathML/Authoring#using_mathml)
 /// > for tips to properly integrate MathML formulas in your web pages and the
-/// > [Examples](https://developer.mozilla.org/en-US/docs/Web/MathML/Examples)
+/// > [Examples](https://developer.mozilla.org/docs/Web/MathML/Examples)
 /// > page for more demos.
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/MathML/Element/math)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/MathML/Element/math)
 pub fn math_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -1989,7 +1989,7 @@ pub fn math_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/menu)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/menu)
 pub fn menu(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2005,7 +2005,7 @@ pub fn menu(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/menu)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/menu)
 pub fn menu_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2018,7 +2018,7 @@ pub fn menu_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/meter)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/meter)
 pub fn meter(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2032,7 +2032,7 @@ pub fn meter(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/meter)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/meter)
 pub fn meter_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2047,7 +2047,7 @@ pub fn meter_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/nav)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/nav)
 pub fn nav(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2063,7 +2063,7 @@ pub fn nav(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/nav)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/nav)
 pub fn nav_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2077,7 +2077,7 @@ pub fn nav_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/noscript)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/noscript)
 pub fn noscript(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2092,7 +2092,7 @@ pub fn noscript(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/noscript)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/noscript)
 pub fn noscript_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2106,7 +2106,7 @@ pub fn noscript_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/object)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/object)
 pub fn object(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2121,7 +2121,7 @@ pub fn object(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/object)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/object)
 pub fn object_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2134,7 +2134,7 @@ pub fn object_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/ol)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/ol)
 pub fn ol(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2148,7 +2148,7 @@ pub fn ol(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/ol)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/ol)
 pub fn ol_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2161,7 +2161,7 @@ pub fn ol_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/optgroup)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/optgroup)
 pub fn optgroup(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2175,7 +2175,7 @@ pub fn optgroup(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/optgroup)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/optgroup)
 pub fn optgroup_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2190,7 +2190,7 @@ pub fn optgroup_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/option)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/option)
 pub fn option(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2206,7 +2206,7 @@ pub fn option(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/option)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/option)
 pub fn option_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2219,7 +2219,7 @@ pub fn option_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/output)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/output)
 pub fn output(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2233,7 +2233,7 @@ pub fn output(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/output)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/output)
 pub fn output_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2253,7 +2253,7 @@ pub fn output_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/p)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/p)
 pub fn p(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2274,7 +2274,7 @@ pub fn p(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/p)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/p)
 pub fn p_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2294,7 +2294,7 @@ pub fn p_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/picture)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/picture)
 pub fn picture(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2315,7 +2315,7 @@ pub fn picture(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/picture)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/picture)
 pub fn picture_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2336,7 +2336,7 @@ pub fn picture_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/portal)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/portal)
 pub fn portal(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2358,7 +2358,7 @@ pub fn portal(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/portal)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/portal)
 pub fn portal_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2376,7 +2376,7 @@ pub fn portal_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/pre)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/pre)
 pub fn pre(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2395,7 +2395,7 @@ pub fn pre(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/pre)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/pre)
 pub fn pre_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2408,7 +2408,7 @@ pub fn pre_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/progress)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/progress)
 pub fn progress(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2422,7 +2422,7 @@ pub fn progress(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/progress)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/progress)
 pub fn progress_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2437,7 +2437,7 @@ pub fn progress_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/q)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/q)
 pub fn q(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2453,7 +2453,7 @@ pub fn q(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/q)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/q)
 pub fn q_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2468,7 +2468,7 @@ pub fn q_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/rp)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/rp)
 pub fn rp(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2484,7 +2484,7 @@ pub fn rp(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/rp)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/rp)
 pub fn rp_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2499,7 +2499,7 @@ pub fn rp_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/rt)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/rt)
 pub fn rt(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2515,7 +2515,7 @@ pub fn rt(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/rt)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/rt)
 pub fn rt_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2535,7 +2535,7 @@ pub fn rt_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/ruby)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/ruby)
 pub fn ruby(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2556,7 +2556,7 @@ pub fn ruby(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/ruby)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/ruby)
 pub fn ruby_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2572,7 +2572,7 @@ pub fn ruby_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/s)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/s)
 pub fn s(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2589,7 +2589,7 @@ pub fn s(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/s)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/s)
 pub fn s_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2604,7 +2604,7 @@ pub fn s_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/samp)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/samp)
 pub fn samp(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2620,7 +2620,7 @@ pub fn samp(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/samp)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/samp)
 pub fn samp_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2635,7 +2635,7 @@ pub fn samp_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/script)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/script)
 pub fn script(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2651,7 +2651,7 @@ pub fn script(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/script)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/script)
 pub fn script_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2669,7 +2669,7 @@ pub fn script_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/search)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/search)
 pub fn search(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2688,7 +2688,7 @@ pub fn search(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/search)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/search)
 pub fn search_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2702,7 +2702,7 @@ pub fn search_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/section)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/section)
 pub fn section(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2717,7 +2717,7 @@ pub fn section(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/section)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/section)
 pub fn section_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2729,7 +2729,7 @@ pub fn section_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/select)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/select)
 pub fn select(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2742,7 +2742,7 @@ pub fn select(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/select)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/select)
 pub fn select_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2756,7 +2756,7 @@ pub fn select_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/slot)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/slot)
 pub fn slot(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2771,7 +2771,7 @@ pub fn slot(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/slot)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/slot)
 pub fn slot_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2786,7 +2786,7 @@ pub fn slot_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/small)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/small)
 pub fn small(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2802,7 +2802,7 @@ pub fn small(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/small)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/small)
 pub fn small_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2812,7 +2812,7 @@ pub fn small_(
 
 /// The `<source>` HTML element specifies one or more media resources for the
 /// `<picture>,` `<audio>,` and `<video>` elements. It is a
-/// [void element](https://developer.mozilla.org/en-US/docs/Glossary/Void_element),
+/// [void element](https://developer.mozilla.org/docs/Glossary/Void_element),
 /// which means that it has no content and does not require a closing tag. This
 /// element is commonly used to offer the same media content in multiple file
 /// formats in order to provide compatibility with a broad range of browsers
@@ -2820,14 +2820,14 @@ pub fn small_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/source)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/source)
 pub fn source(class: Class, attributes: List(Attribute(a))) -> Element(a) {
   el.element("source", class, attributes, [])
 }
 
 /// The `<source>` HTML element specifies one or more media resources for the
 /// `<picture>,` `<audio>,` and `<video>` elements. It is a
-/// [void element](https://developer.mozilla.org/en-US/docs/Glossary/Void_element),
+/// [void element](https://developer.mozilla.org/docs/Glossary/Void_element),
 /// which means that it has no content and does not require a closing tag. This
 /// element is commonly used to offer the same media content in multiple file
 /// formats in order to provide compatibility with a broad range of browsers
@@ -2835,7 +2835,7 @@ pub fn source(class: Class, attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/source)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/source)
 pub fn source_(attributes: List(Attribute(a))) -> Element(a) {
   el.element_("source", attributes, [])
 }
@@ -2850,7 +2850,7 @@ pub fn source_(attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/span)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/span)
 pub fn span(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2869,7 +2869,7 @@ pub fn span(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/span)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/span)
 pub fn span_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2883,7 +2883,7 @@ pub fn span_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/strong)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/strong)
 pub fn strong(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2898,7 +2898,7 @@ pub fn strong(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/strong)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/strong)
 pub fn strong_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2912,7 +2912,7 @@ pub fn strong_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/sub)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/sub)
 pub fn sub(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2927,7 +2927,7 @@ pub fn sub(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/sub)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/sub)
 pub fn sub_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2941,7 +2941,7 @@ pub fn sub_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/summary)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/summary)
 pub fn summary(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2956,7 +2956,7 @@ pub fn summary(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/summary)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/summary)
 pub fn summary_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2970,7 +2970,7 @@ pub fn summary_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/sup)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/sup)
 pub fn sup(
   class: Class,
   attributes: List(Attribute(a)),
@@ -2985,7 +2985,7 @@ pub fn sup(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/sup)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/sup)
 pub fn sup_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3004,7 +3004,7 @@ pub fn sup_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/SVG/Element/svg)
 pub fn svg(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3030,7 +3030,7 @@ pub fn svg(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/SVG/Element/svg)
 pub fn svg_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3044,7 +3044,7 @@ pub fn svg_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/table)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/table)
 pub fn table(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3059,7 +3059,7 @@ pub fn table(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/table)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/table)
 pub fn table_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3072,7 +3072,7 @@ pub fn table_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/tbody)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/tbody)
 pub fn tbody(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3086,7 +3086,7 @@ pub fn tbody(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/tbody)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/tbody)
 pub fn tbody_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3099,7 +3099,7 @@ pub fn tbody_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/td)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/td)
 pub fn td(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3113,7 +3113,7 @@ pub fn td(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/td)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/td)
 pub fn td_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3127,7 +3127,7 @@ pub fn td_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/template)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/template)
 pub fn template(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3142,7 +3142,7 @@ pub fn template(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/template)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/template)
 pub fn template_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3156,7 +3156,7 @@ pub fn template_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/textarea)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/textarea)
 pub fn textarea(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3171,7 +3171,7 @@ pub fn textarea(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/textarea)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/textarea)
 pub fn textarea_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3186,7 +3186,7 @@ pub fn textarea_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/tfoot)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/tfoot)
 pub fn tfoot(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3202,7 +3202,7 @@ pub fn tfoot(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/tfoot)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/tfoot)
 pub fn tfoot_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3216,7 +3216,7 @@ pub fn tfoot_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/th)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/th)
 pub fn th(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3231,7 +3231,7 @@ pub fn th(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/th)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/th)
 pub fn th_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3246,7 +3246,7 @@ pub fn th_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/thead)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/thead)
 pub fn thead(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3262,7 +3262,7 @@ pub fn thead(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/thead)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/thead)
 pub fn thead_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3283,7 +3283,7 @@ pub fn thead_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/time)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/time)
 pub fn time(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3305,7 +3305,7 @@ pub fn time(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/time)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/time)
 pub fn time_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3319,7 +3319,7 @@ pub fn time_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/tr)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/tr)
 pub fn tr(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3334,7 +3334,7 @@ pub fn tr(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/tr)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/tr)
 pub fn tr_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3354,12 +3354,12 @@ pub fn tr_(
 /// been set to be the default, or a kind and translation based on user
 /// preferences.
 ///
-/// The tracks are formatted in [WebVTT format](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API)
+/// The tracks are formatted in [WebVTT format](https://developer.mozilla.org/docs/Web/API/WebVTT_API)
 /// (`.vtt` files) — Web Video Text Tracks.
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/track)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/track)
 pub fn track(class: Class, attributes: List(Attribute(a))) -> Element(a) {
   el.element("track", class, attributes, [])
 }
@@ -3376,12 +3376,12 @@ pub fn track(class: Class, attributes: List(Attribute(a))) -> Element(a) {
 /// been set to be the default, or a kind and translation based on user
 /// preferences.
 ///
-/// The tracks are formatted in [WebVTT format](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API)
+/// The tracks are formatted in [WebVTT format](https://developer.mozilla.org/docs/Web/API/WebVTT_API)
 /// (`.vtt` files) — Web Video Text Tracks.
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/track)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/track)
 pub fn track_(attributes: List(Attribute(a))) -> Element(a) {
   el.element_("track", attributes, [])
 }
@@ -3398,7 +3398,7 @@ pub fn track_(attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/u)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/u)
 pub fn u(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3419,7 +3419,7 @@ pub fn u(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/u)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/u)
 pub fn u_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3432,7 +3432,7 @@ pub fn u_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/ul)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/ul)
 pub fn ul(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3446,7 +3446,7 @@ pub fn ul(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/ul)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/ul)
 pub fn ul_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3461,7 +3461,7 @@ pub fn ul_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/var)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/var)
 pub fn var(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3477,7 +3477,7 @@ pub fn var(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/var)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/var)
 pub fn var_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3491,7 +3491,7 @@ pub fn var_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/video)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/video)
 pub fn video(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3506,7 +3506,7 @@ pub fn video(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/video)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/video)
 pub fn video_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3520,7 +3520,7 @@ pub fn video_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/wbr)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/wbr)
 pub fn wbr(class: Class, attributes: List(Attribute(a))) -> Element(a) {
   el.element("wbr", class, attributes, [])
 }
@@ -3531,7 +3531,7 @@ pub fn wbr(class: Class, attributes: List(Attribute(a))) -> Element(a) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/wbr)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/wbr)
 pub fn wbr_(attributes: List(Attribute(a))) -> Element(a) {
   el.element_("wbr", attributes, [])
 }

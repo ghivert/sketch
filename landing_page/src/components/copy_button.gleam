@@ -5,8 +5,8 @@ import redraw
 import redraw/dom/events
 import redraw/dom/html as h
 import sketch/css
-import sketch/css/size.{px, rem}
-import sketch/redraw/html as sh
+import sketch/css/length.{px, rem}
+import sketch/redraw/dom/html as sh
 
 pub fn copy_button() {
   use #(text) <- redraw.component_("CopyButton")

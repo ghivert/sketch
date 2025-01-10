@@ -1,0 +1,7 @@
+---
+version: 1.2.5
+title: erlang_variable_css
+---
+.css-79177302 {
+  background: red;
+}

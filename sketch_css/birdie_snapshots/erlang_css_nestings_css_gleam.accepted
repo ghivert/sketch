@@ -1,0 +1,37 @@
+---
+version: 1.2.5
+title: erlang_css_nestings_css.gleam
+---
+.css-113639950 {
+}
+
+.css-113639950 > .css-85267893 {
+    background: red;
+}
+
+.css-113639950 > .css-85267893:hover {
+      background: blue;
+}
+
+@media (max-width: 700.0px) or (min-width: 400.0px) {
+  .css-113639950 {
+    background: blue;
+  }
+  .css-113639950:hover {
+      background: red;
+  }
+  .css-113639950:hover {
+  }
+  .css-113639950:hover > .css-85267893 {
+        background: blue;
+  }
+  .css-113639950:hover > .css-85267893:hover {
+          background: red;
+  }
+}
+
+.css-85267893 {
+  color: var(--custom);
+  background: green;
+  padding: 12.0px;
+}

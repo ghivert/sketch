@@ -1,0 +1,17 @@
+---
+version: 1.2.5
+title: erlang_css_function_css.gleam
+---
+.css-56828077 {
+  background: #ddd;
+  background: red;
+  display: block;
+  color: var(--custom);
+  background: green;
+}
+
+.css-90850659 {
+  width-: 12px;
+  color: blue;
+  color: var(--custom);
+}

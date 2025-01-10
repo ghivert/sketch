@@ -4,8 +4,8 @@ import icons/copy
 import icons/github
 import icons/home
 import sketch/css
-import sketch/css/size.{px}
-import sketch/redraw/html as h
+import sketch/css/length.{px}
+import sketch/redraw/dom/html as h
 
 pub fn small(icon) {
   css.class([css.width(px(24)), css.height(px(24))])

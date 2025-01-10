@@ -1,0 +1,61 @@
+---
+version: 1.2.5
+title: js_css_medias_css.gleam
+---
+.css-1009080651 {
+  background: blue;
+}
+
+@media (max-width: 700.0px) {
+  .css-1009080651 {
+    background: red;
+    background: blue;
+  }
+}
+
+.css-1547556747 {
+  background: blue;
+}
+
+@media (max-width: 700.0px) {
+  .css-1547556747 {
+    background: red;
+    background: blue;
+  }
+  .css-1547556747:hover {
+      background: green;
+  }
+}
+
+.css-1353033444 {
+  background: blue;
+}
+
+@media (max-width: 700.0px) and (min-width: 700.0px) or (min-width: 600.0px) {
+  .css-1353033444 {
+    background: red;
+    background: blue;
+  }
+}
+
+.css-952026283 {
+  background: blue;
+}
+
+@media (max-width: 700.0px) or (min-width: 600.0px) {
+  .css-952026283 {
+    background: red;
+    background: blue;
+  }
+}
+
+.css-760505246 {
+  background: blue;
+}
+
+@media (max-width: 700.0px) and (min-width: 600.0px) {
+  .css-760505246 {
+    background: red;
+    background: blue;
+  }
+}

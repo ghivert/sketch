@@ -115,7 +115,7 @@ function xxhash() {
   const defaultBigSeed = 0n
 
   function h32(str, seed = defaultSeed) {
-    // https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder/encodeInto#buffer_sizing
+    // https://developer.mozilla.org/docs/Web/API/TextEncoder/encodeInto#buffer_sizing
     // By sizing the buffer to 3 * string-length we guarantee that the buffer
     // will be appropriately sized for the utf-8 encoding of the string.
     growMemory(str.length * 3, 0)

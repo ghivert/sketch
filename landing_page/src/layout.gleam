@@ -1,9 +1,9 @@
 import redraw/dom/attribute as a
 import redraw/dom/html as h
 import sketch/css
+import sketch/css/length.{percent, px, rem}
 import sketch/css/media
-import sketch/css/size.{percent, px, rem}
-import sketch/redraw/html as sh
+import sketch/redraw/dom/html as sh
 
 fn max_width() {
   css.class([
@@ -123,7 +123,7 @@ pub fn buttons_row(children) {
   css.class([
     css.display("flex"),
     css.gap(px(12)),
-    css.height(size.percent(100)),
+    css.height(percent(100)),
     css.flex_direction("column"),
     css.align_items("center"),
     css.justify_content("center"),

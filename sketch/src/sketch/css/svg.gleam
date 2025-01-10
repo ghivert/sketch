@@ -1,5 +1,9 @@
+//// Some CSS properties are availaible only on SVG elements.
+//// Because Sketch tries to be as complete as possible, but also friendly,
+//// Sketch does not expose those in the main `css` module.
+
 import sketch/css.{type Style, property}
-import sketch/css/size.{type Size}
+import sketch/css/length.{type Length}
 
 /// The `clip-rule` CSS property defines how to determine which pixels in a
 /// mask's box are inside the clipping shape defined by a clip path, and which
@@ -12,7 +16,7 @@ import sketch/css/size.{type Size}
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/clip-rule)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/clip-rule)
 pub fn clip_rule(value: String) -> Style {
   property("clip-rule", value)
 }
@@ -27,9 +31,9 @@ pub fn clip_rule(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/cx)
-pub fn cx(value: Size) -> Style {
-  property("cx", size.to_string(value))
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/cx)
+pub fn cx(value: Length) -> Style {
+  property("cx", length.to_string(value))
 }
 
 /// The `cx` CSS property defines the x-axis center point of an SVG `<circle>`
@@ -42,7 +46,7 @@ pub fn cx(value: Size) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/cx)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/cx)
 pub fn cx_(value: String) -> Style {
   property("cx", value)
 }
@@ -57,9 +61,9 @@ pub fn cx_(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/cy)
-pub fn cy(value: Size) -> Style {
-  property("cy", size.to_string(value))
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/cy)
+pub fn cy(value: Length) -> Style {
+  property("cy", length.to_string(value))
 }
 
 /// The `cy` CSS property defines the y-axis center point of an SVG `<circle>`
@@ -72,7 +76,7 @@ pub fn cy(value: Size) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/cy)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/cy)
 pub fn cy_(value: String) -> Style {
   property("cy", value)
 }
@@ -95,10 +99,10 @@ pub fn cy_(value: String) -> Style {
 /// three components:
 /// - a baseline-identifier for the dominant-baseline,
 /// - a baseline-table, and
-/// - a baseline-table font-size.
+/// - a baseline-table font-length.
 ///
 /// Some values of `dominant-baseline` re-determine all three values. Others
-/// only re-establish the baseline-table font-size. When the initial value,
+/// only re-establish the baseline-table font-length. When the initial value,
 /// `auto`, would give an undesired result, this property can be used to
 /// explicitly set the desired scaled-baseline-table.
 ///
@@ -107,7 +111,7 @@ pub fn cy_(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/dominant-baseline)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/dominant-baseline)
 pub fn dominant_baseline(display: String) -> Style {
   property("dominant-baseline", display)
 }
@@ -135,7 +139,7 @@ pub fn dominant_baseline(display: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/fill)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/fill)
 pub fn fill(fill: String) -> Style {
   property("fill", fill)
 }
@@ -154,7 +158,7 @@ pub fn fill(fill: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/fill-opacity)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/fill-opacity)
 pub fn fill_opacity(fill_opacity: String) -> Style {
   property("fill-opacity", fill_opacity)
 }
@@ -181,7 +185,7 @@ pub fn fill_opacity(fill_opacity: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/fill-rule)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/fill-rule)
 pub fn fill_rule(fill_rule: String) -> Style {
   property("fill-rule", fill_rule)
 }
@@ -197,7 +201,7 @@ pub fn fill_rule(fill_rule: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/flood-color)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/flood-color)
 pub fn flood_color(flood_color: String) -> Style {
   property("flood-color", flood_color)
 }
@@ -217,7 +221,7 @@ pub fn flood_color(flood_color: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/flood-opacity)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/flood-opacity)
 pub fn flood_opacity(flood_opacity: String) -> Style {
   property("flood-opacity", flood_opacity)
 }
@@ -234,7 +238,7 @@ pub fn flood_opacity(flood_opacity: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/lighting-color)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/lighting-color)
 pub fn lighting_color(line_break: String) -> Style {
   property("lighting-color", line_break)
 }
@@ -263,7 +267,7 @@ pub fn lighting_color(line_break: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/marker)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/marker)
 pub fn marker(marker: String) -> Style {
   property("marker", marker)
 }
@@ -285,7 +289,7 @@ pub fn marker(marker: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/marker-end)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/marker-end)
 pub fn marker_end(marker: String) -> Style {
   property("marker-end", marker)
 }
@@ -308,7 +312,7 @@ pub fn marker_end(marker: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/marker-mid)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/marker-mid)
 pub fn marker_mid(marker: String) -> Style {
   property("marker-mid", marker)
 }
@@ -330,7 +334,7 @@ pub fn marker_mid(marker: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/marker-start)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/marker-start)
 pub fn marker_start(marker: String) -> Style {
   property("marker-start", marker)
 }
@@ -345,9 +349,9 @@ pub fn marker_start(marker: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/r)
-pub fn r(r: Size) -> Style {
-  property("r", size.to_string(r))
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/r)
+pub fn r(r: Length) -> Style {
+  property("r", length.to_string(r))
 }
 
 /// The `r` CSS property defines the radius of a circle. It can only be used
@@ -360,7 +364,7 @@ pub fn r(r: Size) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/r)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/r)
 pub fn r_(r: String) -> Style {
   property("r", r)
 }
@@ -376,9 +380,9 @@ pub fn r_(r: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/rx)
-pub fn rx(value: Size) -> Style {
-  property("rx", size.to_string(value))
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/rx)
+pub fn rx(value: Length) -> Style {
+  property("rx", length.to_string(value))
 }
 
 /// The `rx` CSS property defines the x-axis, or horizontal, radius of an SVG
@@ -392,7 +396,7 @@ pub fn rx(value: Size) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/rx)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/rx)
 pub fn rx_(value: String) -> Style {
   property("rx", value)
 }
@@ -408,9 +412,9 @@ pub fn rx_(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/ry)
-pub fn ry(value: Size) -> Style {
-  property("ry", size.to_string(value))
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/ry)
+pub fn ry(value: Length) -> Style {
+  property("ry", length.to_string(value))
 }
 
 /// The `ry` CSS property defines the y-axis, or horizontal, radius of an SVG
@@ -424,7 +428,7 @@ pub fn ry(value: Size) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/ry)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/ry)
 pub fn ry_(value: String) -> Style {
   property("ry", value)
 }
@@ -438,7 +442,7 @@ pub fn ry_(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/shape-rendering)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/shape-rendering)
 pub fn shape_rendering(value: String) -> Style {
   property("shape-rendering", value)
 }
@@ -459,7 +463,7 @@ pub fn shape_rendering(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/stroke)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/stroke)
 pub fn stroke(value: String) -> Style {
   property("stroke", value)
 }
@@ -475,7 +479,7 @@ pub fn stroke(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/stroke-dasharray)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/stroke-dasharray)
 pub fn stroke_dasharray(value: String) -> Style {
   property("stroke-dasharray", value)
 }
@@ -492,7 +496,7 @@ pub fn stroke_dasharray(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/stroke-dashoffset)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/stroke-dashoffset)
 pub fn stroke_dashoffset(value: String) -> Style {
   property("stroke-dashoffset", value)
 }
@@ -508,7 +512,7 @@ pub fn stroke_dashoffset(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/stroke-linecap)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/stroke-linecap)
 pub fn stroke_linecap(value: String) -> Style {
   property("stroke-linecap", value)
 }
@@ -524,7 +528,7 @@ pub fn stroke_linecap(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/stroke-linejoin)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/stroke-linejoin)
 pub fn stroke_linejoin(value: String) -> Style {
   property("stroke-linejoin", value)
 }
@@ -543,7 +547,7 @@ pub fn stroke_linejoin(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/stroke-miterlimit)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/stroke-miterlimit)
 pub fn stroke_miterlimit(value: String) -> Style {
   property("stroke-miterlimit", value)
 }
@@ -566,7 +570,7 @@ pub fn stroke_miterlimit(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/stroke-opacity)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/stroke-opacity)
 pub fn stroke_opacity(value: String) -> Style {
   property("stroke-opacity", value)
 }
@@ -583,7 +587,7 @@ pub fn stroke_opacity(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/stroke-width)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/stroke-width)
 pub fn stroke_width(value: String) -> Style {
   property("stroke-width", value)
 }
@@ -597,7 +601,7 @@ pub fn stroke_width(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/stop-color)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/stop-color)
 pub fn stop_color(value: String) -> Style {
   property("stop-color", value)
 }
@@ -615,13 +619,13 @@ pub fn stop_color(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/stop-opacity)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/stop-opacity)
 pub fn stop_opacity(value: String) -> Style {
   property("stop-opacity", value)
 }
 
 /// The `text-anchor` CSS property aligns a box containing a string of text
-/// where the wrapping area is determined from the `inline-size` property, and
+/// where the wrapping area is determined from the `inline-length` property, and
 /// the text is then placed relative to the anchor point of the element, which
 /// is defined using the `x` and `y` (or `dx` and `dy`) attributes. If present,
 /// the value of the CSS property overrides any value of the element's
@@ -635,7 +639,7 @@ pub fn stop_opacity(value: String) -> Style {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/text-anchor)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/text-anchor)
 pub fn text_anchor(value: String) {
   property("text-anchor", value)
 }
@@ -653,9 +657,9 @@ pub fn text_anchor(value: String) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/x)
-pub fn x(value: Size) {
-  property("x", size.to_string(value))
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/x)
+pub fn x(value: Length) {
+  property("x", length.to_string(value))
 }
 
 /// The `x` CSS property defines the x-axis coordinate of the top left corner
@@ -671,7 +675,7 @@ pub fn x(value: Size) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/x)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/x)
 pub fn x_(value: String) {
   property("x", value)
 }
@@ -689,9 +693,9 @@ pub fn x_(value: String) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/x)
-pub fn y(value: Size) {
-  property("y", size.to_string(value))
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/x)
+pub fn y(value: Length) {
+  property("y", length.to_string(value))
 }
 
 /// The `y` CSS property defines the y-axis coordinate of the top left corner
@@ -707,7 +711,7 @@ pub fn y(value: Size) {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/x)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/x)
 pub fn y_(value: String) {
   property("y", value)
 }

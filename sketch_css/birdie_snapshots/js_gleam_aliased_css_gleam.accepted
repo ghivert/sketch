@@ -1,0 +1,5 @@
+---
+version: 1.2.5
+title: js_gleam_aliased_css.gleam
+---
+pub const aliased_module = "css-2610672850"

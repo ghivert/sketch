@@ -4,6 +4,9 @@ v2.0.0 marks a breaking change with the new Sketch release (i.e. v4.0.0). Sketch
 Lustre now uses a new, more idiomatic `render` and `ssr` API, and simplifies as
 much a possible the exposed API.
 
+Sketch Lustre has been one of the principal package used in combination with
+Lustre. Thanks for your investment!
+
 ### Improvements
 
 - Adapt to new Sketch API v4.0.0. `Cache` has been renamed to `StyleSheet`, and
@@ -14,8 +17,8 @@ much a possible the exposed API.
 - Shadow root management has been changed from `plinth` to simple `Dynamic`.
   This can't type-check it, but it avoid having to depend on `plinth` in
   production, to let every user handle `ShadowRoot` as they want.
-- Every HMTL element now has proper MDN documentation links & fragment of
-  description to explain how to use them.
+- Every HMTL element now has MDN Reference links & fragment of description to
+  explain how to use them.
 
 ## v1.0.3 - 2024-11-06
 

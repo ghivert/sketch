@@ -1,0 +1,7 @@
+---
+version: 1.2.5
+title: erlang_gleam_function_css.gleam
+---
+pub const class = "css-56828077"
+
+pub const property = "css-90850659"

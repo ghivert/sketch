@@ -1,0 +1,8 @@
+---
+version: 1.2.5
+title: erlang_css_important_css.gleam
+---
+.css-82768093 {
+  color: blue;
+  background: #ccc !important;
+}

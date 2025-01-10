@@ -7,7 +7,7 @@
 import redraw
 import redraw/dom/html as h
 import shared_styles as styles
-import sketch/redraw/html
+import sketch/redraw/dom/html
 
 pub fn body(attrs, children) {
   // demonstrate ability to merge fragment at root

@@ -1,0 +1,7 @@
+---
+version: 1.2.5
+title: js_css_variable_css.gleam
+---
+.css-2610672850 {
+  background: red;
+}

@@ -1,5 +1,5 @@
 import sketch/css
-import sketch/css/size.{px, rem}
+import sketch/css/length.{ch, percent, px, rem}
 
 /// Standard class defining a card component. Can be used with `css.compose`
 /// everywhere a card is needed. Properties will be overriden if redefined in a
@@ -114,7 +114,7 @@ pub fn button_style() {
 pub fn value_style() {
   css.class([
     css.background("var(--turquoise)"),
-    css.height(size.percent(100)),
+    css.height(percent(100)),
     css.display("flex"),
     css.align_items("center"),
     css.justify_content("center"),
@@ -123,7 +123,7 @@ pub fn value_style() {
 }
 
 pub fn value_content_style() {
-  css.class([css.width(size.ch(7)), css.text_align("center")])
+  css.class([css.width(ch(7.0)), css.text_align("center")])
 }
 
 pub fn showcase_style() {

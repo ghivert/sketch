@@ -1,0 +1,5 @@
+---
+version: 1.2.5
+title: erlang_gleam_dimensions_css.gleam
+---
+pub const dimensions_variables = "css-103944017"

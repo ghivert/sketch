@@ -1,0 +1,5 @@
+---
+version: 1.2.5
+title: erlang_gleam_variable_css.gleam
+---
+pub const variable_property = "css-79177302"
