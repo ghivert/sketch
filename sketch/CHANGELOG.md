@@ -40,6 +40,7 @@ always pushing the boundaries of what can be achieved with it!
 - `sketch.Cache` has been renamed `sketch.StyleSheet`, and related function have
   been updated accordingly.
 - Support for `only`, `print`, `screen` & `all` media queries has been aded.
+- Add support for every transform functions.
 
 ### Bugfixes
 
