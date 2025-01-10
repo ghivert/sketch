@@ -66,12 +66,7 @@ fn remove_expr(expr: g.Expression) -> g.Expression {
       let function = remove_expr(expr.function)
       g.Call(function:, arguments: {
         use argument <- list.map(expr.arguments)
-        case argument {
-          g.UnlabelledField(e) -> g.UnlabelledField(remove_expr(e))
-          g.ShorthandField(label:) -> g.ShorthandField(label:)
-          g.LabelledField(label:, item:) ->
-            g.LabelledField(label:, item: remove_expr(item))
-        }
+        remove_expr_field(argument)
       })
     }
 
@@ -87,19 +82,35 @@ fn remove_expr(expr: g.Expression) -> g.Expression {
 
     // Rewrites pipe.
     g.BinaryOperator(g.Pipe, left:, right: g.Call(function:, arguments:)) -> {
-      let left = g.UnlabelledField(left)
+      let left = g.UnlabelledField(remove_expr(left))
+      let arguments = list.map(arguments, remove_expr_field)
       let arguments = [left, ..arguments]
       g.Call(function:, arguments:)
     }
 
     g.BinaryOperator(g.Pipe, left:, right: g.Variable(variable)) -> {
-      let left = g.UnlabelledField(left)
+      let left = g.UnlabelledField(remove_expr(left))
       let arguments = [left]
       let function = g.Variable(variable)
       g.Call(function:, arguments:)
     }
 
+    g.BinaryOperator(g.Pipe, left:, right:) -> {
+      let left = remove_expr(left)
+      let right = remove_expr(right)
+      g.Call(function: right, arguments: [g.UnlabelledField(left)])
+    }
+
     // Nothing to handle.
     _ -> expr
+  }
+}
+
+fn remove_expr_field(argument: g.Field(g.Expression)) -> g.Field(g.Expression) {
+  case argument {
+    g.UnlabelledField(e) -> g.UnlabelledField(remove_expr(e))
+    g.ShorthandField(label:) -> g.ShorthandField(label:)
+    g.LabelledField(label:, item:) ->
+      g.LabelledField(label:, item: remove_expr(item))
   }
 }

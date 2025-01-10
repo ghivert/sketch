@@ -4,7 +4,7 @@ import gleam/option.{type Option}
 import gleam/pair
 import gleam/result
 import gleam/string
-import sketch/css/fs
+import sketch_css/fs
 import snag
 import tom
 import uniconfig
@@ -73,4 +73,13 @@ pub fn find_parent_gleam_toml_directory(path: String) {
     let path = remove_last_segment(path)
     find_parent_gleam_toml_directory(path)
   })
+}
+
+pub fn at(list: List(a), index: Int) {
+  use <- bool.guard(when: index < 0, return: Error(Nil))
+  case list {
+    [] -> Error(Nil)
+    [elem, ..] if index == 0 -> Ok(elem)
+    [_, ..rest] -> at(rest, index - 1)
+  }
 }

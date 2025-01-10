@@ -4,13 +4,13 @@ import gleam/order
 import gleam/pair
 import gleam/result
 import gleam/string
-import sketch/css/fs
-import sketch/css/module/dependencies
-import sketch/css/module/exposings
-import sketch/css/module/imports
-import sketch/css/module/pipes
-import sketch/css/module/stylesheet
-import sketch/css/utils
+import sketch_css/fs
+import sketch_css/module/dependencies
+import sketch_css/module/exposings
+import sketch_css/module/imports
+import sketch_css/module/pipes
+import sketch_css/module/stylesheet
+import sketch_css/utils
 import snag
 
 /// Definition of a Gleam styles definitions file.
@@ -84,7 +84,9 @@ pub fn by_dependent(modules: List(Module)) {
 }
 
 /// Convert every style module to CSS stylesheet.
-pub fn convert_styles(modules: List(Module)) -> List(#(Module, stylesheet.CSS)) {
+pub fn convert_styles(
+  modules: List(Module),
+) -> List(#(Module, stylesheet.StyleSheet)) {
   list.map(modules, to_assoc)
   |> list.fold([], stylesheet.convert)
   |> list.filter_map(fn(module) {

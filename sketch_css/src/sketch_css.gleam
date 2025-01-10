@@ -1,6 +1,6 @@
 import argv
 import glint
-import sketch/css/commands/generate
+import sketch_css/commands/generate
 
 /// The `main` function is used as an entrypoint for Sketch CSS. That function
 /// not meant to be used in your code, but is called when you use `gleam run`

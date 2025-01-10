@@ -1,8 +1,8 @@
 import gleam/io
 import gleam/option.{type Option}
 import glint
-import sketch/css/generate
-import sketch/css/utils
+import sketch_css/generate
+import sketch_css/utils
 
 type Flag =
   Option(String)

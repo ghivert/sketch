@@ -3,9 +3,9 @@ import gleam/list
 import gleam/result
 import gleam/string
 import pprint
-import sketch/css/fs
-import sketch/css/module
-import sketch/css/utils
+import sketch_css/fs
+import sketch_css/module
+import sketch_css/utils
 import snag
 
 /// Generate stylesheets from Gleam style definitions files. Recursively extract
@@ -17,7 +17,7 @@ pub fn stylesheets(
   use is_dir <- result.try(fs.is_directory(directories.src))
   use <- bool.guard(when: !is_dir, return: snag.error("Not a directory"))
   use source_files <- result.map(fs.readdir(directories.src, recursive: True))
-  let _modules = convert(source_files) |> pprint.debug
+  let _modules = convert(source_files)
   Nil
 }
 
@@ -31,6 +31,7 @@ fn convert(source_files: List(String)) {
   |> result.map(fn(mods) { list.sort(mods, module.by_dependent(mods)) })
   |> result.map(module.convert_styles)
   |> result.map(list.filter(_, is_css_file))
+  |> pprint.debug
 }
 
 fn is_css_file(module: #(module.Module, a)) -> Bool {

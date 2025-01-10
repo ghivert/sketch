@@ -4,7 +4,7 @@ import gleam/list
 import gleam/pair
 import gleam/result
 import gleam/string
-import sketch/css/fs
+import sketch_css/fs
 import snag
 import tom
 
