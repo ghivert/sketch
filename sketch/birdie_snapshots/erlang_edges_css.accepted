@@ -1,0 +1,10 @@
+---
+version: 1.2.5
+title: erlang_edges_css
+---
+.css-117692592 {
+  grid-template-areas: "header"
+"main";
+  --example-property: example-value;
+  color: blue;
+}

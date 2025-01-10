@@ -1,0 +1,11 @@
+---
+version: 1.2.5
+title: js_function_css
+---
+.css-156994572 {
+  background: #ddd;
+  background: red;
+  display: block;
+  color: red;
+  background: green;
+}

@@ -1,0 +1,9 @@
+---
+version: 1.2.5
+title: erlang_function_property
+---
+.css-19844900 {
+  width: 12px;
+  color: blue;
+  color: red;
+}

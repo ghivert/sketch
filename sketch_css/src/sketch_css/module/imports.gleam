@@ -78,17 +78,24 @@ fn rewrite_custom_type(
 ) -> g.Definition(g.CustomType) {
   let g.Definition(attributes:, definition:) = custom_type
   g.Definition(attributes:, definition: {
-    g.CustomType(..definition, variants: {
-      use variant <- list.map(definition.variants)
-      g.Variant(..variant, fields: {
-        use field <- list.map(variant.fields)
-        let item = rewrite_type(field.item, env)
-        case field {
-          g.LabelledVariantField(..) -> g.LabelledVariantField(..field, item:)
-          g.UnlabelledVariantField(..) -> g.UnlabelledVariantField(item:)
-        }
-      })
-    })
+    g.CustomType(
+      ..definition,
+      variants: {
+        use variant <- list.map(definition.variants)
+        g.Variant(
+          ..variant,
+          fields: {
+            use field <- list.map(variant.fields)
+            let item = rewrite_type(field.item, env)
+            case field {
+              g.LabelledVariantField(..) ->
+                g.LabelledVariantField(..field, item:)
+              g.UnlabelledVariantField(..) -> g.UnlabelledVariantField(item:)
+            }
+          },
+        )
+      },
+    )
   })
 }
 
@@ -332,11 +339,16 @@ fn rewrite_expr(expr: g.Expression, env: Environment) -> g.Expression {
     g.RecordUpdate(..) -> {
       let module = option.map(expr.module, replace_import(_, env))
       let record = rewrite_expr(expr.record, env)
-      g.RecordUpdate(..expr, module:, record:, fields: {
-        use field <- list.map(expr.fields)
-        let item = option.map(field.item, rewrite_expr(_, env))
-        g.RecordUpdateField(..field, item:)
-      })
+      g.RecordUpdate(
+        ..expr,
+        module:,
+        record:,
+        fields: {
+          use field <- list.map(expr.fields)
+          let item = option.map(field.item, rewrite_expr(_, env))
+          g.RecordUpdateField(..field, item:)
+        },
+      )
     }
 
     g.FieldAccess(..) -> {

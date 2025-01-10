@@ -1,0 +1,17 @@
+---
+version: 1.2.5
+title: erlang_medias_pseudo_class
+---
+.css-67993257 {
+  background: blue;
+}
+
+@media (max-width: 700.0px) {
+  .css-67993257 {
+    background: red;
+    background: blue;
+  }
+  .css-67993257:hover {
+      background: green;
+  }
+}

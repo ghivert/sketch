@@ -1,0 +1,11 @@
+---
+version: 1.2.5
+title: erlang_function_css
+---
+.css-74331814 {
+  background: #ddd;
+  background: red;
+  display: block;
+  color: red;
+  background: green;
+}
