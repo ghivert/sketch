@@ -64,9 +64,21 @@ pub fn class_name(class: cache.Class, cache: Cache) -> #(Cache, String) {
 }
 
 @target(erlang)
+pub fn at_rule(rule: cache.AtRule, cache: Cache) -> Cache {
+  case cache {
+    Ephemeral(cache:) -> Ephemeral(cache.at_rule(rule, cache))
+    Persistent(proc:) -> {
+      let _ = process.try_call(proc, Push(rule, _), within: 100)
+      cache
+    }
+  }
+}
+
+@target(erlang)
 pub type Request {
   Render(response: Subject(String))
   Fetch(class: cache.Class, response: Subject(String))
+  Push(rule: cache.AtRule, response: Subject(Nil))
 }
 
 @target(erlang)
@@ -79,6 +91,11 @@ pub fn loop(msg: Request, cache: cache.Cache) -> actor.Next(a, cache.Cache) {
     Fetch(class:, response:) -> {
       let #(cache, class_name) = cache.class_name(class, cache)
       process.send(response, class_name)
+      actor.continue(cache)
+    }
+    Push(rule:, response:) -> {
+      let cache = cache.at_rule(rule, cache)
+      process.send(response, Nil)
       actor.continue(cache)
     }
   }

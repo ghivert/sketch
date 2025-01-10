@@ -34,3 +34,10 @@ pub fn compute_class(class: css.Class, title: String) {
   content |> string.contains(class_name) |> should.be_true
   birdie.snap(title: multitarget_title(title), content:)
 }
+
+pub fn compute_at_rule(rule: css.AtRule, title: String) {
+  let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Ephemeral)
+  let stylesheet = sketch.at_rule(rule, stylesheet)
+  let content = sketch.render(stylesheet)
+  birdie.snap(title: multitarget_title(title), content:)
+}

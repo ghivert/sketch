@@ -2,30 +2,30 @@
 version: 1.2.5
 title: erlang_nestings_example
 ---
-.css-92776350 {
+.css-29574239 {
 }
 
-.css-92776350 > .css-14492986 {
+.css-29574239 > .css-14492986 {
     background: red;
 }
 
-.css-92776350 > .css-14492986:hover {
+.css-29574239 > .css-14492986:hover {
       background: blue;
 }
 
 @media (max-width: 700.0px) or (min-width: 400.0px) {
-  .css-92776350 {
+  .css-29574239 {
     background: blue;
   }
-  .css-92776350:hover {
+  .css-29574239:hover {
       background: red;
   }
-  .css-92776350:hover {
+  .css-29574239:hover {
   }
-  .css-92776350:hover > .css-14492986 {
+  .css-29574239:hover > .css-14492986 {
         background: blue;
   }
-  .css-92776350:hover > .css-14492986:hover {
+  .css-29574239:hover > .css-14492986:hover {
           background: red;
   }
 }

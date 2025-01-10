@@ -1,4 +1,6 @@
+import birdie
 import gleeunit
+import sketch
 import test_/helpers
 
 import classes/aliased_css
@@ -7,6 +9,7 @@ import classes/edges_css
 import classes/exposed_css
 import classes/function_css
 import classes/important_css
+import classes/keyframe_css
 import classes/medias_css
 import classes/nestings_css
 import classes/variable_css
@@ -72,4 +75,15 @@ pub fn nestings_test() {
 pub fn variable_test() {
   variable_css.variable_property()
   |> helpers.compute_class("variable_css")
+}
+
+pub fn keyframe_test() {
+  keyframe_css.keyframe()
+  |> helpers.compute_at_rule("keyframe_css")
+
+  let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Ephemeral)
+  let stylesheet = sketch.at_rule(keyframe_css.keyframe(), stylesheet)
+  let #(stylesheet, _) = sketch.class_name(keyframe_css.example(), stylesheet)
+  let content = sketch.render(stylesheet)
+  birdie.snap(title: helpers.multitarget_title("keyframe_class"), content:)
 }

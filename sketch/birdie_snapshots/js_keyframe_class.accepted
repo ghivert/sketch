@@ -1,0 +1,23 @@
+---
+version: 1.2.5
+title: js_keyframe_class
+---
+@keyframes fade-out {
+  from {
+    opacity: 1.0;
+  }
+
+  50.0% {
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: 0.0;
+  }
+}
+
+.css-2616439478 {
+  opacity: 1.0;
+  animation: fade-out;
+  background: blue;
+}

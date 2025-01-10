@@ -2,13 +2,13 @@ import gleam/bool
 import gleam/dict.{type Dict}
 import gleam/int
 import gleam/list
-import gleam/option.{None, Some}
+import gleam/option.{type Option, None, Some}
 import gleam/pair
 import gleam/string
 import sketch/internals/string as sketch_string
 
 pub type Class {
-  Class(as_string: String, content: List(Style))
+  Class(as_string: String, content: List(Style), name: Option(String))
 }
 
 type Definitions {
@@ -20,11 +20,35 @@ type ComputedClass {
 }
 
 pub opaque type Cache {
-  Cache(cache: Dict(String, #(ComputedClass, Properties)))
+  Cache(
+    cache: Dict(String, #(ComputedClass, Properties)),
+    at_rules: Dict(String, String),
+  )
+}
+
+pub type AtRule {
+  AtRule(as_string: String, rule: String, content: AtRuleContent)
+}
+
+pub type AtRuleContent {
+  AtRuleClasses(List(Class))
+  AtRuleContent(String)
+}
+
+pub fn classes_rule(rule: String, content: List(Class)) {
+  let as_string = string.inspect(content)
+  let content = AtRuleClasses(content)
+  AtRule(as_string:, rule:, content:)
+}
+
+pub fn content_rule(rule: String, content: String) {
+  let as_string = content
+  let content = AtRuleContent(content)
+  AtRule(as_string:, rule:, content:)
 }
 
 pub fn new() {
-  Cache(dict.new())
+  Cache(cache: dict.new(), at_rules: dict.new())
 }
 
 pub type Style {
@@ -59,14 +83,22 @@ type SelectorProperty {
 
 /// Render a valid CSS StyleSheet from a cache.
 pub fn render_sheet(cache: Cache) -> String {
-  dict.values(cache.cache)
-  |> list.flat_map(fn(c) { get_definitions(c.0) })
+  dict.values(cache.at_rules)
+  |> list.append({
+    dict.values(cache.cache)
+    |> list.flat_map(fn(c) { get_definitions(c.0) })
+  })
   |> string.join("\n\n")
 }
 
 pub fn class(content: List(Style)) -> Class {
   let as_string = string.inspect(content)
-  Class(as_string:, content:)
+  Class(as_string:, content:, name: None)
+}
+
+pub fn named(name: String, content: List(Style)) -> Class {
+  let as_string = string.inspect(content)
+  Class(as_string:, content:, name: Some(name))
 }
 
 pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
@@ -75,6 +107,39 @@ pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
   case existing_class {
     Ok(#(class, _)) -> #(cache, class.name)
     Error(..) -> insert_class_in_cache(cache, class)
+  }
+}
+
+pub fn at_rule(rule: AtRule, cache: Cache) -> Cache {
+  case dict.get(cache.at_rules, rule.as_string) {
+    Ok(_) -> cache
+    Error(_) -> {
+      case rule.content {
+        AtRuleContent(content) -> "@" <> rule.rule <> " {" <> content <> "}"
+        AtRuleClasses(classes) -> {
+          list.map(classes, fn(class) {
+            let #(_cache, properties) =
+              compute_properties(cache, class.content, 2, "")
+            let class_ =
+              class.as_string
+              |> compute_hash
+              |> compute_classes(class.name, properties)
+            class_.definitions.class
+          })
+          |> list.map(fn(s) {
+            string.split(s, "\n")
+            |> list.map(string.append("  ", _))
+            |> string.join("\n")
+          })
+          |> string.join("\n\n")
+          |> list.prepend(["}"], _)
+          |> list.prepend("@" <> rule.rule <> " {")
+          |> string.join("\n")
+        }
+      }
+      |> dict.insert(cache.at_rules, rule.as_string, _)
+      |> fn(at_rules) { Cache(..cache, at_rules:) }
+    }
   }
 }
 
@@ -107,8 +172,12 @@ fn compute_properties(
 
 // Compute classes by using the class definitions, and by wrapping them in the
 // correct class declarations, to be CSS compliant.
-fn compute_classes(id: Int, properties: Properties) -> ComputedClass {
-  let name = "css-" <> int.to_string(id)
+fn compute_classes(
+  id: Int,
+  name: Option(String),
+  properties: Properties,
+) -> ComputedClass {
+  let name = option.lazy_unwrap(name, fn() { ".css-" <> int.to_string(id) })
   let Properties(properties:, medias:, selectors:, ..) = properties
   let class = sketch_string.wrap_class(name, properties, 0, None)
   let selectors = wrap_selectors(name, 0, selectors)
@@ -129,11 +198,11 @@ fn insert_class_in_cache(cache: Cache, class: Class) -> #(Cache, String) {
   let class_ =
     class.as_string
     |> compute_hash
-    |> compute_classes(properties)
+    |> compute_classes(class.name, properties)
   class_
   |> pair.new(properties)
   |> dict.insert(cache.cache, class.as_string, _)
-  |> Cache
+  |> fn(cache_) { Cache(..cache, cache: cache_) }
   |> pair.new(class_.name)
 }
 
@@ -200,7 +269,7 @@ fn handle_combinator(
   let assert Combinator(selector:, class:, styles:) = combinator
   let indentation = props.indentation + 2
   let #(cache, class_name) = class_name(class, cache)
-  let selector = existing_selector <> selector <> "." <> class_name
+  let selector = existing_selector <> selector <> class_name
   let #(cache, properties) =
     compute_properties(cache, styles, indentation, selector)
   SelectorProperty(selector:, properties: properties.properties)

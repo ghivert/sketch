@@ -1,6 +1,6 @@
 @target(erlang)
 import gleam/result
-import sketch/css.{type Class}
+import sketch/css.{type AtRule, type Class}
 import sketch/error
 @target(erlang)
 import sketch/internals/cache/actor
@@ -42,6 +42,18 @@ pub fn class_name(class: Class, stylesheet: StyleSheet) -> #(StyleSheet, String)
 pub fn class_name(class: Class, stylesheet: StyleSheet) -> #(StyleSheet, String) {
   let #(cache, class_name) = actor.class_name(class, stylesheet.cache)
   #(StyleSheet(cache:), class_name)
+}
+
+@target(javascript)
+pub fn at_rule(rule: AtRule, stylesheet: StyleSheet) -> StyleSheet {
+  let cache = cache.at_rule(rule, stylesheet.cache)
+  StyleSheet(..stylesheet, cache:)
+}
+
+@target(erlang)
+pub fn at_rule(rule: AtRule, stylesheet: StyleSheet) -> StyleSheet {
+  let cache = actor.at_rule(rule, stylesheet.cache)
+  StyleSheet(cache:)
 }
 
 /// Strategy for the StyleSheet. Two strategies are available as of now: ephemeral

@@ -13,7 +13,7 @@ pub fn wrap_class(
 ) -> String {
   let base_indent = indent(indentation)
   let pseudo_ = option.unwrap(pseudo, "")
-  [base_indent <> "." <> id <> pseudo_ <> " {", ..properties]
+  [base_indent <> id <> pseudo_ <> " {", ..properties]
   |> string.join("\n")
   |> string.append("\n" <> base_indent <> "}")
 }
