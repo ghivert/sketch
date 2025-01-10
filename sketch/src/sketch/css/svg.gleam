@@ -1,3 +1,7 @@
+//// Some CSS properties are availaible only on SVG elements.
+//// Because Sketch tries to be as complete as possible, but also friendly,
+//// Sketch does not expose those in the main `css` module.
+
 import sketch/css.{type Style, property}
 import sketch/css/length.{type Length}
 

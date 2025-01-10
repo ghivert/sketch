@@ -122,7 +122,7 @@ pub fn text(content: String) -> Element(a) {
   el.text(content)
 }
 
-/// The `<a>` HTML element (or anchor element), with [its `href` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href),
+/// The `<a>` HTML element (or anchor element), with [its `href` attribute](https://developer.mozilla.org/docs/Web/HTML/Element/a#href),
 /// creates a hyperlink to web pages, files, email addresses, locations in the
 /// same page, or anything else a URL can address.
 ///
@@ -144,7 +144,7 @@ pub fn a(
   el.element("a", class, attributes, children)
 }
 
-/// The `<a>` HTML element (or anchor element), with [its `href` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href),
+/// The `<a>` HTML element (or anchor element), with [its `href` attribute](https://developer.mozilla.org/docs/Web/HTML/Element/a#href),
 /// creates a hyperlink to web pages, files, email addresses, locations in the
 /// same page, or anything else a URL can address.
 ///
@@ -603,8 +603,8 @@ pub fn button_(
 }
 
 /// Use the HTML `<canvas>` element with either the
-/// [canvas scripting API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) or the
-/// [WebGL API](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API)
+/// [canvas scripting API](https://developer.mozilla.org/docs/Web/API/Canvas_API) or the
+/// [WebGL API](https://developer.mozilla.org/docs/Web/API/WebGL_API)
 /// to draw graphics and animations.
 ///
 /// ---
@@ -619,8 +619,8 @@ pub fn canvas(
 }
 
 /// Use the HTML `<canvas>` element with either the
-/// [canvas scripting API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) or the
-/// [WebGL API](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API)
+/// [canvas scripting API](https://developer.mozilla.org/docs/Web/API/Canvas_API) or the
+/// [WebGL API](https://developer.mozilla.org/docs/Web/API/WebGL_API)
 /// to draw graphics and animations.
 ///
 /// ---
@@ -634,7 +634,7 @@ pub fn canvas_(
 }
 
 /// The `<caption>` HTML element specifies the caption (or title) of a table, p
-/// roviding the table an [accessible description](https://developer.mozilla.org/en-US/docs/Glossary/Accessible_description).
+/// roviding the table an [accessible description](https://developer.mozilla.org/docs/Glossary/Accessible_description).
 ///
 /// ---
 ///
@@ -648,7 +648,7 @@ pub fn caption(
 }
 
 /// The `<caption>` HTML element specifies the caption (or title) of a table, p
-/// roviding the table an [accessible description](https://developer.mozilla.org/en-US/docs/Glossary/Accessible_description).
+/// roviding the table an [accessible description](https://developer.mozilla.org/docs/Glossary/Accessible_description).
 ///
 /// ---
 ///
@@ -1211,7 +1211,7 @@ pub fn fieldset_(
 
 /// The `<figcaption>` HTML element represents a caption or legend describing
 /// the rest of the contents of its parent `<figure>` element, providing the
-/// `<figure>` an [accessible description](https://developer.mozilla.org/en-US/docs/Glossary/Accessible_description).
+/// `<figure>` an [accessible description](https://developer.mozilla.org/docs/Glossary/Accessible_description).
 ///
 /// ---
 ///
@@ -1226,7 +1226,7 @@ pub fn figcaption(
 
 /// The `<figcaption>` HTML element represents a caption or legend describing
 /// the rest of the contents of its parent `<figure>` element, providing the
-/// `<figure>` an [accessible description](https://developer.mozilla.org/en-US/docs/Glossary/Accessible_description).
+/// `<figure>` an [accessible description](https://developer.mozilla.org/docs/Glossary/Accessible_description).
 ///
 /// ---
 ///
@@ -1270,8 +1270,8 @@ pub fn figure_(
 }
 
 /// The `<footer>` HTML element represents a footer for its nearest ancestor
-/// [sectioning content](https://developer.mozilla.org/en-US/docs/Web/HTML/Content_categories#sectioning_content)
-/// or [sectioning root](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#labeling_section_content)
+/// [sectioning content](https://developer.mozilla.org/docs/Web/HTML/Content_categories#sectioning_content)
+/// or [sectioning root](https://developer.mozilla.org/docs/Web/HTML/Element/Heading_Elements#labeling_section_content)
 /// element. A `<footer>` typically contains information about the author of
 /// the section, copyright data or links to related documents.
 ///
@@ -1287,8 +1287,8 @@ pub fn footer(
 }
 
 /// The `<footer>` HTML element represents a footer for its nearest ancestor
-/// [sectioning content](https://developer.mozilla.org/en-US/docs/Web/HTML/Content_categories#sectioning_content)
-/// or [sectioning root](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#labeling_section_content)
+/// [sectioning content](https://developer.mozilla.org/docs/Web/HTML/Content_categories#sectioning_content)
+/// or [sectioning root](https://developer.mozilla.org/docs/Web/HTML/Element/Heading_Elements#labeling_section_content)
 /// element. A `<footer>` typically contains information about the author of
 /// the section, copyright data or links to related documents.
 ///
@@ -1947,14 +1947,14 @@ pub fn mark_(
 /// a single mathematical formula. It can be placed in HTML content where flow
 /// content is permitted.
 ///
-/// > See the [Authoring MathML page](https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring#using_mathml)
+/// > See the [Authoring MathML page](https://developer.mozilla.org/docs/Web/MathML/Authoring#using_mathml)
 /// > for tips to properly integrate MathML formulas in your web pages and the
-/// > [Examples](https://developer.mozilla.org/en-US/docs/Web/MathML/Examples)
+/// > [Examples](https://developer.mozilla.org/docs/Web/MathML/Examples)
 /// > page for more demos.
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/MathML/Element/math)
+/// [MDN Documentation](https://developer.mozilla.org/docs/Web/MathML/Element/math)
 pub fn math(
   class: Class,
   attributes: List(Attribute(a)),
@@ -1967,14 +1967,14 @@ pub fn math(
 /// a single mathematical formula. It can be placed in HTML content where flow
 /// content is permitted.
 ///
-/// > See the [Authoring MathML page](https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring#using_mathml)
+/// > See the [Authoring MathML page](https://developer.mozilla.org/docs/Web/MathML/Authoring#using_mathml)
 /// > for tips to properly integrate MathML formulas in your web pages and the
-/// > [Examples](https://developer.mozilla.org/en-US/docs/Web/MathML/Examples)
+/// > [Examples](https://developer.mozilla.org/docs/Web/MathML/Examples)
 /// > page for more demos.
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/MathML/Element/math)
+/// [MDN Documentation](https://developer.mozilla.org/docs/Web/MathML/Element/math)
 pub fn math_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -2812,7 +2812,7 @@ pub fn small_(
 
 /// The `<source>` HTML element specifies one or more media resources for the
 /// `<picture>,` `<audio>,` and `<video>` elements. It is a
-/// [void element](https://developer.mozilla.org/en-US/docs/Glossary/Void_element),
+/// [void element](https://developer.mozilla.org/docs/Glossary/Void_element),
 /// which means that it has no content and does not require a closing tag. This
 /// element is commonly used to offer the same media content in multiple file
 /// formats in order to provide compatibility with a broad range of browsers
@@ -2827,7 +2827,7 @@ pub fn source(class: Class, attributes: List(Attribute(a))) -> Element(a) {
 
 /// The `<source>` HTML element specifies one or more media resources for the
 /// `<picture>,` `<audio>,` and `<video>` elements. It is a
-/// [void element](https://developer.mozilla.org/en-US/docs/Glossary/Void_element),
+/// [void element](https://developer.mozilla.org/docs/Glossary/Void_element),
 /// which means that it has no content and does not require a closing tag. This
 /// element is commonly used to offer the same media content in multiple file
 /// formats in order to provide compatibility with a broad range of browsers
@@ -3004,7 +3004,7 @@ pub fn sup_(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg)
+/// [MDN Documentation](https://developer.mozilla.org/docs/Web/SVG/Element/svg)
 pub fn svg(
   class: Class,
   attributes: List(Attribute(a)),
@@ -3030,7 +3030,7 @@ pub fn svg(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg)
+/// [MDN Documentation](https://developer.mozilla.org/docs/Web/SVG/Element/svg)
 pub fn svg_(
   attributes: List(Attribute(a)),
   children: List(Element(a)),
@@ -3354,7 +3354,7 @@ pub fn tr_(
 /// been set to be the default, or a kind and translation based on user
 /// preferences.
 ///
-/// The tracks are formatted in [WebVTT format](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API)
+/// The tracks are formatted in [WebVTT format](https://developer.mozilla.org/docs/Web/API/WebVTT_API)
 /// (`.vtt` files) — Web Video Text Tracks.
 ///
 /// ---
@@ -3376,7 +3376,7 @@ pub fn track(class: Class, attributes: List(Attribute(a))) -> Element(a) {
 /// been set to be the default, or a kind and translation based on user
 /// preferences.
 ///
-/// The tracks are formatted in [WebVTT format](https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API)
+/// The tracks are formatted in [WebVTT format](https://developer.mozilla.org/docs/Web/API/WebVTT_API)
 /// (`.vtt` files) — Web Video Text Tracks.
 ///
 /// ---

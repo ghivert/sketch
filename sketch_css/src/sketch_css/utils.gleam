@@ -5,9 +5,9 @@ import gleam/pair
 import gleam/result
 import gleam/string
 import sketch_css/fs
+import sketch_css/uniconfig
 import snag
 import tom
-import uniconfig
 
 /// Directories used in scripts.
 /// - `src` indicates where to search for styles files.

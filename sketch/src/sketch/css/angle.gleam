@@ -1,13 +1,14 @@
-/// `Angle` defines a [CSS Unit](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Values_and_Units).
-/// It represents an angle value expressed in degrees, gradians, radians, or turns.
-/// It is used, for example, in `<gradient>`s and in some `transform` functions.
-///
-/// ---
-///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/angle)
+//// `Angle` defines a [CSS Unit](https://developer.mozilla.org/docs/Web/CSS/CSS_Values_and_Units).
+//// It represents an angle value expressed in degrees, gradians, radians, or turns.
+//// It is used, for example, in `<gradient>`s and in some `transform` functions.
+////
+//// ---
+////
+//// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/angle)
+
 import gleam/float
 
-/// `Angle` defines a [CSS Unit](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Values_and_Units).
+/// `Angle` defines a [CSS Unit](https://developer.mozilla.org/docs/Web/CSS/CSS_Values_and_Units).
 /// It represents an angle value expressed in degrees, gradians, radians, or turns.
 /// It is used, for example, in `<gradient>`s and in some `transform` functions.
 ///
@@ -26,7 +27,7 @@ pub opaque type Angle {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#deg)
+/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/angle#deg)
 pub fn deg(value: Float) -> Angle {
   Deg(value)
 }
@@ -37,7 +38,7 @@ pub fn deg(value: Float) -> Angle {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#rad)
+/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/angle#rad)
 pub fn rad(value: Float) -> Angle {
   Rad(value)
 }
@@ -47,7 +48,7 @@ pub fn rad(value: Float) -> Angle {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#grad)
+/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/angle#grad)
 pub fn grad(value: Float) -> Angle {
   Grad(value)
 }
@@ -57,7 +58,7 @@ pub fn grad(value: Float) -> Angle {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/angle#turn)
+/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/angle#turn)
 pub fn turn(value: Float) -> Angle {
   Turn(value)
 }
