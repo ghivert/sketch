@@ -1,0 +1,7 @@
+---
+version: 1.2.5
+title: erlang_css_aliased_css.gleam
+---
+.css-79177302 {
+  background: red;
+}

@@ -1,0 +1,7 @@
+---
+version: 1.2.5
+title: erlang_gleam_exposed_css.gleam
+---
+pub const exposed_class = "css-132390646"
+
+pub const exposed_property = "css-132390646"

@@ -1,0 +1,61 @@
+---
+version: 1.2.5
+title: erlang_css_medias_css.gleam
+---
+.css-112994211 {
+  background: blue;
+}
+
+@media (max-width: 700.0px) and (min-width: 600.0px) {
+  .css-112994211 {
+    background: red;
+    background: blue;
+  }
+}
+
+.css-123977435 {
+  background: blue;
+}
+
+@media (max-width: 700.0px) and (min-width: 700.0px) or (min-width: 600.0px) {
+  .css-123977435 {
+    background: red;
+    background: blue;
+  }
+}
+
+.css-18913567 {
+  background: blue;
+}
+
+@media (max-width: 700.0px) or (min-width: 600.0px) {
+  .css-18913567 {
+    background: red;
+    background: blue;
+  }
+}
+
+.css-67993257 {
+  background: blue;
+}
+
+@media (max-width: 700.0px) {
+  .css-67993257 {
+    background: red;
+    background: blue;
+  }
+  .css-67993257:hover {
+      background: green;
+  }
+}
+
+.css-22725631 {
+  background: blue;
+}
+
+@media (max-width: 700.0px) {
+  .css-22725631 {
+    background: red;
+    background: blue;
+  }
+}
