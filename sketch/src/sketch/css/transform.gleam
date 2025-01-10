@@ -3,12 +3,12 @@ import gleam/float
 import gleam/list
 import gleam/string
 import sketch/css/angle.{type Angle}
-import sketch/css/size.{type Size}
+import sketch/css/length.{type Length}
 
 pub opaque type Transform {
-  Translate(Size, Size)
-  TranslateX(Size)
-  TranslateY(Size)
+  Translate(Length, Length)
+  TranslateX(Length)
+  TranslateY(Length)
   Scale(Float, Float)
   ScaleX(Float)
   ScaleY(Float)
@@ -17,20 +17,20 @@ pub opaque type Transform {
   SkewY(Angle)
 }
 
-pub fn translate2(x: Size, y: Size) -> Transform {
+pub fn translate2(x: Length, y: Length) -> Transform {
   Translate(x, y)
 }
 
-/// `translate(x)` is `translate2(x, size.percent(0))`
-pub fn translate(x: Size) -> Transform {
-  translate2(x, size.percent(0))
+/// `translate(x)` is `translate2(x, length.percent(0))`
+pub fn translate(x: Length) -> Transform {
+  translate2(x, length.percent(0))
 }
 
-pub fn translate_x(x: Size) -> Transform {
+pub fn translate_x(x: Length) -> Transform {
   TranslateX(x)
 }
 
-pub fn translate_y(y: Size) -> Transform {
+pub fn translate_y(y: Length) -> Transform {
   TranslateY(y)
 }
 
@@ -63,6 +63,8 @@ pub fn skew_y(x: Angle) -> Transform {
   SkewY(x)
 }
 
+/// Internal function, can be used if you need to go from a transform function
+/// to a String in case you're building on top of sketch.
 @internal
 pub fn to_string(value: List(Transform)) -> String {
   use <- bool.guard(when: list.is_empty(value), return: "none")
@@ -74,10 +76,10 @@ fn transform_to_string(value: Transform) -> String {
   case value {
     Translate(x, y) ->
       "translate("
-      <> string.join([size.to_string(x), size.to_string(y)], ",")
+      <> string.join([length.to_string(x), length.to_string(y)], ",")
       <> ")"
-    TranslateX(x) -> "translateX(" <> size.to_string(x) <> ")"
-    TranslateY(y) -> "translateY(" <> size.to_string(y) <> ")"
+    TranslateX(x) -> "translateX(" <> length.to_string(x) <> ")"
+    TranslateY(y) -> "translateY(" <> length.to_string(y) <> ")"
     Scale(x, y) ->
       "scale("
       <> string.join([float.to_string(x), float.to_string(y)], ",")

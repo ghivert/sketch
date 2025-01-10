@@ -7,8 +7,8 @@ import gleam/result
 import gleam/string
 import sketch/css
 import sketch/css/angle
+import sketch/css/length
 import sketch/css/media
-import sketch/css/size
 import sketch/css/transform
 import sketch_css/constants
 import sketch_css/module/functions
@@ -18,7 +18,7 @@ pub type Value {
   IntValue(Int)
   FloatValue(Float)
   StringValue(String)
-  SizeValue(size.Size)
+  LengthValue(length.Length)
   ClassValue(css.Class)
   AngleValue(angle.Angle)
   TransformValue(transform.Transform)
@@ -240,22 +240,58 @@ fn convert_size(
     [g.UnlabelledField(item:)] -> {
       use value <- result.try(convert_expression(item, env, modules))
       case label, value {
-        "px", IntValue(i) -> Ok(SizeValue(size.px(i)))
-        "px_", FloatValue(f) -> Ok(SizeValue(size.px_(f)))
-        "pt", IntValue(i) -> Ok(SizeValue(size.pt(i)))
-        "pt_", FloatValue(f) -> Ok(SizeValue(size.pt_(f)))
-        "percent", IntValue(i) -> Ok(SizeValue(size.percent(i)))
-        "percent_", FloatValue(f) -> Ok(SizeValue(size.percent_(f)))
-        "vh", IntValue(i) -> Ok(SizeValue(size.vh(i)))
-        "vh_", FloatValue(f) -> Ok(SizeValue(size.vh_(f)))
-        "vw", IntValue(i) -> Ok(SizeValue(size.vw(i)))
-        "vw_", FloatValue(f) -> Ok(SizeValue(size.vw_(f)))
-        "em", FloatValue(f) -> Ok(SizeValue(size.em(f)))
-        "rem", FloatValue(f) -> Ok(SizeValue(size.rem(f)))
-        "lh", FloatValue(f) -> Ok(SizeValue(size.lh(f)))
-        "rlh", FloatValue(f) -> Ok(SizeValue(size.rlh(f)))
-        "ch", IntValue(i) -> Ok(SizeValue(size.ch(i)))
-        "ch_", FloatValue(f) -> Ok(SizeValue(size.ch_(f)))
+        "px", IntValue(i) -> Ok(LengthValue(length.px(i)))
+        "px_", FloatValue(f) -> Ok(LengthValue(length.px_(f)))
+        "cm", IntValue(i) -> Ok(LengthValue(length.cm(i)))
+        "mm", IntValue(i) -> Ok(LengthValue(length.mm(i)))
+        "q", IntValue(i) -> Ok(LengthValue(length.q(i)))
+        "in", IntValue(i) -> Ok(LengthValue(length.in(i)))
+        "pc", IntValue(i) -> Ok(LengthValue(length.pc(i)))
+        "cm_", FloatValue(f) -> Ok(LengthValue(length.cm_(f)))
+        "mm_", FloatValue(f) -> Ok(LengthValue(length.mm_(f)))
+        "q_", FloatValue(f) -> Ok(LengthValue(length.q_(f)))
+        "in_", FloatValue(f) -> Ok(LengthValue(length.in_(f)))
+        "pc_", FloatValue(f) -> Ok(LengthValue(length.pc_(f)))
+        "pt", IntValue(i) -> Ok(LengthValue(length.pt(i)))
+        "pt_", FloatValue(f) -> Ok(LengthValue(length.pt_(f)))
+        "percent", IntValue(i) -> Ok(LengthValue(length.percent(i)))
+        "percent_", FloatValue(f) -> Ok(LengthValue(length.percent_(f)))
+        "vh", IntValue(i) -> Ok(LengthValue(length.vh(i)))
+        "vh_", FloatValue(f) -> Ok(LengthValue(length.vh_(f)))
+        "vw", IntValue(i) -> Ok(LengthValue(length.vw(i)))
+        "vw_", FloatValue(f) -> Ok(LengthValue(length.vw_(f)))
+        "em", FloatValue(f) -> Ok(LengthValue(length.em(f)))
+        "rem", FloatValue(f) -> Ok(LengthValue(length.rem(f)))
+        "lh", FloatValue(f) -> Ok(LengthValue(length.lh(f)))
+        "rlh", FloatValue(f) -> Ok(LengthValue(length.rlh(f)))
+        "ch", FloatValue(f) -> Ok(LengthValue(length.ch(f)))
+        "cap", FloatValue(f) -> Ok(LengthValue(length.cap(f)))
+        "ex", FloatValue(f) -> Ok(LengthValue(length.ex(f)))
+        "ic", FloatValue(f) -> Ok(LengthValue(length.ic(f)))
+        "rcap", FloatValue(f) -> Ok(LengthValue(length.rcap(f)))
+        "rch", FloatValue(f) -> Ok(LengthValue(length.rch(f)))
+        "rex", FloatValue(f) -> Ok(LengthValue(length.rex(f)))
+        "ric", FloatValue(f) -> Ok(LengthValue(length.ric(f)))
+        "vmax", IntValue(f) -> Ok(LengthValue(length.vmax(f)))
+        "vmax_", FloatValue(f) -> Ok(LengthValue(length.vmax_(f)))
+        "vmin", IntValue(f) -> Ok(LengthValue(length.vmin(f)))
+        "vmin_", FloatValue(f) -> Ok(LengthValue(length.vmin_(f)))
+        "vb", IntValue(f) -> Ok(LengthValue(length.vb(f)))
+        "vb_", FloatValue(f) -> Ok(LengthValue(length.vb_(f)))
+        "vi", IntValue(f) -> Ok(LengthValue(length.vi(f)))
+        "vi_", FloatValue(f) -> Ok(LengthValue(length.vi_(f)))
+        "cqw", IntValue(f) -> Ok(LengthValue(length.cqw(f)))
+        "cqw_", FloatValue(f) -> Ok(LengthValue(length.cqw_(f)))
+        "cqh", IntValue(f) -> Ok(LengthValue(length.cqh(f)))
+        "cqh_", FloatValue(f) -> Ok(LengthValue(length.cqh_(f)))
+        "cqi", IntValue(f) -> Ok(LengthValue(length.cqi(f)))
+        "cqi_", FloatValue(f) -> Ok(LengthValue(length.cqi_(f)))
+        "cqb", IntValue(f) -> Ok(LengthValue(length.cqb(f)))
+        "cqb_", FloatValue(f) -> Ok(LengthValue(length.cqb_(f)))
+        "cqmin", IntValue(f) -> Ok(LengthValue(length.cqmin(f)))
+        "cqmin_", FloatValue(f) -> Ok(LengthValue(length.cqmin_(f)))
+        "cqmax", IntValue(f) -> Ok(LengthValue(length.cqmax(f)))
+        "cqmax_", FloatValue(f) -> Ok(LengthValue(length.cqmax_(f)))
         _, _ -> Error(Nil)
       }
     }
@@ -294,9 +330,9 @@ fn convert_transform(
     [g.UnlabelledField(item:)] -> {
       use value <- result.try(convert_expression(item, env, modules))
       case label, value {
-        "translate", SizeValue(f) -> Ok(transform.translate(f))
-        "translate_x", SizeValue(f) -> Ok(transform.translate_x(f))
-        "translate_y", SizeValue(f) -> Ok(transform.translate_y(f))
+        "translate", LengthValue(f) -> Ok(transform.translate(f))
+        "translate_x", LengthValue(f) -> Ok(transform.translate_x(f))
+        "translate_y", LengthValue(f) -> Ok(transform.translate_y(f))
         "scale", FloatValue(f) -> Ok(transform.scale(f))
         "scale_x", FloatValue(f) -> Ok(transform.scale_x(f))
         "scale_y", FloatValue(f) -> Ok(transform.scale_y(f))
@@ -311,7 +347,7 @@ fn convert_transform(
       use fst <- result.try(convert_expression(fst, env, modules))
       use snd <- result.try(convert_expression(snd, env, modules))
       case label, fst, snd {
-        "translate2", SizeValue(fst), SizeValue(snd) ->
+        "translate2", LengthValue(fst), LengthValue(snd) ->
           Ok(transform.translate2(fst, snd))
         "scale2", FloatValue(fst), FloatValue(snd) ->
           Ok(transform.scale2(fst, snd))
@@ -335,6 +371,9 @@ fn convert_media(
     "light_theme" -> Ok(media.light_theme())
     "landscape" -> Ok(media.landscape())
     "portrait" -> Ok(media.portrait())
+    "all" -> Ok(media.all())
+    "screen" -> Ok(media.screen())
+    "print" -> Ok(media.print())
     _ -> convert_media_arguments(label, arguments, env, modules)
   }
   |> result.map(MediaValue)
@@ -345,11 +384,12 @@ fn convert_media_arguments(label, arguments, env, modules) {
     [g.UnlabelledField(item:)] -> {
       use value <- result.try(convert_expression(item, env, modules))
       case value, label {
-        SizeValue(value), "max_width" -> Ok(media.max_width(value))
-        SizeValue(value), "min_width" -> Ok(media.min_width(value))
-        SizeValue(value), "max_height" -> Ok(media.max_height(value))
-        SizeValue(value), "min_height" -> Ok(media.min_height(value))
+        LengthValue(value), "max_width" -> Ok(media.max_width(value))
+        LengthValue(value), "min_width" -> Ok(media.min_width(value))
+        LengthValue(value), "max_height" -> Ok(media.max_height(value))
+        LengthValue(value), "min_height" -> Ok(media.min_height(value))
         MediaValue(value), "not" -> Ok(media.not(value))
+        MediaValue(value), "only" -> Ok(media.only(value))
         _, _ -> Error(Nil)
       }
     }
@@ -539,7 +579,7 @@ fn convert_generic_call(
               StringValue(s) -> s
               IntValue(i) -> int.to_string(i)
               FloatValue(f) -> float.to_string(f)
-              SizeValue(s) -> size.to_string(s)
+              LengthValue(s) -> length.to_string(s)
               AngleValue(a) -> angle.to_string(a)
               _ -> ""
             }
@@ -555,7 +595,8 @@ fn convert_generic_call(
             StringValue(s) -> StyleValue(css.property(label, s))
             IntValue(i) -> StyleValue(css.property(label, int.to_string(i)))
             FloatValue(f) -> StyleValue(css.property(label, float.to_string(f)))
-            SizeValue(s) -> StyleValue(css.property(label, size.to_string(s)))
+            LengthValue(s) ->
+              StyleValue(css.property(label, length.to_string(s)))
             AngleValue(a) -> StyleValue(css.property(label, angle.to_string(a)))
             _ -> StyleValue(css.none())
           }

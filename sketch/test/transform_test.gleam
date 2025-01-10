@@ -1,28 +1,28 @@
 import gleeunit/should
 import sketch/css/angle
-import sketch/css/size
+import sketch/css/length
 import sketch/css/transform
 
 pub fn translate_test() {
-  [transform.translate(size.px(10))]
+  [transform.translate(length.px(10))]
   |> transform.to_string
   |> should.equal("translate(10.0px,0.0%)")
 }
 
 pub fn translate2_test() {
-  [transform.translate2(size.px(10), size.rem(3.0))]
+  [transform.translate2(length.px(10), length.rem(3.0))]
   |> transform.to_string
   |> should.equal("translate(10.0px,3.0rem)")
 }
 
 pub fn translate_x() {
-  [transform.translate_x(size.px(10))]
+  [transform.translate_x(length.px(10))]
   |> transform.to_string
   |> should.equal("translateX(10px)")
 }
 
 pub fn translate_y() {
-  [transform.translate_y(size.px(10))]
+  [transform.translate_y(length.px(10))]
   |> transform.to_string
   |> should.equal("translateY(10px)")
 }
@@ -70,9 +70,9 @@ pub fn skew_y() {
 }
 
 pub fn translate_equiv_test() {
-  let current = [transform.translate(size.px(10))] |> transform.to_string
+  let current = [transform.translate(length.px(10))] |> transform.to_string
   let expected =
-    [transform.translate2(size.px(10), size.percent(0))]
+    [transform.translate2(length.px(10), length.percent(0))]
     |> transform.to_string
 
   should.equal(current, expected)

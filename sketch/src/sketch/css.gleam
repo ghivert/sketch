@@ -6,8 +6,8 @@ import gleam/float
 import gleam/int
 import gleam/list
 import gleam/string
+import sketch/css/length.{type Length}
 import sketch/css/media.{type Query}
-import sketch/css/size.{type Size}
 import sketch/css/transform.{type Transform}
 import sketch/internals/cache/cache as style
 
@@ -483,8 +483,8 @@ pub fn background_size(background: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/block-size)
-pub fn block_size(value: Size) -> Style {
-  property("block-size", size.to_string(value))
+pub fn block_size(value: Length) -> Style {
+  property("block-size", length.to_string(value))
 }
 
 /// The `block-size` CSS property defines the horizontal or vertical size of an
@@ -622,8 +622,8 @@ pub fn border_block_end_style(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-block-end-width)
-pub fn border_block_end_width(value: Size) -> Style {
-  property("border-block-end-width", size.to_string(value))
+pub fn border_block_end_width(value: Length) -> Style {
+  property("border-block-end-width", length.to_string(value))
 }
 
 /// The `border-block-end-width` CSS property defines the width of the logical
@@ -696,8 +696,8 @@ pub fn border_block_start_style(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-block-start-width)
-pub fn border_block_start_width(value: Size) -> Style {
-  property("border-block-start-width", size.to_string(value))
+pub fn border_block_start_width(value: Length) -> Style {
+  property("border-block-start-width", length.to_string(value))
 }
 
 /// The `border-block-start-width` CSS property defines the width of the logical
@@ -738,8 +738,8 @@ pub fn border_block_style(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-block-width)
-pub fn border_block_width(value: Size) -> Style {
-  property("border-block-width", size.to_string(value))
+pub fn border_block_width(value: Length) -> Style {
+  property("border-block-width", length.to_string(value))
 }
 
 /// The `border-block-width` CSS property defines the width of the logical
@@ -799,8 +799,8 @@ pub fn border_bottom_color(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-bottom-left-radius)
-pub fn border_bottom_left_radius(border_bottom_left_radius: Size) -> Style {
-  size.to_string(border_bottom_left_radius)
+pub fn border_bottom_left_radius(border_bottom_left_radius: Length) -> Style {
+  length.to_string(border_bottom_left_radius)
   |> property("border-bottom-left-radius", _)
 }
 
@@ -836,8 +836,8 @@ pub fn border_bottom_left_radius_(border_bottom_left_radius: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-bottom-right-radius)
-pub fn border_bottom_right_radius(border_bottom_right_radius: Size) -> Style {
-  size.to_string(border_bottom_right_radius)
+pub fn border_bottom_right_radius(border_bottom_right_radius: Length) -> Style {
+  length.to_string(border_bottom_right_radius)
   |> property("border-bottom-right-radius", _)
 }
 
@@ -874,8 +874,8 @@ pub fn border_bottom_style(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-bottom-width)
-pub fn border_bottom_width(value: Size) -> Style {
-  property("border-bottom-width", size.to_string(value))
+pub fn border_bottom_width(value: Length) -> Style {
+  property("border-bottom-width", length.to_string(value))
 }
 
 /// The `border-bottom-width` CSS property sets the width of the bottom border of an element.
@@ -983,8 +983,8 @@ pub fn border_image(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-image-outset)
-pub fn border_image_outset(value: Size) -> Style {
-  property("border-image-outset", size.to_string(value))
+pub fn border_image_outset(value: Length) -> Style {
+  property("border-image-outset", length.to_string(value))
 }
 
 /// The `border-image-outset` CSS property sets the distance by which an
@@ -1045,8 +1045,8 @@ pub fn border_image_source(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-image-width)
-pub fn border_image_width(value: Size) -> Style {
-  property("border-image-width", size.to_string(value))
+pub fn border_image_width(value: Length) -> Style {
+  property("border-image-width", length.to_string(value))
 }
 
 /// The `border-image-width` CSS property sets the width of an element's border image.
@@ -1161,8 +1161,8 @@ pub fn border_inline_end_style(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-inline-end-width)
-pub fn border_inline_end_width(value: Size) -> Style {
-  property("border-inline-end-width", size.to_string(value))
+pub fn border_inline_end_width(value: Length) -> Style {
+  property("border-inline-end-width", length.to_string(value))
 }
 
 /// The `border-inline-end-width` CSS property defines the width of the logical
@@ -1235,8 +1235,8 @@ pub fn border_inline_start_style(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-inline-start-width)
-pub fn border_inline_start_width(value: Size) -> Style {
-  property("border-inline-start-width", size.to_string(value))
+pub fn border_inline_start_width(value: Length) -> Style {
+  property("border-inline-start-width", length.to_string(value))
 }
 
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-inline-start-width)
@@ -1275,8 +1275,8 @@ pub fn border_inline_style(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-inline-width)
-pub fn border_inline_width(value: Size) -> Style {
-  property("border-inline-width", size.to_string(value))
+pub fn border_inline_width(value: Length) -> Style {
+  property("border-inline-width", length.to_string(value))
 }
 
 /// The `border-inline-width` CSS property defines the width of the logical
@@ -1335,8 +1335,8 @@ pub fn border_left_style(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-left-width)
-pub fn border_left_width(value: Size) -> Style {
-  property("border-left-width", size.to_string(value))
+pub fn border_left_width(value: Length) -> Style {
+  property("border-left-width", length.to_string(value))
 }
 
 /// The `border-left-width` CSS property sets the width of the left border of an element.
@@ -1370,8 +1370,8 @@ pub fn border_left_width_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-radius)
-pub fn border_radius(border_radius: Size) -> Style {
-  property("border-radius", size.to_string(border_radius))
+pub fn border_radius(border_radius: Length) -> Style {
+  property("border-radius", length.to_string(border_radius))
 }
 
 /// The `border-radius` CSS property rounds the corners of an element's outer
@@ -1442,8 +1442,8 @@ pub fn border_right_style(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-right-width)
-pub fn border_right_width(value: Size) -> Style {
-  property("border-right-width", size.to_string(value))
+pub fn border_right_width(value: Length) -> Style {
+  property("border-right-width", length.to_string(value))
 }
 
 /// The `border-right-width` CSS property sets the width of the right border of an element.
@@ -1468,8 +1468,8 @@ pub fn border_right_width_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-spacing)
-pub fn border_spacing(value: Size) -> Style {
-  property("border-spacing", size.to_string(value))
+pub fn border_spacing(value: Length) -> Style {
+  property("border-spacing", length.to_string(value))
 }
 
 /// The `border-spacing` CSS property sets the distance between the borders of
@@ -1583,8 +1583,8 @@ pub fn border_top_color(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-top-left-radius)
-pub fn border_top_left_radius(border_top_left_radius: Size) -> Style {
-  size.to_string(border_top_left_radius)
+pub fn border_top_left_radius(border_top_left_radius: Length) -> Style {
+  length.to_string(border_top_left_radius)
   |> property("border-top-left-radius", _)
 }
 
@@ -1620,8 +1620,8 @@ pub fn border_top_left_radius_(border_top_left_radius: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-top-right-radius)
-pub fn border_top_right_radius(border_top_right_radius: Size) -> Style {
-  size.to_string(border_top_right_radius)
+pub fn border_top_right_radius(border_top_right_radius: Length) -> Style {
+  length.to_string(border_top_right_radius)
   |> property("border-top-right-radius", _)
 }
 
@@ -1657,8 +1657,8 @@ pub fn border_top_style(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-top-width)
-pub fn border_top_width(value: Size) -> Style {
-  property("border-top-width", size.to_string(value))
+pub fn border_top_width(value: Length) -> Style {
+  property("border-top-width", length.to_string(value))
 }
 
 /// The `border-top-width` CSS property sets the width of the top border of an element.
@@ -1683,8 +1683,8 @@ pub fn border_top_width_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/border-width)
-pub fn border_width(value: Size) -> Style {
-  property("border-width", size.to_string(value))
+pub fn border_width(value: Length) -> Style {
+  property("border-width", length.to_string(value))
 }
 
 /// The `border-width` shorthand CSS property sets the width of an element's border.
@@ -1734,8 +1734,8 @@ pub fn border_width_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/bottom)
-pub fn bottom(size: Size) -> Style {
-  property("bottom", size.to_string(size))
+pub fn bottom(size: Length) -> Style {
+  property("bottom", length.to_string(size))
 }
 
 /// The `bottom` CSS property participates in setting the vertical position of a
@@ -2071,8 +2071,8 @@ pub fn column_fill(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/column-gap)
-pub fn column_gap(column_gap: Size) -> Style {
-  property("column-gap", size.to_string(column_gap))
+pub fn column_gap(column_gap: Length) -> Style {
+  property("column-gap", length.to_string(column_gap))
 }
 
 /// The `column-rule` shorthand CSS property sets the width, style, and color
@@ -2218,8 +2218,8 @@ pub fn contain(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/contain-intrinsic-block-size)
-pub fn contain_intrinsic_block_size(value: Size) -> Style {
-  property("contain-intrinsic-block-size", size.to_string(value))
+pub fn contain_intrinsic_block_size(value: Length) -> Style {
+  property("contain-intrinsic-block-size", length.to_string(value))
 }
 
 /// The `contain-intrinsic-block-size` CSS [logical property](https://developer.mozilla.org/docs/Web/CSS/CSS_logical_properties_and_values)
@@ -2246,8 +2246,8 @@ pub fn contain_intrinsic_block_size_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/contain-intrinsic-height)
-pub fn contain_intrinsic_height(value: Size) -> Style {
-  property("contain-intrinsic-height", size.to_string(value))
+pub fn contain_intrinsic_height(value: Length) -> Style {
+  property("contain-intrinsic-height", length.to_string(value))
 }
 
 /// The `contain-intrinsic-block-height` CSS property sets the height of an
@@ -2274,8 +2274,8 @@ pub fn contain_intrinsic_height_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/contain-intrinsic-inline-size)
-pub fn contain_intrinsic_inline_size(value: Size) -> Style {
-  property("contain-intrinsic-inline-size", size.to_string(value))
+pub fn contain_intrinsic_inline_size(value: Length) -> Style {
+  property("contain-intrinsic-inline-size", length.to_string(value))
 }
 
 /// The `contain-intrinsic-inline-size` CSS [logical property](https://developer.mozilla.org/docs/Web/CSS/CSS_logical_properties_and_values)
@@ -2308,8 +2308,8 @@ pub fn contain_intrinsic_inline_size_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/contain-intrinsic-size)
-pub fn contain_intrinsic_size(value: Size) -> Style {
-  property("contain-intrinsic-size", size.to_string(value))
+pub fn contain_intrinsic_size(value: Length) -> Style {
+  property("contain-intrinsic-size", length.to_string(value))
 }
 
 /// The contain-intrinsic-size CSS shorthand property sets the size of an
@@ -2336,8 +2336,8 @@ pub fn contain_intrinsic_size_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/contain-intrinsic-width)
-pub fn contain_intrinsic_width(value: Size) -> Style {
-  property("contain-intrinsic-width", size.to_string(value))
+pub fn contain_intrinsic_width(value: Length) -> Style {
+  property("contain-intrinsic-width", length.to_string(value))
 }
 
 /// The `contain-intrinsic-width` CSS property sets the width of an element that
@@ -2395,7 +2395,7 @@ pub fn container_name(value: String) -> Style {
 /// using the `container-type` CSS property. `container-type` is used to define
 /// the type of size containment used in a container query.
 ///
-/// Size containment turns off the ability of an element to get size information
+/// Length containment turns off the ability of an element to get size information
 /// from its contents, which is important for container queries to avoid infinite
 /// loops. If this were not the case, a CSS rule inside a container query could
 /// change the content size, which in turn could make the query evaluate to
@@ -2958,8 +2958,8 @@ pub fn font_palette(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/font-size)
-pub fn font_size(font_size: Size) -> Style {
-  property("font-size", size.to_string(font_size))
+pub fn font_size(font_size: Length) -> Style {
+  property("font-size", length.to_string(font_size))
 }
 
 /// The `font-size` CSS property sets the size of the font. Changing the font
@@ -3271,8 +3271,8 @@ pub fn forced_color_adjust(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/gap)
-pub fn gap(gap: Size) -> Style {
-  property("gap", size.to_string(gap))
+pub fn gap(gap: Length) -> Style {
+  property("gap", length.to_string(gap))
 }
 
 /// The `gap` CSS shorthand property sets the gaps (also called [gutters](https://developer.mozilla.org/docs/Glossary/Gutters))
@@ -3579,8 +3579,8 @@ pub fn hanging_punctuation(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/height)
-pub fn height(height: Size) -> Style {
-  property("height", size.to_string(height))
+pub fn height(height: Length) -> Style {
+  property("height", length.to_string(height))
 }
 
 /// The `height` CSS property specifies the height of an element. By default,
@@ -3674,7 +3674,7 @@ pub fn image_orientation(value: String) -> Style {
 ///
 /// The [user agent](https://developer.mozilla.org/docs/Glossary/User_agent)
 /// will scale an image when the page author specifies dimensions other than its
-/// natural size. Scaling may also occur due to user interaction (zooming). For
+/// natural length. Scaling may also occur due to user interaction (zooming). For
 /// example, if the natural size of an image is `100×100px`, but its actual
 /// dimensions are `200×200px` (or `50×50px`), then the image will be upscaled
 /// (or downscaled) using the algorithm specified by `image-rendering`. This
@@ -3935,8 +3935,8 @@ pub fn justify_self(justify: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/left)
-pub fn left(size: Size) -> Style {
-  property("left", size.to_string(size))
+pub fn left(size: Length) -> Style {
+  property("left", length.to_string(size))
 }
 
 /// The `left` CSS property participates in specifying the horizontal position
@@ -4075,8 +4075,8 @@ pub fn list_style_type(list_style_type: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/margin)
-pub fn margin(margin: Size) -> Style {
-  property("margin", size.to_string(margin))
+pub fn margin(margin: Length) -> Style {
+  property("margin", length.to_string(margin))
 }
 
 /// The `margin` CSS shorthand property sets the
@@ -4111,8 +4111,8 @@ pub fn margin_(margin: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/margin-block)
-pub fn margin_block(margin: Size) -> Style {
-  property("margin-block", size.to_string(margin))
+pub fn margin_block(margin: Length) -> Style {
+  property("margin-block", length.to_string(margin))
 }
 
 /// The `margin-block` CSS shorthand property defines the logical block start
@@ -4139,8 +4139,8 @@ pub fn margin_block_(margin: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/margin-block-end)
-pub fn margin_block_end(margin: Size) -> Style {
-  property("margin-block-end", size.to_string(margin))
+pub fn margin_block_end(margin: Length) -> Style {
+  property("margin-block-end", length.to_string(margin))
 }
 
 /// The `margin-block-end` CSS property defines the logical block end margin of
@@ -4161,8 +4161,8 @@ pub fn margin_block_end_(margin: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/margin-block-start)
-pub fn margin_block_start(margin: Size) -> Style {
-  property("margin-block-start", size.to_string(margin))
+pub fn margin_block_start(margin: Length) -> Style {
+  property("margin-block-start", length.to_string(margin))
 }
 
 /// The `margin-block-start` CSS property defines the logical block start margin of
@@ -4186,8 +4186,8 @@ pub fn margin_block_start_(margin: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/margin-bottom)
-pub fn margin_bottom(margin: Size) -> Style {
-  property("margin-bottom", size.to_string(margin))
+pub fn margin_bottom(margin: Length) -> Style {
+  property("margin-bottom", length.to_string(margin))
 }
 
 /// The `margin-bottom` CSS property sets the
@@ -4217,8 +4217,8 @@ pub fn margin_bottom_(margin: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/margin-inline)
-pub fn margin_inline(margin: Size) -> Style {
-  property("margin-inline", size.to_string(margin))
+pub fn margin_inline(margin: Length) -> Style {
+  property("margin-inline", length.to_string(margin))
 }
 
 /// The `margin-inline` CSS shorthand property defines both the logical inline
@@ -4248,8 +4248,8 @@ pub fn margin_inline_(margin: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/margin-inline-end)
-pub fn margin_inline_end(margin: Size) -> Style {
-  property("margin-inline-end", size.to_string(margin))
+pub fn margin_inline_end(margin: Length) -> Style {
+  property("margin-inline-end", length.to_string(margin))
 }
 
 /// The `margin-inline-end` CSS property defines the logical inline end margin
@@ -4276,8 +4276,8 @@ pub fn margin_inline_end_(margin: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/margin-inline-start)
-pub fn margin_inline_start(margin: Size) -> Style {
-  property("margin-inline-start", size.to_string(margin))
+pub fn margin_inline_start(margin: Length) -> Style {
+  property("margin-inline-start", length.to_string(margin))
 }
 
 /// The `margin-inline-start` CSS property defines the logical inline start margin
@@ -4310,8 +4310,8 @@ pub fn margin_inline_start_(margin: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/margin-left)
-pub fn margin_left(margin: Size) -> Style {
-  property("margin-left", size.to_string(margin))
+pub fn margin_left(margin: Length) -> Style {
+  property("margin-left", length.to_string(margin))
 }
 
 /// The `margin-left` CSS property sets the
@@ -4345,8 +4345,8 @@ pub fn margin_left_(margin: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/margin-right)
-pub fn margin_right(margin: Size) -> Style {
-  property("margin-right", size.to_string(margin))
+pub fn margin_right(margin: Length) -> Style {
+  property("margin-right", length.to_string(margin))
 }
 
 /// The `margin-right` CSS property sets the
@@ -4374,8 +4374,8 @@ pub fn margin_right_(margin: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/margin-top)
-pub fn margin_top(margin: Size) -> Style {
-  property("margin-top", size.to_string(margin))
+pub fn margin_top(margin: Length) -> Style {
+  property("margin-top", length.to_string(margin))
 }
 
 /// The `margin-top` CSS property sets the
@@ -4506,8 +4506,8 @@ pub fn mask_border_source(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/mask-border-width)
-pub fn mask_border_width(value: Size) -> Style {
-  property("mask-border-width", size.to_string(value))
+pub fn mask_border_width(value: Length) -> Style {
+  property("mask-border-width", length.to_string(value))
 }
 
 /// The `mask-border-width` CSS property set the width of an element's
@@ -4683,8 +4683,8 @@ pub fn math_style(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/max-block-size)
-pub fn max_block_size(value: Size) -> Style {
-  property("max-block-size", size.to_string(value))
+pub fn max_block_size(value: Length) -> Style {
+  property("max-block-size", length.to_string(value))
 }
 
 /// The `max-block-size` CSS property specifies the maximum size of an element
@@ -4725,8 +4725,8 @@ pub fn max_block_size_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/max-height)
-pub fn max_height(height: Size) -> Style {
-  property("max-height", size.to_string(height))
+pub fn max_height(height: Length) -> Style {
+  property("max-height", length.to_string(height))
 }
 
 /// The `max-height` CSS property sets the maximum height of an element. It
@@ -4755,8 +4755,8 @@ pub fn max_height_(height: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/max-inline-size)
-pub fn max_inline_size(value: Size) -> Style {
-  property("max-inline-size", size.to_string(value))
+pub fn max_inline_size(value: Length) -> Style {
+  property("max-inline-size", length.to_string(value))
 }
 
 /// The `max-inline-size` CSS property defines the horizontal or vertical
@@ -4786,8 +4786,8 @@ pub fn max_inline_size_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/max-width)
-pub fn max_width(width: Size) -> Style {
-  property("max-width", size.to_string(width))
+pub fn max_width(width: Length) -> Style {
+  property("max-width", length.to_string(width))
 }
 
 /// The `max-width` CSS property sets the maximum width of an element. It
@@ -4817,8 +4817,8 @@ pub fn max_width_(width: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/min-block-size)
-pub fn min_block_size(value: Size) -> Style {
-  property("min-block-size", size.to_string(value))
+pub fn min_block_size(value: Length) -> Style {
+  property("min-block-size", length.to_string(value))
 }
 
 /// The `min-block-size` CSS property defines the minimum horizontal or vertical
@@ -4849,8 +4849,8 @@ pub fn min_block_size_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/min-height)
-pub fn min_height(height: Size) -> Style {
-  property("min-height", size.to_string(height))
+pub fn min_height(height: Length) -> Style {
+  property("min-height", length.to_string(height))
 }
 
 /// The `min-height` CSS property sets the minimum height of an element. It
@@ -4876,8 +4876,8 @@ pub fn min_height_(height: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/min-inline-size)
-pub fn min_inline_size(value: Size) -> Style {
-  property("min-inline-size", size.to_string(value))
+pub fn min_inline_size(value: Length) -> Style {
+  property("min-inline-size", length.to_string(value))
 }
 
 /// The `min-inline-size` CSS property defines the horizontal or vertical
@@ -4903,8 +4903,8 @@ pub fn min_inline_size_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/min-width)
-pub fn min_width(width: Size) -> Style {
-  property("min-width", size.to_string(width))
+pub fn min_width(width: Length) -> Style {
+  property("min-width", length.to_string(width))
 }
 
 /// The `min-width` CSS property sets the minimum width of an element. It
@@ -5375,8 +5375,8 @@ pub fn overscroll_behavior_y(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/padding)
-pub fn padding(padding: Size) -> Style {
-  property("padding", size.to_string(padding))
+pub fn padding(padding: Length) -> Style {
+  property("padding", length.to_string(padding))
 }
 
 /// The `padding` CSS shorthand property sets the
@@ -5417,8 +5417,8 @@ pub fn padding_(padding: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/padding-block)
-pub fn padding_block(padding: Size) -> Style {
-  property("padding-block", size.to_string(padding))
+pub fn padding_block(padding: Length) -> Style {
+  property("padding-block", length.to_string(padding))
 }
 
 /// The `padding-block` CSS shorthand property defines the logical block start
@@ -5446,8 +5446,8 @@ pub fn padding_block_(padding: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/padding-block-end)
-pub fn padding_block_end(padding: Size) -> Style {
-  property("padding-block-end", size.to_string(padding))
+pub fn padding_block_end(padding: Length) -> Style {
+  property("padding-block-end", length.to_string(padding))
 }
 
 /// The `padding-block-end` CSS property defines the logical block end padding
@@ -5468,8 +5468,8 @@ pub fn padding_block_end_(padding: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/padding-block-start)
-pub fn padding_block_start(padding: Size) -> Style {
-  property("padding-block-start", size.to_string(padding))
+pub fn padding_block_start(padding: Length) -> Style {
+  property("padding-block-start", length.to_string(padding))
 }
 
 /// The `padding-block-start` CSS property defines the logical block start padding
@@ -5489,8 +5489,8 @@ pub fn padding_block_start_(padding: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/padding-bottom)
-pub fn padding_bottom(padding: Size) -> Style {
-  property("padding-bottom", size.to_string(padding))
+pub fn padding_bottom(padding: Length) -> Style {
+  property("padding-bottom", length.to_string(padding))
 }
 
 /// The `padding-bottom` CSS property sets the height of the padding area on
@@ -5517,8 +5517,8 @@ pub fn padding_bottom_(padding: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/padding-inline)
-pub fn padding_inline(padding: Size) -> Style {
-  property("padding-inline", size.to_string(padding))
+pub fn padding_inline(padding: Length) -> Style {
+  property("padding-inline", length.to_string(padding))
 }
 
 /// The `padding-inline` CSS shorthand property defines the logical inline start
@@ -5546,8 +5546,8 @@ pub fn padding_inline_(padding: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/padding-inline-end)
-pub fn padding_inline_end(padding: Size) -> Style {
-  property("padding-inline-end", size.to_string(padding))
+pub fn padding_inline_end(padding: Length) -> Style {
+  property("padding-inline-end", length.to_string(padding))
 }
 
 /// The `padding-inline-end` CSS property defines the logical inline end
@@ -5568,8 +5568,8 @@ pub fn padding_inline_end_(padding: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/padding-inline-start)
-pub fn padding_inline_start(padding: Size) -> Style {
-  property("padding-inline-start", size.to_string(padding))
+pub fn padding_inline_start(padding: Length) -> Style {
+  property("padding-inline-start", length.to_string(padding))
 }
 
 /// The `padding-inline-start` CSS property defines the logical inline start
@@ -5589,8 +5589,8 @@ pub fn padding_inline_start_(padding: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/padding-left)
-pub fn padding_left(padding: Size) -> Style {
-  property("padding-left", size.to_string(padding))
+pub fn padding_left(padding: Length) -> Style {
+  property("padding-left", length.to_string(padding))
 }
 
 /// The `padding-left` CSS property sets the width of the padding area to
@@ -5609,8 +5609,8 @@ pub fn padding_left_(padding: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/padding-right)
-pub fn padding_right(padding: Size) -> Style {
-  property("padding-right", size.to_string(padding))
+pub fn padding_right(padding: Length) -> Style {
+  property("padding-right", length.to_string(padding))
 }
 
 /// The `padding-right` CSS property sets the width of the padding area to
@@ -5629,8 +5629,8 @@ pub fn padding_right_(padding: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/padding-top)
-pub fn padding_top(padding: Size) -> Style {
-  property("padding-top", size.to_string(padding))
+pub fn padding_top(padding: Length) -> Style {
+  property("padding-top", length.to_string(padding))
 }
 
 /// The `padding-top` CSS property sets the height of the padding area on the
@@ -5820,8 +5820,8 @@ pub fn resize(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/right)
-pub fn right(size: Size) -> Style {
-  property("right", size.to_string(size))
+pub fn right(size: Length) -> Style {
+  property("right", length.to_string(size))
 }
 
 /// The `right` CSS property participates in specifying the horizontal position
@@ -5859,8 +5859,8 @@ pub fn rotate(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/row-gap)
-pub fn row_gap(row_gap: Size) -> Style {
-  property("row-gap", size.to_string(row_gap))
+pub fn row_gap(row_gap: Length) -> Style {
+  property("row-gap", length.to_string(row_gap))
 }
 
 /// The `ruby-align` CSS property defines the distribution of the different
@@ -5929,8 +5929,8 @@ pub fn scroll_behavior(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-margin)
-pub fn scroll_margin(value: Size) -> Style {
-  property("scroll-margin", size.to_string(value))
+pub fn scroll_margin(value: Length) -> Style {
+  property("scroll-margin", length.to_string(value))
 }
 
 /// The `scroll-margin` shorthand property sets all of the scroll margins of an
@@ -5964,8 +5964,8 @@ pub fn scroll_margin_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-margin-block)
-pub fn scroll_margin_block(value: Size) -> Style {
-  property("scroll-margin-block", size.to_string(value))
+pub fn scroll_margin_block(value: Length) -> Style {
+  property("scroll-margin-block", length.to_string(value))
 }
 
 /// The `scroll-margin-block` shorthand property sets the scroll margins of
@@ -5994,8 +5994,8 @@ pub fn scroll_margin_block_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-margin-block-end)
-pub fn scroll_margin_block_end(value: Size) -> Style {
-  property("scroll-margin-block-end", size.to_string(value))
+pub fn scroll_margin_block_end(value: Length) -> Style {
+  property("scroll-margin-block-end", length.to_string(value))
 }
 
 /// The `scroll-margin-block-end` property defines the margin of the scroll
@@ -6022,8 +6022,8 @@ pub fn scroll_margin_block_end_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-margin-block-start)
-pub fn scroll_margin_block_start(value: Size) -> Style {
-  property("scroll-margin-block-start", size.to_string(value))
+pub fn scroll_margin_block_start(value: Length) -> Style {
+  property("scroll-margin-block-start", length.to_string(value))
 }
 
 /// The `scroll-margin-block-start` property defines the margin of the scroll
@@ -6050,8 +6050,8 @@ pub fn scroll_margin_block_start_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-margin-bottom)
-pub fn scroll_margin_bottom(value: Size) -> Style {
-  property("scroll-margin-bottom", size.to_string(value))
+pub fn scroll_margin_bottom(value: Length) -> Style {
+  property("scroll-margin-bottom", length.to_string(value))
 }
 
 /// The `scroll-margin-bottom` property defines the bottom margin of the scroll
@@ -6080,8 +6080,8 @@ pub fn scroll_margin_bottom_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-margin-inline)
-pub fn scroll_margin_inline(value: Size) -> Style {
-  property("scroll-margin-inline", size.to_string(value))
+pub fn scroll_margin_inline(value: Length) -> Style {
+  property("scroll-margin-inline", length.to_string(value))
 }
 
 /// The `scroll-margin-inline` shorthand property sets the scroll margins of an
@@ -6110,8 +6110,8 @@ pub fn scroll_margin_inline_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-margin-inline-end)
-pub fn scroll_margin_inline_end(value: Size) -> Style {
-  property("scroll-margin-inline-end", size.to_string(value))
+pub fn scroll_margin_inline_end(value: Length) -> Style {
+  property("scroll-margin-inline-end", length.to_string(value))
 }
 
 /// The `scroll-margin-inline-end` property defines the margin of the scroll
@@ -6138,8 +6138,8 @@ pub fn scroll_margin_inline_end_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-margin-inline-start)
-pub fn scroll_margin_inline_start(value: Size) -> Style {
-  property("scroll-margin-inline-start", size.to_string(value))
+pub fn scroll_margin_inline_start(value: Length) -> Style {
+  property("scroll-margin-inline-start", length.to_string(value))
 }
 
 /// The `scroll-margin-inline-start` property defines the margin of the scroll
@@ -6166,8 +6166,8 @@ pub fn scroll_margin_inline_start_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-margin-left)
-pub fn scroll_margin_left(value: Size) -> Style {
-  property("scroll-margin-left", size.to_string(value))
+pub fn scroll_margin_left(value: Length) -> Style {
+  property("scroll-margin-left", length.to_string(value))
 }
 
 /// The `scroll-margin-left` property defines the left margin of the scroll
@@ -6194,8 +6194,8 @@ pub fn scroll_margin_left_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-margin-right)
-pub fn scroll_margin_right(value: Size) -> Style {
-  property("scroll-margin-right", size.to_string(value))
+pub fn scroll_margin_right(value: Length) -> Style {
+  property("scroll-margin-right", length.to_string(value))
 }
 
 /// The `scroll-margin-right` property defines the right margin of the scroll
@@ -6222,8 +6222,8 @@ pub fn scroll_margin_right_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-margin-top)
-pub fn scroll_margin_top(value: Size) -> Style {
-  property("scroll-margin-top", size.to_string(value))
+pub fn scroll_margin_top(value: Length) -> Style {
+  property("scroll-margin-top", length.to_string(value))
 }
 
 /// The `scroll-margin-top` property defines the top margin of the scroll
@@ -6262,8 +6262,8 @@ pub fn scroll_margin_top_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-padding)
-pub fn scroll_padding(value: Size) -> Style {
-  property("scroll-padding", size.to_string(value))
+pub fn scroll_padding(value: Length) -> Style {
+  property("scroll-padding", length.to_string(value))
 }
 
 /// The `scroll-padding` shorthand property sets scroll padding on all sides of
@@ -6311,8 +6311,8 @@ pub fn scroll_padding_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-padding-block)
-pub fn scroll_padding_block(value: Size) -> Style {
-  property("scroll-padding-block", size.to_string(value))
+pub fn scroll_padding_block(value: Length) -> Style {
+  property("scroll-padding-block", length.to_string(value))
 }
 
 /// The `scroll-padding-block` shorthand property sets the scroll padding of
@@ -6349,8 +6349,8 @@ pub fn scroll_padding_block_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-padding-block-end)
-pub fn scroll_padding_block_end(value: Size) -> Style {
-  property("scroll-padding-block-end", size.to_string(value))
+pub fn scroll_padding_block_end(value: Length) -> Style {
+  property("scroll-padding-block-end", length.to_string(value))
 }
 
 /// The `scroll-padding-block-end` property defines offsets for the end edge
@@ -6379,8 +6379,8 @@ pub fn scroll_padding_block_end_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-padding-block-start)
-pub fn scroll_padding_block_start(value: Size) -> Style {
-  property("scroll-padding-block-start", size.to_string(value))
+pub fn scroll_padding_block_start(value: Length) -> Style {
+  property("scroll-padding-block-start", length.to_string(value))
 }
 
 /// The `scroll-padding-block-start` property defines offsets for the start edge
@@ -6409,8 +6409,8 @@ pub fn scroll_padding_block_start_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-padding-bottom)
-pub fn scroll_padding_bottom(value: Size) -> Style {
-  property("scroll-padding-bottom", size.to_string(value))
+pub fn scroll_padding_bottom(value: Length) -> Style {
+  property("scroll-padding-bottom", length.to_string(value))
 }
 
 /// The `scroll-padding-bottom` property defines offsets for the bottom
@@ -6447,8 +6447,8 @@ pub fn scroll_padding_bottom_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-padding-inline)
-pub fn scroll_padding_inline(value: Size) -> Style {
-  property("scroll-padding-inline", size.to_string(value))
+pub fn scroll_padding_inline(value: Length) -> Style {
+  property("scroll-padding-inline", length.to_string(value))
 }
 
 /// The `scroll-padding-inline` shorthand property sets the scroll padding of an
@@ -6485,8 +6485,8 @@ pub fn scroll_padding_inline_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-padding-inline-end)
-pub fn scroll_padding_inline_end(value: Size) -> Style {
-  property("scroll-padding-inline-end", size.to_string(value))
+pub fn scroll_padding_inline_end(value: Length) -> Style {
+  property("scroll-padding-inline-end", length.to_string(value))
 }
 
 /// The `scroll-padding-inline-end` property defines offsets for the end edge in
@@ -6515,8 +6515,8 @@ pub fn scroll_padding_inline_end_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-padding-inline-start)
-pub fn scroll_padding_inline_start(value: Size) -> Style {
-  property("scroll-padding-inline-start", size.to_string(value))
+pub fn scroll_padding_inline_start(value: Length) -> Style {
+  property("scroll-padding-inline-start", length.to_string(value))
 }
 
 /// The `scroll-padding-inline-start` property defines offsets for the start edge in
@@ -6545,8 +6545,8 @@ pub fn scroll_padding_inline_start_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-padding-left)
-pub fn scroll_padding_left(value: Size) -> Style {
-  property("scroll-padding-left", size.to_string(value))
+pub fn scroll_padding_left(value: Length) -> Style {
+  property("scroll-padding-left", length.to_string(value))
 }
 
 /// The `scroll-padding-left` property defines offsets for the left of
@@ -6575,8 +6575,8 @@ pub fn scroll_padding_left_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-padding-right)
-pub fn scroll_padding_right(value: Size) -> Style {
-  property("scroll-padding-right", size.to_string(value))
+pub fn scroll_padding_right(value: Length) -> Style {
+  property("scroll-padding-right", length.to_string(value))
 }
 
 /// The `scroll-padding-right` property defines offsets for the right of
@@ -6605,8 +6605,8 @@ pub fn scroll_padding_right_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/scroll-padding-top)
-pub fn scroll_padding_top(value: Size) -> Style {
-  property("scroll-padding-top", size.to_string(value))
+pub fn scroll_padding_top(value: Length) -> Style {
+  property("scroll-padding-top", length.to_string(value))
 }
 
 /// The `scroll-padding-top` property defines offsets for the top of
@@ -6759,8 +6759,8 @@ pub fn shape_image_threshold_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/shape-margin)
-pub fn shape_margin(value: Size) -> Style {
-  property("shape-margin", size.to_string(value))
+pub fn shape_margin(value: Length) -> Style {
+  property("shape-margin", length.to_string(value))
 }
 
 /// The `shape-margin` CSS property sets a margin for a CSS shape created
@@ -6795,8 +6795,8 @@ pub fn shape_outside(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/tab-size)
-pub fn tab_size(size: Size) -> Style {
-  property("tab-size", size.to_string(size))
+pub fn tab_size(size: Length) -> Style {
+  property("tab-size", length.to_string(size))
 }
 
 /// The `tab-size` CSS property is used to customize the width of tab
@@ -7168,8 +7168,8 @@ pub fn text_transform(text_transform: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/text-underline-offset)
-pub fn text_underline_offset(value: Size) -> Style {
-  property("text-underline-offset", size.to_string(value))
+pub fn text_underline_offset(value: Length) -> Style {
+  property("text-underline-offset", length.to_string(value))
 }
 
 /// The `text-underline-offset` CSS property sets the offset distance of an
@@ -7281,8 +7281,8 @@ pub fn text_wrap_style(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/top)
-pub fn top(size: Size) -> Style {
-  property("top", size.to_string(size))
+pub fn top(size: Length) -> Style {
+  property("top", length.to_string(size))
 }
 
 /// The `top` CSS property sets the vertical position of a
@@ -7552,7 +7552,7 @@ pub fn transition_delay(value: String) -> Style {
 /// which acts as a master list. If the number of specified durations is less
 /// than in the master list, the user agent repeats the list of durations. If
 /// the number of specified durations is more than in the master list, the list
-/// is truncated to the right size. In both the cases, the CSS declaration
+/// is truncated to the right length. In both the cases, the CSS declaration
 /// stays valid.
 ///
 /// ---
@@ -7593,7 +7593,7 @@ pub fn transition_property(value: String) -> Style {
 /// functions specified than in the `transition-property` list, the user agent
 /// must calculate which value is used by repeating the list of values until
 /// there is one for each transition property. If there are more easing
-/// functions, the list is truncated to the right size. In both cases, the CSS
+/// functions, the list is truncated to the right length. In both cases, the CSS
 /// declaration stays valid.
 ///
 /// ---
@@ -7763,8 +7763,8 @@ pub fn widows(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/width)
-pub fn width(width: Size) -> Style {
-  property("width", size.to_string(width))
+pub fn width(width: Length) -> Style {
+  property("width", length.to_string(width))
 }
 
 /// The `width` CSS property sets an element's width. By default, it sets the

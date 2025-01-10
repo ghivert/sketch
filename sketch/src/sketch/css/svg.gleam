@@ -1,5 +1,5 @@
 import sketch/css.{type Style, property}
-import sketch/css/size.{type Size}
+import sketch/css/length.{type Length}
 
 /// The `clip-rule` CSS property defines how to determine which pixels in a
 /// mask's box are inside the clipping shape defined by a clip path, and which
@@ -28,8 +28,8 @@ pub fn clip_rule(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/cx)
-pub fn cx(value: Size) -> Style {
-  property("cx", size.to_string(value))
+pub fn cx(value: Length) -> Style {
+  property("cx", length.to_string(value))
 }
 
 /// The `cx` CSS property defines the x-axis center point of an SVG `<circle>`
@@ -58,8 +58,8 @@ pub fn cx_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/cy)
-pub fn cy(value: Size) -> Style {
-  property("cy", size.to_string(value))
+pub fn cy(value: Length) -> Style {
+  property("cy", length.to_string(value))
 }
 
 /// The `cy` CSS property defines the y-axis center point of an SVG `<circle>`
@@ -95,10 +95,10 @@ pub fn cy_(value: String) -> Style {
 /// three components:
 /// - a baseline-identifier for the dominant-baseline,
 /// - a baseline-table, and
-/// - a baseline-table font-size.
+/// - a baseline-table font-length.
 ///
 /// Some values of `dominant-baseline` re-determine all three values. Others
-/// only re-establish the baseline-table font-size. When the initial value,
+/// only re-establish the baseline-table font-length. When the initial value,
 /// `auto`, would give an undesired result, this property can be used to
 /// explicitly set the desired scaled-baseline-table.
 ///
@@ -346,8 +346,8 @@ pub fn marker_start(marker: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/r)
-pub fn r(r: Size) -> Style {
-  property("r", size.to_string(r))
+pub fn r(r: Length) -> Style {
+  property("r", length.to_string(r))
 }
 
 /// The `r` CSS property defines the radius of a circle. It can only be used
@@ -377,8 +377,8 @@ pub fn r_(r: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/rx)
-pub fn rx(value: Size) -> Style {
-  property("rx", size.to_string(value))
+pub fn rx(value: Length) -> Style {
+  property("rx", length.to_string(value))
 }
 
 /// The `rx` CSS property defines the x-axis, or horizontal, radius of an SVG
@@ -409,8 +409,8 @@ pub fn rx_(value: String) -> Style {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/ry)
-pub fn ry(value: Size) -> Style {
-  property("ry", size.to_string(value))
+pub fn ry(value: Length) -> Style {
+  property("ry", length.to_string(value))
 }
 
 /// The `ry` CSS property defines the y-axis, or horizontal, radius of an SVG
@@ -621,7 +621,7 @@ pub fn stop_opacity(value: String) -> Style {
 }
 
 /// The `text-anchor` CSS property aligns a box containing a string of text
-/// where the wrapping area is determined from the `inline-size` property, and
+/// where the wrapping area is determined from the `inline-length` property, and
 /// the text is then placed relative to the anchor point of the element, which
 /// is defined using the `x` and `y` (or `dx` and `dy`) attributes. If present,
 /// the value of the CSS property overrides any value of the element's
@@ -654,8 +654,8 @@ pub fn text_anchor(value: String) {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/x)
-pub fn x(value: Size) {
-  property("x", size.to_string(value))
+pub fn x(value: Length) {
+  property("x", length.to_string(value))
 }
 
 /// The `x` CSS property defines the x-axis coordinate of the top left corner
@@ -690,8 +690,8 @@ pub fn x_(value: String) {
 /// ---
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/x)
-pub fn y(value: Size) {
-  property("y", size.to_string(value))
+pub fn y(value: Length) {
+  property("y", length.to_string(value))
 }
 
 /// The `y` CSS property defines the y-axis coordinate of the top left corner

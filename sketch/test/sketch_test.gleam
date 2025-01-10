@@ -5,8 +5,8 @@ import gleeunit/should
 import helpers
 import sketch
 import sketch/css
+import sketch/css/length
 import sketch/css/media
-import sketch/css/size
 
 pub fn main() {
   gleeunit.main()
@@ -32,9 +32,9 @@ fn dummy_class() {
     ]),
     css.child(button_class(), [
       css.background("blue") |> css.important,
-      css.font_size(size.rem(2.0)),
+      css.font_size(length.rem(2.0)),
     ]),
-    css.media(media.max_width(size.px(700)), [css.background("yellow")]),
+    css.media(media.max_width(length.px(700)), [css.background("yellow")]),
   ])
 }
 

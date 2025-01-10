@@ -9,6 +9,11 @@ path!
 Thanks to everyone using Sketch and helping me maintaining it as a package,
 always pushing the boundaries of what can be achieved with it!
 
+### Breaking Changes
+
+- `size` module is renamed `length`, to follow CSS specifications. All lengths
+  are also now implemented and supported.
+
 ### Features
 
 - Most selectors have been implemented. Some selectors are still missing, when
@@ -34,6 +39,7 @@ always pushing the boundaries of what can be achieved with it!
 - Few tests are now implemented to ensure no regression across versions!
 - `sketch.Cache` has been renamed `sketch.StyleSheet`, and related function have
   been updated accordingly.
+- Support for `only`, `print`, `screen` & `all` media queries has been aded.
 
 ### Bugfixes
 
