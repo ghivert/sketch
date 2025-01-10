@@ -4,7 +4,7 @@
 ////
 //// ---
 ////
-//// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/angle)
+//// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/angle)
 
 import gleam/float
 
@@ -14,7 +14,7 @@ import gleam/float
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/angle)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/angle)
 pub opaque type Angle {
   Deg(Float)
   Rad(Float)
@@ -27,7 +27,7 @@ pub opaque type Angle {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/angle#deg)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/angle#deg)
 pub fn deg(value: Float) -> Angle {
   Deg(value)
 }
@@ -38,7 +38,7 @@ pub fn deg(value: Float) -> Angle {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/angle#rad)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/angle#rad)
 pub fn rad(value: Float) -> Angle {
   Rad(value)
 }
@@ -48,7 +48,7 @@ pub fn rad(value: Float) -> Angle {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/angle#grad)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/angle#grad)
 pub fn grad(value: Float) -> Angle {
   Grad(value)
 }
@@ -58,7 +58,7 @@ pub fn grad(value: Float) -> Angle {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/angle#turn)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/angle#turn)
 pub fn turn(value: Float) -> Angle {
   Turn(value)
 }

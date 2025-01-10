@@ -3,7 +3,7 @@
 ////
 //// ---
 ////
-//// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function)
+//// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function)
 
 import gleam/bool
 import gleam/float
@@ -19,7 +19,7 @@ import sketch/css/length.{type Length}
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function)
 pub opaque type Transform {
   Matrix(Float, Float, Float, Float, Float, Float)
   Matrix3D(
@@ -78,7 +78,7 @@ pub opaque type Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/matrix)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/matrix)
 pub fn matrix(
   a: Float,
   b: Float,
@@ -95,7 +95,7 @@ pub fn matrix(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/matrix3d)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/matrix3d)
 pub fn matrix_3d(
   values: #(
     #(Float, Float, Float, Float),
@@ -118,7 +118,7 @@ pub fn matrix_3d(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/translate)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/translate)
 pub fn translate(x: Length, y: Length) -> Transform {
   Translate(x, y)
 }
@@ -127,7 +127,7 @@ pub fn translate(x: Length, y: Length) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/translate3d)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/translate3d)
 pub fn translate_3d(x: Length, y: Length, z: Length) -> Transform {
   Translate3D(x, y, z)
 }
@@ -137,7 +137,7 @@ pub fn translate_3d(x: Length, y: Length, z: Length) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/translateX)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/translateX)
 pub fn translate_x(x: Length) -> Transform {
   TranslateX(x)
 }
@@ -147,7 +147,7 @@ pub fn translate_x(x: Length) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/translateY)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/translateY)
 pub fn translate_y(y: Length) -> Transform {
   TranslateY(y)
 }
@@ -157,7 +157,7 @@ pub fn translate_y(y: Length) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/translateZ)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/translateZ)
 pub fn translate_z(y: Length) -> Transform {
   TranslateZ(y)
 }
@@ -170,7 +170,7 @@ pub fn translate_z(y: Length) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/scale)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/scale)
 pub fn scale(x: Float, y: Float) -> Transform {
   Scale(x, y)
 }
@@ -181,7 +181,7 @@ pub fn scale(x: Float, y: Float) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/scale3d)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/scale3d)
 pub fn scale_3d(x: Float, y: Float, z: Float) -> Transform {
   Scale3D(x, y, z)
 }
@@ -193,7 +193,7 @@ pub fn scale_3d(x: Float, y: Float, z: Float) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/scaleX)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/scaleX)
 pub fn scale_x(x: Float) -> Transform {
   ScaleX(x)
 }
@@ -207,7 +207,7 @@ pub fn scale_x(x: Float) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/scaleY)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/scaleY)
 pub fn scale_y(y: Float) -> Transform {
   ScaleY(y)
 }
@@ -219,7 +219,7 @@ pub fn scale_y(y: Float) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/scaleZ)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/scaleZ)
 pub fn scale_z(y: Float) -> Transform {
   ScaleZ(y)
 }
@@ -229,7 +229,7 @@ pub fn scale_z(y: Float) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/rotate)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/rotate)
 pub fn rotate(value: Angle) -> Transform {
   Rotate(value)
 }
@@ -239,7 +239,7 @@ pub fn rotate(value: Angle) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/rotate3d)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/rotate3d)
 pub fn rotate_3d(x: Float, y: Float, z: Float, value: Angle) -> Transform {
   Rotate3D(x, y, z, value)
 }
@@ -251,7 +251,7 @@ pub fn rotate_3d(x: Float, y: Float, z: Float, value: Angle) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/rotateX)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/rotateX)
 pub fn rotate_x(x: Angle) -> Transform {
   RotateX(x)
 }
@@ -263,7 +263,7 @@ pub fn rotate_x(x: Angle) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/rotateY)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/rotateY)
 pub fn rotate_y(y: Angle) -> Transform {
   RotateY(y)
 }
@@ -275,7 +275,7 @@ pub fn rotate_y(y: Angle) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/rotateZ)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/rotateZ)
 pub fn rotate_z(y: Angle) -> Transform {
   RotateZ(y)
 }
@@ -285,7 +285,7 @@ pub fn rotate_z(y: Angle) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/skew)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/skew)
 pub fn skew(x: Angle, y: Angle) -> Transform {
   Skew(x, y)
 }
@@ -295,7 +295,7 @@ pub fn skew(x: Angle, y: Angle) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/skewX)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/skewX)
 pub fn skew_x(x: Angle) -> Transform {
   SkewX(x)
 }
@@ -305,7 +305,7 @@ pub fn skew_x(x: Angle) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/skewY)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/skewY)
 pub fn skew_y(x: Angle) -> Transform {
   SkewY(x)
 }
@@ -316,7 +316,7 @@ pub fn skew_y(x: Angle) -> Transform {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/transform-function/perspective)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/transform-function/perspective)
 pub fn perspective(x: Length) -> Transform {
   Perspective(x)
 }

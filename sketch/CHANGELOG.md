@@ -31,17 +31,17 @@ always pushing the boundaries of what can be achieved with it!
 - Every CSS property, selectors & combinators now live in `sketch/css`.
 - Every other modules, like `media`, `size` or `angle` now live in `sketch/css`.
 - Every CSS property now display the headline of the documentation, and points
-  to its MDN documentation.
+  to its MDN Reference.
 - Every CSS length now display the headline of the documentation, and points to
-  its MDN documentation.
+  its MDN Reference.
 - Every CSS angle now display the headline of the documentation, and points to
-  its MDN documentation.
+  its MDN Reference.
 - Every CSS media queries now display the headline of the documentation, and
-  points to its MDN documentation.
+  points to its MDN Reference.
 - Every CSS transform now display the headline of the documentation, and points
-  to its MDN documentation.
-- Every CSS pseudo-classes & pseudo-elements now points to its MDN documentation
-  and have a fragment of the page to simplify understanding.
+  to its MDN Reference.
+- Every CSS pseudo-classes & pseudo-elements now points to its MDN Reference and
+  have a fragment of the page to simplify understanding.
 - SVG exclusives properties has moved to `sketch/css/svg`.
 - `to_string` functions have been hidden from user in documentation. While they
   remain publicly accessible, they are of small utility for the daily users.

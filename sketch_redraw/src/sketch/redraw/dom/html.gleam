@@ -18,7 +18,7 @@ import sketch/redraw.{styled}
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/html)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/html)
 pub fn html(
   class: Class,
   attributes: List(Attribute),
@@ -36,7 +36,7 @@ pub fn html(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/base)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/base)
 pub fn base(class: Class, attributes: List(Attribute)) -> Component {
   styled("base", class, attributes, coerce(Nil))
 }
@@ -51,7 +51,7 @@ pub fn base(class: Class, attributes: List(Attribute)) -> Component {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/head)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/head)
 pub fn head(
   class: Class,
   attributes: List(Attribute),
@@ -68,7 +68,7 @@ pub fn head(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/link)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/link)
 pub fn link(class: Class, attributes: List(Attribute)) -> Component {
   styled("link", class, attributes, [])
 }
@@ -91,7 +91,7 @@ pub fn link(class: Class, attributes: List(Attribute)) -> Component {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/meta)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/meta)
 pub fn meta(class: Class, attributes: List(Attribute)) -> Component {
   styled("meta", class, attributes, [])
 }
@@ -102,7 +102,7 @@ pub fn meta(class: Class, attributes: List(Attribute)) -> Component {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/style)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/style)
 pub fn style(
   class: Class,
   attributes: List(Attribute),
@@ -117,7 +117,7 @@ pub fn style(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/title)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/title)
 pub fn title(
   class: Class,
   attributes: List(Attribute),
@@ -130,7 +130,7 @@ pub fn title(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/API/Text)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/API/Text)
 pub fn text(content: String) -> Component {
   html.text(content)
 }
@@ -148,7 +148,7 @@ pub fn text(content: String) -> Component {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/a)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/a)
 pub fn a(
   class: Class,
   attributes: List(Attribute),
@@ -171,7 +171,7 @@ pub fn a(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/abbr)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/abbr)
 pub fn abbr(
   class: Class,
   attributes: List(Attribute),
@@ -196,7 +196,7 @@ pub fn abbr(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/address)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/address)
 pub fn address(
   class: Class,
   attributes: List(Attribute),
@@ -213,7 +213,7 @@ pub fn address(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/area)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/area)
 pub fn area(class: Class, attributes: List(Attribute)) -> Component {
   styled("area", class, attributes, [])
 }
@@ -232,7 +232,7 @@ pub fn area(class: Class, attributes: List(Attribute)) -> Component {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/article)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/article)
 pub fn article(
   class: Class,
   attributes: List(Attribute),
@@ -247,7 +247,7 @@ pub fn article(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/aside)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/aside)
 pub fn aside(
   class: Class,
   attributes: List(Attribute),
@@ -263,7 +263,7 @@ pub fn aside(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/audio)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/audio)
 pub fn audio(
   class: Class,
   attributes: List(Attribute),
@@ -282,7 +282,7 @@ pub fn audio(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/b)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/b)
 pub fn b(
   class: Class,
   attributes: List(Attribute),
@@ -298,7 +298,7 @@ pub fn b(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/bdi)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/bdi)
 pub fn bdi(
   class: Class,
   attributes: List(Attribute),
@@ -312,7 +312,7 @@ pub fn bdi(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/bdo)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/bdo)
 pub fn bdo(
   class: Class,
   attributes: List(Attribute),
@@ -328,7 +328,7 @@ pub fn bdo(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/blockquote)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/blockquote)
 pub fn blockquote(
   class: Class,
   attributes: List(Attribute),
@@ -342,7 +342,7 @@ pub fn blockquote(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/body)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/body)
 pub fn body(
   class: Class,
   attributes: List(Attribute),
@@ -357,7 +357,7 @@ pub fn body(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/br)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/br)
 pub fn br(class: Class, attributes: List(Attribute)) -> Component {
   styled("br", class, attributes, [])
 }
@@ -372,7 +372,7 @@ pub fn br(class: Class, attributes: List(Attribute)) -> Component {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/button)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/button)
 pub fn button(
   class: Class,
   attributes: List(Attribute),
@@ -388,7 +388,7 @@ pub fn button(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/canvas)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/canvas)
 pub fn canvas(
   class: Class,
   attributes: List(Attribute),
@@ -402,7 +402,7 @@ pub fn canvas(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/caption)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/caption)
 pub fn caption(
   class: Class,
   attributes: List(Attribute),
@@ -417,7 +417,7 @@ pub fn caption(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/cite)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/cite)
 pub fn cite(
   class: Class,
   attributes: List(Attribute),
@@ -432,7 +432,7 @@ pub fn cite(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/code)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/code)
 pub fn code(
   class: Class,
   attributes: List(Attribute),
@@ -448,7 +448,7 @@ pub fn code(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/col)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/col)
 pub fn col(class: Class, attributes: List(Attribute)) -> Component {
   styled("col", class, attributes, [])
 }
@@ -457,7 +457,7 @@ pub fn col(class: Class, attributes: List(Attribute)) -> Component {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/colgroup)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/colgroup)
 pub fn colgroup(
   class: Class,
   attributes: List(Attribute),
@@ -472,7 +472,7 @@ pub fn colgroup(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/data)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/data)
 pub fn data(
   class: Class,
   attributes: List(Attribute),
@@ -487,7 +487,7 @@ pub fn data(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/datalist)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/datalist)
 pub fn datalist(
   class: Class,
   attributes: List(Attribute),
@@ -501,7 +501,7 @@ pub fn datalist(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dd)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dd)
 pub fn dd(
   class: Class,
   attributes: List(Attribute),
@@ -520,7 +520,7 @@ pub fn dd(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/del)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/del)
 pub fn del(
   class: Class,
   attributes: List(Attribute),
@@ -541,7 +541,7 @@ pub fn del(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/details)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/details)
 pub fn details(
   class: Class,
   attributes: List(Attribute),
@@ -560,7 +560,7 @@ pub fn details(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dfn)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dfn)
 pub fn dfn(
   class: Class,
   attributes: List(Attribute),
@@ -587,7 +587,7 @@ pub fn dfn(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dialog)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dialog)
 pub fn dialog(
   class: Class,
   attributes: List(Attribute),
@@ -609,7 +609,7 @@ pub fn dialog(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/div)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/div)
 pub fn div(
   class: Class,
   attributes: List(Attribute),
@@ -625,7 +625,7 @@ pub fn div(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dl)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dl)
 pub fn dl(
   class: Class,
   attributes: List(Attribute),
@@ -644,7 +644,7 @@ pub fn dl(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/dt)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/dt)
 pub fn dt(
   class: Class,
   attributes: List(Attribute),
@@ -659,7 +659,7 @@ pub fn dt(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/em)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/em)
 pub fn em(
   class: Class,
   attributes: List(Attribute),
@@ -674,7 +674,7 @@ pub fn em(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/embed)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/embed)
 pub fn embed(class: Class, attributes: List(Attribute)) -> Component {
   styled("embed", class, attributes, [])
 }
@@ -684,7 +684,7 @@ pub fn embed(class: Class, attributes: List(Attribute)) -> Component {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/fieldset)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/fieldset)
 pub fn fieldset(
   class: Class,
   attributes: List(Attribute),
@@ -699,7 +699,7 @@ pub fn fieldset(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/figcaption)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/figcaption)
 pub fn figcaption(
   class: Class,
   attributes: List(Attribute),
@@ -715,7 +715,7 @@ pub fn figcaption(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/figure)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/figure)
 pub fn figure(
   class: Class,
   attributes: List(Attribute),
@@ -732,7 +732,7 @@ pub fn figure(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/footer)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/footer)
 pub fn footer(
   class: Class,
   attributes: List(Attribute),
@@ -750,7 +750,7 @@ pub fn footer(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/form)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/form)
 pub fn form(
   class: Class,
   attributes: List(Attribute),
@@ -766,7 +766,7 @@ pub fn form(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h1)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h1)
 pub fn h1(
   class: Class,
   attributes: List(Attribute),
@@ -782,7 +782,7 @@ pub fn h1(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h2)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h2)
 pub fn h2(
   class: Class,
   attributes: List(Attribute),
@@ -798,7 +798,7 @@ pub fn h2(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h3)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h3)
 pub fn h3(
   class: Class,
   attributes: List(Attribute),
@@ -814,7 +814,7 @@ pub fn h3(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h4)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h4)
 pub fn h4(
   class: Class,
   attributes: List(Attribute),
@@ -830,7 +830,7 @@ pub fn h4(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h5)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h5)
 pub fn h5(
   class: Class,
   attributes: List(Attribute),
@@ -846,7 +846,7 @@ pub fn h5(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/h6)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/h6)
 pub fn h6(
   class: Class,
   attributes: List(Attribute),
@@ -861,7 +861,7 @@ pub fn h6(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/header)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/header)
 pub fn header(
   class: Class,
   attributes: List(Attribute),
@@ -875,7 +875,7 @@ pub fn header(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/hgroup)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/hgroup)
 pub fn hgroup(
   class: Class,
   attributes: List(Attribute),
@@ -890,7 +890,7 @@ pub fn hgroup(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/hr)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/hr)
 pub fn hr(class: Class, attributes: List(Attribute)) -> Component {
   styled("hr", class, attributes, [])
 }
@@ -903,7 +903,7 @@ pub fn hr(class: Class, attributes: List(Attribute)) -> Component {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/i)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/i)
 pub fn i(
   class: Class,
   attributes: List(Attribute),
@@ -917,7 +917,7 @@ pub fn i(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/iframe)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/iframe)
 pub fn iframe(
   class: Class,
   attributes: List(Attribute),
@@ -930,7 +930,7 @@ pub fn iframe(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/img)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/img)
 pub fn img(class: Class, attributes: List(Attribute)) -> Component {
   styled("img", class, attributes, [])
 }
@@ -944,7 +944,7 @@ pub fn img(class: Class, attributes: List(Attribute)) -> Component {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/input)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/input)
 pub fn input(class: Class, attributes: List(Attribute)) -> Component {
   styled("input", class, attributes, [])
 }
@@ -955,7 +955,7 @@ pub fn input(class: Class, attributes: List(Attribute)) -> Component {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/ins)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/ins)
 pub fn ins(
   class: Class,
   attributes: List(Attribute),
@@ -972,7 +972,7 @@ pub fn ins(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/kbd)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/kbd)
 pub fn kbd(
   class: Class,
   attributes: List(Attribute),
@@ -986,7 +986,7 @@ pub fn kbd(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/label)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/label)
 pub fn label(
   class: Class,
   attributes: List(Attribute),
@@ -1000,7 +1000,7 @@ pub fn label(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/legend)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/legend)
 pub fn legend(
   class: Class,
   attributes: List(Attribute),
@@ -1017,7 +1017,7 @@ pub fn legend(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/li)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/li)
 pub fn li(
   class: Class,
   attributes: List(Attribute),
@@ -1033,7 +1033,7 @@ pub fn li(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/main)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/main)
 pub fn main(
   class: Class,
   attributes: List(Attribute),
@@ -1047,7 +1047,7 @@ pub fn main(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/map)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/map)
 pub fn map(
   class: Class,
   attributes: List(Attribute),
@@ -1062,7 +1062,7 @@ pub fn map(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/mark)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/mark)
 pub fn mark(
   class: Class,
   attributes: List(Attribute),
@@ -1082,7 +1082,7 @@ pub fn mark(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/MathML/Element/math)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/MathML/Element/math)
 pub fn math(
   class: Class,
   attributes: List(Attribute),
@@ -1098,7 +1098,7 @@ pub fn math(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/menu)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/menu)
 pub fn menu(
   class: Class,
   attributes: List(Attribute),
@@ -1112,7 +1112,7 @@ pub fn menu(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/meter)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/meter)
 pub fn meter(
   class: Class,
   attributes: List(Attribute),
@@ -1128,7 +1128,7 @@ pub fn meter(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/nav)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/nav)
 pub fn nav(
   class: Class,
   attributes: List(Attribute),
@@ -1143,7 +1143,7 @@ pub fn nav(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/noscript)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/noscript)
 pub fn noscript(
   class: Class,
   attributes: List(Attribute),
@@ -1158,7 +1158,7 @@ pub fn noscript(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/object)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/object)
 pub fn object(
   class: Class,
   attributes: List(Attribute),
@@ -1172,7 +1172,7 @@ pub fn object(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/ol)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/ol)
 pub fn ol(
   class: Class,
   attributes: List(Attribute),
@@ -1186,7 +1186,7 @@ pub fn ol(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/optgroup)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/optgroup)
 pub fn optgroup(
   class: Class,
   attributes: List(Attribute),
@@ -1202,7 +1202,7 @@ pub fn optgroup(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/option)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/option)
 pub fn option(
   class: Class,
   attributes: List(Attribute),
@@ -1216,7 +1216,7 @@ pub fn option(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/output)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/output)
 pub fn output(
   class: Class,
   attributes: List(Attribute),
@@ -1237,7 +1237,7 @@ pub fn output(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/p)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/p)
 pub fn p(
   class: Class,
   attributes: List(Attribute),
@@ -1258,7 +1258,7 @@ pub fn p(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/picture)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/picture)
 pub fn picture(
   class: Class,
   attributes: List(Attribute),
@@ -1280,7 +1280,7 @@ pub fn picture(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/portal)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/portal)
 pub fn portal(
   class: Class,
   attributes: List(Attribute),
@@ -1299,7 +1299,7 @@ pub fn portal(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/pre)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/pre)
 pub fn pre(
   class: Class,
   attributes: List(Attribute),
@@ -1313,7 +1313,7 @@ pub fn pre(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/progress)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/progress)
 pub fn progress(
   class: Class,
   attributes: List(Attribute),
@@ -1329,7 +1329,7 @@ pub fn progress(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/q)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/q)
 pub fn q(
   class: Class,
   attributes: List(Attribute),
@@ -1345,7 +1345,7 @@ pub fn q(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/rp)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/rp)
 pub fn rp(
   class: Class,
   attributes: List(Attribute),
@@ -1361,7 +1361,7 @@ pub fn rp(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/rt)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/rt)
 pub fn rt(
   class: Class,
   attributes: List(Attribute),
@@ -1382,7 +1382,7 @@ pub fn rt(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/ruby)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/ruby)
 pub fn ruby(
   class: Class,
   attributes: List(Attribute),
@@ -1399,7 +1399,7 @@ pub fn ruby(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/s)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/s)
 pub fn s(
   class: Class,
   attributes: List(Attribute),
@@ -1415,7 +1415,7 @@ pub fn s(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/samp)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/samp)
 pub fn samp(
   class: Class,
   attributes: List(Attribute),
@@ -1431,7 +1431,7 @@ pub fn samp(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/script)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/script)
 pub fn script(
   class: Class,
   attributes: List(Attribute),
@@ -1450,7 +1450,7 @@ pub fn script(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/search)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/search)
 pub fn search(
   class: Class,
   attributes: List(Attribute),
@@ -1465,7 +1465,7 @@ pub fn search(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/section)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/section)
 pub fn section(
   class: Class,
   attributes: List(Attribute),
@@ -1478,7 +1478,7 @@ pub fn section(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/select)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/select)
 pub fn select(
   class: Class,
   attributes: List(Attribute),
@@ -1493,7 +1493,7 @@ pub fn select(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/slot)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/slot)
 pub fn slot(
   class: Class,
   attributes: List(Attribute),
@@ -1509,7 +1509,7 @@ pub fn slot(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/small)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/small)
 pub fn small(
   class: Class,
   attributes: List(Attribute),
@@ -1528,7 +1528,7 @@ pub fn small(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/source)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/source)
 pub fn source(class: Class, attributes: List(Attribute)) -> Component {
   styled("source", class, attributes, [])
 }
@@ -1543,7 +1543,7 @@ pub fn source(class: Class, attributes: List(Attribute)) -> Component {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/span)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/span)
 pub fn span(
   class: Class,
   attributes: List(Attribute),
@@ -1558,7 +1558,7 @@ pub fn span(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/strong)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/strong)
 pub fn strong(
   class: Class,
   attributes: List(Attribute),
@@ -1573,7 +1573,7 @@ pub fn strong(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/sub)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/sub)
 pub fn sub(
   class: Class,
   attributes: List(Attribute),
@@ -1588,7 +1588,7 @@ pub fn sub(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/summary)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/summary)
 pub fn summary(
   class: Class,
   attributes: List(Attribute),
@@ -1603,7 +1603,7 @@ pub fn summary(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/sup)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/sup)
 pub fn sup(
   class: Class,
   attributes: List(Attribute),
@@ -1618,7 +1618,7 @@ pub fn sup(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/table)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/table)
 pub fn table(
   class: Class,
   attributes: List(Attribute),
@@ -1632,7 +1632,7 @@ pub fn table(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/tbody)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/tbody)
 pub fn tbody(
   class: Class,
   attributes: List(Attribute),
@@ -1646,7 +1646,7 @@ pub fn tbody(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/td)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/td)
 pub fn td(
   class: Class,
   attributes: List(Attribute),
@@ -1661,7 +1661,7 @@ pub fn td(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/template)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/template)
 pub fn template(
   class: Class,
   attributes: List(Attribute),
@@ -1676,7 +1676,7 @@ pub fn template(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/textarea)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/textarea)
 pub fn textarea(
   class: Class,
   attributes: List(Attribute),
@@ -1692,7 +1692,7 @@ pub fn textarea(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/tfoot)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/tfoot)
 pub fn tfoot(
   class: Class,
   attributes: List(Attribute),
@@ -1707,7 +1707,7 @@ pub fn tfoot(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/th)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/th)
 pub fn th(
   class: Class,
   attributes: List(Attribute),
@@ -1723,7 +1723,7 @@ pub fn th(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/thead)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/thead)
 pub fn thead(
   class: Class,
   attributes: List(Attribute),
@@ -1745,7 +1745,7 @@ pub fn thead(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/time)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/time)
 pub fn time(
   class: Class,
   attributes: List(Attribute),
@@ -1760,7 +1760,7 @@ pub fn time(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/tr)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/tr)
 pub fn tr(
   class: Class,
   attributes: List(Attribute),
@@ -1786,7 +1786,7 @@ pub fn tr(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/track)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/track)
 pub fn track(class: Class, attributes: List(Attribute)) -> Component {
   styled("track", class, attributes, [])
 }
@@ -1803,7 +1803,7 @@ pub fn track(class: Class, attributes: List(Attribute)) -> Component {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/u)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/u)
 pub fn u(
   class: Class,
   attributes: List(Attribute),
@@ -1817,7 +1817,7 @@ pub fn u(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/ul)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/ul)
 pub fn ul(
   class: Class,
   attributes: List(Attribute),
@@ -1833,7 +1833,7 @@ pub fn ul(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/var)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/var)
 pub fn var(
   class: Class,
   attributes: List(Attribute),
@@ -1848,7 +1848,7 @@ pub fn var(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/video)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/video)
 pub fn video(
   class: Class,
   attributes: List(Attribute),
@@ -1863,7 +1863,7 @@ pub fn video(
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/HTML/Element/wbr)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/wbr)
 pub fn wbr(class: Class, attributes: List(Attribute)) -> Component {
   styled("wbr", class, attributes, [])
 }

@@ -7,7 +7,7 @@
 ////
 //// ---
 ////
-//// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length)
+//// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length)
 
 import gleam/float
 import gleam/int
@@ -22,7 +22,7 @@ import gleam/string
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length)
 pub opaque type Length {
   Px(Float)
   Cm(Float)
@@ -64,7 +64,7 @@ pub opaque type Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#px)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#px)
 pub fn px(value: Int) -> Length {
   Px(int.to_float(value))
 }
@@ -75,7 +75,7 @@ pub fn px(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#px)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#px)
 pub fn px_(value: Float) -> Length {
   Px(value)
 }
@@ -84,7 +84,7 @@ pub fn px_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cm)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cm)
 pub fn cm(value: Int) -> Length {
   Cm(int.to_float(value))
 }
@@ -93,7 +93,7 @@ pub fn cm(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cm)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cm)
 pub fn cm_(value: Float) -> Length {
   Cm(value)
 }
@@ -102,7 +102,7 @@ pub fn cm_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#mm)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#mm)
 pub fn mm(value: Int) -> Length {
   Mm(int.to_float(value))
 }
@@ -111,7 +111,7 @@ pub fn mm(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#mm)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#mm)
 pub fn mm_(value: Float) -> Length {
   Mm(value)
 }
@@ -120,7 +120,7 @@ pub fn mm_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#q)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#q)
 pub fn q(value: Int) -> Length {
   Q(int.to_float(value))
 }
@@ -129,7 +129,7 @@ pub fn q(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#q)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#q)
 pub fn q_(value: Float) -> Length {
   Q(value)
 }
@@ -138,7 +138,7 @@ pub fn q_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#in)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#in)
 pub fn in(value: Int) -> Length {
   In(int.to_float(value))
 }
@@ -147,7 +147,7 @@ pub fn in(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#in)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#in)
 pub fn in_(value: Float) -> Length {
   In(value)
 }
@@ -156,7 +156,7 @@ pub fn in_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#pc)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#pc)
 pub fn pc(value: Int) -> Length {
   Pc(int.to_float(value))
 }
@@ -165,7 +165,7 @@ pub fn pc(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#pc)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#pc)
 pub fn pc_(value: Float) -> Length {
   Pc(value)
 }
@@ -174,7 +174,7 @@ pub fn pc_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#pt)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#pt)
 pub fn pt(value: Int) -> Length {
   Pt(int.to_float(value))
 }
@@ -183,7 +183,7 @@ pub fn pt(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#pt)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#pt)
 pub fn pt_(value: Float) -> Length {
   Pt(value)
 }
@@ -193,7 +193,7 @@ pub fn pt_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cap)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cap)
 pub fn cap(value: Float) -> Length {
   Cap(value)
 }
@@ -204,7 +204,7 @@ pub fn cap(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/percentage)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/percentage)
 pub fn percent(value: Int) -> Length {
   Pct(int.to_float(value))
 }
@@ -215,7 +215,7 @@ pub fn percent(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/percentage)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/percentage)
 pub fn percent_(value: Float) -> Length {
   Pct(value)
 }
@@ -227,7 +227,7 @@ pub fn percent_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#vh)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#vh)
 pub fn vh(value: Int) -> Length {
   Vh(int.to_float(value))
 }
@@ -239,7 +239,7 @@ pub fn vh(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#vh)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#vh)
 pub fn vh_(value: Float) -> Length {
   Vh(value)
 }
@@ -251,7 +251,7 @@ pub fn vh_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#vw)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#vw)
 pub fn vw(value: Int) -> Length {
   Vw(int.to_float(value))
 }
@@ -263,7 +263,7 @@ pub fn vw(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#vw)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#vw)
 pub fn vw_(value: Float) -> Length {
   Vw(value)
 }
@@ -272,7 +272,7 @@ pub fn vw_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#vmax)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#vmax)
 pub fn vmax(value: Int) -> Length {
   Vmax(int.to_float(value))
 }
@@ -281,7 +281,7 @@ pub fn vmax(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#vmax)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#vmax)
 pub fn vmax_(value: Float) -> Length {
   Vmax(value)
 }
@@ -290,7 +290,7 @@ pub fn vmax_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#vmin)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#vmin)
 pub fn vmin(value: Int) -> Length {
   Vmin(int.to_float(value))
 }
@@ -299,7 +299,7 @@ pub fn vmin(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#vmin)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#vmin)
 pub fn vmin_(value: Float) -> Length {
   Vmin(value)
 }
@@ -310,7 +310,7 @@ pub fn vmin_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#vb)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#vb)
 pub fn vb(value: Int) -> Length {
   Vb(int.to_float(value))
 }
@@ -321,7 +321,7 @@ pub fn vb(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#vb)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#vb)
 pub fn vb_(value: Float) -> Length {
   Vb(value)
 }
@@ -332,7 +332,7 @@ pub fn vb_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#vi)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#vi)
 pub fn vi(value: Int) -> Length {
   Vi(int.to_float(value))
 }
@@ -343,7 +343,7 @@ pub fn vi(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#vi)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#vi)
 pub fn vi_(value: Float) -> Length {
   Vi(value)
 }
@@ -355,7 +355,7 @@ pub fn vi_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cqh)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cqh)
 pub fn cqh(value: Int) -> Length {
   Cqh(int.to_float(value))
 }
@@ -366,7 +366,7 @@ pub fn cqh(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cqh)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cqh)
 pub fn cqh_(value: Float) -> Length {
   Cqh(value)
 }
@@ -377,7 +377,7 @@ pub fn cqh_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cqw)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cqw)
 pub fn cqw(value: Int) -> Length {
   Cqw(int.to_float(value))
 }
@@ -388,7 +388,7 @@ pub fn cqw(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cqw)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cqw)
 pub fn cqw_(value: Float) -> Length {
   Cqw(value)
 }
@@ -401,7 +401,7 @@ pub fn cqw_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cqmax)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cqmax)
 pub fn cqmax(value: Int) -> Length {
   Cqmax(int.to_float(value))
 }
@@ -414,7 +414,7 @@ pub fn cqmax(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cqmax)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cqmax)
 pub fn cqmax_(value: Float) -> Length {
   Cqmax(value)
 }
@@ -427,7 +427,7 @@ pub fn cqmax_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cqmin)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cqmin)
 pub fn cqmin(value: Int) -> Length {
   Cqmin(int.to_float(value))
 }
@@ -440,7 +440,7 @@ pub fn cqmin(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cqmin)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cqmin)
 pub fn cqmin_(value: Float) -> Length {
   Cqmin(value)
 }
@@ -451,7 +451,7 @@ pub fn cqmin_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cqb)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cqb)
 pub fn cqb(value: Int) -> Length {
   Cqb(int.to_float(value))
 }
@@ -462,7 +462,7 @@ pub fn cqb(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cqb)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cqb)
 pub fn cqb_(value: Float) -> Length {
   Cqb(value)
 }
@@ -473,7 +473,7 @@ pub fn cqb_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cqi)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cqi)
 pub fn cqi(value: Int) -> Length {
   Cqi(int.to_float(value))
 }
@@ -484,7 +484,7 @@ pub fn cqi(value: Int) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#cqi)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#cqi)
 pub fn cqi_(value: Float) -> Length {
   Cqi(value)
 }
@@ -495,7 +495,7 @@ pub fn cqi_(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#em)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#em)
 pub fn em(value: Float) -> Length {
   Em(value)
 }
@@ -506,7 +506,7 @@ pub fn em(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#ex)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#ex)
 pub fn ex(value: Float) -> Length {
   Ex(value)
 }
@@ -517,7 +517,7 @@ pub fn ex(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#rex)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#rex)
 pub fn rex(value: Float) -> Length {
   Rex(value)
 }
@@ -528,7 +528,7 @@ pub fn rex(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#ic)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#ic)
 pub fn ic(value: Float) -> Length {
   Ic(value)
 }
@@ -537,7 +537,7 @@ pub fn ic(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#ric)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#ric)
 pub fn ric(value: Float) -> Length {
   Ric(value)
 }
@@ -549,7 +549,7 @@ pub fn ric(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#rem)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#rem)
 pub fn rem(value: Float) -> Length {
   Rem(value)
 }
@@ -561,7 +561,7 @@ pub fn rem(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#rch)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#rch)
 pub fn rch(value: Float) -> Length {
   Rch(value)
 }
@@ -571,7 +571,7 @@ pub fn rch(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#rcap)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#rcap)
 pub fn rcap(value: Float) -> Length {
   Rcap(value)
 }
@@ -583,7 +583,7 @@ pub fn rcap(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#lh)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#lh)
 pub fn lh(value: Float) -> Length {
   Lh(value)
 }
@@ -594,7 +594,7 @@ pub fn lh(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#rlh)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#rlh)
 pub fn rlh(value: Float) -> Length {
   Rlh(value)
 }
@@ -607,7 +607,7 @@ pub fn rlh(value: Float) -> Length {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/length#ch)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/length#ch)
 pub fn ch(value: Float) -> Length {
   Ch(value)
 }

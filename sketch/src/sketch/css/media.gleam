@@ -11,7 +11,7 @@
 ////
 //// ---
 ////
-//// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/@media#all)
+//// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@media#all)
 
 import sketch/css/length.{type Length, to_string as to_str}
 
@@ -28,7 +28,7 @@ pub opaque type ColorMode {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/@media#all)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@media#all)
 pub opaque type Query {
   MaxWidth(Length)
   MinWidth(Length)
@@ -54,7 +54,7 @@ pub opaque type Query {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/@media/prefers-color-scheme)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@media/prefers-color-scheme)
 pub fn dark_theme() -> Query {
   ColorScheme(Dark)
 }
@@ -68,7 +68,7 @@ pub fn dark_theme() -> Query {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/@media/prefers-color-scheme)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@media/prefers-color-scheme)
 pub fn light_theme() -> Query {
   ColorScheme(Light)
 }
@@ -105,7 +105,7 @@ pub fn min_height(length) -> Query {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/@media#screen)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@media#screen)
 pub fn screen() -> Query {
   Screen
 }
@@ -120,7 +120,7 @@ pub fn screen() -> Query {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/@media#screen)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@media#screen)
 pub fn print() -> Query {
   Print
 }
@@ -133,7 +133,7 @@ pub fn print() -> Query {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/@media#all)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@media#all)
 pub fn all() -> Query {
   All
 }
@@ -144,7 +144,7 @@ pub fn all() -> Query {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/@media#and)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@media#and)
 pub fn and(first: Query, second: Query) -> Query {
   And(first, second)
 }
@@ -157,7 +157,7 @@ pub fn and(first: Query, second: Query) -> Query {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/@media#only)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@media#only)
 pub fn only(query: Query) -> Query {
   Only(query)
 }
@@ -168,7 +168,7 @@ pub fn only(query: Query) -> Query {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/@media#or)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@media#or)
 pub fn or(first: Query, second: Query) -> Query {
   Or(first, second)
 }
@@ -179,7 +179,7 @@ pub fn or(first: Query, second: Query) -> Query {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/@media#not)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@media#not)
 pub fn not(query: Query) -> Query {
   Not(query)
 }
@@ -192,7 +192,7 @@ pub fn not(query: Query) -> Query {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/@media/orientation#landscape)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@media/orientation#landscape)
 pub fn landscape() -> Query {
   Orientation("landscape")
 }
@@ -205,7 +205,7 @@ pub fn landscape() -> Query {
 ///
 /// ---
 ///
-/// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/@media/orientation#portrait)
+/// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@media/orientation#portrait)
 pub fn portrait() -> Query {
   Orientation("portrait")
 }

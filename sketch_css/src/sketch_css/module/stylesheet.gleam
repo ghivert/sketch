@@ -135,8 +135,8 @@ fn convert_expression(
         g.FieldAccess(container: g.Variable("sketch/css/media"), label:) ->
           convert_media(label, arguments, env, modules)
 
-        g.FieldAccess(container: g.Variable("sketch/css/size"), label:) ->
-          convert_size(label, arguments, env, modules)
+        g.FieldAccess(container: g.Variable("sketch/css/length"), label:) ->
+          convert_length(label, arguments, env, modules)
 
         g.FieldAccess(container: g.Variable("sketch/css/angle"), label:) ->
           convert_angle(label, arguments, env, modules)
@@ -230,7 +230,7 @@ fn convert_body(
   }
 }
 
-fn convert_size(
+fn convert_length(
   label: String,
   arguments: List(g.Field(g.Expression)),
   env: StyleSheet,
