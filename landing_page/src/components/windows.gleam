@@ -2,8 +2,8 @@ import ffi
 import redraw/dom/attribute as a
 import redraw/dom/html as h
 import sketch/css
-import sketch/css/size.{percent, px}
-import sketch/redraw/html as sh
+import sketch/css/length.{percent, px}
+import sketch/redraw/dom/html as sh
 
 pub fn scaffold(children) {
   css.class([

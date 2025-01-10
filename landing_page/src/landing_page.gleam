@@ -14,9 +14,9 @@ import redraw/dom/client
 import redraw/dom/events
 import redraw/dom/html as h
 import sketch/css
-import sketch/css/size.{px}
+import sketch/css/length.{px}
 import sketch/redraw as sr
-import sketch/redraw/html as sh
+import sketch/redraw/dom/html as sh
 import texts
 
 pub fn main() {

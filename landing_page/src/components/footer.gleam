@@ -2,8 +2,8 @@ import redraw
 import redraw/dom/attribute as a
 import redraw/dom/html as h
 import sketch/css
-import sketch/css/size.{px, rem}
-import sketch/redraw/html as sh
+import sketch/css/length.{px, rem}
+import sketch/redraw/dom/html as sh
 
 pub fn footer() {
   use <- redraw.component__("Footer")
