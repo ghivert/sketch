@@ -327,18 +327,66 @@ fn convert_transform(
   modules: List(#(String, StyleSheet)),
 ) -> Result(Value, Nil) {
   case arguments {
+    [g.UnlabelledField(item: g.Tuple(items))] -> {
+      let items = list.try_map(items, convert_expression(_, env, modules))
+      use items <- result.try(items)
+      case label, items {
+        "matrix_3d",
+          [
+            TupleValue([
+              FloatValue(a1),
+              FloatValue(b1),
+              FloatValue(c1),
+              FloatValue(d1),
+            ]),
+            TupleValue([
+              FloatValue(a2),
+              FloatValue(b2),
+              FloatValue(c2),
+              FloatValue(d2),
+            ]),
+            TupleValue([
+              FloatValue(a3),
+              FloatValue(b3),
+              FloatValue(c3),
+              FloatValue(d3),
+            ]),
+            TupleValue([
+              FloatValue(a4),
+              FloatValue(b4),
+              FloatValue(c4),
+              FloatValue(d4),
+            ]),
+          ]
+        -> {
+          Ok(
+            transform.matrix_3d(
+              #(#(a1, b1, c1, d1), #(a2, b2, c2, d2), #(a3, b3, c3, d3), {
+                #(a4, b4, c4, d4)
+              }),
+            ),
+          )
+        }
+        _, _ -> Error(Nil)
+      }
+    }
+
     [g.UnlabelledField(item:)] -> {
       use value <- result.try(convert_expression(item, env, modules))
       case label, value {
-        "translate", LengthValue(f) -> Ok(transform.translate(f))
         "translate_x", LengthValue(f) -> Ok(transform.translate_x(f))
         "translate_y", LengthValue(f) -> Ok(transform.translate_y(f))
-        "scale", FloatValue(f) -> Ok(transform.scale(f))
+        "translate_z", LengthValue(f) -> Ok(transform.translate_z(f))
         "scale_x", FloatValue(f) -> Ok(transform.scale_x(f))
         "scale_y", FloatValue(f) -> Ok(transform.scale_y(f))
+        "scale_z", FloatValue(f) -> Ok(transform.scale_z(f))
         "rotate", AngleValue(f) -> Ok(transform.rotate(f))
+        "rotate_x", AngleValue(f) -> Ok(transform.rotate_x(f))
+        "rotate_y", AngleValue(f) -> Ok(transform.rotate_y(f))
+        "rotate_z", AngleValue(f) -> Ok(transform.rotate_z(f))
         "skew_x", AngleValue(f) -> Ok(transform.skew_x(f))
         "skew_y", AngleValue(f) -> Ok(transform.skew_y(f))
+        "perspective", LengthValue(f) -> Ok(transform.perspective(f))
         _, _ -> Error(Nil)
       }
     }
@@ -347,11 +395,77 @@ fn convert_transform(
       use fst <- result.try(convert_expression(fst, env, modules))
       use snd <- result.try(convert_expression(snd, env, modules))
       case label, fst, snd {
-        "translate2", LengthValue(fst), LengthValue(snd) ->
-          Ok(transform.translate2(fst, snd))
-        "scale2", FloatValue(fst), FloatValue(snd) ->
-          Ok(transform.scale2(fst, snd))
+        "skew", AngleValue(fst), AngleValue(snd) -> Ok(transform.skew(fst, snd))
+        "translate", LengthValue(fst), LengthValue(snd) ->
+          Ok(transform.translate(fst, snd))
+        "scale", FloatValue(fst), FloatValue(snd) ->
+          Ok(transform.scale(fst, snd))
         _, _, _ -> Error(Nil)
+      }
+    }
+
+    [
+      g.UnlabelledField(item: fst),
+      g.UnlabelledField(item: snd),
+      g.UnlabelledField(item: trd),
+    ] -> {
+      use fst <- result.try(convert_expression(fst, env, modules))
+      use snd <- result.try(convert_expression(snd, env, modules))
+      use trd <- result.try(convert_expression(trd, env, modules))
+      case label, fst, snd, trd {
+        "translate_3d", LengthValue(fst), LengthValue(snd), LengthValue(trd) ->
+          Ok(transform.translate_3d(fst, snd, trd))
+        "scale_3d", FloatValue(fst), FloatValue(snd), FloatValue(trd) ->
+          Ok(transform.scale_3d(fst, snd, trd))
+        _, _, _, _ -> Error(Nil)
+      }
+    }
+
+    [
+      g.UnlabelledField(item: fst),
+      g.UnlabelledField(item: snd),
+      g.UnlabelledField(item: trd),
+      g.UnlabelledField(item: fth),
+    ] -> {
+      use fst <- result.try(convert_expression(fst, env, modules))
+      use snd <- result.try(convert_expression(snd, env, modules))
+      use trd <- result.try(convert_expression(trd, env, modules))
+      use fth <- result.try(convert_expression(fth, env, modules))
+      case label, fst, snd, trd, fth {
+        "rotate_3d",
+          FloatValue(fst),
+          FloatValue(snd),
+          FloatValue(trd),
+          AngleValue(fth)
+        -> Ok(transform.rotate_3d(fst, snd, trd, fth))
+        _, _, _, _, _ -> Error(Nil)
+      }
+    }
+
+    [
+      g.UnlabelledField(item: fst),
+      g.UnlabelledField(item: snd),
+      g.UnlabelledField(item: trd),
+      g.UnlabelledField(item: fth),
+      g.UnlabelledField(item: fifth),
+      g.UnlabelledField(item: six),
+    ] -> {
+      use fst <- result.try(convert_expression(fst, env, modules))
+      use snd <- result.try(convert_expression(snd, env, modules))
+      use trd <- result.try(convert_expression(trd, env, modules))
+      use fth <- result.try(convert_expression(fth, env, modules))
+      use fifth <- result.try(convert_expression(fifth, env, modules))
+      use six <- result.try(convert_expression(six, env, modules))
+      case label, fst, snd, trd, fth, fifth, six {
+        "matrix",
+          FloatValue(fst),
+          FloatValue(snd),
+          FloatValue(trd),
+          FloatValue(fth),
+          FloatValue(fifth),
+          FloatValue(six)
+        -> Ok(transform.matrix(fst, snd, trd, fth, fifth, six))
+        _, _, _, _, _, _, _ -> Error(Nil)
       }
     }
 

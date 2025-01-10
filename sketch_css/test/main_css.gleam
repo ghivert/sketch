@@ -3,8 +3,8 @@ import helper
 import sketch/css
 import sketch/css.{type Class as Classs, background, class as t} as s
 import sketch/css/angle
+import sketch/css/length.{percent, px}
 import sketch/css/media
-import sketch/css/size.{percent, px}
 import sketch/css/transform
 
 pub type Example =
@@ -33,7 +33,7 @@ pub fn card(custom) {
     css.width(percent(100)),
     background("red"),
     s.display("block"),
-    s.padding(size.pt(12)),
+    s.padding(length.pt(12)),
     s.padding(px(12)),
     s.font_weight("900"),
     helper.custom_color(custom),
