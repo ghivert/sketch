@@ -2,4 +2,4 @@
 version: 1.2.5
 title: js_gleam_edges_css.gleam
 ---
-pub const edge_cases = "css-3884838561"
+pub const edge_cases = "classes-edges_css_edge_cases"

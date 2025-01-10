@@ -2,12 +2,12 @@
 version: 1.2.5
 title: erlang_gleam_medias_css.gleam
 ---
-pub const pseudo_class = "css-67993257"
+pub const simple = "classes-medias_css_simple"
 
-pub const and_or = "css-123977435"
+pub const and = "classes-medias_css_and"
 
-pub const or = "css-18913567"
+pub const or = "classes-medias_css_or"
 
-pub const and = "css-112994211"
+pub const and_or = "classes-medias_css_and_or"
 
-pub const simple = "css-22725631"
+pub const pseudo_class = "classes-medias_css_pseudo_class"

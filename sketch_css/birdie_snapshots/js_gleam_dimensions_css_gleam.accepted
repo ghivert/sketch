@@ -2,4 +2,4 @@
 version: 1.2.5
 title: js_gleam_dimensions_css.gleam
 ---
-pub const dimensions_variables = "css-1813474272"
+pub const dimensions_variables = "classes-dimensions_css_dimensions_variables"

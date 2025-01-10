@@ -2,4 +2,4 @@
 version: 1.2.5
 title: erlang_gleam_aliased_css.gleam
 ---
-pub const aliased_module = "css-79177302"
+pub const aliased_module = "classes-aliased_css_aliased_module"

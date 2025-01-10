@@ -2,7 +2,7 @@
 version: 1.2.5
 title: erlang_css_exposed_css.gleam
 ---
-.css-132390646 {
+.classes-exposed_css_exposed_class {
   background: red;
   color: red;
 }

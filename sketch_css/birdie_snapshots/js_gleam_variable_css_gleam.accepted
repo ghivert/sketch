@@ -2,4 +2,4 @@
 version: 1.2.5
 title: js_gleam_variable_css.gleam
 ---
-pub const variable_property = "css-2610672850"
+pub const variable_property = "classes-variable_css_variable_property"

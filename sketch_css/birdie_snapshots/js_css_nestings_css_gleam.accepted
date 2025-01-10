@@ -2,35 +2,35 @@
 version: 1.2.5
 title: js_css_nestings_css.gleam
 ---
-.css-1377303339 {
+.classes-nestings_css_example {
 }
 
-.css-1377303339 > .css-1783369628 {
+.classes-nestings_css_example > .classes-nestings_css_content {
     background: red;
 }
 
-.css-1377303339 > .css-1783369628:hover {
+.classes-nestings_css_example > .classes-nestings_css_content:hover {
       background: blue;
 }
 
 @media (max-width: 700.0px) or (min-width: 400.0px) {
-  .css-1377303339 {
+  .classes-nestings_css_example {
     background: blue;
   }
-  .css-1377303339:hover {
+  .classes-nestings_css_example:hover {
       background: red;
   }
-  .css-1377303339:hover {
+  .classes-nestings_css_example:hover {
   }
-  .css-1377303339:hover > .css-1783369628 {
+  .classes-nestings_css_example:hover > .classes-nestings_css_content {
         background: blue;
   }
-  .css-1377303339:hover > .css-1783369628:hover {
+  .classes-nestings_css_example:hover > .classes-nestings_css_content:hover {
           background: red;
   }
 }
 
-.css-1783369628 {
+.classes-nestings_css_content {
   color: var(--custom);
   background: green;
   padding: 12.0px;

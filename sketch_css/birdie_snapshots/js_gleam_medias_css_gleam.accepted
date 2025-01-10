@@ -2,12 +2,12 @@
 version: 1.2.5
 title: js_gleam_medias_css.gleam
 ---
-pub const pseudo_class = "css-1547556747"
+pub const simple = "classes-medias_css_simple"
 
-pub const and_or = "css-1353033444"
+pub const and = "classes-medias_css_and"
 
-pub const or = "css-952026283"
+pub const or = "classes-medias_css_or"
 
-pub const and = "css-760505246"
+pub const and_or = "classes-medias_css_and_or"
 
-pub const simple = "css-1009080651"
+pub const pseudo_class = "classes-medias_css_pseudo_class"

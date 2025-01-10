@@ -25,9 +25,9 @@ pub fn read_test() {
   |> generate.stylesheets
   |> should.be_ok
 
-  use item <- list.each(css_files)
-  read_snapshot_file(item, src, dst, extension: "css")
-  read_snapshot_file(item, src, interface, extension: "gleam")
+  use css_file <- list.each(css_files)
+  read_snapshot_file(css_file, src, dst, extension: "css")
+  read_snapshot_file(css_file, src, interface, extension: "gleam")
 }
 
 fn read_snapshot_file(

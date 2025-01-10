@@ -2,7 +2,7 @@
 version: 1.2.5
 title: erlang_css_edges_css.gleam
 ---
-.css-55916051 {
+.classes-edges_css_edge_cases {
   grid-template-areas: "header" "main";
   --example-property: example-value;
   color: var(--custom);

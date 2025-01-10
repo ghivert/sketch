@@ -93,12 +93,26 @@ pub fn convert_styles(
 
 /// Build Gleam interface from an association list mapping function name to
 /// generated class name by Sketch.
-pub fn build_interface(names: List(#(String, String))) {
-  list.map(names, fn(name) {
-    let class_name = string.join(["\"", name.1, "\""], with: "")
-    string.join(["pub", "const", name.0, "=", class_name], with: " ")
+pub fn build_interface(
+  module_name: String,
+  content: String,
+  names: List(#(String, String)),
+) {
+  list.fold(names, #(content, []), fn(acc, val) {
+    let #(content, interface) = acc
+    let #(fun_name, gen_name) = val
+    let module_name = string.replace(module_name, each: "/", with: "-")
+    let class_name = string.join([module_name, fun_name], with: "_")
+    content
+    |> string.replace(each: gen_name, with: class_name)
+    |> pair.new({
+      let class_name = string.join(["\"", class_name, "\""], with: "")
+      ["pub", "const", fun_name, "=", class_name]
+      |> string.join(with: " ")
+      |> list.prepend(interface, _)
+    })
   })
-  |> string.join(with: "\n\n")
+  |> pair.map_second(string.join(_, with: "\n\n"))
 }
 
 /// Build Sketch Stylesheet & association list interface.

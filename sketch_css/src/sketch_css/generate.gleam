@@ -53,11 +53,12 @@ fn write_css_file(
 ) -> snag.Result(Nil) {
   let #(stylesheet, names) = module.build_stylesheet(module, stylesheet)
   let content = sketch.render(stylesheet)
+  let #(content, interfaces) =
+    module.build_interface({ module.0 }.name, content, names)
   let outputs = utils.outputs(directories, { module.0 }.name)
   use _ <- result.try(fs.mkdir(outputs.dst, recursive: True))
   use _ <- result.try(fs.mkdir(outputs.interface, recursive: True))
   use _ <- result.try(fs.write_file(outputs.dst_file, content))
-  let interfaces = module.build_interface(names)
   use _ <- result.map(fs.write_file(outputs.interface_file, interfaces))
   io.println("=========")
   io.println("Gleam styles " <> { module.0 }.name <> " converted.")

@@ -60,7 +60,8 @@ pub fn at(list: List(a), index: Int) {
   }
 }
 
-pub fn outputs(directories: Directories, name: String) {
+/// Computes the output directories & files.
+pub fn outputs(directories: Directories, name: String) -> Outputs {
   let dst_file = string.join([directories.dst, name], with: "/")
   let dst_file = string.join([dst_file, "css"], with: ".")
   let interface_file = string.join([directories.interface, name], with: "/")

@@ -2,4 +2,4 @@
 version: 1.2.5
 title: erlang_gleam_important_css.gleam
 ---
-pub const important = "css-82768093"
+pub const important = "classes-important_css_important"

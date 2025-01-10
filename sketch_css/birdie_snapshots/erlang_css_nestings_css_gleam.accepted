@@ -2,35 +2,35 @@
 version: 1.2.5
 title: erlang_css_nestings_css.gleam
 ---
-.css-113639950 {
+.classes-nestings_css_example {
 }
 
-.css-113639950 > .css-85267893 {
+.classes-nestings_css_example > .classes-nestings_css_content {
     background: red;
 }
 
-.css-113639950 > .css-85267893:hover {
+.classes-nestings_css_example > .classes-nestings_css_content:hover {
       background: blue;
 }
 
 @media (max-width: 700.0px) or (min-width: 400.0px) {
-  .css-113639950 {
+  .classes-nestings_css_example {
     background: blue;
   }
-  .css-113639950:hover {
+  .classes-nestings_css_example:hover {
       background: red;
   }
-  .css-113639950:hover {
+  .classes-nestings_css_example:hover {
   }
-  .css-113639950:hover > .css-85267893 {
+  .classes-nestings_css_example:hover > .classes-nestings_css_content {
         background: blue;
   }
-  .css-113639950:hover > .css-85267893:hover {
+  .classes-nestings_css_example:hover > .classes-nestings_css_content:hover {
           background: red;
   }
 }
 
-.css-85267893 {
+.classes-nestings_css_content {
   color: var(--custom);
   background: green;
   padding: 12.0px;
