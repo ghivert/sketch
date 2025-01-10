@@ -4,13 +4,13 @@ import gleam/order
 import gleam/pair
 import gleam/result
 import gleam/string
+import sketch
 import sketch_css/fs
 import sketch_css/module/dependencies
 import sketch_css/module/exposings
 import sketch_css/module/imports
 import sketch_css/module/pipes
 import sketch_css/module/stylesheet
-import sketch_css/utils
 import snag
 
 /// Definition of a Gleam styles definitions file.
@@ -24,17 +24,13 @@ pub type Module {
 /// Read the file located at `path`, and turns it into a `Module`. No
 /// modification is applied. If the file does not exists or is not a valid
 /// Gleam file, an error is returned.
-pub fn from_path(path: String) -> snag.Result(Module) {
+pub fn from_path(path: String, root: String) -> snag.Result(Module) {
   use content <- result.try(fs.read_file(path))
-  use ast <- result.try(parse_module(content))
-  let dir = utils.remove_last_segment(path)
-  use dir <- result.map(utils.find_parent_gleam_toml_directory(dir))
-  let src = string.join([dir, "src/"], with: "/")
-  let test_ = string.join([dir, "test/"], with: "/")
+  use ast <- result.map(parse_module(content))
   Module(path:, content:, ast:, name: {
     path
-    |> string.replace(each: src, with: "")
-    |> string.replace(each: test_, with: "")
+    |> string.replace(each: root <> "/", with: "")
+    |> string.replace(each: root, with: "")
     |> string.replace(each: ".gleam", with: "")
   })
 }
@@ -93,6 +89,28 @@ pub fn convert_styles(
     list.find(modules, fn(mod) { mod.name == module.0 })
     |> result.map(pair.new(_, module.1))
   })
+}
+
+/// Build Gleam interface from an association list mapping function name to
+/// generated class name by Sketch.
+pub fn build_interface(names: List(#(String, String))) {
+  list.map(names, fn(name) {
+    let class_name = string.join(["\"", name.1, "\""], with: "")
+    string.join(["pub", "const", name.0, "=", class_name], with: " ")
+  })
+  |> string.join(with: "\n\n")
+}
+
+/// Build Sketch Stylesheet & association list interface.
+pub fn build_stylesheet(
+  module: #(Module, stylesheet.StyleSheet),
+  stylesheet: sketch.StyleSheet,
+) -> #(sketch.StyleSheet, List(#(String, String))) {
+  use stylesheet, class <- list.fold({ module.1 }.classes, #(stylesheet, []))
+  let #(stylesheet, names) = stylesheet
+  let #(class_name, class) = class
+  let #(stylesheet, generated_class) = sketch.class_name(class, stylesheet)
+  #(stylesheet, list.key_set(names, class_name, generated_class))
 }
 
 fn parse_module(source: String) -> snag.Result(g.Module) {

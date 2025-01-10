@@ -4,7 +4,8 @@ import gleam/list
 import gleam/option
 import gleam/order
 
-pub fn by_dependent(a: g.Function, b: g.Function) -> order.Order {
+/// True if the first is dependent of the second.
+pub fn is_dependent(a: g.Function, b: g.Function) -> order.Order {
   case in_statements(b.body, a.name) {
     True -> order.Lt
     False -> order.Gt

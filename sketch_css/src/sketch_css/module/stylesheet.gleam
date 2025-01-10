@@ -60,7 +60,7 @@ pub fn convert(
   let stylesheet =
     functions
     |> list.map(fn(function) { function.definition })
-    |> list.sort(functions.by_dependent)
+    |> list.sort(functions.is_dependent)
     |> list.fold(StyleSheet(environment:, classes: [], styles: []), convert_fn)
   [#(name, StyleSheet(..stylesheet, environment:)), ..modules]
 }
@@ -200,35 +200,34 @@ fn convert_body(
   env: StyleSheet,
   modules: List(#(String, StyleSheet)),
 ) -> StyleSheet {
-  list.fold(function.body, env, fn(env, statement) {
-    case statement {
-      g.Assignment(pattern: g.PatternVariable(name:), value:, ..) -> {
-        case convert_expression(value, env, modules) {
-          Error(_) -> env
-          Ok(value) -> {
-            list.key_set(env.environment, name, value)
-            |> fn(e) { StyleSheet(..env, environment: e) }
-          }
+  use env, statement <- list.fold(function.body, env)
+  case statement {
+    g.Assignment(pattern: g.PatternVariable(name:), value:, ..) -> {
+      case convert_expression(value, env, modules) {
+        Error(_) -> env
+        Ok(value) -> {
+          list.key_set(env.environment, name, value)
+          |> fn(e) { StyleSheet(..env, environment: e) }
         }
       }
-
-      g.Expression(expression) -> {
-        case convert_expression(expression, env, modules) {
-          Ok(ClassValue(class)) -> {
-            let classes = [#(function.name, class), ..env.classes]
-            StyleSheet(..env, classes:)
-          }
-          Ok(StyleValue(style)) -> {
-            let styles = [#(function.name, style), ..env.styles]
-            StyleSheet(..env, styles:)
-          }
-          _ -> env
-        }
-      }
-
-      _ -> env
     }
-  })
+
+    g.Expression(expression) -> {
+      case convert_expression(expression, env, modules) {
+        Ok(ClassValue(class)) -> {
+          let classes = [#(function.name, class), ..env.classes]
+          StyleSheet(..env, classes:)
+        }
+        Ok(StyleValue(style)) -> {
+          let styles = [#(function.name, style), ..env.styles]
+          StyleSheet(..env, styles:)
+        }
+        _ -> env
+      }
+    }
+
+    _ -> env
+  }
 }
 
 fn convert_size(
@@ -506,12 +505,11 @@ fn convert_transform_call(
       let styles = list.try_map(transforms, convert_expression(_, env, modules))
       use styles <- result.try(styles)
       use transforms <- result.map({
-        list.try_map(styles, fn(value) {
-          case value {
-            TransformValue(v) -> Ok(v)
-            _ -> Error(Nil)
-          }
-        })
+        use value <- list.try_map(styles)
+        case value {
+          TransformValue(v) -> Ok(v)
+          _ -> Error(Nil)
+        }
       })
       StyleValue(css.transform(transforms))
     }

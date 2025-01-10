@@ -20,6 +20,7 @@ pub fn reject_cycles(
   }
 }
 
+/// True if the first is a dependency of the second.
 pub fn is_dependency(
   a: #(String, g.Module),
   of b: #(String, g.Module),

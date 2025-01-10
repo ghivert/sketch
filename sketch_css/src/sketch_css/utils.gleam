@@ -17,6 +17,20 @@ pub type Directories {
   Directories(src: String, dst: String, interface: String)
 }
 
+/// Outputs used in scripts.
+/// - `dst` indicates the directory to output the stylesheet.
+/// - `dst_file` indicates the filename to output the stylesheet.
+/// - `interface` indicates the directory to output the interface.
+/// - `interface_file` indicates the filename to output the interface.
+pub type Outputs {
+  Outputs(
+    dst: String,
+    dst_file: String,
+    interface: String,
+    interface_file: String,
+  )
+}
+
 pub fn directories(
   src: Option(String),
   dst: Option(String),
@@ -29,6 +43,31 @@ pub fn directories(
   Directories(src:, dst:, interface: {
     read_directory("interface", interface, cwd, config, "src/sketch/styles")
   })
+}
+
+pub fn remove_last_segment(path: String) {
+  let segments = string.split(path, on: "/")
+  let segments = list.take(segments, list.length(segments) - 1)
+  string.join(segments, with: "/")
+}
+
+pub fn at(list: List(a), index: Int) {
+  use <- bool.guard(when: index < 0, return: Error(Nil))
+  case list {
+    [] -> Error(Nil)
+    [elem, ..] if index == 0 -> Ok(elem)
+    [_, ..rest] -> at(rest, index - 1)
+  }
+}
+
+pub fn outputs(directories: Directories, name: String) {
+  let dst_file = string.join([directories.dst, name], with: "/")
+  let dst_file = string.join([dst_file, "css"], with: ".")
+  let interface_file = string.join([directories.interface, name], with: "/")
+  let interface_file = string.join([interface_file, "gleam"], with: ".")
+  let dst = remove_last_segment(dst_file)
+  let interface = remove_last_segment(interface_file)
+  Outputs(dst:, interface:, dst_file:, interface_file:)
 }
 
 fn read_directory(
@@ -55,31 +94,4 @@ fn read_config_directory(
   |> tom.get_string([key])
   |> option.from_result
   |> option.map(pair.new(config.directory, _))
-}
-
-pub fn remove_last_segment(path: String) {
-  let segments = string.split(path, on: "/")
-  let segments = list.take(segments, list.length(segments) - 1)
-  string.join(segments, with: "/")
-}
-
-pub fn find_parent_gleam_toml_directory(path: String) {
-  let error = "No gleam.toml parent directory"
-  use <- bool.guard(when: string.is_empty(path), return: snag.error(error))
-  let filename = string.join([path, "gleam.toml"], with: "/")
-  fs.read_file(filename)
-  |> result.replace(path)
-  |> result.try_recover(fn(_) {
-    let path = remove_last_segment(path)
-    find_parent_gleam_toml_directory(path)
-  })
-}
-
-pub fn at(list: List(a), index: Int) {
-  use <- bool.guard(when: index < 0, return: Error(Nil))
-  case list {
-    [] -> Error(Nil)
-    [elem, ..] if index == 0 -> Ok(elem)
-    [_, ..rest] -> at(rest, index - 1)
-  }
 }
