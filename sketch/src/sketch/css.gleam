@@ -8762,7 +8762,7 @@ pub fn target(styles: List(Style)) -> Style {
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/:nth-child)
 pub fn nth_child(sel: String, styles: List(Style)) -> Style {
-  selector(string.append(":nth-child", sel), styles)
+  selector(":nth-child(" <> sel <> ")", styles)
 }
 
 /// The `:nth-last-child()` CSS
@@ -8774,7 +8774,7 @@ pub fn nth_child(sel: String, styles: List(Style)) -> Style {
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/:nth-last-child)
 pub fn nth_last_child(sel: String, styles: List(Style)) -> Style {
-  selector(string.append(":nth-last-child", sel), styles)
+  selector(":nth-last-child(" <> sel <> ")", styles)
 }
 
 /// The `:nth-of-type()` CSS
@@ -8786,7 +8786,7 @@ pub fn nth_last_child(sel: String, styles: List(Style)) -> Style {
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/:nth-of-type)
 pub fn nth_of_type(sel: String, styles: List(Style)) -> Style {
-  selector(string.append(":nth-of-type", sel), styles)
+  selector(":nth-of-type(" <> sel <> ")", styles)
 }
 
 /// The `:nth-last-of-type()` CSS
@@ -8798,7 +8798,7 @@ pub fn nth_of_type(sel: String, styles: List(Style)) -> Style {
 ///
 /// [MDN Documentation](https://developer.mozilla.org/docs/Web/CSS/:nth-last-of-type)
 pub fn nth_last_of_type(sel: String, styles: List(Style)) -> Style {
-  selector(string.append(":nth-last-of-type", sel), styles)
+  selector(":nth-last-of-type(" <> sel <> ")", styles)
 }
 
 /// The `:first-child` CSS

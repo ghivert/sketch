@@ -18,7 +18,7 @@ packages = [
   { name = "glint", version = "1.2.0", build_tools = ["gleam"], requirements = ["gleam_community_ansi", "gleam_community_colour", "gleam_stdlib", "snag"], otp_app = "glint", source = "hex", outer_checksum = "EA4B47B5A6147CA524AE81862EE1BE1C5A194757B26897233BD26BD3F7A54930" },
   { name = "pprint", version = "1.0.4", build_tools = ["gleam"], requirements = ["glam", "gleam_stdlib"], otp_app = "pprint", source = "hex", outer_checksum = "C310A98BDC0995644847C3C8702DE19656D6BCD638B2A8A358B97824379ECAA1" },
   { name = "simplifile", version = "2.2.0", build_tools = ["gleam"], requirements = ["filepath", "gleam_stdlib"], otp_app = "simplifile", source = "hex", outer_checksum = "0DFABEF7DC7A9E2FF4BB27B108034E60C81BEBFCB7AB816B9E7E18ED4503ACD8" },
-  { name = "sketch", version = "3.1.2", build_tools = ["gleam"], requirements = ["gleam_erlang", "gleam_otp", "gleam_stdlib"], otp_app = "sketch", source = "hex", outer_checksum = "85E41BC0BE2E5D8985EF34F0D2FD7315329A463FC845570EC5D399F20F8AFA08" },
+  { name = "sketch", version = "4.0.0", build_tools = ["gleam"], requirements = ["gleam_erlang", "gleam_otp", "gleam_stdlib"], source = "local", path = "../sketch" },
   { name = "snag", version = "1.1.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "snag", source = "hex", outer_checksum = "7E9F06390040EB5FAB392CE642771484136F2EC103A92AE11BA898C8167E6E17" },
   { name = "tom", version = "1.1.1", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "tom", source = "hex", outer_checksum = "0910EE688A713994515ACAF1F486A4F05752E585B9E3209D8F35A85B234C2719" },
 ]
@@ -32,6 +32,6 @@ gleeunit = { version = ">= 1.0.0 and < 2.0.0" }
 glint = { version = ">= 1.2.0 and < 2.0.0" }
 pprint = { version = ">= 1.0.4 and < 2.0.0" }
 simplifile = { version = ">= 2.0.1 and < 3.0.0" }
-sketch = { version = ">= 3.0.0 and < 4.0.0" }
+sketch = { path = "../sketch" }
 snag = { version = ">= 1.1.0 and < 2.0.0" }
 tom = { version = ">= 1.1.1 and < 2.0.0" }

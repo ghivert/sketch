@@ -1,12 +1,10 @@
-import gleam/string
 import gleeunit
 import gleeunit/should
-import simplifile
 import sketch/constants
-import sketch/css/fs
-import sketch/css/generate
-import sketch/css/path
-import sketch/css/utils
+import sketch_css/fs
+import sketch_css/generate
+import sketch_css/path
+import sketch_css/utils
 
 pub fn main() {
   gleeunit.main()

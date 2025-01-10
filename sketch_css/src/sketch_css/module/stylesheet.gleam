@@ -6,8 +6,10 @@ import gleam/list
 import gleam/result
 import gleam/string
 import sketch/css
+import sketch/css/angle
 import sketch/css/media
 import sketch/css/size
+import sketch/css/transform
 import sketch_css/constants
 import sketch_css/module/functions
 import sketch_css/utils
@@ -18,6 +20,8 @@ pub type Value {
   StringValue(String)
   SizeValue(size.Size)
   ClassValue(css.Class)
+  AngleValue(angle.Angle)
+  TransformValue(transform.Transform)
   StyleValue(css.Style)
   ListValue(List(Value))
   TupleValue(List(Value))
@@ -118,14 +122,24 @@ fn convert_expression(
             "selector" -> convert_selector_call(arguments, env, modules)
             "property" -> convert_property_call(arguments, env, modules)
             "important" -> convert_important_call(arguments, env, modules)
+            "transform" -> convert_transform_call(arguments, env, modules)
             label -> convert_generic_call(label, arguments, env, modules)
           }
+
+        g.FieldAccess(container: g.Variable("sketch/css/svg"), label:) ->
+          convert_generic_call(label, arguments, env, modules)
+
+        g.FieldAccess(container: g.Variable("sketch/css/transform"), label:) ->
+          convert_transform(label, arguments, env, modules)
 
         g.FieldAccess(container: g.Variable("sketch/css/media"), label:) ->
           convert_media(label, arguments, env, modules)
 
         g.FieldAccess(container: g.Variable("sketch/css/size"), label:) ->
           convert_size(label, arguments, env, modules)
+
+        g.FieldAccess(container: g.Variable("sketch/css/angle"), label:) ->
+          convert_angle(label, arguments, env, modules)
 
         g.FieldAccess(container: g.Variable(container), label:) -> {
           let stylesheet = list.key_find(modules, container)
@@ -165,14 +179,6 @@ fn convert_functions(modules: List(#(String, StyleSheet))) {
     use <- bool.guard(when: function.publicity == g.Private, return: env)
     let env = add_function_parameters(function, env)
     convert_body(function, env, modules)
-    // #(
-    //   class
-    //     |> option.map(list.key_set(classes, function.name, _))
-    //     |> option.unwrap(classes),
-    //   style
-    //     |> option.map(list.key_set(styles, function.name, _))
-    //     |> option.unwrap(styles),
-    // )
   }
 }
 
@@ -256,6 +262,67 @@ fn convert_size(
     }
     _ -> Error(Nil)
   }
+}
+
+fn convert_angle(
+  label: String,
+  arguments: List(g.Field(g.Expression)),
+  env: StyleSheet,
+  modules: List(#(String, StyleSheet)),
+) -> Result(Value, Nil) {
+  case arguments {
+    [g.UnlabelledField(item:)] -> {
+      use value <- result.try(convert_expression(item, env, modules))
+      case label, value {
+        "deg", FloatValue(f) -> Ok(AngleValue(angle.deg(f)))
+        "rad", FloatValue(f) -> Ok(AngleValue(angle.rad(f)))
+        "grad", FloatValue(f) -> Ok(AngleValue(angle.grad(f)))
+        "turn", FloatValue(f) -> Ok(AngleValue(angle.turn(f)))
+        _, _ -> Error(Nil)
+      }
+    }
+    _ -> Error(Nil)
+  }
+}
+
+fn convert_transform(
+  label: String,
+  arguments: List(g.Field(g.Expression)),
+  env: StyleSheet,
+  modules: List(#(String, StyleSheet)),
+) -> Result(Value, Nil) {
+  case arguments {
+    [g.UnlabelledField(item:)] -> {
+      use value <- result.try(convert_expression(item, env, modules))
+      case label, value {
+        "translate", SizeValue(f) -> Ok(transform.translate(f))
+        "translate_x", SizeValue(f) -> Ok(transform.translate_x(f))
+        "translate_y", SizeValue(f) -> Ok(transform.translate_y(f))
+        "scale", FloatValue(f) -> Ok(transform.scale(f))
+        "scale_x", FloatValue(f) -> Ok(transform.scale_x(f))
+        "scale_y", FloatValue(f) -> Ok(transform.scale_y(f))
+        "rotate", AngleValue(f) -> Ok(transform.rotate(f))
+        "skew_x", AngleValue(f) -> Ok(transform.skew_x(f))
+        "skew_y", AngleValue(f) -> Ok(transform.skew_y(f))
+        _, _ -> Error(Nil)
+      }
+    }
+
+    [g.UnlabelledField(item: fst), g.UnlabelledField(item: snd)] -> {
+      use fst <- result.try(convert_expression(fst, env, modules))
+      use snd <- result.try(convert_expression(snd, env, modules))
+      case label, fst, snd {
+        "translate2", SizeValue(fst), SizeValue(snd) ->
+          Ok(transform.translate2(fst, snd))
+        "scale2", FloatValue(fst), FloatValue(snd) ->
+          Ok(transform.scale2(fst, snd))
+        _, _, _ -> Error(Nil)
+      }
+    }
+
+    _ -> Error(Nil)
+  }
+  |> result.map(TransformValue)
 }
 
 fn convert_media(
@@ -429,6 +496,29 @@ fn convert_property_call(
   }
 }
 
+fn convert_transform_call(
+  arguments: List(g.Field(g.Expression)),
+  env: StyleSheet,
+  modules: List(#(String, StyleSheet)),
+) -> Result(Value, Nil) {
+  case arguments {
+    [g.UnlabelledField(item: g.List(transforms, ..))] -> {
+      let styles = list.try_map(transforms, convert_expression(_, env, modules))
+      use styles <- result.try(styles)
+      use transforms <- result.map({
+        list.try_map(styles, fn(value) {
+          case value {
+            TransformValue(v) -> Ok(v)
+            _ -> Error(Nil)
+          }
+        })
+      })
+      StyleValue(css.transform(transforms))
+    }
+    _ -> Error(Nil)
+  }
+}
+
 fn convert_generic_call(
   label: String,
   arguments: List(g.Field(g.Expression)),
@@ -452,6 +542,7 @@ fn convert_generic_call(
               IntValue(i) -> int.to_string(i)
               FloatValue(f) -> float.to_string(f)
               SizeValue(s) -> size.to_string(s)
+              AngleValue(a) -> angle.to_string(a)
               _ -> ""
             }
           })
@@ -467,6 +558,7 @@ fn convert_generic_call(
             IntValue(i) -> StyleValue(css.property(label, int.to_string(i)))
             FloatValue(f) -> StyleValue(css.property(label, float.to_string(f)))
             SizeValue(s) -> StyleValue(css.property(label, size.to_string(s)))
+            AngleValue(a) -> StyleValue(css.property(label, angle.to_string(a)))
             _ -> StyleValue(css.none())
           }
         }
