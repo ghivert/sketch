@@ -1,0 +1,23 @@
+---
+version: 1.2.5
+title: erlang_css_keyframe_css.gleam
+---
+@keyframes fade-out {
+  from {
+    opacity: 1.0;
+  }
+
+  50.0% {
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: 0.0;
+  }
+}
+
+.classes-keyframe_css_example {
+  opacity: 1.0;
+  animation: fade-out;
+  background: blue;
+}

@@ -1,4 +1,5 @@
 import glance as g
+import gleam/function
 import gleam/list
 import gleam/order
 import gleam/pair
@@ -104,7 +105,7 @@ pub fn build_interface(
     let module_name = string.replace(module_name, each: "/", with: "-")
     let class_name = string.join([module_name, fun_name], with: "_")
     content
-    |> string.replace(each: gen_name, with: class_name)
+    |> string.replace(each: gen_name, with: "." <> class_name)
     |> pair.new({
       let class_name = string.join(["\"", class_name, "\""], with: "")
       ["pub", "const", fun_name, "=", class_name]
@@ -120,6 +121,8 @@ pub fn build_stylesheet(
   module: #(Module, stylesheet.StyleSheet),
   stylesheet: sketch.StyleSheet,
 ) -> #(sketch.StyleSheet, List(#(String, String))) {
+  let at_rule = function.flip(sketch.at_rule)
+  let stylesheet = list.fold({ module.1 }.at_rules, stylesheet, at_rule)
   use stylesheet, class <- list.fold({ module.1 }.classes, #(stylesheet, []))
   let #(stylesheet, names) = stylesheet
   let #(class_name, class) = class

@@ -7,6 +7,7 @@ import gleam/result
 import gleam/string
 import sketch/css
 import sketch/css/angle
+import sketch/css/keyframe
 import sketch/css/length
 import sketch/css/media
 import sketch/css/transform
@@ -26,6 +27,8 @@ pub type Value {
   ListValue(List(Value))
   TupleValue(List(Value))
   MediaValue(media.Query)
+  AtRuleValue(css.AtRule)
+  KeyframeValue(keyframe.Keyframe)
 }
 
 pub type Environment =
@@ -35,6 +38,7 @@ pub type StyleSheet {
   StyleSheet(
     environment: Environment,
     classes: List(#(String, css.Class)),
+    at_rules: List(css.AtRule),
     styles: List(#(String, css.Style)),
   )
 }
@@ -45,7 +49,7 @@ fn init_environment(
 ) -> Environment {
   use env, constant <- list.fold(constants, [])
   constant.definition.value
-  |> convert_expression(StyleSheet(env, [], []), modules)
+  |> convert_expression(StyleSheet(env, [], [], []), modules)
   |> result.map(list.key_set(env, constant.definition.name, _))
   |> result.unwrap(env)
 }
@@ -61,7 +65,10 @@ pub fn convert(
     functions
     |> list.map(fn(function) { function.definition })
     |> list.sort(functions.is_dependent)
-    |> list.fold(StyleSheet(environment:, classes: [], styles: []), convert_fn)
+    |> list.fold(
+      StyleSheet(environment:, classes: [], at_rules: [], styles: []),
+      convert_fn,
+    )
   [#(name, StyleSheet(..stylesheet, environment:)), ..modules]
 }
 
@@ -123,6 +130,7 @@ fn convert_expression(
             "property" -> convert_property_call(arguments, env, modules)
             "important" -> convert_important_call(arguments, env, modules)
             "transform" -> convert_transform_call(arguments, env, modules)
+            "keyframes" -> convert_keyframes_call(arguments, env, modules)
             label -> convert_generic_call(label, arguments, env, modules)
           }
 
@@ -140,6 +148,9 @@ fn convert_expression(
 
         g.FieldAccess(container: g.Variable("sketch/css/angle"), label:) ->
           convert_angle(label, arguments, env, modules)
+
+        g.FieldAccess(container: g.Variable("sketch/css/keyframe"), label:) ->
+          convert_keyframe(label, arguments, env, modules)
 
         g.FieldAccess(container: g.Variable(container), label:) -> {
           let stylesheet = list.key_find(modules, container)
@@ -221,6 +232,10 @@ fn convert_body(
         Ok(StyleValue(style)) -> {
           let styles = [#(function.name, style), ..env.styles]
           StyleSheet(..env, styles:)
+        }
+        Ok(AtRuleValue(rule)) -> {
+          let at_rules = [rule, ..env.at_rules]
+          StyleSheet(..env, at_rules:)
         }
         _ -> env
       }
@@ -313,6 +328,52 @@ fn convert_angle(
         "rad", FloatValue(f) -> Ok(AngleValue(angle.rad(f)))
         "grad", FloatValue(f) -> Ok(AngleValue(angle.grad(f)))
         "turn", FloatValue(f) -> Ok(AngleValue(angle.turn(f)))
+        _, _ -> Error(Nil)
+      }
+    }
+    _ -> Error(Nil)
+  }
+}
+
+fn convert_keyframe(
+  label: String,
+  arguments: List(g.Field(g.Expression)),
+  env: StyleSheet,
+  modules: List(#(String, StyleSheet)),
+) -> Result(Value, Nil) {
+  case arguments {
+    [g.UnlabelledField(item: g.List(items, ..))] -> {
+      let values = list.try_map(items, convert_expression(_, env, modules))
+      use values <- result.try(values)
+      let values =
+        list.filter_map(values, fn(value) {
+          case value {
+            StyleValue(v) -> Ok(v)
+            _ -> Error(Nil)
+          }
+        })
+      case label {
+        "from" -> Ok(KeyframeValue(keyframe.from(values)))
+        "to" -> Ok(KeyframeValue(keyframe.to(values)))
+        _ -> Error(Nil)
+      }
+    }
+
+    [g.UnlabelledField(item:), g.UnlabelledField(item: g.List(items, ..))] -> {
+      use item <- result.try(convert_expression(item, env, modules))
+      let values = list.try_map(items, convert_expression(_, env, modules))
+      use values <- result.try(values)
+      case label, item {
+        "at", FloatValue(f) ->
+          keyframe.at(f, {
+            use value <- list.filter_map(values)
+            case value {
+              StyleValue(v) -> Ok(v)
+              _ -> Error(Nil)
+            }
+          })
+          |> KeyframeValue
+          |> Ok
         _, _ -> Error(Nil)
       }
     }
@@ -538,6 +599,32 @@ fn convert_class_call(
       })
       |> ClassValue
       |> Ok
+    }
+    _ -> Error(Nil)
+  }
+}
+
+fn convert_keyframes_call(
+  arguments: List(g.Field(g.Expression)),
+  env: StyleSheet,
+  modules: List(#(String, StyleSheet)),
+) -> Result(Value, Nil) {
+  case arguments {
+    [g.UnlabelledField(item:), g.UnlabelledField(item: g.List(elements, ..))] -> {
+      use item <- result.try(convert_expression(item, env, modules))
+      case item {
+        StringValue(s) ->
+          css.keyframes(s, {
+            use element <- list.flat_map(elements)
+            case convert_expression(element, env, modules) {
+              Ok(KeyframeValue(v)) -> [v]
+              _ -> []
+            }
+          })
+          |> AtRuleValue
+          |> Ok
+        _ -> Error(Nil)
+      }
     }
     _ -> Error(Nil)
   }
