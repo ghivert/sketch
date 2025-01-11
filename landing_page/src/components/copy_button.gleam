@@ -10,16 +10,7 @@ import sketch/redraw/dom/html as sh
 
 pub fn copy_button() {
   use #(text) <- redraw.component_("CopyButton")
-  let #(copied, set_copied) = redraw.use_state(False)
-  let on_copy = on_copy(text, set_copied)
-  redraw.use_effect_(
-    fn() {
-      use <- bool.guard(when: !copied, return: fn() { Nil })
-      let timeout = ffi.set_timeout(fn() { set_copied(False) }, 2000)
-      fn() { ffi.clear_timeout(timeout) }
-    },
-    #(copied),
-  )
+  let #(copied, on_copy) = use_copy(text)
   sh.code(code_install(), [on_copy], [
     h.text(text),
     sh.button(sm_button_class(), [on_copy], [
@@ -29,6 +20,19 @@ pub fn copy_button() {
       }),
     ]),
   ])
+}
+
+fn use_copy(text: String) {
+  let #(copied, set_copied) = redraw.use_state(False)
+  use_copied_timeout(copied, set_copied)
+  #(copied, on_copy(text, set_copied))
+}
+
+fn use_copied_timeout(copied: Bool, set_copied: fn(Bool) -> Nil) -> Nil {
+  use <- redraw.use_effect_(_, #(copied))
+  use <- bool.guard(when: !copied, return: fn() { Nil })
+  let timeout = ffi.set_timeout(fn() { set_copied(False) }, 2000)
+  fn() { ffi.clear_timeout(timeout) }
 }
 
 fn on_copy(text, set_copied) {

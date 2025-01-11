@@ -28,7 +28,7 @@ pub fn title_container(children) {
 
 pub fn title_container_inside(children) {
   css.class([css.gap(px(36))])
-  |> sh.h1([], children)
+  |> sh.div([], children)
 }
 
 pub fn title(text) {

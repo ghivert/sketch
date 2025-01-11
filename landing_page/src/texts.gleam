@@ -23,7 +23,7 @@ pub const sketch_wisp_fst = "CSS-in-Gleam is great, but sometimes, you just need
 pub const sketch_wisp_snd = "Sketch can be used with Lustre, but also with any way to generate HMTL and CSS. All you need is creating a StyleSheet, and putting some styles inside. Once it's done, render the stylesheet as string, and you have a valid CSS file! And of course, because Lustre can also handle SSR for you, Sketch can integrate in Lustre's SSR!"
 
 pub const sketch_lustre_example = "import sketch/css
-import sketch/css/size.{px, percent}
+import sketch/css/length.{px, percent}
 import sketch/lustre/html
 
 pub type Color {
@@ -77,10 +77,10 @@ fn view(model: Model) {
 "
 
 pub const sketch_redraw_example = "import redraw
-import redraw/html
+import redraw/dom/html
 import sketch/css
-import sketch/css/size.{px, percent}
-import sketch/redraw/html as sketch_html
+import sketch/css/length.{px, percent}
+import sketch/redraw/dom/html as sketch_html
 
 pub type Color {
   Red
@@ -159,17 +159,17 @@ fn gap_row(gap: String) {
 }
 "
 
-pub const sketch_css_css = ".row {
+pub const sketch_css_css = ".module_name-row {
   display: flex;
   flex-direction: row;
 }
 
-.column {
+.module_name-column {
   display: flex;
   flex-direction: column;
 }
 
-.gap-row {
+.module_name-gap_row {
   gap: var(--flex-direction);
 }
 "

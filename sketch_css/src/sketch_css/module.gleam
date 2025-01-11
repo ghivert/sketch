@@ -93,7 +93,7 @@ pub fn build_interface(
     let module_name = string.replace(module_name, each: "/", with: "-")
     let class_name = string.join([module_name, fun_name], with: "_")
     content
-    |> string.replace(each: gen_name, with: "." <> class_name)
+    |> string.replace(each: gen_name, with: class_name)
     |> pair.new({
       let class_name = string.join(["\"", class_name, "\""], with: "")
       ["pub", "const", fun_name, "=", class_name]

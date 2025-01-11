@@ -16,7 +16,12 @@ type Definitions {
 }
 
 type ComputedClass {
-  ComputedClass(id: Int, name: String, definitions: Definitions)
+  ComputedClass(
+    id: Int,
+    name: String,
+    class_name: String,
+    definitions: Definitions,
+  )
 }
 
 pub opaque type Cache {
@@ -102,12 +107,24 @@ pub fn named(name: String, content: List(Style)) -> Class {
 }
 
 pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
-  use <- bool.guard(when: list.is_empty(class.content), return: #(cache, ""))
+  computed_class(class, cache)
+  |> pair.map_second(fn(class) { class.class_name })
+}
+
+fn computed_class(class: Class, cache: Cache) -> #(Cache, ComputedClass) {
+  use <- bool.lazy_guard(when: list.is_empty(class.content), return: fn() {
+    #(cache, empty_computed())
+  })
   let existing_class = dict.get(cache.cache, class.as_string)
   case existing_class {
-    Ok(#(class, _)) -> #(cache, class.name)
+    Ok(#(class, _)) -> #(cache, class)
     Error(..) -> insert_class_in_cache(cache, class)
   }
+}
+
+fn empty_computed() {
+  let definitions = Definitions([], [], "")
+  ComputedClass(id: 0, name: "", class_name: "", definitions:)
 }
 
 pub fn at_rule(rule: AtRule, cache: Cache) -> Cache {
@@ -177,11 +194,13 @@ fn compute_classes(
   name: Option(String),
   properties: Properties,
 ) -> ComputedClass {
+  let class_name =
+    option.lazy_unwrap(name, fn() { "css-" <> int.to_string(id) })
   let name = option.lazy_unwrap(name, fn() { ".css-" <> int.to_string(id) })
   let Properties(properties:, medias:, selectors:, ..) = properties
   let class = sketch_string.wrap_class(name, properties, 0, None)
   let selectors = wrap_selectors(name, 0, selectors)
-  ComputedClass(id:, name:, definitions: {
+  ComputedClass(id:, name:, class_name:, definitions: {
     Definitions(class:, selectors:, medias: {
       use MediaProperty(query, properties, selectors) <- list.map(medias)
       let selectors = wrap_selectors(name, 2, selectors)
@@ -193,7 +212,7 @@ fn compute_classes(
   })
 }
 
-fn insert_class_in_cache(cache: Cache, class: Class) -> #(Cache, String) {
+fn insert_class_in_cache(cache: Cache, class: Class) -> #(Cache, ComputedClass) {
   let #(cache, properties) = compute_properties(cache, class.content, 2, "")
   let class_ =
     class.as_string
@@ -203,7 +222,7 @@ fn insert_class_in_cache(cache: Cache, class: Class) -> #(Cache, String) {
   |> pair.new(properties)
   |> dict.insert(cache.cache, class.as_string, _)
   |> fn(cache_) { Cache(..cache, cache: cache_) }
-  |> pair.new(class_.name)
+  |> pair.new(class_)
 }
 
 @external(erlang, "erlang", "phash2")
@@ -268,8 +287,8 @@ fn handle_combinator(
 ) -> #(Cache, Properties) {
   let assert Combinator(selector:, class:, styles:) = combinator
   let indentation = props.indentation + 2
-  let #(cache, class_name) = class_name(class, cache)
-  let selector = existing_selector <> selector <> class_name
+  let #(cache, class) = computed_class(class, cache)
+  let selector = existing_selector <> selector <> class.name
   let #(cache, properties) =
     compute_properties(cache, styles, indentation, selector)
   SelectorProperty(selector:, properties: properties.properties)
