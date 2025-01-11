@@ -1,9 +1,0 @@
----
-version: 1.2.5
-title: erlang_css_egdes_css.gleam
----
-.css-55916051 {
-  grid-template-areas: "header" "main";
-  --example-property: example-value;
-  color: var(--custom);
-}

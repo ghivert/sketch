@@ -2,4 +2,4 @@
 version: 1.2.5
 title: erlang_gleam_variable_css.gleam
 ---
-pub const variable_property = "classes-variable_css_variable_property"
+pub const variable_property = "sketch_css_test-classes-variable_css_variable_property"

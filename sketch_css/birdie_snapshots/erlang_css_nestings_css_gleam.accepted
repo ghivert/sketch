@@ -2,35 +2,35 @@
 version: 1.2.5
 title: erlang_css_nestings_css.gleam
 ---
-.classes-nestings_css_example {
+.sketch_css_test-classes-nestings_css_example {
 }
 
-.classes-nestings_css_example > .classes-nestings_css_content {
+.sketch_css_test-classes-nestings_css_example > .sketch_css_test-classes-nestings_css_content {
     background: red;
 }
 
-.classes-nestings_css_example > .classes-nestings_css_content:hover {
+.sketch_css_test-classes-nestings_css_example > .sketch_css_test-classes-nestings_css_content:hover {
       background: blue;
 }
 
 @media (max-width: 700.0px) or (min-width: 400.0px) {
-  .classes-nestings_css_example {
+  .sketch_css_test-classes-nestings_css_example {
     background: blue;
   }
-  .classes-nestings_css_example:hover {
+  .sketch_css_test-classes-nestings_css_example:hover {
       background: red;
   }
-  .classes-nestings_css_example:hover {
+  .sketch_css_test-classes-nestings_css_example:hover {
   }
-  .classes-nestings_css_example:hover > .classes-nestings_css_content {
+  .sketch_css_test-classes-nestings_css_example:hover > .sketch_css_test-classes-nestings_css_content {
         background: blue;
   }
-  .classes-nestings_css_example:hover > .classes-nestings_css_content:hover {
+  .sketch_css_test-classes-nestings_css_example:hover > .sketch_css_test-classes-nestings_css_content:hover {
           background: red;
   }
 }
 
-.classes-nestings_css_content {
+.sketch_css_test-classes-nestings_css_content {
   color: var(--custom);
   background: green;
   padding: 12.0px;

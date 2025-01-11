@@ -2,12 +2,12 @@
 version: 1.2.5
 title: js_gleam_medias_css.gleam
 ---
-pub const simple = "classes-medias_css_simple"
+pub const simple = "sketch_css_test-classes-medias_css_simple"
 
-pub const and = "classes-medias_css_and"
+pub const and = "sketch_css_test-classes-medias_css_and"
 
-pub const or = "classes-medias_css_or"
+pub const or = "sketch_css_test-classes-medias_css_or"
 
-pub const and_or = "classes-medias_css_and_or"
+pub const and_or = "sketch_css_test-classes-medias_css_and_or"
 
-pub const pseudo_class = "classes-medias_css_pseudo_class"
+pub const pseudo_class = "sketch_css_test-classes-medias_css_pseudo_class"

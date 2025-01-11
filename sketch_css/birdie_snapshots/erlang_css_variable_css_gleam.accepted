@@ -2,6 +2,6 @@
 version: 1.2.5
 title: erlang_css_variable_css.gleam
 ---
-.classes-variable_css_variable_property {
+.sketch_css_test-classes-variable_css_variable_property {
   background: red;
 }

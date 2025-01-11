@@ -1,5 +1,0 @@
----
-version: 1.2.5
-title: js_gleam_egdes_css.gleam
----
-pub const edge_cases = "css-3884838561"

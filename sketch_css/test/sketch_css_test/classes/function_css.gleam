@@ -1,6 +1,6 @@
 import sketch/css
-import test_/constants
-import test_/helpers
+import sketch_css_test/constants
+import sketch_css_test/helpers
 
 /// Constants in another file.
 pub fn property() {

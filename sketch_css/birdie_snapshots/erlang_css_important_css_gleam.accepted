@@ -2,7 +2,7 @@
 version: 1.2.5
 title: erlang_css_important_css.gleam
 ---
-.classes-important_css_important {
+.sketch_css_test-classes-important_css_important {
   color: blue;
   background: #ccc !important;
 }

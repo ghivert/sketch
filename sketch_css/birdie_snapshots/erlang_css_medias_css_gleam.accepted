@@ -2,59 +2,59 @@
 version: 1.2.5
 title: erlang_css_medias_css.gleam
 ---
-.classes-medias_css_and {
+.sketch_css_test-classes-medias_css_and {
   background: blue;
 }
 
 @media (max-width: 700.0px) and (min-width: 600.0px) {
-  .classes-medias_css_and {
+  .sketch_css_test-classes-medias_css_and {
     background: red;
     background: blue;
   }
 }
 
-.classes-medias_css_and_or {
+.sketch_css_test-classes-medias_css_and_or {
   background: blue;
 }
 
 @media (max-width: 700.0px) and (min-width: 700.0px) or (min-width: 600.0px) {
-  .classes-medias_css_and_or {
+  .sketch_css_test-classes-medias_css_and_or {
     background: red;
     background: blue;
   }
 }
 
-.classes-medias_css_or {
+.sketch_css_test-classes-medias_css_or {
   background: blue;
 }
 
 @media (max-width: 700.0px) or (min-width: 600.0px) {
-  .classes-medias_css_or {
+  .sketch_css_test-classes-medias_css_or {
     background: red;
     background: blue;
   }
 }
 
-.classes-medias_css_pseudo_class {
+.sketch_css_test-classes-medias_css_pseudo_class {
   background: blue;
 }
 
 @media (max-width: 700.0px) {
-  .classes-medias_css_pseudo_class {
+  .sketch_css_test-classes-medias_css_pseudo_class {
     background: red;
     background: blue;
   }
-  .classes-medias_css_pseudo_class:hover {
+  .sketch_css_test-classes-medias_css_pseudo_class:hover {
       background: green;
   }
 }
 
-.classes-medias_css_simple {
+.sketch_css_test-classes-medias_css_simple {
   background: blue;
 }
 
 @media (max-width: 700.0px) {
-  .classes-medias_css_simple {
+  .sketch_css_test-classes-medias_css_simple {
     background: red;
     background: blue;
   }

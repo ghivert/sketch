@@ -2,6 +2,6 @@
 version: 1.2.5
 title: js_gleam_function_css.gleam
 ---
-pub const property = "classes-function_css_property"
+pub const property = "sketch_css_test-classes-function_css_property"
 
-pub const class = "classes-function_css_class"
+pub const class = "sketch_css_test-classes-function_css_class"

@@ -2,6 +2,6 @@
 version: 1.2.5
 title: js_gleam_nestings_css.gleam
 ---
-pub const content = "classes-nestings_css_content"
+pub const content = "sketch_css_test-classes-nestings_css_content"
 
-pub const example = "classes-nestings_css_example"
+pub const example = "sketch_css_test-classes-nestings_css_example"

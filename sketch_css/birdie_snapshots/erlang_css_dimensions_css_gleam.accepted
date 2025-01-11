@@ -2,7 +2,7 @@
 version: 1.2.5
 title: erlang_css_dimensions_css.gleam
 ---
-.classes-dimensions_css_dimensions_variables {
+.sketch_css_test-classes-dimensions_css_dimensions_variables {
   padding: 12.0px;
   margin: 12.0px;
   transform: rotate(1.0rad) skew(1.0deg, 2.0deg);

@@ -41,6 +41,6 @@ pub fn at(percentage: Float, styles: List(style.Style)) {
 /// Internal function, can be used if you need to go from a keyframe to a String
 /// in case you're building on top of sketch.
 @internal
-pub fn class(keyframe: Keyframe) {
+pub fn class(keyframe: Keyframe) -> style.Class {
   keyframe.class
 }

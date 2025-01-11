@@ -2,13 +2,13 @@
 version: 1.2.5
 title: js_css_function_css.gleam
 ---
-.classes-function_css_property {
+.sketch_css_test-classes-function_css_property {
   width-: 12px;
   color: blue;
   color: var(--custom);
 }
 
-.classes-function_css_class {
+.sketch_css_test-classes-function_css_class {
   background: #ddd;
   background: red;
   display: block;

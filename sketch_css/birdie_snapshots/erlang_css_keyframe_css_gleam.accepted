@@ -16,7 +16,7 @@ title: erlang_css_keyframe_css.gleam
   }
 }
 
-.classes-keyframe_css_example {
+.sketch_css_test-classes-keyframe_css_example {
   opacity: 1.0;
   animation: fade-out;
   background: blue;

@@ -2,4 +2,4 @@
 version: 1.2.5
 title: erlang_gleam_dimensions_css.gleam
 ---
-pub const dimensions_variables = "classes-dimensions_css_dimensions_variables"
+pub const dimensions_variables = "sketch_css_test-classes-dimensions_css_dimensions_variables"

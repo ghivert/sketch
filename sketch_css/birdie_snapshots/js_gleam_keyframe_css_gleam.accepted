@@ -2,4 +2,4 @@
 version: 1.2.5
 title: js_gleam_keyframe_css.gleam
 ---
-pub const example = "classes-keyframe_css_example"
+pub const example = "sketch_css_test-classes-keyframe_css_example"

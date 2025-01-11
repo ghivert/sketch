@@ -1,8 +1,8 @@
 import birdie
 import gleam/string
-import gleeunit/should
 import sketch
 import sketch/css.{type Class}
+import startest/expect
 
 pub fn card_body(custom: String) -> Class {
   css.class([
@@ -31,8 +31,9 @@ pub fn compute_class(class: css.Class, title: String) {
   let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Ephemeral)
   let #(stylesheet, class_name) = sketch.class_name(class, stylesheet)
   let content = sketch.render(stylesheet)
-  content |> string.contains(class_name) |> should.be_true
+  content |> string.contains(class_name) |> expect.to_be_true
   birdie.snap(title: multitarget_title(title), content:)
+  Nil
 }
 
 pub fn compute_at_rule(rule: css.AtRule, title: String) {
@@ -40,4 +41,5 @@ pub fn compute_at_rule(rule: css.AtRule, title: String) {
   let stylesheet = sketch.at_rule(rule, stylesheet)
   let content = sketch.render(stylesheet)
   birdie.snap(title: multitarget_title(title), content:)
+  Nil
 }

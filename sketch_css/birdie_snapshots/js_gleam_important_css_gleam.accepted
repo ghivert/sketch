@@ -2,4 +2,4 @@
 version: 1.2.5
 title: js_gleam_important_css.gleam
 ---
-pub const important = "classes-important_css_important"
+pub const important = "sketch_css_test-classes-important_css_important"
