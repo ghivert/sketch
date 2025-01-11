@@ -830,7 +830,10 @@ fn convert_generic_call(
     Ok(c), _ -> convert_pseudo_selector_call(label, c, arguments, env, modules)
     _, Ok(c) -> convert_combinator_call(c, arguments, env, modules)
     _, _ -> {
-      let label = string.replace(label, each: "_", with: "-")
+      let label =
+        label
+        |> utils.remove_trailing_underscore
+        |> string.replace(each: "_", with: "-")
       case arguments {
         [g.UnlabelledField(item: g.List(styles, ..))] -> {
           let styles = list.try_map(styles, convert_expression(_, env, modules))

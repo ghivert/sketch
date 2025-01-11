@@ -1,7 +1,7 @@
 import glance as g
+import gleam/bool
 import gleam/function
 import gleam/list
-import gleam/order
 import gleam/pair
 import gleam/result
 import gleam/string
@@ -65,31 +65,19 @@ pub fn reject_cycles(modules: List(Module)) -> snag.Result(List(Module)) {
   |> result.replace(modules)
 }
 
-/// Sort modules by order of dependencies. If a module depends on another, it
-/// will be placed later in the list, guaranteeing the dependency will be
-/// compiled earlier.
-pub fn by_dependent(modules: List(Module)) {
-  fn(a: Module, b: Module) {
-    let a = to_assoc(a)
-    let b = to_assoc(b)
-    let modules = list.map(modules, to_assoc)
-    case dependencies.is_dependency(a, of: b, modules:) {
-      True -> order.Lt
-      False -> order.Gt
-    }
-  }
-}
-
 /// Convert every style module to CSS stylesheet.
-pub fn convert_styles(
-  modules: List(Module),
-) -> List(#(Module, stylesheet.StyleSheet)) {
-  list.map(modules, to_assoc)
-  |> list.fold([], stylesheet.convert)
-  |> list.filter_map(fn(module) {
-    list.find(modules, fn(mod) { mod.name == module.0 })
-    |> result.map(pair.new(_, module.1))
-  })
+pub fn convert_style(modules: List(Module)) {
+  fn(mods: List(#(String, stylesheet.StyleSheet)), module: Module) {
+    let is_present = list.key_find(mods, module.name) |> result.is_ok
+    use <- bool.guard(when: is_present, return: mods)
+    let m = to_assoc(module)
+    let modules_ = list.map(modules, to_assoc)
+    dependencies.all_imports(m, modules_, [])
+    |> list.filter(fn(i) { list.key_find(mods, i) |> result.is_error })
+    |> list.filter_map(fn(i) { list.find(modules, fn(m) { m.name == i }) })
+    |> list.fold(mods, convert_style(modules))
+    |> stylesheet.convert(to_assoc(module))
+  }
 }
 
 /// Build Gleam interface from an association list mapping function name to

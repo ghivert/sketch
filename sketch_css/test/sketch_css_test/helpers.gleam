@@ -1,9 +1,10 @@
 import sketch/css.{type Class}
+import sketch_css_test/constants
 
 pub fn card_body(custom: String) -> Class {
   css.class([
     css.background("#ddd"),
-    css.background("red"),
+    css.background(constants.red),
     css.display("block"),
     custom_color(custom),
   ])

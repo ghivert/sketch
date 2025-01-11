@@ -11,7 +11,7 @@ title: erlang_css_function_css.gleam
 }
 
 .sketch_css_test-classes-function_css_property {
-  width-: 12px;
+  width: 12px;
   color: blue;
   color: var(--custom);
 }

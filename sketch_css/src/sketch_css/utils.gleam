@@ -71,6 +71,15 @@ pub fn outputs(directories: Directories, name: String) -> Outputs {
   Outputs(dst:, interface:, dst_file:, interface_file:)
 }
 
+pub fn remove_trailing_underscore(label: String) {
+  case string.ends_with(label, "_") {
+    False -> label
+    True ->
+      string.drop_end(label, 1)
+      |> remove_trailing_underscore
+  }
+}
+
 fn read_directory(
   key: String,
   flag: Option(String),

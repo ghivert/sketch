@@ -1,20 +1,21 @@
 import gleam/bool
 import gleam/io
 import gleam/list
+import gleam/pair
 import gleam/result
 import gleam/string
 import sketch
 import sketch_css/fs
-import sketch_css/module
-import sketch_css/module/stylesheet
-import sketch_css/utils
+import sketch_css/module.{type Module}
+import sketch_css/module/stylesheet.{type StyleSheet}
+import sketch_css/utils.{type Directories}
 import snag
 
 /// Generate stylesheets from Gleam style definitions files. Recursively extract
 /// all files ending with `_styles.gleam`, `_css.gleam` or `_sketch.gleam` to
 /// proper stylesheets, and output some files interfaces to interact with them.
 pub fn stylesheets(
-  directories directories: utils.Directories,
+  directories directories: Directories,
 ) -> Result(Nil, snag.Snag) {
   use is_dir <- result.try(fs.is_directory(directories.src))
   use <- bool.guard(when: !is_dir, return: snag.error("Not a directory"))
@@ -23,20 +24,27 @@ pub fn stylesheets(
   write_css_files(modules, directories)
 }
 
-fn convert(source_files: List(String), directories: utils.Directories) {
+fn convert(source_files: List(String), directories: Directories) {
   source_files
   |> list.filter_map(module.from_path(_, directories.src))
   |> list.map(module.remove_pipes)
   |> list.map(module.rewrite_imports)
   |> list.map(module.rewrite_exposings)
   |> module.reject_cycles
-  |> result.map(fn(mods) { list.sort(mods, module.by_dependent(mods)) })
-  |> result.map(module.convert_styles)
+  |> result.map(convert_modules)
+}
+
+fn convert_modules(modules: List(Module)) -> List(#(Module, StyleSheet)) {
+  list.fold(modules, [], module.convert_style(modules))
+  |> list.filter_map(fn(module) {
+    list.find(modules, fn(m) { m.name == module.0 })
+    |> result.map(pair.new(_, module.1))
+  })
 }
 
 fn write_css_files(
-  modules: List(#(module.Module, stylesheet.StyleSheet)),
-  directories: utils.Directories,
+  modules: List(#(Module, StyleSheet)),
+  directories: Directories,
 ) -> snag.Result(Nil) {
   let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Ephemeral)
   let modules = list.filter(modules, is_css_file)
@@ -47,9 +55,9 @@ fn write_css_files(
 }
 
 fn write_css_file(
-  module: #(module.Module, stylesheet.StyleSheet),
+  module: #(Module, StyleSheet),
   stylesheet: sketch.StyleSheet,
-  directories: utils.Directories,
+  directories: Directories,
 ) -> snag.Result(Nil) {
   let #(stylesheet, names) = module.build_stylesheet(module, stylesheet)
   let content = sketch.render(stylesheet)
@@ -67,7 +75,7 @@ fn write_css_file(
   Nil
 }
 
-fn is_css_file(module: #(module.Module, a)) -> Bool {
+fn is_css_file(module: #(Module, a)) -> Bool {
   let path = { module.0 }.path
   string.ends_with(path, "_styles.gleam")
   || string.ends_with(path, "_css.gleam")
