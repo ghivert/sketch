@@ -25,6 +25,7 @@ always pushing the boundaries of what can be achieved with it!
 - Support for `only`, `print`, `screen` & `all` media queries has been added.
 - CSS transform functions are now fully supported, with all functions supported.
 - CSS Length are now fully supported, with all length types supported.
+- Keyframes @rule are now supported.
 
 ### Improvements
 

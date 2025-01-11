@@ -9065,6 +9065,15 @@ pub fn compose(class: Class) -> Style {
   style.ClassName(class)
 }
 
+/// The @keyframes CSS [at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)
+/// controls the intermediate steps in a CSS animation sequence by defining
+/// styles for keyframes (or waypoints) along the animation sequence. This gives
+/// more control over the intermediate steps of the animation sequence than
+/// [transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_transitions).
+///
+/// ---
+///
+/// [MDN Reference](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes#percentage)
 pub fn keyframes(name: String, frames: List(Keyframe)) -> AtRule {
   style.classes_rule("keyframes " <> name, {
     use keyframe <- list.map(frames)
