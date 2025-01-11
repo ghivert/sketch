@@ -13,39 +13,41 @@ one entrypoint, `sketch/redraw`, containing everything needed to get started.
 ```gleam
 // main.gleam
 import redraw
-import sketch
 import sketch/redraw as sketch_redraw
 
 pub fn main() {
   let root = client.create_root("root")
-  client.render(root, redraw.strict_mode([
-    // Initialise the cache. Sketch Redraw handles the details for you.
-    sr.provider([
-      // Here comes your components!
+  client.render(root,
+    redraw.strict_mode([
+      // Initialise the cache. Sketch Redraw handles the details for you.
+      sketch_redraw.provider([
+        // Here comes your components!
+      ])
     ])
-  ]))
+  )
 }
 ```
 
 ## Usage
 
 `sketch_redraw` exposes one module to help you build your site, similarly to
-redraw: `sketch/redraw/html`. `html` is simply a supercharged component,
+redraw: `sketch/redraw/dom/html`. `html` is simply a supercharged component,
 accepting a `sketch.Class` as first argument, and applies that style to the
-node. Because it's a simple component, `sketch/redraw/html` and `redraw/html`
-can be mixed in the same code without issue! Because of that property,
-`sketch_redraw` _does not_ expose `text` and `none` function at that time.
+node. Because it's a simple component, `sketch/redraw/dom/html` and
+`redraw/html` can be mixed in the same code without issue! Because of that
+property, `sketch_redraw` _does not_ expose `text` and `none` function at that
+time.
 
 ```gleam
 import redraw/html as h
-import sketch
+import sketch/css
+import sketch/css/length.{px}
 import sketch/redraw/html
-import sketch/size.{px}
 
 fn main_style() {
-  sketch.class([
-    sketch.background("red"),
-    sketch.font_size(px(16)),
+  css.class([
+    css.background("red"),
+    css.font_size(px(16)),
   ])
 }
 

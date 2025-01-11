@@ -65,6 +65,12 @@ abstraction allows a greater flexibility, without adding too much burden, as
 they're still all generated at runtime. Sketch favour explicitness and CSS
 generation for every node instead of relying on cascading and inheritance.
 
+## Examples
+
+Want to see examples to jump directly on subject? Take a look at
+[e2e folder on GitHub](https://github.com/ghivert/sketch/tree/main/e2e) to see
+how it works!
+
 ## Sketch Lustre
 
 ### Setup
@@ -119,7 +125,7 @@ simple node, without any class linked on it.
 
 ```gleam
 import sketch/css
-import sketch/csssize.{px}
+import sketch/css/length.{px}
 import sketch/lustre/element
 import sketch/lustre/element/html
 
@@ -209,7 +215,7 @@ time.
 ```gleam
 import redraw/html as h
 import sketch/css
-import sketch/css/size.{px}
+import sketch/css/length.{px}
 import sketch/redraw/html
 
 fn main_style() {
@@ -384,8 +390,8 @@ to call the proper functions, and Sketch will take care of the rest.
 
 ```gleam
 import sketch/css
+import sketch/css/length.{px}
 import sketch/css/media
-import sketch/css/size.{px}
 
 fn my_class() {
   css.class([

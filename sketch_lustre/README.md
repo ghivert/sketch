@@ -18,17 +18,19 @@ import sketch
 import sketch/lustre as sketch_lustre
 
 pub fn main() {
-  // Initialise the cache. Two strategies can be used in browser, only one
-  // on server-side.
-  let assert Ok(cache) = sketch.cache(strategy: sketch.Ephemeral)
-  // Select the output of the generated stylesheet.
-  sketch_lustre.node()
-  // Add the sketch CSS generation "view middleware".
-  |> sketch_lustre.compose(view, cache)
-  // Give the new view function to lustre runtime!
-  |> lustre.simple(init, update, _)
+  // Initialise the cache. Two strategies can be used. Ephemeral caches are designed as throw-away caches.
+  let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Ephemeral)
+  // Generate the partial view function, compatible with Lustre's runtime.
+  lustre.simple(init, update, view(_, stylesheet))
   // And voilà!
   |> lustre.start("#app", Nil)
+}
+
+fn view(model, stylesheet) {
+  // Add the sketch CSS generation "view middleware".
+  use <- sketch_lustre.render(stylesheet, [sketch_lustre.node()])
+  // Run your actual view function.
+  my_view(model)
 }
 ```
 
@@ -54,21 +56,23 @@ Lustre, and will not add another class. This is helpful when you want to use a
 simple node, without any class linked on it.
 
 ```gleam
-import sketch
+import sketch/css
+import sketch/css/length.{px}
 import sketch/lustre/element
 import sketch/lustre/element/html
-import sketch/size.{px}
 
 fn main_style() {
-  sketch.class([
-    sketch.background("red"),
-    sketch.font_size(px(16)),
+  css.class([
+    css.background("red"),
+    css.font_size(px(16)),
   ])
 }
 
 fn view(model: Int) {
   html.div(main_style(), [], [
-    html.div_([], [h.text(int.to_string(model))]),
+    html.div_([], [
+      html.text(int.to_string(model)),
+    ]),
   ])
 }
 ```
@@ -86,12 +90,21 @@ straightforward, by using `sketch/lustre/element.unstyled`. The opposite (going
 from a Lustre element to a Sketch Lustre element) is also possible by using
 `sketch/lustre/element.styled`!
 
+### Sketch Lustre Experimental
+
+Because sometimes you may want to avoid the `Element(msg)` overhead, you can try
+the experimental Sketch Lustre runtime, `sketch_lustre_experimental`. That
+runtime works in the same way, excepts it does not implements its own `Element`
+type on top of Lustre's `Element`. Most of the time, you should not see any
+differences. Keep in mind that it can bug though, as it's still experimental. If
+you try to use it, please, report any bugs you can find.
+
 ### Usage with Shadow DOM
 
 In browser, Sketch can work with a Shadow DOM, in order to hide the compiled
-styles from the rest of the application. To do it, you can use
-[`plinth`](https://github.com/CrowdHailer/plinth). This allows to create a
-`ShadowRoot`, to use
-[`sketch/options.shadow_root()`](https://hexdocs.pm/sketch/sketch/options.html#shadow_root).
-In the same way you can initialize the cache to render in document or in a
-`style` node, you can now use a Shadow Root to paint styles in your application!
+styles from the rest of the application. With a proper shadow root (represented
+as a `Dynamic` in Gleam), you can use
+[`sketch/lustre.shadow()`](https://hexdocs.pm/sketch_lustre/sketch/lustre.html#shadow)
+to render a stylesheet in the shadow root directly. In the same way you can
+initialize the cache to render in document or in a `style` node, you can use a
+shadow root to paint styles in your application!
