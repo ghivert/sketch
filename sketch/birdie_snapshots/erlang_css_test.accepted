@@ -1,0 +1,37 @@
+---
+version: 1.2.5
+title: erlang_css_test
+file: ./test/sketch_test.gleam
+test_name: erlang_css_test
+---
+.css-8772105 {
+  appearance: none;
+  background: none;
+  border: 1px solid black;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.css-6675211 {
+  background: red;
+}
+
+.css-6675211:hover {
+    background: blue;
+}
+
+.css-6675211:hover > .css-8772105 {
+      background: red;
+      font-family: Verdana;
+}
+
+.css-6675211 > .css-8772105 {
+    background: blue !important;
+    font-size: 2.0rem;
+}
+
+@media (max-width: 700.0px) {
+  .css-6675211 {
+    background: yellow;
+  }
+}

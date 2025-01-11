@@ -1,0 +1,7 @@
+---
+version: 1.2.5
+title: js_gleam_exposed_css.gleam
+---
+pub const exposed_property = "sketch_css_test-classes-exposed_css_exposed_property"
+
+pub const exposed_class = "sketch_css_test-classes-exposed_css_exposed_class"

@@ -1,6 +1,6 @@
 pub const explanation_fst = "Sketch is a universal CSS library built for Gleam. Whether you prefer CSS-in-Gleam or plain CSS, if you render your stylings on your server, or if you use node.js, bun or Erlang, Sketch covers them all!"
 
-pub const explanation_snd = "Sketch does not try to hide CSS nor add abstraction layer on top of it. Instead, it deliberately leverages on CSS, and fills the gap between CSS and your favorite framework, be it Lustre, Wisp or even Redraw!"
+pub const explanation_snd = "Sketch does not try to hide CSS nor add abstraction layer on top of it. Instead, it deliberately leverages on CSS, and fills the gap between CSS and your favorite framework, be it Lustre, Wisp or even Redraw! "
 
 pub const explanation_trd = "CSS is already the framework you need for your designs. Stop learning yet another framework you'll fight with. If you know how to write CSS, you already know how to write styles with Sketch."
 
@@ -22,9 +22,9 @@ pub const sketch_wisp_fst = "CSS-in-Gleam is great, but sometimes, you just need
 
 pub const sketch_wisp_snd = "Sketch can be used with Lustre, but also with any way to generate HMTL and CSS. All you need is creating a StyleSheet, and putting some styles inside. Once it's done, render the stylesheet as string, and you have a valid CSS file! And of course, because Lustre can also handle SSR for you, Sketch can integrate in Lustre's SSR!"
 
-pub const sketch_lustre_example = "import sketch
+pub const sketch_lustre_example = "import sketch/css
+import sketch/css/length.{px, percent}
 import sketch/lustre/html
-import sketch/size.{px, percent}
 
 pub type Color {
   Red
@@ -38,35 +38,35 @@ fn button(color, text) {
     Orange -> \"rgb(254, 188, 46)\"
     Green -> \"rgb(40, 202, 65)\"
   }
-  s.class([
-    s.background(background),
-    s.color(\"white\"),
-    s.border_radius(px(8)),
-    s.transition(\"all .3s\"),
-    s.border(\"none\"),
-    s.appearance(\"none\"),
-    s.font_family(\"inherit\"),
-    s.font_size(px(16)),
-    s.padding(px(12)),
-    s.font_weight(\"bold\"),
-    s.cursor(\"pointer\"),
-    s.min_width(px(200)),
-    s.text_align(\"center\"),
-    s.hover([
-      s.opacity(0.7),
+  css.class([
+    css.background(background),
+    css.color(\"white\"),
+    css.border_radius(px(8)),
+    css.transition(\"all .3s\"),
+    css.border(\"none\"),
+    css.appearance(\"none\"),
+    css.font_family(\"inherit\"),
+    css.font_size(px(16)),
+    css.padding(px(12)),
+    css.font_weight(\"bold\"),
+    css.cursor(\"pointer\"),
+    css.min_width(px(200)),
+    css.text_align(\"center\"),
+    css.hover([
+      css.opacity(0.7),
     ]),
   ])
   |> html.button([], [html.text(text)])
 }
 
 fn view(model: Model) {
-  s.class([
-    s.display(\"flex\"),
-    s.gap(px(12)),
-    s.height(percent(100)),
-    s.flex_direction(\"column\"),
-    s.align_items(\"center\"),
-    s.justify_content(\"center\"),
+  css.class([
+    css.display(\"flex\"),
+    css.gap(px(12)),
+    css.height(percent(100)),
+    css.flex_direction(\"column\"),
+    css.align_items(\"center\"),
+    css.justify_content(\"center\"),
   ])
   |> html.div([], [
     button(Red, \"Close\"),
@@ -77,10 +77,10 @@ fn view(model: Model) {
 "
 
 pub const sketch_redraw_example = "import redraw
-import redraw/html
-import sketch
-import sketch/redraw/html as sketch_html
-import sketch/size.{px, percent}
+import redraw/dom/html
+import sketch/css
+import sketch/css/length.{px, percent}
+import sketch/redraw/dom/html as sketch_html
 
 pub type Color {
   Red
@@ -95,22 +95,22 @@ fn button() {
     Orange -> \"rgb(254, 188, 46)\"
     Green -> \"rgb(40, 202, 65)\"
   }
-  s.class([
-    s.background(background),
-    s.color(\"white\"),
-    s.border_radius(px(8)),
-    s.transition(\"all .3s\"),
-    s.border(\"none\"),
-    s.appearance(\"none\"),
-    s.font_family(\"inherit\"),
-    s.font_size(px(16)),
-    s.padding(px(12)),
-    s.font_weight(\"bold\"),
-    s.cursor(\"pointer\"),
-    s.min_width(px(200)),
-    s.text_align(\"center\"),
-    s.hover([
-      s.opacity(0.7),
+  css.class([
+    css.background(background),
+    css.color(\"white\"),
+    css.border_radius(px(8)),
+    css.transition(\"all .3s\"),
+    css.border(\"none\"),
+    css.appearance(\"none\"),
+    css.font_family(\"inherit\"),
+    css.font_size(px(16)),
+    css.padding(px(12)),
+    css.font_weight(\"bold\"),
+    css.cursor(\"pointer\"),
+    css.min_width(px(200)),
+    css.text_align(\"center\"),
+    css.hover([
+      css.opacity(0.7),
     ]),
   ])
   |> sketch_html.button([], [html.text(text)])
@@ -119,13 +119,13 @@ fn button() {
 fn app() {
   let button = button()
   use <- redraw.component__(\"App\")
-  s.class([
-    s.display(\"flex\"),
-    s.gap(px(12)),
-    s.height(percent(100)),
-    s.flex_direction(\"column\"),
-    s.align_items(\"center\"),
-    s.justify_content(\"center\"),
+  css.class([
+    css.display(\"flex\"),
+    css.gap(px(12)),
+    css.height(percent(100)),
+    css.flex_direction(\"column\"),
+    css.align_items(\"center\"),
+    css.justify_content(\"center\"),
   ])
   |> sketch_html.div([], [
     button(#(Red, \"Close\")),
@@ -135,41 +135,41 @@ fn app() {
 }
 "
 
-pub const sketch_css_example = "import sketch
+pub const sketch_css_example = "import sketch/css
 
 fn row() {
-  sketch.class([
-    sketch.display(\"flex\"),
-    sketch.flex_direction(\"row\"),
+  css.class([
+    css.display(\"flex\"),
+    css.flex_direction(\"row\"),
   ])
 }
 
 fn column() {
-  sketch.class([
-    sketch.display(\"flex\"),
-    sketch.flex_direction(\"column\"),
+  css.class([
+    css.display(\"flex\"),
+    css.flex_direction(\"column\"),
   ])
 }
 
 fn gap_row(gap: String) {
-  sketch.class([
-    sketch.compose(row()),
-    sketch.gap_(gap),
+  css.class([
+    css.compose(row()),
+    css.gap_(gap),
   ])
 }
 "
 
-pub const sketch_css_css = ".row {
+pub const sketch_css_css = ".module_name-row {
   display: flex;
   flex-direction: row;
 }
 
-.column {
+.module_name-column {
   display: flex;
   flex-direction: column;
 }
 
-.gap-row {
+.module_name-gap_row {
   gap: var(--flex-direction);
 }
 "
@@ -184,11 +184,13 @@ pub const gap_row = \"row gap_row\"
 pub const sketch_ssr_example = "import lustre/element
 import mist
 import sketch
+import sketch/css
 import sketch/lustre as sketch_lustre
 import sketch/lustre/html
 import wisp
 
-pub fn response() {
+pub fn response(stylesheet: sketch.StyleSheet) {
+  use <- sketch_lustre.ssr(stylesheet)
   html.html([], [
     html.head([], [html.title(\"Sketch Example\")]),
     html.body_([], [
@@ -200,19 +202,18 @@ pub fn response() {
 }
 
 fn row() {
-  sketch.class([
-    sketch.display(\"flex\"),
-    sketch.flex_direction(\"row\"),
+  css.class([
+    css.display(\"flex\"),
+    css.flex_direction(\"row\"),
   ])
 }
 
 pub fn main() {
-  let assert Ok(cache) = sketch.cache(strategy: sketch.Ephemeral)
+  let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Ephemeral)
   let secret = wisp.random_string(64)
   let assert Ok(_) =
     fn (_request) {
-      response()
-      |> sketch_lustre.ssr(cache)
+      response(stylesheet)
       |> element.to_document_string_builder
       |> wisp.html_response(200)
     }

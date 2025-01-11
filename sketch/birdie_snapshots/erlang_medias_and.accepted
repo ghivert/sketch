@@ -1,0 +1,14 @@
+---
+version: 1.2.5
+title: erlang_medias_and
+---
+.css-112994211 {
+  background: blue;
+}
+
+@media (max-width: 700.0px) and (min-width: 600.0px) {
+  .css-112994211 {
+    background: red;
+    background: blue;
+  }
+}

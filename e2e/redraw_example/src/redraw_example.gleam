@@ -1,15 +1,15 @@
 import components
 import gleam/int
 import redraw
-import redraw/attribute as a
-import redraw/handler
-import redraw/html as h
-import redraw_dom/client
+import redraw/dom/attribute as a
+import redraw/dom/client
+import redraw/dom/events
+import redraw/dom/html as h
 import sketch/redraw as sr
 
 pub fn main() {
   let app = app()
-  let root = client.create_root("root")
+  let assert Ok(root) = client.create_root("root")
   client.render(root, redraw.strict_mode([sr.provider([app()])]))
 }
 
@@ -19,8 +19,8 @@ fn app() {
   let showcase = showcase()
   use <- redraw.component__("App")
   let #(count, set_count) = redraw.use_state_(0)
-  let increment = handler.on_click(fn(_) { set_count(fn(c) { c + 1 }) })
-  let decrement = handler.on_click(fn(_) { set_count(fn(c) { c - 1 }) })
+  let increment = events.on_click(fn(_) { set_count(fn(c) { c + 1 }) })
+  let decrement = events.on_click(fn(_) { set_count(fn(c) { c - 1 }) })
   components.body([], [
     components.topbar([], [h.text("Sketch")]),
     components.headline(count, [], [

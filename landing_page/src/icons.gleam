@@ -3,17 +3,17 @@ import icons/check
 import icons/copy
 import icons/github
 import icons/home
-import sketch as s
-import sketch/redraw/html as h
-import sketch/size.{px}
+import sketch/css
+import sketch/css/length.{px}
+import sketch/redraw/dom/html as h
 
 pub fn small(icon) {
-  s.class([s.width(px(24)), s.height(px(24))])
+  css.class([css.width(px(24)), css.height(px(24))])
   |> h.div([], [icon])
 }
 
 pub fn tiny(icon) {
-  s.class([s.width(px(12)), s.height(px(12))])
+  css.class([css.width(px(12)), css.height(px(12))])
   |> h.div([], [icon])
 }
 

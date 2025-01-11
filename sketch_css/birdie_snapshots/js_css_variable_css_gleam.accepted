@@ -1,0 +1,7 @@
+---
+version: 1.2.5
+title: js_css_variable_css.gleam
+---
+.sketch_css_test-classes-variable_css_variable_property {
+  background: red;
+}

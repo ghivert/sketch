@@ -1,0 +1,9 @@
+---
+version: 1.2.5
+title: erlang_font_face_css
+---
+@font-face {
+  src: file;
+  font-family: Example;
+  font-style: bold;
+}

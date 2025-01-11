@@ -1,0 +1,14 @@
+---
+version: 1.2.5
+title: js_medias_or
+---
+.css-952026283 {
+  background: blue;
+}
+
+@media (max-width: 700.0px) or (min-width: 600.0px) {
+  .css-952026283 {
+    background: red;
+    background: blue;
+  }
+}

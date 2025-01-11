@@ -1,18 +1,18 @@
-import redraw/attribute as a
-import redraw/html as h
-import sketch as s
-import sketch/redraw/html as sh
-import sketch/size.{px, rem}
+import redraw/dom/attribute as a
+import redraw/dom/html as h
+import sketch/css
+import sketch/css/length.{px, rem}
+import sketch/redraw/dom/html as sh
 
 fn primary_class() {
-  s.class([
-    s.display("block"),
-    s.text_decoration("none"),
-    s.background("var(--dark-background)"),
-    s.border_radius(px(6)),
-    s.padding_("9px 16px"),
-    s.font_size(rem(1.0)),
-    s.color("inherit"),
+  css.class([
+    css.display("block"),
+    css.text_decoration("none"),
+    css.background("var(--dark-background)"),
+    css.border_radius(px(6)),
+    css.padding_("9px 16px"),
+    css.font_size(rem(1.0)),
+    css.color("inherit"),
   ])
 }
 
@@ -33,30 +33,30 @@ pub fn example(color, text) {
     Orange -> "rgb(254, 188, 46)"
     Green -> "rgb(40, 202, 65)"
   }
-  s.class([
-    s.background(background),
-    s.color("white"),
-    s.border_radius(px(8)),
-    s.transition("all .3s"),
-    s.border("none"),
-    s.appearance("none"),
-    s.font_family("inherit"),
-    s.font_size(px(16)),
-    s.padding(px(12)),
-    s.font_weight("bold"),
-    s.cursor("pointer"),
-    s.min_width(px(200)),
-    s.text_align("center"),
-    s.hover([s.opacity(0.7)]),
+  css.class([
+    css.background(background),
+    css.color("white"),
+    css.border_radius(px(8)),
+    css.transition("all .3s"),
+    css.border("none"),
+    css.appearance("none"),
+    css.font_family("inherit"),
+    css.font_size(px(16)),
+    css.padding(px(12)),
+    css.font_weight("bold"),
+    css.cursor("pointer"),
+    css.min_width(px(200)),
+    css.text_align("center"),
+    css.hover([css.opacity(0.7)]),
   ])
   |> sh.button([], [h.text(text)])
 }
 
 pub fn link(link, content) {
-  s.class([
-    s.compose(primary_class()),
-    s.background("var(--background)"),
-    s.border("1px solid var(--border-color)"),
+  css.class([
+    css.compose(primary_class()),
+    css.background("var(--background)"),
+    css.border("1px solid var(--border-color)"),
   ])
   |> sh.a([a.href(link)], [h.text(content)])
 }

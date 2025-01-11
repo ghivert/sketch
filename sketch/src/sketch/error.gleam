@@ -2,8 +2,7 @@
 
 import gleam/otp/actor
 
-/// NotABrowser is unused nowadays. It will be removed in v4.
+/// Standard Sketch Error. Used on BEAM target. JS target never fails.
 pub type SketchError {
-  NotABrowser
   OtpError(actor.StartError)
 }

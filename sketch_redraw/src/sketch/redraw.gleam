@@ -1,12 +1,12 @@
 import redraw.{type Component} as react
-import redraw/attribute.{type Attribute} as a
-import redraw/internals/attribute
-import sketch.{type Class}
+import redraw/dom/attribute.{type Attribute} as a
+import sketch
+import sketch/css.{type Class}
 import sketch/redraw/internals/mutable as mut
 import sketch/redraw/internals/object
 
 type StyleSheet {
-  StyleSheet(cache: mut.Mutable(sketch.Cache), render: fn() -> Nil)
+  StyleSheet(cache: mut.Mutable(sketch.StyleSheet), render: fn() -> Nil)
 }
 
 /// Unique name for Sketch Context. Only used across the module.
@@ -16,14 +16,13 @@ const context_name = "SketchRedrawContext"
 /// user what should be done before using `sketch_redraw`.
 const error_msg = "Sketch Redraw Provider not set. Please, add the provider in your render tree."
 
-/// Create the Sketch provider used to manage `Cache`. This makes sure identical
-/// styles will never be computed twice.
-///
+/// Create the Sketch provider used to manage the `StyleSheet`. \
+/// This makes sure identical styles will never be computed twice. \
 /// Use it at root of your render function.
 ///
 /// ```gleam
 /// import redraw
-/// import redraw_dom/client
+/// import redraw/dom/client
 /// import sketch/redraw as sketch_redraw
 ///
 /// pub fn main() {
@@ -39,7 +38,7 @@ const error_msg = "Sketch Redraw Provider not set. Please, add the provider in y
 /// }
 /// ```
 pub fn provider(children) {
-  let assert Ok(cache) = sketch.cache(strategy: sketch.Ephemeral)
+  let assert Ok(cache) = sketch.stylesheet(strategy: sketch.Persistent)
   let cache = mut.wrap(cache)
   let stylesheet = StyleSheet(cache:, render: fn() { Nil })
   let assert Ok(context) = react.create_context_(context_name, stylesheet)
@@ -66,7 +65,7 @@ fn do_styled(props) {
   let context = get_context()
   let StyleSheet(cache:, render:) = react.use_context(context)
   let #(tag, styles, props) = extract(props)
-  let str = styles.string_representation
+  let str = styles.as_string
   let class_name =
     react.use_memo(fn() { generate_class_name(cache, styles) }, #(cache, str))
   use_insertion_effect(fn() { render() }, #(class_name))
@@ -85,7 +84,7 @@ pub fn styled(
   let as_ = a.attribute("as", tag)
   let styles = a.attribute("styles", styles)
   let fun = styled_fn(tag, do_styled)
-  attribute.to_props([as_, styles, ..props])
+  to_props([as_, styles, ..props])
   |> react.jsx(fun, _, children)
 }
 
@@ -109,3 +108,6 @@ fn dump_styles(style: a, content: String) -> Nil
 /// Otherwise, returns the existing `do_styled` function specialized for the tag.
 @external(javascript, "../redraw.ffi.mjs", "styledFn")
 fn styled_fn(tag: String, value: a) -> a
+
+@external(javascript, "../redraw.ffi.mjs", "toProps")
+fn to_props(props: List(a.Attribute)) -> b

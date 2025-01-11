@@ -3,12 +3,12 @@ version = "1.0.0"
 
 [dependencies]
 gleam_stdlib = "~> 0.34 or ~> 1.0"
-sketch = { path = "../../sketch" }
-sketch_lustre = { path = "../../sketch_lustre" }
+sketch = {path = "../../sketch"}
+sketch_lustre = {path = "../../sketch_lustre"}
 gleam_http = "~> 3.6"
-mist = "~> 3.0"
+mist = ">= 4.0.0 and < 5.0.0"
 lustre = ">= 4.6.0 and < 5.0.0"
-shared_view = { path = "../shared_view" }
+shared_view = {path = "../shared_view"}
 gleam_otp = ">= 0.13.0 and < 1.0.0"
 gleam_json = ">= 2.0.0 and < 3.0.0"
 gleam_erlang = ">= 0.28.0 and < 1.0.0"

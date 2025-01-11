@@ -1,10 +1,13 @@
 name = "sketch"
-version = "3.1.2"
+version = "4.0.0"
 
 description = "A CSS-in-Gleam package, foundation for CSS packages!"
 internal_modules = ["sketch/internals", "sketch/internals/*"]
 licences = ["MIT"]
-links = [{title = "Sponsor", href = "https://github.com/sponsors/ghivert"}]
+
+[[links]]
+title = "Sponsor"
+href = "https://github.com/sponsors/ghivert"
 
 [repository]
 type = "github"
@@ -12,16 +15,11 @@ user = "ghivert"
 repo = "sketch"
 path = "sketch"
 
-[documentation]
-pages = [
-  {title = " ", path = "#", source = ""}, # {title = "Internal Details", path = "internal-details.html", source = "./docs/internal-details.md"},
-  {title = "Usage with BEAM", path = "usage-with-beam.html", source = "./docs/usage-with-beam.md"}, # {title = "Usage with Lustre SSR", path = "usage-with-lustre-ssr.html", source = "./docs/usage-with-lustre-ssr.md"},
-]
-
 [dependencies]
 gleam_erlang = ">= 0.25.0 and < 1.0.0"
 gleam_otp = ">= 0.10.0 and < 1.0.0"
-gleam_stdlib = "~> 0.34 or ~> 1.0"
+gleam_stdlib = ">= 0.34.0 and < 1.0.0"
 
 [dev-dependencies]
-gleeunit = "~> 1.0"
+birdie = ">= 1.2.5 and < 2.0.0"
+startest = ">= 0.6.0 and < 1.0.0"

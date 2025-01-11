@@ -1,0 +1,9 @@
+---
+version: 1.2.5
+title: js_css_edges_css.gleam
+---
+.sketch_css_test-classes-edges_css_edge_cases {
+  grid-template-areas: "header" "main";
+  --example-property: example-value;
+  color: var(--custom);
+}

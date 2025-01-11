@@ -1,5 +1,5 @@
-import redraw/attribute as a
-import redraw/svg
+import redraw/dom/attribute as a
+import redraw/dom/svg
 
 const content = "<rect width=\"256\" height=\"256\" fill=\"none\"/><polyline points=\"40 144 96 200 224 72\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"16\"/>"
 

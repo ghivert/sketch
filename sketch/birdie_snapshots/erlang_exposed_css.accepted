@@ -1,0 +1,8 @@
+---
+version: 1.2.5
+title: erlang_exposed_css
+---
+.css-132390646 {
+  background: red;
+  color: red;
+}

@@ -1,0 +1,13 @@
+---
+version: 1.2.5
+title: erlang_gleam_medias_css.gleam
+---
+pub const simple = "sketch_css_test-classes-medias_css_simple"
+
+pub const and = "sketch_css_test-classes-medias_css_and"
+
+pub const or = "sketch_css_test-classes-medias_css_or"
+
+pub const and_or = "sketch_css_test-classes-medias_css_and_or"
+
+pub const pseudo_class = "sketch_css_test-classes-medias_css_pseudo_class"

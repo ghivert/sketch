@@ -1,19 +1,19 @@
 import gleam/option.{type Option}
 import gleam/string
 
-pub fn indent(indent: Int) {
+pub fn indent(indent: Int) -> String {
   string.repeat(" ", indent)
 }
 
 pub fn wrap_class(
   id: String,
   properties: List(String),
-  idt: Int,
+  indentation: Int,
   pseudo: Option(String),
-) {
-  let base_indent = indent(idt)
+) -> String {
+  let base_indent = indent(indentation)
   let pseudo_ = option.unwrap(pseudo, "")
-  [base_indent <> "." <> id <> pseudo_ <> " {", ..properties]
+  [base_indent <> id <> pseudo_ <> " {", ..properties]
   |> string.join("\n")
   |> string.append("\n" <> base_indent <> "}")
 }

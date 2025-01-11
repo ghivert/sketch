@@ -1,0 +1,17 @@
+---
+version: 1.2.5
+title: js_css_function_css.gleam
+---
+.sketch_css_test-classes-function_css_property {
+  width: 12px;
+  color: blue;
+  color: var(--custom);
+}
+
+.sketch_css_test-classes-function_css_class {
+  background: #ddd;
+  background: red;
+  display: block;
+  color: var(--custom);
+  background: green;
+}
