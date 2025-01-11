@@ -403,7 +403,7 @@ fn convert_keyframe(
       let values = list.try_map(items, convert_expression(_, env, modules))
       use values <- result.try(values)
       case label, item {
-        "at", FloatValue(f) ->
+        "at", IntValue(f) ->
           keyframe.at(f, {
             use value <- list.filter_map(values)
             case value {

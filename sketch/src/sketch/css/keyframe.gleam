@@ -1,4 +1,4 @@
-import gleam/float
+import gleam/int
 import sketch/internals/cache/cache as style
 
 /// A keyframe is a part of an `@keyframes` rule.
@@ -34,8 +34,8 @@ pub fn to(styles: List(style.Style)) {
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@keyframes#percentage)
-pub fn at(percentage: Float, styles: List(style.Style)) {
-  Keyframe(style.named(float.to_string(percentage) <> "%", styles))
+pub fn at(percentage: Int, styles: List(style.Style)) {
+  Keyframe(style.named(int.to_string(percentage) <> "%", styles))
 }
 
 /// Internal function, can be used if you need to go from a keyframe to a String

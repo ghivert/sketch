@@ -7,7 +7,7 @@ title: js_css_keyframe_css.gleam
     opacity: 1.0;
   }
 
-  50.0% {
+  50% {
     opacity: 0.5;
   }
 

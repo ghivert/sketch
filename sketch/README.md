@@ -1,20 +1,23 @@
 # Sketch
 
-Sketch is a module providing CSS-in-Gleam in its simpler form. Sketch does not
-try to add complicated API on top of CSS. If you have CSS knowledge, you'll feel
-right at home, with all the niceties offered by Sketch, i.e. type-checking of
-sizes and push-to-browser stylesheets of your classes, as well as SSR support.
+Sketch provides CSS support in Gleam in its simpler — yet complete — form.
+Sketch does not add complicated API on top of CSS. If you have CSS knowledge,
+you'll feel right at home, with all the niceties offered by Sketch, i.e.
+type-checking of dimensions and push-to-browser stylesheets of your classes, as
+well as SSR support or CSS files generation.
 
 Sketch supports both runtime of Gleam, and will let you write your CSS without
 over-thinking about it. Let Sketch handle the hard task for you of CSS caching,
 generation and pushing it in the browser. Sketch do the right choices for you,
 to maximise performance in the browser and on BEAM.
 
+Write your styles once, use them anywhere you want.
+
 ## Distributions
 
 Sketch is thought as bare package, built as a foundation for every CSS packages
-that want to leverage it. In the Sketch package, you'll find all CSS properties
-accessible, as well as low level generation functions, to go from Sketch to CSS.
+that want to leverage it. In the core package, you'll find all CSS properties
+accessible and a way to convert them directly in plain CSS. \
 Sketch package is also made for framework developers, to provide a common
 basement, reusable across the entire Gleam ecosystem, letting users reuse their
 knowledge no matter what they are coding.
@@ -129,7 +132,9 @@ fn main_style() {
 
 fn view(model: Int) {
   html.div(main_style(), [], [
-    html.div_([], [html.text(int.to_string(model))]),
+    html.div_([], [
+      html.text(int.to_string(model)),
+    ]),
   ])
 }
 ```
@@ -180,23 +185,26 @@ import sketch/redraw as sketch_redraw
 
 pub fn main() {
   let root = client.create_root("root")
-  client.render(root, redraw.strict_mode([
-    // Initialise the cache. Sketch Redraw handles the details for you.
-    sketch_redraw.provider([
-      // Here comes your components!
+  client.render(root,
+    redraw.strict_mode([
+      // Initialise the cache. Sketch Redraw handles the details for you.
+      sketch_redraw.provider([
+        // Here comes your components!
+      ])
     ])
-  ]))
+  )
 }
 ```
 
 ### Usage
 
 `sketch_redraw` exposes one module to help you build your site, similarly to
-redraw: `sketch/redraw/html`. `html` is simply a supercharged component,
+redraw: `sketch/redraw/dom/html`. `html` is simply a supercharged component,
 accepting a `sketch.Class` as first argument, and applies that style to the
-node. Because it's a simple component, `sketch/redraw/html` and `redraw/html`
-can be mixed in the same code without issue! Because of that property,
-`sketch_redraw` _does not_ expose `text` and `none` function at that time.
+node. Because it's a simple component, `sketch/redraw/dom/html` and
+`redraw/html` can be mixed in the same code without issue! Because of that
+property, `sketch_redraw` _does not_ expose `text` and `none` function at that
+time.
 
 ```gleam
 import redraw/html as h
@@ -231,7 +239,7 @@ seeing something weird, signal the bug!
 
 Because pure CSS generation is straightforward, `sketch_css` does not need a
 cache to generate correct CSS files. Instead, `sketch_css` ships with a CLI
-tool, able to read your Gleam styles files, and output corresponding your CSS
+tool, able to read your Gleam styles files, and output corresponding CSS
 automagically, while providing an abstraction layer written in Gleam, to make
 sure you're using the right classes! It's an other way to leverage Sketch core
 and enjoy the styling in Gleam, while taking advantage of all the static CSS
@@ -249,15 +257,58 @@ in `src/sketch/styles`, matching your styles files, to use in your project!
 
 ### Options
 
-Sketch CSS generation has strong defaults, but everything can be customised. Use
-the CLI flags to configure what you need. CLI exposes 3 flags:
+Sketch CSS generation has strong defaults, but everything can be customised. To
+pass options to Sketch CSS, you have three ways:
+
+- Pass them directly on the CLI. Every option has its equivalent exposed in the
+  CLI.
+- Write them in a `sketch_css.toml` file, at root of your project, next
+  `gleam.toml`.
+- Write them directly in `gleam.toml`, under `[sketch_css]` section.
+
+Sketch CSS has 3 distinct options:
 
 - `--dest`, accepting a folder, relative to current directory. It defaults to
-  `styles`
+  `styles`.
 - `--src`, accepting a folder, relative to current directory. It defaults to
   `src`.
 - `--interface`, accepting a folder, relative to current directory. It defaults
   to `src/sketch/styles`.
+
+Write directly the folder, path resolution is done with current working
+directory as root.
+
+#### Examples
+
+```sh
+gleam run -m sketch_css generate --src="src" --dest="styles" --interface="src/sketch/styles"
+```
+
+```toml
+# sketch_css.toml
+src = "src"
+dest = "styles"
+interface = "src/sketch/styles"
+```
+
+```toml
+# gleam.toml
+name = "name"
+version = "1.0.0"
+
+[sketch_css]
+src = "src"
+dst = "styles"
+interface = "src/sketch/styles"
+
+[dependencies]
+gleam_stdlib = ">= 0.34.0 and < 2.0.0"
+sketch = ">= 4.0.0 and < 5.0.0"
+sketch_css = ">= 2.0.0 and < 3.0.0"
+
+[dev-dependencies]
+gleeunit = ">= 1.0.0 and < 2.0.0"
+```
 
 ### A note on generation algorithm
 
@@ -268,8 +319,10 @@ generated with the variable taken into account! Sketch CSS being opinionated, it
 generates the class, with a CSS variable, letting you update it, override it,
 etc.
 
-All `_` are also automatically transformed into `-`, because CSS classes are
-most of the time used with dashes, so Sketch CSS follows that convention!
+Sketch CSS also acts as a basic interpreter. It means you can write basic
+constants or variables, and they will be taking into account. Be sure to write
+classes like you would do in CSS yet: Sketch CSS does not execute your
+functions!
 
 ### Example
 
@@ -277,43 +330,51 @@ most of the time used with dashes, so Sketch CSS follows that convention!
 // src/main_styles.gleam
 import sketch/css
 
-fn flexer() {
-  css.class([
-    css.display("flex"),
-  ])
+pub fn flexer() {
+  let display = "flex"
+  css.class([css.display(display)])
 }
 
-fn flexer_direction(flex_direction: String) {
+fn direction(flex_direction: String) {
+  css.flex_direction(flex_direction)
+}
+
+pub fn flexer_direction(flex_direction: String) {
   css.class([
     css.compose(flexer()),
-    css.flex_direction(flex_direction),
+    direction(flex_direction),
   ])
 }
 ```
 
 ```css
 /* styles/main_styles.css */
-.flexer {
+.main_styles-flexer {
   display: flex;
 }
 
-.flexer-direction {
+.main_styles-flexer_direction {
+  display: flex;
   flex-direction: var(--flex-direction);
 }
 ```
 
 ```gleam
 // src/sketch/styles/main_styles.gleam
-pub const flexer = "flexer"
+pub const flexer = "main_styles-flexer"
 
-pub const flexer_direction = "flexer flexer-direction"
+pub const flexer_direction = "main_styles-flexer_direction"
 ```
 
 ## Sketch general usage
 
 At its core, Sketch relies on `sketch.class`, which let you define a class. A
 class is made of CSS properties. All of those can be accessed in `sketch`
-module. Build your classes, and use them across your codebase!
+module. Build your classes, and use them across your codebase! But a Sketch
+class contains more than CSS properties, it can also contains every piece of
+information used to defined a CSS class. This includes media queries,
+pseudo-selectors & combinators! This allows to think to your styles in
+isolation, without worrying with the global scope.
 
 ## Using media queries and pseudo-selectors
 
@@ -476,6 +537,52 @@ fn button(disabled) {
   html.button(class, [], [html.text("Yay!")])
 }
 ```
+
+## Top-level CSS
+
+Sometimes, you need to write CSS directly in stylesheets, at the top-level.
+Sketch implements a cherry-picked subset of
+[@rules](https://developer.mozilla.org/docs/Web/CSS/At-rule). You can use them
+directly on stylesheet, and they will be bundled in your resulting stylesheet!
+
+```gleam
+import sketch
+import sketch/css
+
+pub fn main() {
+  let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Ephemeral)
+  let stylesheet = sketch.at_rule(my_keyframe(), stylesheet)
+  let content = stylesheet.render(stylesheet)
+}
+
+fn my_keyframe() {
+  css.keyframes("fade-out", [
+    keyframe.from([css.opacity(1.0)]),
+    keyframe.at(50, [css.opacity(0.5)]),
+    keyframe.to([css.opacity(0.0)]),
+  ])
+}
+```
+
+In the above code, `content` will contains the following CSS.
+
+```css
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+```
+
+Similarly, you can use `@font-face` to define your own fonts!
 
 ## Some opinions on properties
 

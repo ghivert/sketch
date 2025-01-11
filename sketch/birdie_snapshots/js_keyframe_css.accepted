@@ -7,7 +7,7 @@ title: js_keyframe_css
     opacity: 1.0;
   }
 
-  50.0% {
+  50% {
     opacity: 0.5;
   }
 
