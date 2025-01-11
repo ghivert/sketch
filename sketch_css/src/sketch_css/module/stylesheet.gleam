@@ -7,6 +7,7 @@ import gleam/result
 import gleam/string
 import sketch/css
 import sketch/css/angle
+import sketch/css/font_face
 import sketch/css/keyframe
 import sketch/css/length
 import sketch/css/media
@@ -29,6 +30,7 @@ pub type Value {
   MediaValue(media.Query)
   AtRuleValue(css.AtRule)
   KeyframeValue(keyframe.Keyframe)
+  FontFaceValue(font_face.FontFace)
 }
 
 pub type Environment =
@@ -131,6 +133,7 @@ fn convert_expression(
             "important" -> convert_important_call(arguments, env, modules)
             "transform" -> convert_transform_call(arguments, env, modules)
             "keyframes" -> convert_keyframes_call(arguments, env, modules)
+            "font_face" -> convert_font_face_call(arguments, env, modules)
             label -> convert_generic_call(label, arguments, env, modules)
           }
 
@@ -151,6 +154,9 @@ fn convert_expression(
 
         g.FieldAccess(container: g.Variable("sketch/css/keyframe"), label:) ->
           convert_keyframe(label, arguments, env, modules)
+
+        g.FieldAccess(container: g.Variable("sketch/css/font_face"), label:) ->
+          convert_font_face(label, arguments, env, modules)
 
         g.FieldAccess(container: g.Variable(container), label:) -> {
           let stylesheet = list.key_find(modules, container)
@@ -309,6 +315,39 @@ fn convert_length(
         "cqmax_", FloatValue(f) -> Ok(LengthValue(length.cqmax_(f)))
         _, _ -> Error(Nil)
       }
+    }
+    _ -> Error(Nil)
+  }
+}
+
+fn convert_font_face(
+  label: String,
+  arguments: List(g.Field(g.Expression)),
+  env: StyleSheet,
+  modules: List(#(String, StyleSheet)),
+) -> Result(Value, Nil) {
+  case arguments {
+    [g.UnlabelledField(item:)] -> {
+      use value <- result.try(convert_expression(item, env, modules))
+      case label, value {
+        "ascent_override", FloatValue(f) -> Ok(font_face.ascent_override(f))
+        "descent_override", FloatValue(f) -> Ok(font_face.descent_override(f))
+        "font_display", StringValue(f) -> Ok(font_face.font_display(f))
+        "font_family", StringValue(f) -> Ok(font_face.font_family(f))
+        "font_stretch", StringValue(f) -> Ok(font_face.font_stretch(f))
+        "font_style", StringValue(f) -> Ok(font_face.font_style(f))
+        "font_weight", StringValue(f) -> Ok(font_face.font_weight(f))
+        "font_feature_settings", StringValue(f) ->
+          Ok(font_face.font_feature_settings(f))
+        "font_variation_settings", StringValue(f) ->
+          Ok(font_face.font_variation_settings(f))
+        "line_gap_override", FloatValue(f) -> Ok(font_face.line_gap_override(f))
+        "size_adjust", FloatValue(f) -> Ok(font_face.size_adjust(f))
+        "src", StringValue(f) -> Ok(font_face.src(f))
+        "unicode_range", StringValue(f) -> Ok(font_face.unicode_range(f))
+        _, _ -> Error(Nil)
+      }
+      |> result.map(FontFaceValue)
     }
     _ -> Error(Nil)
   }
@@ -625,6 +664,27 @@ fn convert_keyframes_call(
           |> Ok
         _ -> Error(Nil)
       }
+    }
+    _ -> Error(Nil)
+  }
+}
+
+fn convert_font_face_call(
+  arguments: List(g.Field(g.Expression)),
+  env: StyleSheet,
+  modules: List(#(String, StyleSheet)),
+) -> Result(Value, Nil) {
+  case arguments {
+    [g.UnlabelledField(item: g.List(elements, ..))] -> {
+      css.font_face({
+        use element <- list.flat_map(elements)
+        case convert_expression(element, env, modules) {
+          Ok(FontFaceValue(v)) -> [v]
+          _ -> []
+        }
+      })
+      |> AtRuleValue
+      |> Ok
     }
     _ -> Error(Nil)
   }

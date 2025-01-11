@@ -1,4 +1,5 @@
 import birdie
+import gleam/io
 import gleam/list
 import gleam/result
 import gleam/string
@@ -28,6 +29,7 @@ pub fn read_test() {
   use css_file <- list.each(css_files)
   read_snapshot_file(css_file, src, dst, extension: "css")
   read_snapshot_file(css_file, src, interface, extension: "gleam")
+  io.println(css_file <> " test succes!")
 }
 
 fn read_snapshot_file(

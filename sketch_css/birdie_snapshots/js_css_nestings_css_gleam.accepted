@@ -2,6 +2,12 @@
 version: 1.2.5
 title: js_css_nestings_css.gleam
 ---
+.classes-nestings_css_content {
+  color: var(--custom);
+  background: green;
+  padding: 12.0px;
+}
+
 .classes-nestings_css_example {
 }
 
@@ -28,10 +34,4 @@ title: js_css_nestings_css.gleam
   .classes-nestings_css_example:hover > .classes-nestings_css_content:hover {
           background: red;
   }
-}
-
-.classes-nestings_css_content {
-  color: var(--custom);
-  background: green;
-  padding: 12.0px;
 }

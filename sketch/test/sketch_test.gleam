@@ -7,6 +7,7 @@ import classes/aliased_css
 import classes/dimensions_css
 import classes/edges_css
 import classes/exposed_css
+import classes/font_face_css
 import classes/function_css
 import classes/important_css
 import classes/keyframe_css
@@ -86,4 +87,9 @@ pub fn keyframe_test() {
   let #(stylesheet, _) = sketch.class_name(keyframe_css.example(), stylesheet)
   let content = sketch.render(stylesheet)
   birdie.snap(title: helpers.multitarget_title("keyframe_class"), content:)
+}
+
+pub fn font_face_test() {
+  font_face_css.font_face()
+  |> helpers.compute_at_rule("font_face_css")
 }

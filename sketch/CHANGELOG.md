@@ -26,6 +26,7 @@ always pushing the boundaries of what can be achieved with it!
 - CSS transform functions are now fully supported, with all functions supported.
 - CSS Length are now fully supported, with all length types supported.
 - Keyframes @rule are now supported.
+- Font Face @rule are now supported.
 
 ### Improvements
 

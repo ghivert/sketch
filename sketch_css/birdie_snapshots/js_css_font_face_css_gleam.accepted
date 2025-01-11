@@ -1,0 +1,9 @@
+---
+version: 1.2.5
+title: js_css_font_face_css.gleam
+---
+@font-face {
+  src: file;
+  font-family: Example;
+  font-style: bold;
+}
