@@ -1,5 +1,5 @@
 name = "sketch_css"
-version = "1.1.1"
+version = "2.0.0"
 
 description = "A Sketch runtime package, made to generate CSS!"
 internal_modules = ["sketch_css/*"]
@@ -24,7 +24,7 @@ gleam_erlang = ">= 0.25.0 and < 1.0.0"
 gleam_stdlib = ">= 0.42.0 and < 2.0.0"
 glint = ">= 1.2.0 and < 2.0.0"
 simplifile = ">= 2.0.1 and < 3.0.0"
-sketch = {path = "../sketch"}
+sketch = ">= 4.0.0 and < 5.0.0"
 snag = ">= 1.1.0 and < 2.0.0"
 tom = ">= 1.1.1 and < 2.0.0"
 

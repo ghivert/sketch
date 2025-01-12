@@ -1,4 +1,4 @@
-## v2.0.0 - Unreleased
+## v2.0.0 - 2025-01-12
 
 Sketch CSS underwent a major rewrite. From a quick proof of concept drafted in a
 day to illustrate the abilities of Sketch, Sketch CSS is now completely
