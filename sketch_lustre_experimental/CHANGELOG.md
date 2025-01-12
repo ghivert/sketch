@@ -1,4 +1,4 @@
-## v0.1.0 - Unreleased
+## v0.1.0 - 2025-01-12
 
 Initial release of Sketch Lustre Experimental! That experimental version tries a
 new approach for Sketch Lustre, by hiding completely the `sketch.StyleSheet`,
