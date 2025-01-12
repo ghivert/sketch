@@ -16,7 +16,7 @@ path = "sketch_lustre"
 [dependencies]
 gleam_stdlib = ">= 0.42.0 and < 2.0.0"
 lustre = ">= 4.6.0 and < 5.0.0"
-sketch = {path = "../sketch"}
+sketch = ">= 4.0.0 and < 5.0.0"
 
 [dev-dependencies]
 gleeunit = ">= 1.0.0 and < 2.0.0"

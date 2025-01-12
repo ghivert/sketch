@@ -1,4 +1,4 @@
-## v2.0.0 - Unreleased
+## v2.0.0 - 2025-1-12
 
 v2.0.0 marks a breaking change with the new Sketch release (i.e. v4.0.0). Sketch
 Lustre now uses a new, more idiomatic `render` and `ssr` API, and simplifies as
