@@ -1,4 +1,4 @@
-## v4.0.0 - 2024-01-12
+## v4.0.0 - 2025-01-12
 
 v4.0.0 marks a major release for Sketch! It bundles new improvements, new
 features, and improved namespacing! Six months after the initial release of v3,
