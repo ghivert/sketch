@@ -9,7 +9,7 @@ packages = [
   { name = "gleeunit", version = "1.2.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleeunit", source = "hex", outer_checksum = "F7A7228925D3EE7D0813C922E062BFD6D7E9310F0BEE585D3A42F3307E3CFD13" },
   { name = "redraw", version = "2.0.0", build_tools = ["gleam"], requirements = ["gleam_javascript", "gleam_stdlib"], otp_app = "redraw", source = "hex", outer_checksum = "FF52D8626E1E6DC92EB8BC9DC8C70BC6F0E25824524A7C0658222EA406B5BE23" },
   { name = "redraw_dom", version = "2.0.0", build_tools = ["gleam"], requirements = ["gleam_stdlib", "redraw"], otp_app = "redraw_dom", source = "hex", outer_checksum = "8318DA1E428B349177C444DDC2FA9AE0D33E0DD0CC5A55B82F030811FFD69EA4" },
-  { name = "sketch", version = "4.0.0", build_tools = ["gleam"], requirements = ["gleam_erlang", "gleam_otp", "gleam_stdlib"], source = "local", path = "../sketch" },
+  { name = "sketch", version = "4.0.0", build_tools = ["gleam"], requirements = ["gleam_erlang", "gleam_otp", "gleam_stdlib"], otp_app = "sketch", source = "hex", outer_checksum = "AF090E77F6FD02467DABD8F0EDC1C329482853698FE6DB33B86D7D05C1BE32F4" },
 ]
 
 [requirements]
@@ -17,4 +17,4 @@ gleam_stdlib = { version = ">= 0.42.0 and < 2.0.0" }
 gleeunit = { version = ">= 1.0.0 and < 2.0.0" }
 redraw = { version = ">= 2.0.0 and < 3.0.0" }
 redraw_dom = { version = ">= 2.0.0 and < 3.0.0" }
-sketch = { path = "../sketch" }
+sketch = { version = ">= 4.0.0 and < 5.0.0" }
