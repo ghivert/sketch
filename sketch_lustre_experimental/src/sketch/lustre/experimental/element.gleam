@@ -8,26 +8,26 @@ import sketch/css
 import sketch/lustre/experimental/internals/global
 
 /// Alias for `lustre/element.Element`. \
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#Element)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#Element)
 pub type Element(msg) =
   el.Element(msg)
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#keyed)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#keyed)
 pub const keyed = el.keyed
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#fragment)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#fragment)
 pub const fragment = el.fragment
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#none)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#none)
 pub const none = el.none
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#text)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#text)
 pub const text = el.text
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#map)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#map)
 pub const map = el.map
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#element)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#element)
 pub fn element(
   tag tag: String,
   class class: css.Class,
@@ -38,7 +38,7 @@ pub fn element(
   el.element(tag, [attribute.class(class_name), ..attributes], children)
 }
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#element)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#element)
 pub fn element_(
   tag tag: String,
   attributes attributes: List(Attribute(msg)),
@@ -47,7 +47,7 @@ pub fn element_(
   el.element(tag, attributes, children)
 }
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#namespaced)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#namespaced)
 pub fn namespaced(
   tag tag: String,
   namespace namespace: String,
@@ -60,7 +60,7 @@ pub fn namespaced(
   el.namespaced(tag, namespace, attributes, children)
 }
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#namespaced)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#namespaced)
 pub fn namespaced_(
   tag tag: String,
   namespace namespace: String,

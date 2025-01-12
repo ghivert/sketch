@@ -23,7 +23,7 @@ pub type Style =
 pub type Class =
   style.Class
 
-/// Represents an at-rule.
+/// Represents an [at-rule](https://developer.mozilla.org/docs/Web/CSS/At-rule).
 pub type AtRule =
   style.AtRule
 
@@ -137,15 +137,15 @@ pub fn all(value: String) -> Style {
 /// ---
 ///
 /// This property is a shorthand for the following CSS properties:
-/// [`animation-delay`](https://developer.mozilla.org/docs/Web/CSS/animation-delay)
-/// [`animation-direction`](https://developer.mozilla.org/docs/Web/CSS/animation-direction)
-/// [`animation-duration`](https://developer.mozilla.org/docs/Web/CSS/animation-duration)
-/// [`animation-fill-mode`](https://developer.mozilla.org/docs/Web/CSS/animation-fill-mode)
-/// [`animation-iteration-count`](https://developer.mozilla.org/docs/Web/CSS/animation-iteration-count)
-/// [`animation-name`](https://developer.mozilla.org/docs/Web/CSS/animation-name)
-/// [`animation-play-state`](https://developer.mozilla.org/docs/Web/CSS/animation-play-state)
-/// [`animation-timeline`](https://developer.mozilla.org/docs/Web/CSS/animation-timeline)
-/// [`animation-timing-function`](https://developer.mozilla.org/docs/Web/CSS/animation-timing-function)
+/// - [`animation-delay`](https://developer.mozilla.org/docs/Web/CSS/animation-delay)
+/// - [`animation-direction`](https://developer.mozilla.org/docs/Web/CSS/animation-direction)
+/// - [`animation-duration`](https://developer.mozilla.org/docs/Web/CSS/animation-duration)
+/// - [`animation-fill-mode`](https://developer.mozilla.org/docs/Web/CSS/animation-fill-mode)
+/// - [`animation-iteration-count`](https://developer.mozilla.org/docs/Web/CSS/animation-iteration-count)
+/// - [`animation-name`](https://developer.mozilla.org/docs/Web/CSS/animation-name)
+/// - [`animation-play-state`](https://developer.mozilla.org/docs/Web/CSS/animation-play-state)
+/// - [`animation-timeline`](https://developer.mozilla.org/docs/Web/CSS/animation-timeline)
+/// - [`animation-timing-function`](https://developer.mozilla.org/docs/Web/CSS/animation-timing-function)
 ///
 /// ---
 ///

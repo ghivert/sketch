@@ -39,7 +39,7 @@ argv = { version = ">= 1.0.2 and < 2.0.0" }
 birdie = { version = ">= 1.2.5 and < 2.0.0" }
 glance = { version = ">= 2.0.0 and < 3.0.0" }
 gleam_erlang = { version = ">= 0.25.0 and < 1.0.0" }
-gleam_stdlib = { version = ">= 0.34.0 and < 2.0.0" }
+gleam_stdlib = { version = ">= 0.42.0 and < 2.0.0" }
 glint = { version = ">= 1.2.0 and < 2.0.0" }
 pprint = { version = ">= 1.0.4 and < 2.0.0" }
 simplifile = { version = ">= 2.0.1 and < 3.0.0" }

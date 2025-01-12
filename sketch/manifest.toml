@@ -35,5 +35,5 @@ packages = [
 birdie = { version = ">= 1.2.5 and < 2.0.0" }
 gleam_erlang = { version = ">= 0.25.0 and < 1.0.0" }
 gleam_otp = { version = ">= 0.10.0 and < 1.0.0" }
-gleam_stdlib = { version = ">= 0.34.0 and < 1.0.0" }
+gleam_stdlib = { version = ">= 0.42.0 and < 1.0.0" }
 startest = { version = ">= 0.6.0 and < 1.0.0" }

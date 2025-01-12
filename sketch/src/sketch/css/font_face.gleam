@@ -1,3 +1,11 @@
+//// The `@font-face` CSS at-rule specifies a custom font with which to display
+//// text; the font can be loaded from either a remote server or a
+//// locally-installed font on the user's own computer.
+////
+//// ---
+////
+//// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@font-face)
+
 import gleam/float
 
 /// A `FontFace` is a part of a `@font-face` rule.

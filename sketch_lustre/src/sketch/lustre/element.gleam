@@ -12,7 +12,7 @@ import sketch/css
 
 /// 1:1 representation of a `lustre/element.Element`.
 ///
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#Element)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#Element)
 pub opaque type Element(msg) {
   Nothing
   Text(content: String)
@@ -27,17 +27,17 @@ pub opaque type Element(msg) {
   )
 }
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#none)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#none)
 pub fn none() -> Element(a) {
   Nothing
 }
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#text)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#text)
 pub fn text(content: String) -> Element(a) {
   Text(content)
 }
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#element)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#element)
 pub fn element(
   tag tag: String,
   class class: css.Class,
@@ -48,7 +48,7 @@ pub fn element(
   Element("", "", tag, class, attributes, children)
 }
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#element)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#element)
 pub fn element_(
   tag tag: String,
   attributes attributes: List(Attribute(msg)),
@@ -57,7 +57,7 @@ pub fn element_(
   Element("", "", tag, option.None, attributes, children)
 }
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#namespaced)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#namespaced)
 pub fn namespaced(
   namespace namespace: String,
   tag tag: String,
@@ -69,7 +69,7 @@ pub fn namespaced(
   Element("", namespace, tag, class, attributes, children)
 }
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#namespaced)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#namespaced)
 pub fn namespaced_(
   namespace namespace: String,
   tag tag: String,
@@ -79,13 +79,13 @@ pub fn namespaced_(
   Element("", namespace, tag, option.None, attributes, children)
 }
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#fragment)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#fragment)
 pub fn fragment(children: List(Element(msg))) -> Element(msg) {
   let attrs = [attribute.style([#("display", "contents")])]
   Element("", "", "lustre-fragment", option.None, attrs, children)
 }
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#keyed)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#keyed)
 pub fn keyed(
   element: fn(List(Element(msg))) -> Element(msg),
   children: List(#(String, Element(msg))),
@@ -106,7 +106,7 @@ fn do_keyed(element: Element(msg), key: String) -> Element(msg) {
   }
 }
 
-/// [Documentation](https://hexdocs.pm/lustre/lustre/element.html#map)
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#map)
 pub fn map(element: Element(a), mapper: fn(a) -> b) -> Element(b) {
   case element {
     Nothing -> Nothing

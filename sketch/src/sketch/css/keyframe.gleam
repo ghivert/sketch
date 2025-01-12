@@ -1,3 +1,13 @@
+//// The `@keyframes` CSS [at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)
+//// controls the intermediate steps in a CSS  animation sequence by defining
+//// styles for keyframes (or waypoints) along the animation sequence. This
+//// gives more control over the intermediate steps of the animation sequence
+//// than [transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_transitions).
+////
+//// ---
+////
+//// [MDN Reference](https://developer.mozilla.org/docs/Web/CSS/@keyframes)
+
 import gleam/int
 import sketch/internals/cache/cache as style
 

@@ -30,7 +30,7 @@ pub fn render(cache: StyleSheet) -> String {
 }
 
 @target(javascript)
-/// Convert a `Class` to its class name, to use it anywhere in your application.
+/// Converts a `Class` to its class name, to use it anywhere in your application.
 /// It always returns the StyleSheet, because the class can have been pushed
 /// in the StyleSheet itself.
 pub fn class_name(class: Class, stylesheet: StyleSheet) -> #(StyleSheet, String) {
@@ -45,6 +45,8 @@ pub fn class_name(class: Class, stylesheet: StyleSheet) -> #(StyleSheet, String)
 }
 
 @target(javascript)
+/// Pushes an `@rule` in the StyleSheet, to get it bundled in the outputted CSS.
+/// It returns the StyleSheet with the rule added.
 pub fn at_rule(rule: AtRule, stylesheet: StyleSheet) -> StyleSheet {
   let cache = cache.at_rule(rule, stylesheet.cache)
   StyleSheet(..stylesheet, cache:)
