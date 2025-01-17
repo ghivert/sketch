@@ -611,6 +611,20 @@ already implemented, like `hover`, you could want to define some specific
 selectors. In that case, look for
 [`css.selector()`](https://hexdocs.pm/sketch/sketch/css.selector)!
 
+## Usagi with Chrome Extensions
+
+At its core, Sketch uses Wasm to compute classes hash, to make sure there's no
+performance bottleneck. Unfortunately, Google is conservative on Wasm in Chrome
+Extension. To get Sketch running in Chrome Extension, you should put the
+following code in your `manifest.json`. This allows Chrome to load Wasm code in
+your extension!
+
+```json
+"content_security_policy": {
+   "extension_pages":"script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+}
+```
+
 ## Integration
 
 > This part is new, and subject to modification. Because nobody integrated
