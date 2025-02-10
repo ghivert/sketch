@@ -4,7 +4,7 @@ let _stylesheet = null
 
 export function setStyleSheet(stylesheet) {
   _stylesheet = stylesheet
-  return stylesheet
+  return new gleam.Ok(stylesheet)
 }
 
 export function getStyleSheet() {
