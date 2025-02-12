@@ -18,16 +18,16 @@ import sketch/lustre/experimental as sketch_lustre
 
 pub fn main() {
   // Initialise the cache. Two strategies can be used. Ephemeral caches are designed as throw-away caches.
-  let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Ephemeral)
+  let assert Ok(_) = sketch.stylesheet(strategy: sketch.Ephemeral)
   // Generate the partial view function, compatible with Lustre's runtime.
-  lustre.simple(init, update, view(_, stylesheet))
+  lustre.simple(init, update, view)
   // And voilà!
   |> lustre.start("#app", Nil)
 }
 
-fn view(model, stylesheet) {
+fn view(model) {
   // Add the sketch CSS generation "view middleware".
-  use <- sketch_lustre.render(stylesheet, [sketch_lustre.node()])
+  use <- sketch_lustre.render(in: [sketch_lustre.node()])
   // Run your actual view function.
   my_view(model)
 }

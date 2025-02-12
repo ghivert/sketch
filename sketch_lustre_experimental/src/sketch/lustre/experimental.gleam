@@ -61,11 +61,11 @@ pub fn setup(stylesheet: sketch.StyleSheet) -> Result(sketch.StyleSheet, Nil) {
 /// }
 /// ```
 pub fn render(
-  stylesheet stylesheet: sketch.StyleSheet,
   in outputs: List(Container),
   after view: fn() -> el.Element(msg),
 ) -> el.Element(msg) {
   let new_view = view()
+  let assert Ok(stylesheet) = global.get_stylesheet()
   let content = sketch.render(stylesheet)
   use view, stylesheet <- list.fold(outputs, new_view)
   case stylesheet {
@@ -117,11 +117,9 @@ pub fn render(
 ///   html.div([], [])
 /// }
 /// ```
-pub fn ssr(
-  stylesheet: sketch.StyleSheet,
-  view: fn() -> el.Element(a),
-) -> el.Element(a) {
+pub fn ssr(view: fn() -> el.Element(a)) -> el.Element(a) {
   let new_view = view()
+  let assert Ok(stylesheet) = global.get_stylesheet()
   let content = sketch.render(stylesheet)
   case contains_head(new_view) {
     True -> put_in_head(new_view, content)
