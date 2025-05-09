@@ -1,0 +1,9 @@
+---
+version: 1.2.5
+title: run_globals_blue
+---
+:root {
+  color: blue;
+  background: blue;
+  margin: 0.0px;
+}

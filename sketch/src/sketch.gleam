@@ -59,7 +59,7 @@ pub fn at_rule(rule: AtRule, stylesheet: StyleSheet) -> StyleSheet {
 }
 
 @target(javascript)
-/// Pushes an `@rule` in the StyleSheet, to get it bundled in the outputted CSS.
+/// Pushes a global class in the StyleSheet, to get it bundled in the outputted CSS.
 /// It returns the StyleSheet with the rule added.
 pub fn global(stylesheet: StyleSheet, global: css.Global) -> StyleSheet {
   let #(cache, _) = cache.class_name(global.class, stylesheet.cache)

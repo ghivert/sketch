@@ -94,8 +94,8 @@ type SelectorProperty {
 pub fn render_sheet(cache: Cache) -> String {
   dict.values(cache.at_rules)
   |> list.append({
-    dict.values(cache.cache)
-    |> list.flat_map(fn(c) { get_definitions(c.0) })
+    use c <- list.flat_map(dict.values(cache.cache))
+    get_definitions(c.0)
   })
   |> string.join("\n\n")
 }
@@ -111,8 +111,8 @@ pub fn named(name: String, content: List(Style)) -> Class {
 }
 
 pub fn class_name(class: Class, cache: Cache) -> #(Cache, String) {
-  computed_class(class, cache)
-  |> pair.map_second(fn(class) { class.class_name })
+  use class <- pair.map_second(computed_class(class, cache))
+  class.class_name
 }
 
 fn computed_class(class: Class, cache: Cache) -> #(Cache, ComputedClass) {
@@ -217,15 +217,11 @@ fn compute_classes(
 
 fn insert_class_in_cache(cache: Cache, class: Class) -> #(Cache, ComputedClass) {
   let #(cache, properties) = compute_properties(cache, class.content, 2, "")
-  let class_ =
-    class.as_string
-    |> compute_hash
-    |> compute_classes(class.name, properties)
-  class_
-  |> pair.new(properties)
-  |> dict.insert(cache.cache, class.as_string, _)
-  |> fn(cache_) { Cache(..cache, cache: cache_) }
-  |> pair.new(class_)
+  let hash = compute_hash(class.as_string)
+  let class_ = compute_classes(hash, class.name, properties)
+  let key = option.unwrap(class.name, class.as_string)
+  let cache_ = dict.insert(cache.cache, key, #(class_, properties))
+  #(Cache(..cache, cache: cache_), class_)
 }
 
 fn compute_hash(to_hash: String) -> String {
@@ -259,10 +255,8 @@ fn handle_media(
   let indentation = props.indentation + 2
   let #(cache, properties) = compute_properties(cache, styles, indentation, "")
   let Properties(properties:, selectors:, ..) = properties
-  MediaProperty(query:, properties:, selectors:)
-  |> list.prepend(props.medias, _)
-  |> fn(medias) { Properties(..props, medias:) }
-  |> pair.new(cache, _)
+  let medias = [MediaProperty(query:, properties:, selectors:), ..props.medias]
+  #(cache, Properties(..props, medias:))
 }
 
 fn handle_selector(
@@ -276,11 +270,10 @@ fn handle_selector(
   let selector = existing_selector <> selector
   let #(cache, properties) =
     compute_properties(cache, styles, indentation, selector)
-  SelectorProperty(selector:, properties: properties.properties)
-  |> list.prepend(properties.selectors, _)
-  |> list.append(props.selectors)
-  |> fn(selectors) { Properties(..props, selectors:) }
-  |> pair.new(cache, _)
+  let selector = SelectorProperty(selector:, properties: properties.properties)
+  let selectors = [selector, ..properties.selectors]
+  let selectors = list.append(selectors, props.selectors)
+  #(cache, Properties(..props, selectors:))
 }
 
 fn handle_combinator(
@@ -295,11 +288,10 @@ fn handle_combinator(
   let selector = existing_selector <> selector <> class.name
   let #(cache, properties) =
     compute_properties(cache, styles, indentation, selector)
-  SelectorProperty(selector:, properties: properties.properties)
-  |> list.prepend(properties.selectors, _)
-  |> list.append(props.selectors)
-  |> fn(selectors) { Properties(..props, selectors:) }
-  |> pair.new(cache, _)
+  let selector = SelectorProperty(selector:, properties: properties.properties)
+  let selectors = [selector, ..properties.selectors]
+  let selectors = list.append(selectors, props.selectors)
+  #(cache, Properties(..props, selectors:))
 }
 
 fn compute_property(

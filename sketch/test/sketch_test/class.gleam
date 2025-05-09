@@ -1,7 +1,10 @@
 import birdie
+import classes/globals_css
+import gleam/string
 import sketch
 import sketch_test/helpers
 import startest.{describe, it}
+import startest/expect
 
 import classes/dimensions_css
 import classes/edges_css
@@ -33,6 +36,7 @@ pub fn sketch_tests() {
       it("should handle keyframe rules", run_keyframes),
       it("should handle media queries", run_medias),
       it("should handle nestings properties", run_nestings),
+      it("should handle global classes", run_globals),
     ]),
   ])
 }
@@ -58,4 +62,19 @@ fn run_medias() {
 fn run_nestings() {
   nestings_css.content("blue") |> helpers.compute_class("nestings_css")
   nestings_css.example("blue") |> helpers.compute_class("nestings_example")
+}
+
+fn run_globals() {
+  let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Ephemeral)
+  let stylesheet = sketch.global(stylesheet, globals_css.root("red"))
+  let content = sketch.render(stylesheet)
+  content |> string.contains(":root") |> expect.to_be_true
+  birdie.snap(title: "run_globals_red", content:)
+
+  let stylesheet = sketch.global(stylesheet, globals_css.root("blue"))
+  let content = sketch.render(stylesheet)
+  content |> string.contains(":root") |> expect.to_be_true
+  birdie.snap(title: "run_globals_blue", content:)
+
+  Nil
 }
