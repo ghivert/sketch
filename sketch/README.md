@@ -88,6 +88,8 @@ import sketch/lustre as sketch_lustre
 pub fn main() {
   // Initialise the cache. Two strategies can be used. Ephemeral caches are designed as throw-away caches.
   let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Ephemeral)
+  // Setup the cache. This should be done once before using the render.
+  let assert Ok(stylesheet) = sketch.setup(stylesheet)
   // Generate the partial view function, compatible with Lustre's runtime.
   lustre.simple(init, update, view(_, stylesheet))
   // And voilà!
@@ -96,7 +98,7 @@ pub fn main() {
 
 fn view(model, stylesheet) {
   // Add the sketch CSS generation "view middleware".
-  use <- sketch_lustre.render(stylesheet, [sketch_lustre.node()])
+  use <- sketch_lustre.render(stylesheet:, in: [sketch_lustre.node()])
   // Run your actual view function.
   my_view(model)
 }
@@ -148,24 +150,6 @@ fn view(model: Int) {
 And you're done! Enjoy your Lustre app, Sketch-enhanced!
 
 ### Final notes
-
-#### On Sketch Lustre Element
-
-A Sketch `Element(msg)` is extremely similar to a Lustre `Element(msg)`,
-excepted it carries styles information on top. Going from a
-`sketch/lustre/element.Element(msg)` to a `lustre/element.Element(msg)` is
-straightforward, by using `sketch/lustre/element.unstyled`. The opposite (going
-from a Lustre element to a Sketch Lustre element) is also possible by using
-`sketch/lustre/element.styled`!
-
-#### Sketch Lustre Experimental
-
-Because sometimes you may want to avoid the `Element(msg)` overhead, you can try
-the experimental Sketch Lustre runtime, `sketch_lustre_experimental`. That
-runtime works in the same way, excepts it does not implements its own `Element`
-type on top of Lustre's `Element`. Most of the time, you should not see any
-differences. Keep in mind that it can bug though, as it's still experimental. If
-you try to use it, please, report any bugs you can find.
 
 #### Usage with Shadow DOM
 

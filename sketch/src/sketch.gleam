@@ -110,6 +110,18 @@ pub fn stylesheet(
   StyleSheet(cache:, id:)
 }
 
+@target(javascript)
+/// Delete a persistent stylesheet. That function should be called for Persistent
+/// Erlang stylesheet, and won't have any effect otherwise.
+pub fn dispose(stylesheet: StyleSheet) {
+  Nil
+}
+
+@target(erlang)
+pub fn dispose(stylesheet: StyleSheet) {
+  actor.dispose(stylesheet.cache)
+}
+
 @external(erlang, "erlang", "unique_integer")
 @external(javascript, "./sketch.ffi.mjs", "uniqueId")
 fn unique_id() -> Int

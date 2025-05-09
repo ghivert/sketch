@@ -100,3 +100,14 @@ pub fn loop(msg: Request, cache: cache.Cache) -> actor.Next(a, cache.Cache) {
     }
   }
 }
+
+@target(erlang)
+pub fn dispose(cache: Cache) {
+  case cache {
+    Ephemeral(_) -> Nil
+    Persistent(proc:) -> {
+      process.subject_owner(proc)
+      |> process.send_exit
+    }
+  }
+}
