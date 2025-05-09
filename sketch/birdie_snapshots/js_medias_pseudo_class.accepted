@@ -2,16 +2,16 @@
 version: 1.2.5
 title: js_medias_pseudo_class
 ---
-.css-1547556747 {
+.css-2B46C00D {
   background: blue;
 }
 
 @media (max-width: 700.0px) {
-  .css-1547556747 {
+  .css-2B46C00D {
     background: red;
     background: blue;
   }
-  .css-1547556747:hover {
+  .css-2B46C00D:hover {
       background: green;
   }
 }

@@ -2,7 +2,7 @@
 version: 1.2.5
 title: erlang_edges_css
 ---
-.css-117692592 {
+.css-95E3D239 {
   grid-template-areas: "header"
 "main";
   --example-property: example-value;

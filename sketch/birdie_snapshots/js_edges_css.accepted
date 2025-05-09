@@ -2,7 +2,7 @@
 version: 1.2.5
 title: js_edges_css
 ---
-.css-154188189 {
+.css-00143995 {
   grid-template-areas: "header"
 "main";
   --example-property: example-value;

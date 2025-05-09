@@ -2,12 +2,12 @@
 version: 1.2.5
 title: erlang_medias_simple
 ---
-.css-22725631 {
+.css-10DAB2C4 {
   background: blue;
 }
 
 @media (max-width: 700.0px) {
-  .css-22725631 {
+  .css-10DAB2C4 {
     background: red;
     background: blue;
   }
