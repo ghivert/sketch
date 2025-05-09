@@ -39,11 +39,11 @@ jobs:
           # elixir-version: "1.15.4"
       - run: gleam deps download
         working-directory: sketch_css
+      - run: gleam format --check src test
+        working-directory: sketch_css
       - run: gleam test --target=erlang
         working-directory: sketch_css
       - run: gleam test --target=javascript
-        working-directory: sketch_css
-      - run: gleam format --check src test
         working-directory: sketch_css
 
   test-sketch-lustre:
