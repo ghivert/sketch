@@ -5,22 +5,16 @@ import gleam/option
 /// Rewrites every pipe (`|>`) to the proper function call. Because pipe is an
 /// operator that disappears at runtime, it's useless to keep it in the AST.
 pub fn remove(module: g.Module) -> g.Module {
-  g.Module(
-    ..module,
-    functions: {
-      use g.Definition(attributes:, definition:) <- list.map(module.functions)
-      let attributes = list.map(attributes, remove_attribute)
-      g.Definition(attributes:, definition: {
-        g.Function(
-          ..definition,
-          body: {
-            use statement <- list.map(definition.body)
-            remove_statement(statement)
-          },
-        )
+  g.Module(..module, functions: {
+    use g.Definition(attributes:, definition:) <- list.map(module.functions)
+    let attributes = list.map(attributes, remove_attribute)
+    g.Definition(attributes:, definition: {
+      g.Function(..definition, body: {
+        use statement <- list.map(definition.body)
+        remove_statement(statement)
       })
-    },
-  )
+    })
+  })
 }
 
 fn remove_attribute(attribute: g.Attribute) -> g.Attribute {
@@ -56,15 +50,11 @@ fn remove_expr(expr: g.Expression) -> g.Expression {
 
     g.RecordUpdate(..) -> {
       let record = remove_expr(expr.record)
-      g.RecordUpdate(
-        ..expr,
-        record:,
-        fields: {
-          use field <- list.map(expr.fields)
-          let item = option.map(field.item, remove_expr)
-          g.RecordUpdateField(..field, item:)
-        },
-      )
+      g.RecordUpdate(..expr, record:, fields: {
+        use field <- list.map(expr.fields)
+        let item = option.map(field.item, remove_expr)
+        g.RecordUpdateField(..field, item:)
+      })
     }
 
     g.FieldAccess(..) -> {
