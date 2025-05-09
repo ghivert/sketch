@@ -46,6 +46,7 @@ default styles during the lifetime of your application.
   100% auditable!
 - Class names are now defined using hex instead of ints! This makes class names
   easier to recognize and easier to read in the DOM!
+- Add a `dispose` function, to delete stylesheets and avoid memory leaks.
 
 ## v4.0.0 - 2025-01-12
 
