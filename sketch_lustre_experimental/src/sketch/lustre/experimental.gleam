@@ -61,9 +61,11 @@ pub fn setup(stylesheet: sketch.StyleSheet) -> Result(sketch.StyleSheet, Nil) {
 /// }
 /// ```
 pub fn render(
+  stylesheet stylesheet: sketch.StyleSheet,
   in outputs: List(Container),
   after view: fn() -> el.Element(msg),
 ) -> el.Element(msg) {
+  let assert Ok(_) = global.set_current_stylesheet(stylesheet)
   let new_view = view()
   case global.get_stylesheet() {
     Error(_) -> new_view

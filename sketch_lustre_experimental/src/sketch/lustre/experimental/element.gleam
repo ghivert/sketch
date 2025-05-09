@@ -32,10 +32,8 @@ pub fn element(
   attributes attributes: List(Attribute(msg)),
   children children: List(el.Element(msg)),
 ) {
-  let attributes = case class_name(class) {
-    Ok(class_name) -> [attribute.class(class_name), ..attributes]
-    Error(_) -> attributes
-  }
+  let class_name = class_name(class)
+  let attributes = [attribute.class(class_name), ..attributes]
   el.element(tag, attributes, children)
 }
 
@@ -56,10 +54,8 @@ pub fn namespaced(
   attributes attributes: List(Attribute(msg)),
   children children: List(el.Element(msg)),
 ) {
-  let attributes = case class_name(class) {
-    Ok(class_name) -> [attribute.class(class_name), ..attributes]
-    Error(_) -> attributes
-  }
+  let class_name = class_name(class)
+  let attributes = [attribute.class(class_name), ..attributes]
   el.namespaced(tag, namespace, attributes, children)
 }
 
@@ -77,16 +73,13 @@ const error_msg = "Stylesheet is not initialized in your application. Please, in
 
 /// Generate a class name from a `Class`, using the `StyleSheet` injected
 /// in the environment.
-pub fn class_name(class: css.Class) -> Result(String, Nil) {
+pub fn class_name(class: css.Class) -> String {
   case global.get_stylesheet() {
-    Error(_) -> {
-      io.println(error_msg)
-      Error(Nil)
-    }
+    Error(_) -> panic as error_msg
     Ok(stylesheet) -> {
       let #(stylesheet, class_name) = sketch.class_name(class, stylesheet)
       let _ = global.set_stylesheet(stylesheet)
-      Ok(class_name)
+      class_name
     }
   }
 }

@@ -6,6 +6,6 @@ import sketch/lustre/experimental as sketch_lustre
 pub fn main() {
   let assert Ok(stylesheet) = sketch.stylesheet(sketch.Persistent)
   let assert Ok(_) = sketch_lustre.setup(stylesheet)
-  shared_view.app()
+  shared_view.app(stylesheet)
   |> lustre.start("#app", Nil)
 }

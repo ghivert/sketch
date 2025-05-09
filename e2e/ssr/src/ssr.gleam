@@ -11,15 +11,15 @@ pub fn main() {
   let assert Ok(stylesheet) = sketch.stylesheet(sketch.Persistent)
   let assert Ok(_) = sketch_lustre.setup(stylesheet)
   let assert Ok(_) =
-    fn(_) { greet() }
+    fn(_) { greet(stylesheet) }
     |> mist.new()
     |> mist.port(1234)
     |> mist.start_http()
   process.sleep_forever()
 }
 
-fn greet() -> Response(ResponseData) {
-  shared_view.ssr(0)
+fn greet(stylesheet: sketch.StyleSheet) -> Response(ResponseData) {
+  shared_view.ssr(0, stylesheet)
   |> element.to_document_string()
   |> bytes_tree.from_string()
   |> mist.Bytes()

@@ -23,11 +23,6 @@ import sketch/lustre/experimental as sketch_lustre
 // MAIN ------------------------------------------------------------------------
 
 pub fn main() {
-  let assert Ok(stylesheet) = sketch.stylesheet(sketch.Persistent)
-  let assert Ok(_) =
-    stylesheet
-    |> sketch.global(host_class())
-    |> sketch_lustre.setup
   let assert Ok(_) =
     fn(request: Request(Connection)) -> Response(ResponseData) {
       // In order to get started with server components, we'll need to handle at
@@ -159,7 +154,12 @@ type CounterSocketInit =
   #(CounterSocket, Option(Selector(CounterSocketMessage)))
 
 fn init_counter_socket(_) -> CounterSocketInit {
-  let counter = shared_view.app()
+  let assert Ok(stylesheet) = sketch.stylesheet(sketch.Persistent)
+  let assert Ok(_) =
+    stylesheet
+    |> sketch.global(host_class())
+    |> sketch_lustre.setup
+  let counter = shared_view.app(stylesheet)
   // Rather than calling `lustre.start` as we do in the client, we construct the
   // Lustre runtime by calling `lustre.start_server_component`. This is the same
   // `Runtime` type we get from `lustre.start` but this function doesn't need a

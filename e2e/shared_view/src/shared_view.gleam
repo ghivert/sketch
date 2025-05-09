@@ -3,6 +3,7 @@ import gleam/int
 import lustre
 import lustre/attribute as a
 import lustre/event as e
+import sketch
 import sketch/lustre/experimental as sketch_lustre
 import sketch/lustre/experimental/element/html as h
 import styles
@@ -16,17 +17,17 @@ pub type Msg {
 }
 
 /// Defines the standard app, used everywhere in Lustre applications.
-pub fn app() {
+pub fn app(stylesheet: sketch.StyleSheet) {
   use model <- lustre.simple(init, update)
-  use <- sketch_lustre.render(in: [sketch_lustre.node()])
+  use <- sketch_lustre.render(stylesheet:, in: [sketch_lustre.node()])
   view(model)
 }
 
 /// Function used specifically in SSR, in order to send the correct HTML
 /// before hydrating it. It can also be an example of HTML server-side
 /// generation, Sketch improved.
-pub fn ssr(model: Model) {
-  use <- sketch_lustre.render([sketch_lustre.node()])
+pub fn ssr(model: Model, stylesheet: sketch.StyleSheet) {
+  use <- sketch_lustre.render(stylesheet:, in: [sketch_lustre.node()])
   h.html([], [
     h.head([], [
       h.link([a.rel("stylesheet"), a.href(styles.fonts)]),

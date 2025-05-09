@@ -9,3 +9,9 @@ pub fn set_stylesheet(
 @external(erlang, "sketch_global_ffi", "get_stylesheet")
 @external(javascript, "./global.ffi.mjs", "getStyleSheet")
 pub fn get_stylesheet() -> Result(sketch.StyleSheet, Nil)
+
+@external(erlang, "sketch_global_ffi", "set_current_stylesheet")
+@external(javascript, "./global.ffi.mjs", "setCurrentStylesheet")
+pub fn set_current_stylesheet(
+  stylesheet: sketch.StyleSheet,
+) -> Result(sketch.StyleSheet, Nil)

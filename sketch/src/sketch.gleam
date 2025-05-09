@@ -1,6 +1,6 @@
 @target(erlang)
 import gleam/result
-import sketch/css.{type AtRule, type Class, type Global}
+import sketch/css.{type AtRule, type Class}
 import sketch/error
 @target(erlang)
 import sketch/internals/cache/actor
@@ -10,12 +10,12 @@ import sketch/internals/cache/cache
 @target(javascript)
 /// Manages the styles. Can be instanciated with [`stylesheet`](#stylesheet).
 pub opaque type StyleSheet {
-  StyleSheet(cache: cache.Cache, is_persistent: Bool)
+  StyleSheet(cache: cache.Cache, id: Int, is_persistent: Bool)
 }
 
 @target(erlang)
 pub opaque type StyleSheet {
-  StyleSheet(cache: actor.Cache)
+  StyleSheet(cache: actor.Cache, id: Int)
 }
 
 @target(javascript)
@@ -41,62 +41,35 @@ pub fn class_name(class: Class, stylesheet: StyleSheet) -> #(StyleSheet, String)
 @target(erlang)
 pub fn class_name(class: Class, stylesheet: StyleSheet) -> #(StyleSheet, String) {
   let #(cache, class_name) = actor.class_name(class, stylesheet.cache)
-  #(StyleSheet(cache:), class_name)
+  #(StyleSheet(..stylesheet, cache:), class_name)
 }
 
 @target(javascript)
 /// Pushes an `@rule` in the StyleSheet, to get it bundled in the outputted CSS.
 /// It returns the StyleSheet with the rule added.
-@deprecated("Use `at_rule_` instead. `at_rule` will be replaced in the next version.")
 pub fn at_rule(rule: AtRule, stylesheet: StyleSheet) -> StyleSheet {
   let cache = cache.at_rule(rule, stylesheet.cache)
   StyleSheet(..stylesheet, cache:)
 }
 
 @target(erlang)
-@deprecated("Use `at_rule_` instead. `at_rule` will be replaced in the next version.")
 pub fn at_rule(rule: AtRule, stylesheet: StyleSheet) -> StyleSheet {
   let cache = actor.at_rule(rule, stylesheet.cache)
-  StyleSheet(cache:)
+  StyleSheet(..stylesheet, cache:)
 }
 
 @target(javascript)
 /// Pushes an `@rule` in the StyleSheet, to get it bundled in the outputted CSS.
 /// It returns the StyleSheet with the rule added.
-pub fn at_rule_(stylesheet: StyleSheet, rule: AtRule) -> StyleSheet {
-  let cache = cache.at_rule(rule, stylesheet.cache)
-  StyleSheet(..stylesheet, cache:)
-}
-
-@target(erlang)
-pub fn at_rule_(stylesheet: StyleSheet, rule: AtRule) -> StyleSheet {
-  let cache = actor.at_rule(rule, stylesheet.cache)
-  StyleSheet(cache:)
-}
-
-@target(javascript)
-/// Injects a `Global` class in the StyleSheet. Use it to apply some style on
-/// `body` for example.
-///
-/// ```gleam
-/// let assert Ok(stylesheet) = sketch.stylesheet(sketch.Persistent)
-/// stylesheet
-/// |> sketch.global({
-///   css.global("body", [
-///     css.margin(px(0)),
-///     css.backkground("red"),
-///   ])
-/// })
-/// ```
-pub fn global(stylesheet: StyleSheet, global: Global) -> StyleSheet {
+pub fn global(stylesheet: StyleSheet, global: css.Global) -> StyleSheet {
   let #(cache, _) = cache.class_name(global.class, stylesheet.cache)
   StyleSheet(..stylesheet, cache:)
 }
 
 @target(erlang)
-pub fn global(stylesheet: StyleSheet, global: Global) -> StyleSheet {
+pub fn global(stylesheet: StyleSheet, global: css.Global) -> StyleSheet {
   let #(cache, _) = actor.class_name(global.class, stylesheet.cache)
-  StyleSheet(cache:)
+  StyleSheet(..stylesheet, cache:)
 }
 
 /// Strategy for the StyleSheet. Two strategies are available as of now: ephemeral
@@ -118,9 +91,10 @@ pub type Strategy {
 pub fn stylesheet(
   strategy strategy: Strategy,
 ) -> Result(StyleSheet, error.SketchError) {
+  let id = unique_id()
   Ok(case strategy {
-    Ephemeral -> StyleSheet(cache: cache.new(), is_persistent: False)
-    Persistent -> StyleSheet(cache: cache.new(), is_persistent: True)
+    Ephemeral -> StyleSheet(cache: cache.new(), id:, is_persistent: False)
+    Persistent -> StyleSheet(cache: cache.new(), id:, is_persistent: True)
   })
 }
 
@@ -128,9 +102,14 @@ pub fn stylesheet(
 pub fn stylesheet(
   strategy strategy: Strategy,
 ) -> Result(StyleSheet, error.SketchError) {
-  case strategy {
+  let id = unique_id()
+  use cache <- result.map(case strategy {
     Ephemeral -> Ok(actor.ephemeral())
     Persistent -> actor.persistent()
-  }
-  |> result.map(StyleSheet)
+  })
+  StyleSheet(cache:, id:)
 }
+
+@external(erlang, "erlang", "unique_integer")
+@external(javascript, "./sketch.ffi.mjs", "uniqueId")
+fn unique_id() -> Int

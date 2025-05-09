@@ -14,10 +14,8 @@ pub fn element(
   attributes: List(Attribute(msg)),
   children: List(#(String, Element(msg))),
 ) -> Element(msg) {
-  let attributes = case class_name(class) {
-    Ok(class_name) -> [attribute.class(class_name), ..attributes]
-    Error(_) -> attributes
-  }
+  let class_name = class_name(class)
+  let attributes = [attribute.class(class_name), ..attributes]
   keyed.element(tag, attributes, children)
 }
 
@@ -38,10 +36,8 @@ pub fn namespaced(
   attributes: List(Attribute(msg)),
   children: List(#(String, Element(msg))),
 ) -> Element(msg) {
-  let attributes = case class_name(class) {
-    Ok(class_name) -> [attribute.class(class_name), ..attributes]
-    Error(_) -> attributes
-  }
+  let class_name = class_name(class)
+  let attributes = [attribute.class(class_name), ..attributes]
   keyed.namespaced(namespace, tag, attributes, children)
 }
 
@@ -64,10 +60,8 @@ pub fn ul(
   attributes: List(Attribute(msg)),
   children: List(#(String, Element(msg))),
 ) -> Element(msg) {
-  let attributes = case class_name(class) {
-    Ok(class_name) -> [attribute.class(class_name), ..attributes]
-    Error(_) -> attributes
-  }
+  let class_name = class_name(class)
+  let attributes = [attribute.class(class_name), ..attributes]
   keyed.element("ul", attributes, children)
 }
 
@@ -85,10 +79,8 @@ pub fn ol(
   attributes: List(Attribute(msg)),
   children: List(#(String, Element(msg))),
 ) -> Element(msg) {
-  let attributes = case class_name(class) {
-    Ok(class_name) -> [attribute.class(class_name), ..attributes]
-    Error(_) -> attributes
-  }
+  let class_name = class_name(class)
+  let attributes = [attribute.class(class_name), ..attributes]
   keyed.element("ol", attributes, children)
 }
 
@@ -106,10 +98,8 @@ pub fn div(
   attributes: List(Attribute(msg)),
   children: List(#(String, Element(msg))),
 ) -> Element(msg) {
-  let attributes = case class_name(class) {
-    Ok(class_name) -> [attribute.class(class_name), ..attributes]
-    Error(_) -> attributes
-  }
+  let class_name = class_name(class)
+  let attributes = [attribute.class(class_name), ..attributes]
   keyed.element("div", attributes, children)
 }
 
@@ -127,10 +117,8 @@ pub fn tbody(
   attributes: List(Attribute(msg)),
   children: List(#(String, Element(msg))),
 ) -> Element(msg) {
-  let attributes = case class_name(class) {
-    Ok(class_name) -> [attribute.class(class_name), ..attributes]
-    Error(_) -> attributes
-  }
+  let class_name = class_name(class)
+  let attributes = [attribute.class(class_name), ..attributes]
   keyed.element("tbody", attributes, children)
 }
 
@@ -148,10 +136,8 @@ pub fn dl(
   attributes: List(Attribute(msg)),
   children: List(#(String, Element(msg))),
 ) -> Element(msg) {
-  let attributes = case class_name(class) {
-    Ok(class_name) -> [attribute.class(class_name), ..attributes]
-    Error(_) -> attributes
-  }
+  let class_name = class_name(class)
+  let attributes = [attribute.class(class_name), ..attributes]
   keyed.element("dl", attributes, children)
 }
 
