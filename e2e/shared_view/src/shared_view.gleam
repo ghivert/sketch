@@ -4,8 +4,8 @@ import lustre
 import lustre/attribute as a
 import lustre/event as e
 import sketch
-import sketch/lustre/experimental as sketch_lustre
-import sketch/lustre/experimental/element/html as h
+import sketch/lustre as sketch_lustre
+import sketch/lustre/element/html as h
 import styles
 
 pub type Model =

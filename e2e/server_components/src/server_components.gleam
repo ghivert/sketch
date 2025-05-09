@@ -9,6 +9,7 @@ import gleam/http/response.{type Response}
 import gleam/json
 import gleam/option.{type Option, None, Some}
 import gleam/otp/actor
+import gleam/result
 import lustre
 import lustre/attribute
 import lustre/element
@@ -18,7 +19,7 @@ import mist.{type Connection, type ResponseData}
 import shared_view
 import sketch
 import sketch/css
-import sketch/lustre/experimental as sketch_lustre
+import sketch/lustre as sketch_lustre
 
 // MAIN ------------------------------------------------------------------------
 
@@ -144,6 +145,7 @@ type CounterSocket {
   CounterSocket(
     component: lustre.Runtime(shared_view.Msg),
     self: Subject(server_component.ClientMessage(shared_view.Msg)),
+    stylesheet: sketch.StyleSheet,
   )
 }
 
@@ -154,11 +156,10 @@ type CounterSocketInit =
   #(CounterSocket, Option(Selector(CounterSocketMessage)))
 
 fn init_counter_socket(_) -> CounterSocketInit {
-  let assert Ok(stylesheet) = sketch.stylesheet(sketch.Persistent)
-  let assert Ok(_) =
-    stylesheet
-    |> sketch.global(host_class())
-    |> sketch_lustre.setup
+  let assert Ok(stylesheet) =
+    sketch_lustre.setup()
+    |> result.map(sketch.global(_, host_class()))
+
   let counter = shared_view.app(stylesheet)
   // Rather than calling `lustre.start` as we do in the client, we construct the
   // Lustre runtime by calling `lustre.start_server_component`. This is the same
@@ -183,7 +184,7 @@ fn init_counter_socket(_) -> CounterSocketInit {
   server_component.register_subject(self)
   |> lustre.send(to: component)
 
-  #(CounterSocket(component:, self:), Some(selector))
+  #(CounterSocket(component:, self:, stylesheet:), Some(selector))
 }
 
 fn loop_counter_socket(
@@ -215,18 +216,20 @@ fn loop_counter_socket(
     // are encoded and sent to the client.
     mist.Custom(client_message) -> {
       let json = server_component.client_message_to_json(client_message)
-      let assert Ok(_) = mist.send_text_frame(connection, json.to_string(json))
-
-      actor.continue(state)
+      case mist.send_text_frame(connection, json.to_string(json)) {
+        Ok(_) -> actor.continue(state)
+        Error(_) -> {
+          close_counter_socket(state)
+          actor.Stop(process.Normal)
+        }
+      }
     }
 
     mist.Closed | mist.Shutdown -> {
       // The server component runtime sets up a process monitor that can clean
       // up if our socket process dies or is killed, but it's good practice to
       // clean up ourselves if we get the opportunity.
-      server_component.deregister_subject(state.self)
-      |> lustre.send(to: state.component)
-
+      close_counter_socket(state)
       actor.Stop(process.Normal)
     }
   }
@@ -235,6 +238,8 @@ fn loop_counter_socket(
 fn close_counter_socket(state: CounterSocket) -> Nil {
   server_component.deregister_subject(state.self)
   |> lustre.send(to: state.component)
+  sketch_lustre.teardown(state.stylesheet)
+  |> result.unwrap_both
 }
 
 fn host_class() {

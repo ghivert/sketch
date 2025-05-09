@@ -6,7 +6,7 @@ version = "1.0.0"
 gleam_stdlib = "~> 0.34 or ~> 1.0"
 lustre = ">= 5.0.0 and < 6.0.0"
 sketch = {path = "../../sketch"}
-sketch_lustre_experimental = {path = "../../sketch_lustre_experimental"}
+sketch_lustre = {path = "../../sketch_lustre"}
 shared_view = {path = "../shared_view"}
 
 [dev-dependencies]

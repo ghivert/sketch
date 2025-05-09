@@ -5,7 +5,7 @@ import lustre/attribute.{type Attribute}
 import lustre/element.{type Element} as _
 import lustre/element/keyed
 import sketch/css
-import sketch/lustre/experimental/element.{class_name}
+import sketch/lustre/element.{class_name}
 
 /// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element/keyed.html#element)
 pub fn element(

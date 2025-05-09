@@ -8,7 +8,7 @@ gleam_stdlib = ">= 0.34.0 and < 2.0.0"
 lustre = ">= 5.0.0 and < 6.0.0"
 mist = "~> 4.0.0"
 sketch = {path = "../../sketch"}
-sketch_lustre_experimental = {path = "../../sketch_lustre_experimental"}
+sketch_lustre = {path = "../../sketch_lustre"}
 shared_view = {path = "../shared_view"}
 
 [dev-dependencies]

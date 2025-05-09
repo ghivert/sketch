@@ -1,4 +1,33 @@
-## v2.0.0 - 2025-1-12
+## v3.0.0 - 2025-05-09
+
+Sketch Lustre Experimental is now official, and become the official way to use
+Sketch with Lustre! Say goodbye to wrapper type, and say hello to pure, native
+Lustre `Element`!
+
+Sketch Lustre now uses the new approach to hide the `sketch.StyleSheet` during
+`view` creation, to generate directly `lustre/element.Element`.
+`sketch/lustre/element.Element` is now gone, meaning Sketch Lustre becomes
+easily interoperable with the rest of the Lustre ecosystem! Sketch Lustre marks
+a new step for Sketch & Lustre, closing the gap between Lustre & Sketch!
+
+### Breaking Changes
+
+- `sketch/lustre/element.Element` is now gone, and every
+  `sketch/lustre/element/html` function generate `lustre/element.Element`
+  directly.
+- `sketch/lustre.setup` does not accept a `sketch.StyleSheet` anymore, but now
+  generates the corresponding persistent stylesheet on its own. This ensures no
+  user will choose the wrong stylesheet strategy.
+
+### Improvements
+
+- `sketch/lustre` now exposes `teardown`, that let you get rid of a
+  `sketch.StyleSheet`. That ensures no memory leak will happen in applications.
+- To mimic Lustre, `sketch_lustre` exposes a new module
+  `sketch/lustre/element/keyed`, that exposes the same functions as
+  `lustre/element/keyed`, with an additional class when needed.
+
+## v2.0.0 - 2025-01-12
 
 v2.0.0 marks a breaking change with the new Sketch release (i.e. v4.0.0). Sketch
 Lustre now uses a new, more idiomatic `render` and `ssr` API, and simplifies as

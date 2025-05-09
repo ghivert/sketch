@@ -65,25 +65,6 @@ jobs:
       - run: gleam format --check src test
         working-directory: sketch_lustre
 
-  test-sketch-lustre-experimental:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: erlef/setup-beam@v1
-        with:
-          otp-version: '27.0.1'
-          gleam-version: '1.6.3'
-          rebar3-version: '3'
-          # elixir-version: "1.15.4"
-      - run: gleam deps download
-        working-directory: sketch_lustre_experimental
-      - run: gleam test --target=erlang
-        working-directory: sketch_lustre_experimental
-      - run: gleam test --target=javascript
-        working-directory: sketch_lustre_experimental
-      - run: gleam format --check src test
-        working-directory: sketch_lustre_experimental
-
   test-sketch-redraw:
     runs-on: ubuntu-latest
     steps:

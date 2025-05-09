@@ -1,6 +1,7 @@
 -module(sketch_global_ffi).
 
--export([set_stylesheet/1, set_current_stylesheet/1, get_stylesheet/0]).
+-export([set_stylesheet/1, set_current_stylesheet/1, get_stylesheet/0,
+         dismiss_current_stylesheet/0, teardown_stylesheet/1]).
 
 create_cache(Name) ->
   Exists = ets:whereis(Name),
@@ -17,11 +18,22 @@ set_stylesheet(Stylesheet) ->
   ets:insert(cache_manager, {Id, Stylesheet}),
   {ok, Stylesheet}.
 
+teardown_stylesheet(Stylesheet) ->
+  create_cache(cache_manager),
+  Id = element(3, Stylesheet),
+  ets:delete(cache_manager, Id),
+  {ok, nil}.
+
 set_current_stylesheet(Stylesheet) ->
   create_cache(view_manager),
   Id = element(3, Stylesheet),
   ets:insert(view_manager, {self(), Id}),
   {ok, Stylesheet}.
+
+dismiss_current_stylesheet() ->
+  create_cache(view_manager),
+  ets:delete(view_manager, self()),
+  {ok, nil}.
 
 get_stylesheet() ->
   case ets:lookup(view_manager, self()) of
