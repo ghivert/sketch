@@ -1,13 +1,11 @@
 import sketch
 
-@external(javascript, "../../../../global.ffi.mjs", "setStyleSheet")
+@external(erlang, "sketch_global_ffi", "set_stylesheet")
+@external(javascript, "./global.ffi.mjs", "setStyleSheet")
 pub fn set_stylesheet(
   stylesheet: sketch.StyleSheet,
-) -> Result(sketch.StyleSheet, Nil) {
-  Ok(stylesheet)
-}
+) -> Result(sketch.StyleSheet, Nil)
 
-@external(javascript, "../../../../global.ffi.mjs", "getStyleSheet")
-pub fn get_stylesheet() -> Result(sketch.StyleSheet, Nil) {
-  Error(Nil)
-}
+@external(erlang, "sketch_global_ffi", "get_stylesheet")
+@external(javascript, "./global.ffi.mjs", "getStyleSheet")
+pub fn get_stylesheet() -> Result(sketch.StyleSheet, Nil)

@@ -1,6 +1,6 @@
 @target(erlang)
 import gleam/result
-import sketch/css.{type AtRule, type Class}
+import sketch/css.{type AtRule, type Class, type Global}
 import sketch/error
 @target(erlang)
 import sketch/internals/cache/actor
@@ -47,14 +47,55 @@ pub fn class_name(class: Class, stylesheet: StyleSheet) -> #(StyleSheet, String)
 @target(javascript)
 /// Pushes an `@rule` in the StyleSheet, to get it bundled in the outputted CSS.
 /// It returns the StyleSheet with the rule added.
+@deprecated("Use `at_rule_` instead. `at_rule` will be replaced in the next version.")
 pub fn at_rule(rule: AtRule, stylesheet: StyleSheet) -> StyleSheet {
   let cache = cache.at_rule(rule, stylesheet.cache)
   StyleSheet(..stylesheet, cache:)
 }
 
 @target(erlang)
+@deprecated("Use `at_rule_` instead. `at_rule` will be replaced in the next version.")
 pub fn at_rule(rule: AtRule, stylesheet: StyleSheet) -> StyleSheet {
   let cache = actor.at_rule(rule, stylesheet.cache)
+  StyleSheet(cache:)
+}
+
+@target(javascript)
+/// Pushes an `@rule` in the StyleSheet, to get it bundled in the outputted CSS.
+/// It returns the StyleSheet with the rule added.
+pub fn at_rule_(stylesheet: StyleSheet, rule: AtRule) -> StyleSheet {
+  let cache = cache.at_rule(rule, stylesheet.cache)
+  StyleSheet(..stylesheet, cache:)
+}
+
+@target(erlang)
+pub fn at_rule_(stylesheet: StyleSheet, rule: AtRule) -> StyleSheet {
+  let cache = actor.at_rule(rule, stylesheet.cache)
+  StyleSheet(cache:)
+}
+
+@target(javascript)
+/// Injects a `Global` class in the StyleSheet. Use it to apply some style on
+/// `body` for example.
+///
+/// ```gleam
+/// let assert Ok(stylesheet) = sketch.stylesheet(sketch.Persistent)
+/// stylesheet
+/// |> sketch.global({
+///   css.global("body", [
+///     css.margin(px(0)),
+///     css.backkground("red"),
+///   ])
+/// })
+/// ```
+pub fn global(stylesheet: StyleSheet, global: Global) -> StyleSheet {
+  let #(cache, _) = cache.class_name(global.class, stylesheet.cache)
+  StyleSheet(..stylesheet, cache:)
+}
+
+@target(erlang)
+pub fn global(stylesheet: StyleSheet, global: Global) -> StyleSheet {
+  let #(cache, _) = actor.class_name(global.class, stylesheet.cache)
   StyleSheet(cache:)
 }
 

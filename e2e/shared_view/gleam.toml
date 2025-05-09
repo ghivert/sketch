@@ -4,8 +4,8 @@ version = "1.0.0"
 [dependencies]
 gleam_stdlib = ">= 0.34.0 and < 2.0.0"
 sketch = {path = "../../sketch"}
-sketch_lustre = {path = "../../sketch_lustre"}
-lustre = ">= 4.3.1 and < 5.0.0"
+sketch_lustre_experimental = {path = "../../sketch_lustre_experimental"}
+lustre = ">= 5.0.0 and < 6.0.0"
 shared_styles = {path = "../shared_styles"}
 
 [dev-dependencies]

@@ -14,8 +14,8 @@ repo = "sketch"
 path = "sketch_lustre_experimental"
 
 [dependencies]
-gleam_stdlib = ">= 0.42.0 and < 2.0.0"
-lustre = ">= 4.6.1 and < 5.0.0"
+lustre = ">= 5.0.0 and < 6.0.0"
+gleam_stdlib = ">= 0.56.0 and < 1.0.0"
 sketch = ">= 4.0.0 and < 5.0.0"
 
 [dev-dependencies]

@@ -19,6 +19,7 @@ path = "sketch"
 gleam_erlang = ">= 0.25.0 and < 1.0.0"
 gleam_otp = ">= 0.10.0 and < 1.0.0"
 gleam_stdlib = ">= 0.42.0 and < 1.0.0"
+murmur3a = ">= 1.0.0 and < 2.0.0"
 
 [dev-dependencies]
 birdie = ">= 1.2.5 and < 2.0.0"

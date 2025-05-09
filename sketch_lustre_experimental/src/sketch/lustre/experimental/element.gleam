@@ -1,6 +1,7 @@
 //// This module is a drop-in replacement for `lustre/element`. Just
 //// use the new functions, and everything will automagically be styled.
 
+import gleam/io
 import lustre/attribute.{type Attribute}
 import lustre/element as el
 import sketch
@@ -11,9 +12,6 @@ import sketch/lustre/experimental/internals/global
 /// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#Element)
 pub type Element(msg) =
   el.Element(msg)
-
-/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#keyed)
-pub const keyed = el.keyed
 
 /// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#fragment)
 pub const fragment = el.fragment
@@ -34,8 +32,11 @@ pub fn element(
   attributes attributes: List(Attribute(msg)),
   children children: List(el.Element(msg)),
 ) {
-  let class_name = class_name(class)
-  el.element(tag, [attribute.class(class_name), ..attributes], children)
+  let attributes = case class_name(class) {
+    Ok(class_name) -> [attribute.class(class_name), ..attributes]
+    Error(_) -> attributes
+  }
+  el.element(tag, attributes, children)
 }
 
 /// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#element)
@@ -55,8 +56,10 @@ pub fn namespaced(
   attributes attributes: List(Attribute(msg)),
   children children: List(el.Element(msg)),
 ) {
-  let class_name = class_name(class)
-  let attributes = [attribute.class(class_name), ..attributes]
+  let attributes = case class_name(class) {
+    Ok(class_name) -> [attribute.class(class_name), ..attributes]
+    Error(_) -> attributes
+  }
   el.namespaced(tag, namespace, attributes, children)
 }
 
@@ -70,11 +73,20 @@ pub fn namespaced_(
   el.namespaced(tag, namespace, attributes, children)
 }
 
+const error_msg = "Stylesheet is not initialized in your application. Please, initialize a stylesheet before rendering some nodes."
+
 /// Generate a class name from a `Class`, using the `StyleSheet` injected
 /// in the environment.
-pub fn class_name(class: css.Class) -> String {
-  let assert Ok(stylesheet) = global.get_stylesheet()
-  let #(stylesheet, class_name) = sketch.class_name(class, stylesheet)
-  let _ = global.set_stylesheet(stylesheet)
-  class_name
+pub fn class_name(class: css.Class) -> Result(String, Nil) {
+  case global.get_stylesheet() {
+    Error(_) -> {
+      io.println(error_msg)
+      Error(Nil)
+    }
+    Ok(stylesheet) -> {
+      let #(stylesheet, class_name) = sketch.class_name(class, stylesheet)
+      let _ = global.set_stylesheet(stylesheet)
+      Ok(class_name)
+    }
+  }
 }

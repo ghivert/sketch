@@ -1,4 +1,4 @@
-import * as gleam from './gleam.mjs'
+import * as gleam from '../../../../gleam.mjs'
 
 let _stylesheet = null
 

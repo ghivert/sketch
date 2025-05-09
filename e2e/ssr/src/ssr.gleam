@@ -4,8 +4,12 @@ import gleam/http/response.{type Response}
 import lustre/element
 import mist.{type ResponseData}
 import shared_view
+import sketch
+import sketch/lustre/experimental as sketch_lustre
 
 pub fn main() {
+  let assert Ok(stylesheet) = sketch.stylesheet(sketch.Persistent)
+  let assert Ok(_) = sketch_lustre.setup(stylesheet)
   let assert Ok(_) =
     fn(_) { greet() }
     |> mist.new()

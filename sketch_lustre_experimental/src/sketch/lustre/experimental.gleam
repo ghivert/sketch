@@ -3,7 +3,7 @@ import gleam/function
 import gleam/list
 import lustre/element as el
 import lustre/element/html as h
-import lustre/internals/vdom
+import lustre/vdom/vnode
 import sketch
 import sketch/lustre/experimental/internals/css_stylesheet
 import sketch/lustre/experimental/internals/global
@@ -14,8 +14,8 @@ import sketch/lustre/experimental/internals/global
 /// [`shadow()`](#shadow).
 pub opaque type Container {
   Document(css_stylesheet: Dynamic)
-  Node
   Shadow(css_stylesheet: Dynamic)
+  Node
 }
 
 /// Setup the StyleSheet to use across your application. One stylesheet must be
@@ -65,14 +65,18 @@ pub fn render(
   after view: fn() -> el.Element(msg),
 ) -> el.Element(msg) {
   let new_view = view()
-  let assert Ok(stylesheet) = global.get_stylesheet()
-  let content = sketch.render(stylesheet)
-  use view, stylesheet <- list.fold(outputs, new_view)
-  case stylesheet {
-    Node -> el.fragment([h.style([], content), view])
-    Document(css_stylesheet:) | Shadow(css_stylesheet:) -> {
-      use _ <- function.tap(view)
-      css_stylesheet.replace(content, css_stylesheet)
+  case global.get_stylesheet() {
+    Error(_) -> new_view
+    Ok(stylesheet) -> {
+      let content = sketch.render(stylesheet)
+      use view, stylesheet <- list.fold(outputs, new_view)
+      case stylesheet {
+        Node -> el.fragment([h.style([], content), view])
+        Document(css_stylesheet:) | Shadow(css_stylesheet:) -> {
+          use _ <- function.tap(view)
+          css_stylesheet.replace(content, css_stylesheet)
+        }
+      }
     }
   }
 }
@@ -119,11 +123,15 @@ pub fn render(
 /// ```
 pub fn ssr(view: fn() -> el.Element(a)) -> el.Element(a) {
   let new_view = view()
-  let assert Ok(stylesheet) = global.get_stylesheet()
-  let content = sketch.render(stylesheet)
-  case contains_head(new_view) {
-    True -> put_in_head(new_view, content)
-    False -> el.fragment([h.style([], content), new_view])
+  case global.get_stylesheet() {
+    Error(_) -> new_view
+    Ok(stylesheet) -> {
+      let content = sketch.render(stylesheet)
+      case contains_head(new_view) {
+        True -> put_in_head(new_view, content)
+        False -> el.fragment([h.style([], content), new_view])
+      }
+    }
   }
 }
 
@@ -155,23 +163,31 @@ pub fn node() -> Container {
 
 fn contains_head(el: el.Element(a)) -> Bool {
   case el {
-    vdom.Element(tag: "head", ..) -> True
-    vdom.Element(children:, ..) ->
-      list.fold(children, False, fn(acc, val) { acc || contains_head(val) })
+    vnode.Element(tag: "head", ..) -> True
+    vnode.Element(..) -> {
+      use acc, val <- list.fold(el.children, False)
+      acc || contains_head(val)
+    }
     _ -> False
   }
 }
 
 fn put_in_head(el: el.Element(a), content: String) -> el.Element(a) {
   case el {
-    vdom.Element(k, n, "head", a, children, s, v) ->
-      children
-      |> list.append([h.style([], content)])
-      |> vdom.Element(k, n, "head", a, _, s, v)
-    vdom.Element(k, n, "html", a, children, s, v) ->
-      children
-      |> list.map(fn(child) { put_in_head(child, content) })
-      |> vdom.Element(k, n, "html", a, _, s, v)
+    vnode.Element(tag: "head", ..) -> {
+      vnode.Element(..el, children: {
+        let style = h.style([], content)
+        [style, ..el.children]
+      })
+    }
+
+    vnode.Element(tag: "html", ..) -> {
+      vnode.Element(..el, children: {
+        use child <- list.map(el.children)
+        put_in_head(child, content)
+      })
+    }
+
     node -> node
   }
 }
