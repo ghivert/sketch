@@ -1,3 +1,52 @@
+## v4.1.0 - 2025-05-09
+
+v4.1.0 marks a new release for Sketch, allowing to bundle global, static styling
+directly on stylesheet! Instead of depending on an external CSS file, it's now
+possible to style `body`, `:root`, `:host` or any node you want directly in your
+stylesheet.
+
+```gleam
+import sketch
+import sketch/css
+import sketch/css/length.{px}
+
+pub fn main() {
+  let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Ephemeral)
+  stylesheet
+  |> sketch.global(root_class())
+  |> sketch.global(body_class())
+  |> sketch.render
+}
+
+fn root_class() {
+  css.global(":root", [
+    css.property("--my-variable", "#FFFFFF"),
+  ])
+}
+
+fn body_class() {
+  css.global("body", [
+    css.font_family("Déjà Vu Sans"),
+    css.margin(px(0)),
+  ])
+}
+```
+
+Everytime a global class is pushed in a stylesheet, the previous global class
+with the same name will be overidden, and the new style will take place. It's
+possible to leverage persistent stylesheet with global classes to change your
+default styles during the lifetime of your application.
+
+### Improvements
+
+- Add the support for global classes to push directly in stylesheets.
+- Change the class name generation algorithm from xxhash32 to murmur3a, thanks
+  to @eaon! Generation algorithm is now purely written in Gleam, and does not
+  rely anymore on opaque blob, meaning Sketch is now more security-friendly, and
+  100% auditable!
+- Class names are now defined using hex instead of ints! This makes class names
+  easier to recognize and easier to read in the DOM!
+
 ## v4.0.0 - 2025-01-12
 
 v4.0.0 marks a major release for Sketch! It bundles new improvements, new
