@@ -95,7 +95,7 @@ pub fn main() {
   // once before rendering the application. You can initialize one stylesheet
   // for your entire app, or multiple stylesheets if you're running server
   // components (in that case, one stylesheet per client is recommended).
-  let assert Ok(stylesheet) = sketch.setup()
+  let assert Ok(stylesheet) = sketch_lustre.setup()
   // Because stylesheets are persistents with sketch_lustre, you can inject
   // classes, keyframes or @rules directly in it.
   sketch.global(stylesheet, css.global("body", [css.margin(px(0))]))
