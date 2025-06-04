@@ -1,3 +1,49 @@
+## v3.1.0 - 2025-06-04
+
+Sketch Lustre adds a new function, `construct`, to let you inject initial
+styling in the stylesheet. Most of the time, so initial style should be
+injected, whether to style `<body>`, add some keyframe, some font-faces, or
+anything else. Before any use of the stylsheet, `construct` allows you to set
+all those things you need!
+
+You can use it to build something like `normalize.css`, but also to build your
+very own stylesheet, tailored to your needs!
+
+An example :
+
+```gleam
+import lustre
+import lustre/element/html
+import sketch
+import sketch/css
+import sketch/css/length.{percent, px}
+import sketch/lustre as sl
+
+pub fn main() {
+  let assert Ok(stylesheet) = setup_sketch_lustre()
+  let view = view(_, stylesheet)
+  lustre.application(init, view, update)
+  |> lustre.start("#root", Nil)
+}
+
+/// Inject default styling in the initial stylesheet.
+fn setup_sketch_lustre() {
+  use stylesheet <- sl.construct
+  stylesheet
+  |> sketch.global(css.global("body", [css.margin(px(0))]))
+  |> sketch.global(css.global("html", [css.height(percent(100))]))
+  // Add any initial style you want here, `sketch.at_rule`, etc.
+}
+
+fn view(model: Model, stylesheet: sketch.StyleSheet) {
+  use <- sl.render(stylesheet, in: [sl.node()])
+  html.div([], [])
+}
+```
+
+In a nutshell : if you need to instanciate a quick and easy stylesheet, use
+`setup()`, if you need to customize your stylesheet, use `construct()`!
+
 ## v3.0.0 - 2025-05-09
 
 Sketch Lustre Experimental is now official, and become the official way to use

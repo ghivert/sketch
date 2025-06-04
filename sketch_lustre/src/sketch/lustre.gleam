@@ -26,6 +26,9 @@ pub opaque type Container {
 /// In `sketch_lustre`, there's no notion of persistent or ephemeral stylesheets:
 /// all stylesheets will be persisted in the application.
 ///
+/// In case you need to add initial styling directly in your stylesheet, take a
+/// look at [`construct`](#construct).
+///
 /// ```gleam
 /// pub fn main() {
 ///   let assert Ok(stylesheet) = sketch_lustre.setup()
@@ -36,6 +39,34 @@ pub fn setup() -> Result(sketch.StyleSheet, Nil) {
   case sketch.stylesheet(strategy: sketch.Persistent) {
     Error(_) -> Error(Nil)
     Ok(stylesheet) -> global.set_stylesheet(stylesheet)
+  }
+}
+
+/// Setup the StyleSheet to use across your application, and let you inject
+/// initial styling directly in your stylesheet. If you don't need to add
+/// default styling, you can take a look at [`setup`](#setup).
+///
+/// In `sketch_lustre`, there's no notion of persistent or ephemeral stylesheets:
+/// all stylesheets will be persisted in the application.
+///
+/// ```gleam
+/// pub fn main() {
+///   let assert Ok(stylesheet) =
+///     sketch_lustre.construct(fn (stylesheet) {
+///       stylesheet
+///       |> sketch.global(css.global("html", [...]))
+///       |> sketch.global(css.global("body", [...]))
+///       |> sketch.global(css.global(":root", [...]))
+///     })
+///   // The following code goes there.
+/// }
+/// ```
+pub fn construct(
+  init: fn(sketch.StyleSheet) -> sketch.StyleSheet,
+) -> Result(sketch.StyleSheet, Nil) {
+  case sketch.stylesheet(strategy: sketch.Persistent) {
+    Error(_) -> Error(Nil)
+    Ok(stylesheet) -> global.set_stylesheet(init(stylesheet))
   }
 }
 
