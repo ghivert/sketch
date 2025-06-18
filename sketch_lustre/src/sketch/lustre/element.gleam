@@ -1,8 +1,10 @@
 //// This module is a drop-in replacement for `lustre/element`. Just
 //// use the new functions, and everything will automagically be styled.
 
+import gleam/function
 import lustre/attribute.{type Attribute}
 import lustre/element as el
+import lustre/vdom/vnode
 import sketch
 import sketch/css
 import sketch/lustre/internals/global
@@ -23,6 +25,35 @@ pub const text = el.text
 
 /// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#map)
 pub const map = el.map
+
+/// A function for constructing a wrapper element with custom raw HTML as its
+/// content. Lustre will render the provided HTML verbatim, and will not touch
+/// its children except when replacing the entire inner html on changes.
+///
+/// > **Note:** The provided HTML will not be escaped automatically and may expose
+/// > your applications to XSS attacks! Make sure you absolutely trust the HTML you
+/// > pass to this function. In particular, never use this to display un-sanitised
+/// > user HTML!
+///
+pub fn unsafe_raw_html(
+  namespace namespace: String,
+  tag tag: String,
+  class class: css.Class,
+  attributes attributes: List(Attribute(msg)),
+  inner_html inner_html: String,
+) -> Element(msg) {
+  let class_name = class_name(class)
+  let attributes = [attribute.class(class_name), ..attributes]
+
+  vnode.unsafe_inner_html(
+    key: "",
+    namespace:,
+    tag:,
+    mapper: function.identity,
+    attributes:,
+    inner_html:,
+  )
+}
 
 /// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#element)
 pub fn element(
