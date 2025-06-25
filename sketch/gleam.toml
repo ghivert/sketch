@@ -4,6 +4,7 @@ version = "4.1.0"
 description = "A CSS-in-Gleam package, foundation for CSS packages!"
 internal_modules = ["sketch/internals", "sketch/internals/*"]
 licences = ["MIT"]
+gleam = ">= 1.11.0"
 
 [[links]]
 title = "Sponsor"
@@ -16,11 +17,11 @@ repo = "sketch"
 path = "sketch"
 
 [dependencies]
-gleam_erlang = ">= 0.25.0 and < 1.0.0"
-gleam_otp = ">= 0.10.0 and < 1.0.0"
-gleam_stdlib = ">= 0.42.0 and < 1.0.0"
+gleam_erlang = ">= 1.0.0 and < 2.0.0"
+gleam_otp = ">= 1.0.0 and < 2.0.0"
+gleam_stdlib = ">= 0.60.0 and < 1.0.0"
 murmur3a = ">= 1.0.0 and < 2.0.0"
 
 [dev-dependencies]
 birdie = ">= 1.2.5 and < 2.0.0"
-startest = ">= 0.6.0 and < 1.0.0"
+gleeunit = ">= 1.5.1 and < 2.0.0"

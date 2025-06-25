@@ -14,7 +14,7 @@ repo = "sketch"
 path = "sketch_redraw"
 
 [dependencies]
-gleam_stdlib = ">= 0.42.0 and < 2.0.0"
+gleam_stdlib = ">= 0.60.0 and < 2.0.0"
 redraw = ">= 2.0.0 and < 3.0.0"
 redraw_dom = ">= 2.0.0 and < 3.0.0"
 sketch = ">= 4.0.0 and < 5.0.0"

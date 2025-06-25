@@ -113,7 +113,7 @@ pub fn stylesheet(
 @target(javascript)
 /// Delete a persistent stylesheet. That function should be called for Persistent
 /// Erlang stylesheet, and won't have any effect otherwise.
-pub fn dispose(stylesheet: StyleSheet) {
+pub fn dispose(_stylesheet: StyleSheet) {
   Nil
 }
 
