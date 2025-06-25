@@ -1,3 +1,8 @@
+## v4.2.0 - 2025-06-25
+
+v4.2.0 marks officially the adoption of `gleam_erlang` and `gleam_otp` v1.0.0!
+Enjoy the new packages, with a `sketch` version fully compatible!
+
 ## v4.1.0 - 2025-05-09
 
 v4.1.0 marks a new release for Sketch, allowing to bundle global, static styling

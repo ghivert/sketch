@@ -1,5 +1,5 @@
 name = "sketch"
-version = "4.1.0"
+version = "4.2.0"
 
 description = "A CSS-in-Gleam package, foundation for CSS packages!"
 internal_modules = ["sketch/internals", "sketch/internals/*"]
@@ -24,4 +24,4 @@ murmur3a = ">= 1.0.0 and < 2.0.0"
 
 [dev-dependencies]
 birdie = ">= 1.2.5 and < 2.0.0"
-gleeunit = ">= 1.5.1 and < 2.0.0"
+gleeunit = ">= 1.5.0 and < 2.0.0"
