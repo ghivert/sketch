@@ -1,5 +1,5 @@
 name = "sketch_lustre"
-version = "3.1.0"
+version = "3.1.1"
 
 description = "A Sketch runtime package, made to work with Lustre!"
 internal_modules = ["sketch/lustre/internals", "sketch/lustre/internals/*"]
@@ -14,9 +14,9 @@ repo = "sketch"
 path = "sketch_lustre"
 
 [dependencies]
-gleam_stdlib = ">= 0.56.0 and < 2.0.0"
+gleam_stdlib = ">= 0.60.0 and < 2.0.0"
 lustre = ">= 5.0.0 and < 6.0.0"
 sketch = ">= 4.1.0 and < 5.0.0"
 
 [dev-dependencies]
-gleeunit = ">= 1.0.0 and < 2.0.0"
+gleeunit = ">= 1.5.0 and < 2.0.0"

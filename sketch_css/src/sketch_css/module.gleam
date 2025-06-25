@@ -1,6 +1,5 @@
 import glance as g
 import gleam/bool
-import gleam/function
 import gleam/list
 import gleam/pair
 import gleam/result
@@ -109,7 +108,7 @@ pub fn build_stylesheet(
   module: #(Module, stylesheet.StyleSheet),
   stylesheet: sketch.StyleSheet,
 ) -> #(sketch.StyleSheet, List(#(String, String))) {
-  let at_rule = function.flip(sketch.at_rule)
+  let at_rule = fn(a, b) { sketch.at_rule(b, a) }
   let stylesheet = list.fold({ module.1 }.at_rules, stylesheet, at_rule)
   use stylesheet, class <- list.fold({ module.1 }.classes, #(stylesheet, []))
   let #(stylesheet, names) = stylesheet

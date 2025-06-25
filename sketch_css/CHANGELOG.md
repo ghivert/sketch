@@ -1,3 +1,7 @@
+## v2.1.0 - 2025-06-25
+
+Sketch CSS v2.1.0 adopts new `gleam_erlang` 1.0.0.
+
 ## v2.0.0 - 2025-01-12
 
 Sketch CSS underwent a major rewrite. From a quick proof of concept drafted in a

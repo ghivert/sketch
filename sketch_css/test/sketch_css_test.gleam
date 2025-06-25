@@ -1,6 +1,5 @@
-import startest
+import gleeunit
 
 pub fn main() {
-  startest.default_config()
-  |> startest.run
+  gleeunit.main()
 }
