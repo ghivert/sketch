@@ -3,8 +3,6 @@ import classes/globals_css
 import gleam/string
 import sketch
 import sketch_test/helpers
-import startest.{describe, it}
-import startest/expect
 
 import classes/dimensions_css
 import classes/edges_css
@@ -14,31 +12,35 @@ import classes/keyframe_css
 import classes/medias_css
 import classes/nestings_css
 
-pub fn sketch_tests() {
-  describe("Sketch", [
-    describe("Class generation", [
-      it("should handle dimensions", fn() {
-        dimensions_css.dimensions_variables()
-        |> helpers.compute_class("dimensions_css")
-      }),
-      it("should handle edges cases", fn() {
-        edges_css.edge_cases("blue")
-        |> helpers.compute_class("edges_css")
-      }),
-      it("should handle font-face rules", fn() {
-        font_face_css.font_face()
-        |> helpers.compute_at_rule("font_face_css")
-      }),
-      it("should handle important properties", fn() {
-        important_css.important()
-        |> helpers.compute_class("important_css")
-      }),
-      it("should handle keyframe rules", run_keyframes),
-      it("should handle media queries", run_medias),
-      it("should handle nestings properties", run_nestings),
-      it("should handle global classes", run_globals),
-    ]),
-  ])
+pub fn sketch_test() {
+  // describe("Sketch", [
+  //   describe("Class generation", [
+  // it("should handle dimensions", fn() {
+  dimensions_css.dimensions_variables()
+  |> helpers.compute_class("dimensions_css")
+  // })
+  // it("should handle edges cases", fn() {
+  edges_css.edge_cases("blue")
+  |> helpers.compute_class("edges_css")
+  // })
+  // it("should handle font-face rules", fn() {
+  font_face_css.font_face()
+  |> helpers.compute_at_rule("font_face_css")
+  // })
+  // it("should handle important properties", fn() {
+  important_css.important()
+  |> helpers.compute_class("important_css")
+  // })
+  // it("should handle keyframe rules", run_keyframes)
+  run_keyframes()
+  // it("should handle media queries", run_medias)
+  run_medias()
+  // it("should handle nestings properties", run_nestings)
+  run_nestings()
+  // it("should handle global classes", run_globals)
+  run_globals()
+  //   ]),
+  // ])
 }
 
 fn run_keyframes() {
@@ -68,12 +70,12 @@ fn run_globals() {
   let assert Ok(stylesheet) = sketch.stylesheet(strategy: sketch.Ephemeral)
   let stylesheet = sketch.global(stylesheet, globals_css.root("red"))
   let content = sketch.render(stylesheet)
-  content |> string.contains(":root") |> expect.to_be_true
+  assert string.contains(content, ":root")
   birdie.snap(title: "run_globals_red", content:)
 
   let stylesheet = sketch.global(stylesheet, globals_css.root("blue"))
   let content = sketch.render(stylesheet)
-  content |> string.contains(":root") |> expect.to_be_true
+  assert string.contains(content, ":root")
   birdie.snap(title: "run_globals_blue", content:)
 
   Nil
