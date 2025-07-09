@@ -13,7 +13,7 @@ pub fn main() {
     fn(_) { greet(stylesheet) }
     |> mist.new()
     |> mist.port(1234)
-    |> mist.start_http()
+    |> mist.start()
   process.sleep_forever()
 }
 

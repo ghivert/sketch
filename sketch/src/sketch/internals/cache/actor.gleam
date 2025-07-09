@@ -20,7 +20,7 @@ import sketch/internals/cache/cache
 @target(erlang)
 /// Manages the styles. Can be instanciated with [`create_cache`](#create_cache).
 pub opaque type Cache {
-  Persistent(proc: Subject(Request))
+  Persistent(proc: actor.Started(Subject(Request)))
   Ephemeral(cache: cache.Cache)
 }
 
@@ -31,8 +31,10 @@ pub fn ephemeral() {
 
 @target(erlang)
 pub fn persistent() -> Result(Cache, SketchError) {
-  cache.new()
-  |> actor.start(loop)
+  let cache = cache.new()
+  actor.new(cache)
+  |> actor.on_message(loop)
+  |> actor.start
   |> result.map(Persistent)
   |> result.map_error(error.OtpError)
 }
@@ -41,10 +43,7 @@ pub fn persistent() -> Result(Cache, SketchError) {
 pub fn render(cache: Cache) -> String {
   case cache {
     Ephemeral(cache:) -> cache.render_sheet(cache)
-    Persistent(proc:) ->
-      process.try_call(proc, Render, 1000)
-      |> result.replace_error(Nil)
-      |> result.unwrap("")
+    Persistent(proc:) -> process.call(proc.data, 1000, Render)
   }
 }
 
@@ -56,8 +55,7 @@ pub fn class_name(class: cache.Class, cache: Cache) -> #(Cache, String) {
       |> pair.map_first(Ephemeral)
     Persistent(proc:) -> {
       use <- bool.guard(when: list.is_empty(class.content), return: #(cache, ""))
-      process.try_call(proc, Fetch(class, _), within: 100)
-      |> result.unwrap("")
+      process.call(proc.data, 100, Fetch(class, _))
       |> pair.new(cache, _)
     }
   }
@@ -68,7 +66,7 @@ pub fn at_rule(rule: cache.AtRule, cache: Cache) -> Cache {
   case cache {
     Ephemeral(cache:) -> Ephemeral(cache.at_rule(rule, cache))
     Persistent(proc:) -> {
-      let _ = process.try_call(proc, Push(rule, _), within: 100)
+      let _ = process.call(proc.data, 100, Push(rule, _))
       cache
     }
   }
@@ -82,7 +80,10 @@ pub type Request {
 }
 
 @target(erlang)
-pub fn loop(msg: Request, cache: cache.Cache) -> actor.Next(a, cache.Cache) {
+pub fn loop(
+  cache: cache.Cache,
+  msg: Request,
+) -> actor.Next(cache.Cache, Request) {
   case msg {
     Render(response:) -> {
       process.send(response, cache.render_sheet(cache))
@@ -105,9 +106,6 @@ pub fn loop(msg: Request, cache: cache.Cache) -> actor.Next(a, cache.Cache) {
 pub fn dispose(cache: Cache) {
   case cache {
     Ephemeral(_) -> Nil
-    Persistent(proc:) -> {
-      process.subject_owner(proc)
-      |> process.send_exit
-    }
+    Persistent(proc:) -> process.send_exit(proc.pid)
   }
 }
