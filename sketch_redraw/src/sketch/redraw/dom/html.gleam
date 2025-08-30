@@ -1,13 +1,13 @@
-//// This module is a drop-in replacement for `redraw/dom/html`. Just
-//// use the new functions, and everything will automagically be styled.
-//// Every stylable node has two functions: `[node]` and `[node]_`, the former
-//// applying a style, while the latter does not accept style, in case you don't
-//// need to style a node.
+//// This module is a drop-in replacement for `redraw/dom/html` with styles.
+//// Just use the new functions, and everything will automagically be styled.
+//// In case you need to use non-styled functions, use functions from
+//// `redraw/dom/html`. `html.text` and `html.none` have been reexported for
+//// convenience.
 
 import redraw.{type Component} as _
 import redraw/dom/attribute.{type Attribute}
 import redraw/dom/html
-import redraw/internals/coerce.{coerce}
+import redraw/internals/unsafe.{coerce}
 import sketch/css.{type Class}
 import sketch/redraw.{styled}
 
@@ -131,9 +131,10 @@ pub fn title(
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/API/Text)
-pub fn text(content: String) -> Component {
-  html.text(content)
-}
+pub const text: fn(String) -> Component = html.text
+
+/// Does not render anything in the DOM.
+pub const none: fn() -> Component = html.none
 
 /// The `<a>` HTML element (or anchor element), with [its `href` attribute](https://developer.mozilla.org/docs/Web/HTML/Element/a#href),
 /// creates a hyperlink to web pages, files, email addresses, locations in the

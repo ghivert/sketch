@@ -9,8 +9,8 @@ repository = {type = "github", user = "ghivert", repo = "sketch"}
 
 [dependencies]
 gleam_stdlib = ">= 0.34.0 and < 2.0.0"
-redraw = ">= 2.0.0 and < 3.0.0"
-redraw_dom = ">= 2.0.0 and < 3.0.0"
+redraw = {path = "../../../redraw/redraw"}
+redraw_dom = {path = "../../../redraw/redraw_dom"}
 sketch = {path = "../../sketch"}
 sketch_redraw = {path = "../../sketch_redraw"}
 shared_styles = {path = "../shared_styles"}

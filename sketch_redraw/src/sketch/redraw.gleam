@@ -1,12 +1,23 @@
 import redraw.{type Component} as react
 import redraw/dom/attribute.{type Attribute} as a
+import redraw/dom/html
 import sketch
 import sketch/css.{type Class}
-import sketch/redraw/internals/mutable as mut
-import sketch/redraw/internals/object
+import sketch/redraw/internals/mutable.{type Mutable}
+import sketch/redraw/internals/props
+import sketch/redraw/internals/styles
 
+/// Cache required to initialise Sketch Redraw. Use it in conjuction with
+/// [`provider`](#provider).
+pub opaque type Cache {
+  Cache(stylesheet: StyleSheet, context: react.Context(StyleSheet))
+}
+
+/// Internal type use to easily manage Context content. Sketch Context contains
+/// a `StyleSheet`. `render` directly renders the stylesheet correctly in the
+/// HTML Style Element.
 type StyleSheet {
-  StyleSheet(cache: mut.Mutable(sketch.StyleSheet), render: fn() -> Nil)
+  StyleSheet(cache: Mutable(sketch.StyleSheet), render: fn() -> Nil)
 }
 
 /// Unique name for Sketch Context. Only used across the module.
@@ -15,6 +26,38 @@ const context_name = "SketchRedrawContext"
 /// Error message used when querying context. Should be used to indicate to the
 /// user what should be done before using `sketch_redraw`.
 const error_msg = "Sketch Redraw Provider not set. Please, add the provider in your render tree."
+
+/// Creates the Sketch Context and initialises the Sketch cache. Use it in
+/// conjuction with [`provider`](#provider) to setup Sketch Redraw, otherwise
+/// nothing will work.
+///
+/// ```gleam
+/// import redraw
+/// import redraw/dom/client
+/// import sketch/redraw as sketch_redraw
+///
+/// pub fn main() {
+///   let app = app()
+///   let cache = sketch_redraw.create_cache()
+///   let root = client.create_root("root")
+///   client.render(root, {
+///     redraw.strict_mode([
+///       sketch_redraw.provider(cache, [
+///         app(),
+///       ]),
+///     ])
+///   })
+/// }
+/// ```
+pub fn create_cache() -> Cache {
+  let style = styles.create_node()
+  let assert Ok(cache) = sketch.stylesheet(strategy: sketch.Persistent)
+  let cache = mutable.from(cache)
+  let render = fn() { styles.dump(style, sketch.render(mutable.get(cache))) }
+  let stylesheet = StyleSheet(cache:, render:)
+  let assert Ok(context) = react.create_context(context_name, stylesheet)
+  Cache(stylesheet:, context:)
+}
 
 /// Create the Sketch provider used to manage the `StyleSheet`. \
 /// This makes sure identical styles will never be computed twice. \
@@ -27,87 +70,81 @@ const error_msg = "Sketch Redraw Provider not set. Please, add the provider in y
 ///
 /// pub fn main() {
 ///   let app = app()
+///   let cache = sketch_redraw.create_cache()
 ///   let root = client.create_root("root")
 ///   client.render(root, {
 ///     redraw.strict_mode([
-///       sketch_redraw.provider([
+///       sketch_redraw.provider(cache, [
 ///         app(),
 ///       ]),
 ///     ])
 ///   })
 /// }
 /// ```
-pub fn provider(children) {
-  let assert Ok(cache) = sketch.stylesheet(strategy: sketch.Persistent)
-  let cache = mut.wrap(cache)
-  let stylesheet = StyleSheet(cache:, render: fn() { Nil })
-  let assert Ok(context) = react.create_context_(context_name, stylesheet)
-  let style = create_style_tag()
-  let render = fn() { dump_styles(style, sketch.render(mut.get(cache))) }
-  let stylesheet = StyleSheet(cache:, render:)
+pub fn provider(setup: Cache, children: List(Component)) -> Component {
+  let Cache(context:, stylesheet:) = setup
   react.provider(context, stylesheet, children)
 }
 
-fn get_context() {
-  case react.get_context(context_name) {
-    Ok(context) -> context
-    Error(_) -> panic as error_msg
-  }
-}
-
-fn generate_class_name(cache, styles) {
-  let #(cache_, class_name) = sketch.class_name(styles, mut.get(cache))
-  mut.set(cache, cache_)
-  class_name
-}
-
-fn do_styled(props) {
-  let context = get_context()
-  let StyleSheet(cache:, render:) = react.use_context(context)
-  let #(tag, styles, props) = extract(props)
-  let str = styles.as_string
-  let class_name =
-    react.use_memo(fn() { generate_class_name(cache, styles) }, #(cache, str))
-  use_insertion_effect(fn() { render() }, #(class_name))
-  react.jsx(tag, object.add(props, "className", class_name), Nil)
-}
-
-/// Style a native DOM node. Can probably be used for custom elements, but props
-/// will be different, so I don't know yet how to do it properly.
+/// Style a native DOM node. `styled` creates an intermediate component named
+/// `Sketch.Styled(tag)` which will render the styles in the StyleSheet injected
+/// in Context, and inject the class name directly on the node. Every other
+/// props are kept as-is.
+///
+/// ```gleam
+/// import redraw.{type Component}
+/// import redraw/dom/attribute.{type Attribute}
+/// import sketch/css.{type Class}
+///
+/// pub fn my_node(
+///   styles: Class,
+///   props: List(Attribute),
+///   children: List(Component),
+/// ) -> Component {
+///   styled("my_node", styles, props, children)
+/// }
+/// ```
 @internal
 pub fn styled(
   tag: String,
   styles: Class,
   props: List(Attribute),
   children: List(Component),
-) {
+) -> Component {
   let as_ = a.attribute("as", tag)
   let styles = a.attribute("styles", styles)
-  let fun = styled_fn(tag, do_styled)
-  to_props([as_, styles, ..props])
-  |> react.jsx(fun, _, children)
+  let fun = styles.cache(tag, factory)
+  let props = html.to_props([as_, styles, ..props])
+  react.jsx(fun, props, children, convert_children: True)
 }
 
-// FFI
+/// React Component rendering a styled HTML element. Those components are
+/// created lazily on-demand, and are named correctly according to the `tag`.
+fn factory(props: props) -> Component {
+  let #(tag, styles, props) = styles.extract_from(props)
+  let stylesheet = use_sketch_context()
+  let class_name = use_class_name(stylesheet.cache, styles)
+  use_render(stylesheet, class_name)
+  let props = props.append(props, "className", class_name)
+  react.jsx(tag, props, Nil, convert_children: False)
+}
 
-/// Extract the props generated from `styled` function.
-/// Extract `as` and `styles`, and the new props without them.
-@external(javascript, "../redraw.ffi.mjs", "extract")
-fn extract(props: a) -> #(String, Class, a)
+fn use_sketch_context() -> StyleSheet {
+  case react.get_context(context_name) {
+    Ok(context) -> react.use_context(context)
+    Error(_) -> panic as error_msg
+  }
+}
 
-@external(javascript, "../redraw.ffi.mjs", "useInsertionEffect")
-fn use_insertion_effect(setup: fn() -> Nil, deps: a) -> Nil
+fn use_class_name(cache: Mutable(sketch.StyleSheet), styles: Class) -> String {
+  use <- react.use_memo(_, #(cache, styles.as_string))
+  let stylesheet = mutable.get(cache)
+  let #(cache_, class_name) = sketch.class_name(styles, stylesheet)
+  mutable.set(cache, cache_)
+  class_name
+}
 
-@external(javascript, "../redraw.ffi.mjs", "createStyleTag")
-fn create_style_tag() -> a
-
-@external(javascript, "../redraw.ffi.mjs", "dumpStyles")
-fn dump_styles(style: a, content: String) -> Nil
-
-/// Creates the styled function from `do_styled` if it does not exists.
-/// Otherwise, returns the existing `do_styled` function specialized for the tag.
-@external(javascript, "../redraw.ffi.mjs", "styledFn")
-fn styled_fn(tag: String, value: a) -> a
-
-@external(javascript, "../redraw.ffi.mjs", "toProps")
-fn to_props(props: List(a.Attribute)) -> b
+fn use_render(stylesheet: StyleSheet, class_name: String) -> Nil {
+  use <- react.use_insertion_effect(_, #(class_name))
+  stylesheet.render()
+}

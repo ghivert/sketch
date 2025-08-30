@@ -1,6 +1,6 @@
 name = "sketch_redraw"
 target = "javascript"
-version = "2.0.0"
+version = "3.0.0"
 
 description = "A Sketch runtime package, made to work with Redraw!"
 internal_modules = ["sketch/redraw/internals", "sketch/redraw/internals/*"]
@@ -15,8 +15,8 @@ path = "sketch_redraw"
 
 [dependencies]
 gleam_stdlib = ">= 0.60.0 and < 2.0.0"
-redraw = ">= 2.0.0 and < 3.0.0"
-redraw_dom = ">= 2.0.0 and < 3.0.0"
+redraw = {path = "../../redraw/redraw"}
+redraw_dom = {path = "../../redraw/redraw_dom"}
 sketch = ">= 4.0.0 and < 5.0.0"
 
 [dev-dependencies]

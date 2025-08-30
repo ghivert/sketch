@@ -1,4 +1,4 @@
-export function wrap(current) {
+export function from(current) {
   return { current }
 }
 

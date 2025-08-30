@@ -10,14 +10,15 @@ import sketch/redraw as sr
 pub fn main() {
   let app = app()
   let assert Ok(root) = client.create_root("root")
-  client.render(root, redraw.strict_mode([sr.provider([app()])]))
+  let cache = sr.create_cache()
+  client.render(root, redraw.strict_mode([sr.provider(cache, [app()])]))
 }
 
 fn app() {
   let view_counter_description = view_counter_description()
   let view_counter = view_counter()
   let showcase = showcase()
-  use <- redraw.component__("App")
+  use <- redraw.standalone("App")
   let #(count, set_count) = redraw.use_state_(0)
   let increment = events.on_click(fn(_) { set_count(fn(c) { c + 1 }) })
   let decrement = events.on_click(fn(_) { set_count(fn(c) { c - 1 }) })
@@ -45,7 +46,7 @@ fn app() {
 }
 
 fn view_counter_description() {
-  use <- redraw.component__("CounterDescription")
+  use <- redraw.standalone("CounterDescription")
   let use_counter = "Use the counter, and see the site changing with the model!"
   let now_edit = "Now, try to edit the code to see the modifications live!"
   h.div([], [
@@ -56,7 +57,7 @@ fn view_counter_description() {
 }
 
 fn view_counter() {
-  use #(count, increment, decrement) <- redraw.component_("Counter")
+  use #(count, increment, decrement) <- redraw.element("Counter")
   let disabled = a.disabled(count <= 0)
   let model = int.to_string(count)
   components.counter_counter([], [
@@ -67,7 +68,7 @@ fn view_counter() {
 }
 
 fn showcase() {
-  use <- redraw.component__("Showcase")
+  use <- redraw.standalone("Showcase")
   components.showcase([], [
     components.showcase_body([], [h.text("Coming soon...")]),
     components.card_title([], [h.text("Showcase")]),
