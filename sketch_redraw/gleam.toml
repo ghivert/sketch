@@ -12,7 +12,7 @@ type = "github"
 user = "ghivert"
 repo = "sketch"
 path = "sketch_redraw"
-tag-prefix = "sketch_redraw"
+tag-prefix = "sketch_redraw_"
 
 [dependencies]
 gleam_stdlib = ">= 0.60.0 and < 2.0.0"
