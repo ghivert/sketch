@@ -10,18 +10,18 @@ packages = [
   { name = "gleam_stdlib", version = "0.62.1", build_tools = ["gleam"], requirements = [], otp_app = "gleam_stdlib", source = "hex", outer_checksum = "0080706D3A5A9A36C40C68481D1D231D243AF602E6D2A2BE67BA8F8F4DFF45EC" },
   { name = "gleeunit", version = "1.6.1", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleeunit", source = "hex", outer_checksum = "FDC68A8C492B1E9B429249062CD9BAC9B5538C6FBF584817205D0998C42E1DAC" },
   { name = "murmur3a", version = "1.0.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "murmur3a", source = "hex", outer_checksum = "DAA714CEF379915D0F718BC410389245AA8ABFB6F48C73ADB9F011B009F28893" },
-  { name = "redraw", version = "19.0.0", build_tools = ["gleam"], requirements = ["gleam_javascript", "gleam_stdlib"], source = "local", path = "../../../redraw/redraw" },
-  { name = "redraw_dom", version = "19.0.0", build_tools = ["gleam"], requirements = ["gleam_fetch", "gleam_stdlib", "redraw"], source = "local", path = "../../../redraw/redraw_dom" },
+  { name = "redraw", version = "19.0.0", build_tools = ["gleam"], requirements = ["gleam_javascript", "gleam_stdlib"], otp_app = "redraw", source = "hex", outer_checksum = "642210B44949AEAFDADB677D777A47BC8E8443342DC29D920AC40C1D3D79AD99" },
+  { name = "redraw_dom", version = "19.0.0", build_tools = ["gleam"], requirements = ["gleam_fetch", "gleam_stdlib", "redraw"], otp_app = "redraw_dom", source = "hex", outer_checksum = "681278A5A0A3A1C6CA6D297DAE69C15A1C32BB6916F11C43AE8B932AE03C9180" },
   { name = "shared_styles", version = "1.0.0", build_tools = ["gleam"], requirements = ["gleam_stdlib", "sketch"], source = "local", path = "../shared_styles" },
   { name = "sketch", version = "4.2.0", build_tools = ["gleam"], requirements = ["gleam_erlang", "gleam_otp", "gleam_stdlib", "murmur3a"], source = "local", path = "../../sketch" },
-  { name = "sketch_redraw", version = "2.0.0", build_tools = ["gleam"], requirements = ["gleam_stdlib", "redraw", "redraw_dom", "sketch"], source = "local", path = "../../sketch_redraw" },
+  { name = "sketch_redraw", version = "3.0.0", build_tools = ["gleam"], requirements = ["gleam_stdlib", "redraw", "redraw_dom", "sketch"], source = "local", path = "../../sketch_redraw" },
 ]
 
 [requirements]
 gleam_stdlib = { version = ">= 0.34.0 and < 2.0.0" }
 gleeunit = { version = ">= 1.0.0 and < 2.0.0" }
-redraw = { path = "../../../redraw/redraw" }
-redraw_dom = { path = "../../../redraw/redraw_dom" }
+redraw = { version = ">= 19.0.0 and < 20.0.0" }
+redraw_dom = { version = ">= 19.0.0 and < 20.0.0" }
 shared_styles = { path = "../shared_styles" }
 sketch = { path = "../../sketch" }
 sketch_redraw = { path = "../../sketch_redraw" }
