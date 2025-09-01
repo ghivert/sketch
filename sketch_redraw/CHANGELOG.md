@@ -1,3 +1,8 @@
+## v3.1.0 - 2025-09-0
+
+- Exposes `initialise_cache` to provide a way to modify the Sketch stylesheet
+  before insertion in the provider.
+
 ## v3.0.0 - 2025-08-31
 
 - Upgrades to Redraw 19.

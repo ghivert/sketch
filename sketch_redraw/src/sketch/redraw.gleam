@@ -59,6 +59,50 @@ pub fn create_cache() -> Cache {
   Cache(stylesheet:, context:)
 }
 
+/// Creates the Sketch Context and initialises the Sketch cache. Use it in
+/// conjuction with [`provider`](#provider) to setup Sketch Redraw, otherwise
+/// nothing will work. `initialise_cache` acts like `create_cache`, but provides
+/// a customisation function to modify the stylesheet at initialisation (to
+/// inject custom styles, keyframes, etc.).
+///
+/// ```gleam
+/// import redraw
+/// import redraw/dom/client
+/// import sketch/redraw as sketch_redraw
+///
+/// pub fn main() {
+///   let app = app()
+///   let cache = initialise_cache()
+///   let root = client.create_root("root")
+///   client.render(root, {
+///     redraw.strict_mode([
+///       sketch_redraw.provider(cache, [
+///         app(),
+///       ]),
+///     ])
+///   })
+/// }
+///
+/// pub fn initialise_cache() {
+///   use stylesheet <- sketch_redraw.initialise_cache()
+///   stylesheet
+///   |> sketch.at_rule(keyframes.wave(), _)
+///   |> sketch.at_rule(keyframes.pulse(), _)
+/// }
+/// ```
+pub fn initialise_cache(
+  prepare: fn(sketch.StyleSheet) -> sketch.StyleSheet,
+) -> Cache {
+  let style = styles.create_node()
+  let assert Ok(cache) = sketch.stylesheet(strategy: sketch.Persistent)
+  let cache = prepare(cache)
+  let cache = mutable.from(cache)
+  let render = fn() { styles.dump(style, sketch.render(mutable.get(cache))) }
+  let stylesheet = StyleSheet(cache:, render:)
+  let assert Ok(context) = react.create_context(context_name, stylesheet)
+  Cache(stylesheet:, context:)
+}
+
 /// Create the Sketch provider used to manage the `StyleSheet`. \
 /// This makes sure identical styles will never be computed twice. \
 /// Use it at root of your render function.
