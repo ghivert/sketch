@@ -1,4 +1,8 @@
-## v3.1.0 - 2025-09-0
+## v3.1.1 - 2025-09-02
+
+- Correctly handle void elements.
+
+## v3.1.0 - 2025-09-01
 
 - Exposes `initialise_cache` to provide a way to modify the Sketch stylesheet
   before insertion in the provider.

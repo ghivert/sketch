@@ -7,7 +7,6 @@
 import redraw.{type Component} as _
 import redraw/dom/attribute.{type Attribute}
 import redraw/dom/html
-import redraw/internals/unsafe.{coerce}
 import sketch/css.{type Class}
 import sketch/redraw.{styled}
 
@@ -38,7 +37,7 @@ pub fn html(
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/base)
 pub fn base(class: Class, attributes: List(Attribute)) -> Component {
-  styled("base", class, attributes, coerce(Nil))
+  styled("base", class, attributes, Nil)
 }
 
 /// The `<head>` HTML element contains machine-readable information (metadata)
@@ -70,7 +69,7 @@ pub fn head(
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/link)
 pub fn link(class: Class, attributes: List(Attribute)) -> Component {
-  styled("link", class, attributes, [])
+  styled("link", class, attributes, Nil)
 }
 
 /// The `<meta>` HTML element represents metadata that cannot be represented
@@ -93,7 +92,7 @@ pub fn link(class: Class, attributes: List(Attribute)) -> Component {
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/meta)
 pub fn meta(class: Class, attributes: List(Attribute)) -> Component {
-  styled("meta", class, attributes, [])
+  styled("meta", class, attributes, Nil)
 }
 
 /// The `<style>` HTML element contains style information for a document, or
@@ -216,7 +215,7 @@ pub fn address(
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/area)
 pub fn area(class: Class, attributes: List(Attribute)) -> Component {
-  styled("area", class, attributes, [])
+  styled("area", class, attributes, Nil)
 }
 
 /// The `<article>` HTML element represents a self-contained composition in a
@@ -360,7 +359,7 @@ pub fn body(
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/br)
 pub fn br(class: Class, attributes: List(Attribute)) -> Component {
-  styled("br", class, attributes, [])
+  styled("br", class, attributes, Nil)
 }
 
 /// The `<button>` HTML element is an interactive element activated by a user
@@ -451,7 +450,7 @@ pub fn code(
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/col)
 pub fn col(class: Class, attributes: List(Attribute)) -> Component {
-  styled("col", class, attributes, [])
+  styled("col", class, attributes, Nil)
 }
 
 /// The `<colgroup>` HTML element defines a group of columns within a table.
@@ -677,7 +676,7 @@ pub fn em(
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/embed)
 pub fn embed(class: Class, attributes: List(Attribute)) -> Component {
-  styled("embed", class, attributes, [])
+  styled("embed", class, attributes, Nil)
 }
 
 /// The `<fieldset>` HTML element is used to group several controls as well as
@@ -893,7 +892,7 @@ pub fn hgroup(
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/hr)
 pub fn hr(class: Class, attributes: List(Attribute)) -> Component {
-  styled("hr", class, attributes, [])
+  styled("hr", class, attributes, Nil)
 }
 
 /// The `<i>` HTML element represents a range of text that is set off from the
@@ -933,7 +932,7 @@ pub fn iframe(
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/img)
 pub fn img(class: Class, attributes: List(Attribute)) -> Component {
-  styled("img", class, attributes, [])
+  styled("img", class, attributes, Nil)
 }
 
 /// The `<input>` HTML element is used to create interactive controls for
@@ -947,7 +946,7 @@ pub fn img(class: Class, attributes: List(Attribute)) -> Component {
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/input)
 pub fn input(class: Class, attributes: List(Attribute)) -> Component {
-  styled("input", class, attributes, [])
+  styled("input", class, attributes, Nil)
 }
 
 /// The `<ins>` HTML element represents a range of text that has been added to
@@ -1531,7 +1530,7 @@ pub fn small(
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/source)
 pub fn source(class: Class, attributes: List(Attribute)) -> Component {
-  styled("source", class, attributes, [])
+  styled("source", class, attributes, Nil)
 }
 
 /// The `<span>` HTML element is a generic inline container for phrasing content,
@@ -1789,7 +1788,7 @@ pub fn tr(
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/track)
 pub fn track(class: Class, attributes: List(Attribute)) -> Component {
-  styled("track", class, attributes, [])
+  styled("track", class, attributes, Nil)
 }
 
 /// The `<u>` HTML element represents a span of inline text which should be
@@ -1866,5 +1865,5 @@ pub fn video(
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/wbr)
 pub fn wbr(class: Class, attributes: List(Attribute)) -> Component {
-  styled("wbr", class, attributes, [])
+  styled("wbr", class, attributes, Nil)
 }

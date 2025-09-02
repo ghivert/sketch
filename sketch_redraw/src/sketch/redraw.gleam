@@ -153,7 +153,7 @@ pub fn styled(
   tag: String,
   styles: Class,
   props: List(Attribute),
-  children: List(Component),
+  children: a,
 ) -> Component {
   let as_ = a.attribute("as", tag)
   let styles = a.attribute("styles", styles)
