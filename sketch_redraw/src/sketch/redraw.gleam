@@ -21,7 +21,7 @@ type StyleSheet {
 }
 
 /// Unique name for Sketch Context. Only used across the module.
-const context_name = "SketchRedrawContext"
+const context_name = "Sketch:Redraw:Context"
 
 /// Error message used when querying context. Should be used to indicate to the
 /// user what should be done before using `sketch_redraw`.
@@ -130,6 +130,30 @@ pub fn provider(setup: Cache, children: List(Component)) -> Component {
   react.provider(context, stylesheet, children)
 }
 
+/// Generates the corresponding class name to `styles`.
+///
+/// ```gleam
+/// import redraw
+/// import redraw/dom/attribute
+/// import redraw/dom/client
+/// import redraw/dom/html
+/// import sketch/redraw as sketch_redraw
+///
+/// pub fn my_component() {
+///   use <- redraw.standalone("MyComponent")
+///   let class_name = sketch_redraw.use_class_name(my_class())
+///   html.div([attribute.class_name(class_name)], [
+///     html.text("Styled!"),
+///   ])
+/// }
+/// ```
+pub fn use_class_name(styles: Class) -> String {
+  let stylesheet = use_sketch_context()
+  let class_name = use_styles(stylesheet.cache, styles)
+  use_render(stylesheet, class_name)
+  react.use_memo(fn() { class_name }, #(class_name))
+}
+
 /// Style a native DOM node. `styled` creates an intermediate component named
 /// `Sketch.Styled(tag)` which will render the styles in the StyleSheet injected
 /// in Context, and inject the class name directly on the node. Every other
@@ -166,9 +190,7 @@ pub fn styled(
 /// created lazily on-demand, and are named correctly according to the `tag`.
 fn factory(props: props) -> Component {
   let #(tag, styles, props) = styles.extract_from(props)
-  let stylesheet = use_sketch_context()
-  let class_name = use_class_name(stylesheet.cache, styles)
-  use_render(stylesheet, class_name)
+  let class_name = use_class_name(styles)
   let props = props.append(props, "className", class_name)
   react.jsx(tag, props, Nil, convert_children: False)
 }
@@ -180,7 +202,7 @@ fn use_sketch_context() -> StyleSheet {
   }
 }
 
-fn use_class_name(cache: Mutable(sketch.StyleSheet), styles: Class) -> String {
+fn use_styles(cache: Mutable(sketch.StyleSheet), styles: Class) -> String {
   use <- react.use_memo(_, #(cache, styles.as_string))
   let stylesheet = mutable.get(cache)
   let #(cache_, class_name) = sketch.class_name(styles, stylesheet)

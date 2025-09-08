@@ -1,3 +1,7 @@
+## v3.2.0 - 2025-09-08
+
+- Exposes `use_class_name` to generate a class name dynamically.
+
 ## v3.1.1 - 2025-09-02
 
 - Correctly handle void elements.
