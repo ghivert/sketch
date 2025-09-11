@@ -1,3 +1,7 @@
+## v3.2.1 - 2025-09-11
+
+- Fix `sketch_redraw` overriding existing CSS class.
+
 ## v3.2.0 - 2025-09-08
 
 - Exposes `use_class_name` to generate a class name dynamically.

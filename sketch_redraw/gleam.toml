@@ -1,6 +1,6 @@
 name = "sketch_redraw"
 target = "javascript"
-version = "3.2.0"
+version = "3.2.1"
 
 description = "A Sketch runtime package, made to work with Redraw!"
 internal_modules = ["sketch/redraw/internals", "sketch/redraw/internals/*"]
