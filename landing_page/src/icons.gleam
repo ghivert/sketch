@@ -5,16 +5,16 @@ import icons/github
 import icons/home
 import sketch/css
 import sketch/css/length.{px}
-import sketch/redraw/dom/html as h
+import sketch/redraw/dom/hooks/html as h
 
 pub fn small(icon) {
+  use <- h.div([], [icon])
   css.class([css.width(px(24)), css.height(px(24))])
-  |> h.div([], [icon])
 }
 
 pub fn tiny(icon) {
+  use <- h.div([], [icon])
   css.class([css.width(px(12)), css.height(px(12))])
-  |> h.div([], [icon])
 }
 
 pub const book_open = book_open.icon

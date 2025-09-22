@@ -2,7 +2,7 @@ import redraw/dom/attribute as a
 import redraw/dom/html as h
 import sketch/css
 import sketch/css/length.{px, rem}
-import sketch/redraw/dom/html as sh
+import sketch/redraw/dom/hooks/html as sh
 
 fn primary_class() {
   css.class([
@@ -17,8 +17,8 @@ fn primary_class() {
 }
 
 pub fn primary(attributes, content: String) {
+  use <- sh.button(attributes, [h.text(content)])
   primary_class()
-  |> sh.button(attributes, [h.text(content)])
 }
 
 pub type Color {
@@ -28,6 +28,7 @@ pub type Color {
 }
 
 pub fn example(color, text) {
+  use <- sh.button([], [h.text(text)])
   let background = case color {
     Red -> "rgb(255, 95, 87)"
     Orange -> "rgb(254, 188, 46)"
@@ -49,14 +50,13 @@ pub fn example(color, text) {
     css.text_align("center"),
     css.hover([css.opacity(0.7)]),
   ])
-  |> sh.button([], [h.text(text)])
 }
 
 pub fn link(link, content) {
+  use <- sh.a([a.href(link)], [h.text(content)])
   css.class([
     css.compose(primary_class()),
     css.background("var(--background)"),
     css.border("1px solid var(--border-color)"),
   ])
-  |> sh.a([a.href(link)], [h.text(content)])
 }

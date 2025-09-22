@@ -1,3 +1,7 @@
+## v3.3.0 - 2025-09-22
+
+- Add `hooks` namespace to allow more flexibility in component generation.
+
 ## v3.2.1 - 2025-09-11
 
 - Fix `sketch_redraw` overriding existing CSS class.

@@ -6,10 +6,11 @@ import redraw/dom/events
 import redraw/dom/html as h
 import sketch/css
 import sketch/css/length.{px, rem}
+import sketch/redraw/dom/hooks/html as shh
 import sketch/redraw/dom/html as sh
 
 pub fn copy_button() {
-  use #(text) <- redraw.component_("CopyButton")
+  use #(text) <- redraw.element("CopyButton")
   let #(copied, on_copy) = use_copy(text)
   sh.code(code_install(), [on_copy], [
     h.text(text),
@@ -69,6 +70,6 @@ fn sm_button_class() {
 }
 
 pub fn title(text) {
+  use <- shh.h3([], [h.text(text)])
   css.class([css.font_size(rem(1.8)), css.font_weight("600")])
-  |> sh.h3([], [h.text(text)])
 }

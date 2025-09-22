@@ -4,6 +4,7 @@ import components/footer
 import components/navbar
 import components/windows
 import ffi
+import gleam/function
 import layout.{
   body_container, column, main_title, row, section, section_explanation, title,
   title_container, title_container_inside, width_container,
@@ -22,7 +23,14 @@ import texts
 pub fn main() {
   let app = app()
   let assert Ok(root) = client.create_root("app")
-  client.render(root, redraw.strict_mode([sr.provider([app()])]))
+  let cache = sr.initialise_cache(function.identity)
+  client.render(root, {
+    redraw.strict_mode([
+      sr.provider(cache, [
+        app(),
+      ]),
+    ])
+  })
 }
 
 fn app() {
@@ -32,7 +40,8 @@ fn app() {
   let wisp_section = wisp_section()
   let navbar = navbar.navbar()
   let footer = footer.footer()
-  use <- redraw.component__("App")
+
+  use <- redraw.standalone("App")
   sh.div(css.class([css.font_family("Lexend")]), [], [
     navbar(),
     description_section(),
@@ -91,7 +100,7 @@ fn scroll_to(id: String) {
 
 fn lustre_section() {
   let copy_button = copy_button.copy_button()
-  use <- redraw.component__("LustreSection")
+  use <- redraw.standalone("LustreSection")
   section("lustre-section", "var(--dark-background)", [
     width_container([
       column([], [
@@ -124,7 +133,7 @@ fn lustre_section() {
 
 fn redraw_section() {
   let copy_button = copy_button.copy_button()
-  use <- redraw.component__("RedrawSection")
+  use <- redraw.standalone("RedrawSection")
   section("redraw-section", "var(--background)", [
     width_container([
       column([], [
@@ -157,7 +166,7 @@ fn redraw_section() {
 
 fn plain_css_section() {
   let copy_button = copy_button.copy_button()
-  use <- redraw.component__("PlainCssSection")
+  use <- redraw.standalone("PlainCssSection")
   section("plain-css-section", "var(--dark-background)", [
     width_container([
       column([], [
@@ -191,7 +200,7 @@ fn plain_css_section() {
 
 fn wisp_section() {
   let copy_button = copy_button.copy_button()
-  use <- redraw.component__("WispSection")
+  use <- redraw.standalone("WispSection")
   section("wisp-section", "var(--background)", [
     width_container([
       column([], [

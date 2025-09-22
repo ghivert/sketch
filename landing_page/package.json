@@ -9,16 +9,16 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@chouquette/gleam": "^1.11.1",
-    "@vitejs/plugin-react-swc": "^3.7.1",
-    "vite": "^5.4.8",
+    "@chouquette/gleam": "^1.12.0",
+    "@vitejs/plugin-react-swc": "^3.11.0",
+    "vite": "^5.4.20",
     "vite-gleam": "^0.4.3"
   },
   "packageManager": "yarn@4.5.0",
   "dependencies": {
     "@gleam-lang/highlight.js-gleam": "^1.5.0",
-    "highlight.js": "^11.10.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "highlight.js": "^11.11.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   }
 }

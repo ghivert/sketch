@@ -195,6 +195,52 @@ fn factory(props: props) -> Component {
   react.jsx(tag, props, Nil, convert_children: False)
 }
 
+/// Style a native DOM node. `hooked` creates an intermediate component named
+/// `Sketch.Styled(tag)` which will render the styles in the StyleSheet injected
+/// in Context, and inject the class name directly on the node. Every other
+/// props are kept as-is.
+///
+/// `styles` is a function that runs at top-level of the component, allowing
+/// to use hooks directly in the function.
+///
+/// ```gleam
+/// import redraw.{type Component}
+/// import redraw/dom/attribute.{type Attribute}
+/// import sketch/css.{type Class}
+///
+/// pub fn my_node(
+///   styles: Class,
+///   props: List(Attribute),
+///   children: List(Component),
+/// ) -> Component {
+///   use <- hooked("my_node", props, children)
+///   redraw.use_memo(fn () { styles }, #(styles))
+/// }
+/// ```
+@internal
+pub fn hooked(
+  tag: String,
+  props: List(Attribute),
+  children: a,
+  styles: fn() -> Class,
+) -> Component {
+  let as_ = a.attribute("as", tag)
+  let styles = a.attribute("styles", styles)
+  let fun = styles.hook_cache(tag, hook_factory)
+  let props = html.to_props([as_, styles, ..props])
+  react.jsx(fun, props, children, convert_children: True)
+}
+
+/// React Component rendering a styled HTML element. Those components are
+/// created lazily on-demand, and are named correctly according to the `tag`.
+fn hook_factory(props: props) -> Component {
+  let #(tag, use_user_styles, props) = styles.hook_extract_from(props)
+  let styles = use_user_styles()
+  let class_name = use_class_name(styles)
+  let props = props.append(props, "className", class_name)
+  react.jsx(tag, props, Nil, convert_children: False)
+}
+
 fn use_sketch_context() -> StyleSheet {
   case react.get_context(context_name) {
     Ok(context) -> react.use_context(context)
