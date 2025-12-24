@@ -12,6 +12,7 @@ type = "github"
 user = "ghivert"
 repo = "sketch"
 path = "sketch_lustre"
+tag-prefix = "sketch_lustre_"
 
 [dependencies]
 gleam_stdlib = ">= 0.60.0 and < 2.0.0"
