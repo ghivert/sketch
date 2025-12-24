@@ -1,4 +1,4 @@
-import redraw.{type Component} as react
+import redraw.{type Element} as react
 import redraw/dom/attribute.{type Attribute} as a
 import redraw/dom/html
 import sketch
@@ -19,9 +19,6 @@ pub opaque type Cache {
 type StyleSheet {
   StyleSheet(cache: Mutable(sketch.StyleSheet), render: fn() -> Nil)
 }
-
-/// Unique name for Sketch Context. Only used across the module.
-const context_name = "Sketch:Redraw:Context"
 
 /// Error message used when querying context. Should be used to indicate to the
 /// user what should be done before using `sketch_redraw`.
@@ -55,7 +52,7 @@ pub fn create_cache() -> Cache {
   let cache = mutable.from(cache)
   let render = fn() { styles.dump(style, sketch.render(mutable.get(cache))) }
   let stylesheet = StyleSheet(cache:, render:)
-  let assert Ok(context) = react.create_context(context_name, stylesheet)
+  let context = context(stylesheet)
   Cache(stylesheet:, context:)
 }
 
@@ -99,7 +96,7 @@ pub fn initialise_cache(
   let cache = mutable.from(cache)
   let render = fn() { styles.dump(style, sketch.render(mutable.get(cache))) }
   let stylesheet = StyleSheet(cache:, render:)
-  let assert Ok(context) = react.create_context(context_name, stylesheet)
+  let context = context(stylesheet)
   Cache(stylesheet:, context:)
 }
 
@@ -125,7 +122,7 @@ pub fn initialise_cache(
 ///   })
 /// }
 /// ```
-pub fn provider(setup: Cache, children: List(Component)) -> Component {
+pub fn provider(setup: Cache, children: List(Element)) -> Element {
   let Cache(context:, stylesheet:) = setup
   react.provider(context, stylesheet, children)
 }
@@ -178,7 +175,7 @@ pub fn styled(
   styles: Class,
   props: List(Attribute),
   children: a,
-) -> Component {
+) -> Element {
   let as_ = a.attribute("as", tag)
   let styles = a.attribute("styles", styles)
   let fun = styles.cache(tag, factory)
@@ -188,7 +185,7 @@ pub fn styled(
 
 /// React Component rendering a styled HTML element. Those components are
 /// created lazily on-demand, and are named correctly according to the `tag`.
-fn factory(props: props) -> Component {
+fn factory(props: props) -> Element {
   let #(tag, styles, props) = styles.extract_from(props)
   let class_name = use_class_name(styles)
   let props = props.append(props, "className", class_name)
@@ -223,7 +220,7 @@ pub fn hooked(
   props: List(Attribute),
   children: a,
   styles: fn() -> Class,
-) -> Component {
+) -> Element {
   let as_ = a.attribute("as", tag)
   let styles = a.attribute("styles", styles)
   let fun = styles.hook_cache(tag, hook_factory)
@@ -233,7 +230,7 @@ pub fn hooked(
 
 /// React Component rendering a styled HTML element. Those components are
 /// created lazily on-demand, and are named correctly according to the `tag`.
-fn hook_factory(props: props) -> Component {
+fn hook_factory(props: props) -> Element {
   let #(tag, use_user_styles, props) = styles.hook_extract_from(props)
   let styles = use_user_styles()
   let class_name = use_class_name(styles)
@@ -242,7 +239,7 @@ fn hook_factory(props: props) -> Component {
 }
 
 fn use_sketch_context() -> StyleSheet {
-  case react.get_context(context_name) {
+  case get_context() {
     Ok(context) -> react.use_context(context)
     Error(_) -> panic as error_msg
   }
@@ -260,3 +257,9 @@ fn use_render(stylesheet: StyleSheet, class_name: String) -> Nil {
   use <- react.use_insertion_effect(_, #(class_name))
   stylesheet.render()
 }
+
+@external(javascript, "./redraw.ffi.mjs", "context")
+fn context(stylesheet: StyleSheet) -> react.Context(StyleSheet)
+
+@external(javascript, "./redraw.ffi.mjs", "get")
+fn get_context() -> Result(react.Context(StyleSheet), Nil)

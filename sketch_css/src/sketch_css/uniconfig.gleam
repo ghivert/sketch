@@ -37,7 +37,7 @@ fn package_config(dir: String, package_name: String) -> snag.Result(Config) {
   |> result.try_recover(fn(_) {
     fs.read_file(gleam_toml)
     |> result.try(parse_toml)
-    |> result.then(fn(config) {
+    |> result.try(fn(config) {
       tom.get_table(config, [package_name])
       |> snag.map_error(string.inspect)
       |> result.map(pair.new(gleam_toml, _))

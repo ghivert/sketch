@@ -131,20 +131,20 @@ fn rewrite_type(type_: g.Type, env: Environment) -> g.Type {
   case type_ {
     g.TupleType(..) -> {
       let elements = list.map(type_.elements, rewrite_type(_, env))
-      g.TupleType(elements:)
+      g.TupleType(..type_, elements:)
     }
 
     g.NamedType(module: option.None, name:, ..) -> {
       let module = replace_module(name, env)
       let name = replace_name(name, env)
       let parameters = list.map(type_.parameters, rewrite_type(_, env))
-      g.NamedType(module:, parameters:, name:)
+      g.NamedType(..type_, module:, parameters:, name:)
     }
 
     g.FunctionType(..) -> {
       let parameters = list.map(type_.parameters, rewrite_type(_, env))
       let return = rewrite_type(type_.return, env)
-      g.FunctionType(parameters:, return:)
+      g.FunctionType(..type_, parameters:, return:)
     }
 
     _ -> type_
@@ -176,6 +176,13 @@ fn rewrite_statement(
       let stat = g.Assignment(..stat, pattern:, annotation:, value:)
       #([stat, ..stats], env)
     }
+
+    g.Assert(..) -> {
+      let expression = rewrite_expr(stat.expression, env)
+      let message = option.map(stat.message, rewrite_expr(_, env))
+      let stat = g.Assert(..stat, expression:, message:)
+      #([stat, ..stats], env)
+    }
   }
 }
 
@@ -184,18 +191,18 @@ fn rewrite_pattern(
   env: Environment,
 ) -> #(g.Pattern, Environment) {
   case pattern {
-    g.PatternVariable(name:) -> {
+    g.PatternVariable(name:, ..) -> {
       #(name, option.None)
       |> list.prepend(env, _)
-      |> pair.new(g.PatternVariable(name:), _)
+      |> pair.new(g.PatternVariable(..pattern, name:), _)
     }
 
-    g.PatternTuple(elems:) -> {
-      rewrite_patterns(elems, env)
-      |> pair.map_first(g.PatternTuple)
+    g.PatternTuple(elements:, location:) -> {
+      rewrite_patterns(elements, env)
+      |> pair.map_first(g.PatternTuple(location:, elements: _))
     }
 
-    g.PatternList(elements:, tail:) -> {
+    g.PatternList(elements:, tail:, ..) -> {
       let #(elements, env) = rewrite_patterns(elements, env)
       let #(tail, env) = case tail {
         option.None -> #(option.None, env)
@@ -203,10 +210,10 @@ fn rewrite_pattern(
           rewrite_pattern(tail, env)
           |> pair.map_first(option.Some)
       }
-      #(g.PatternList(elements:, tail:), env)
+      #(g.PatternList(..pattern, elements:, tail:), env)
     }
 
-    g.PatternBitString(segments:) -> {
+    g.PatternBitString(segments:, location:) -> {
       list.fold(segments, #([], env), fn(acc, segment) {
         let #(exprs, env) = acc
         let #(pattern, segments) = segment
@@ -215,19 +222,19 @@ fn rewrite_pattern(
         #([#(pattern, segments), ..exprs], env)
       })
       |> pair.map_first(list.reverse)
-      |> pair.map_first(g.PatternBitString)
+      |> pair.map_first(g.PatternBitString(location:, segments: _))
     }
 
-    g.PatternConcatenate(right: g.Named(name) as right, left:) -> {
+    g.PatternConcatenate(rest_name: g.Named(name) as rest_name, ..) -> {
       let env = [#(name, option.None), ..env]
-      #(g.PatternConcatenate(left:, right:), env)
+      #(g.PatternConcatenate(..pattern, rest_name:), env)
     }
 
-    g.PatternConstructor(arguments:, constructor:, ..) -> {
+    g.PatternVariant(arguments:, constructor:, ..) -> {
       let module = replace_module(constructor, env)
       let constructor = replace_name(constructor, env)
       let #(arguments, env) = rewrite_pattern_fields(arguments, env)
-      #(g.PatternConstructor(..pattern, module:, arguments:, constructor:), env)
+      #(g.PatternVariant(..pattern, module:, arguments:, constructor:), env)
     }
 
     _ -> #(pattern, env)
@@ -268,7 +275,7 @@ fn rewrite_pattern_fields(
   list.fold(arguments, #([], env), fn(acc, argument) {
     let #(exprs, env) = acc
     case argument {
-      g.ShorthandField(label:) -> {
+      g.ShorthandField(label:, ..) -> {
         #(label, option.None)
         |> list.prepend(env, _)
         |> pair.new([argument, ..exprs], _)
@@ -296,7 +303,7 @@ fn rewrite_expr_field(
 ) -> g.Field(g.Expression) {
   case field {
     g.UnlabelledField(item:) -> g.UnlabelledField(item: rewrite_expr(item, env))
-    g.ShorthandField(label:) -> g.ShorthandField(label:)
+    g.ShorthandField(label:, ..) -> g.ShorthandField(..field, label:)
     g.LabelledField(item:, ..) -> {
       let item = rewrite_expr(item, env)
       g.LabelledField(..field, item:)
@@ -306,37 +313,42 @@ fn rewrite_expr_field(
 
 fn rewrite_expr(expr: g.Expression, env: Environment) -> g.Expression {
   case expr {
-    g.NegateInt(expr) -> g.NegateInt(rewrite_expr(expr, env))
-    g.NegateBool(expr) -> g.NegateBool(rewrite_expr(expr, env))
-    g.Panic(expr) -> g.Panic(option.map(expr, rewrite_expr(_, env)))
-    g.Todo(expr) -> g.Todo(option.map(expr, rewrite_expr(_, env)))
-    g.Tuple(exprs) -> g.Tuple(list.map(exprs, rewrite_expr(_, env)))
+    g.NegateInt(..) -> g.NegateInt(..expr, value: rewrite_expr(expr.value, env))
+    g.NegateBool(..) ->
+      g.NegateBool(..expr, value: rewrite_expr(expr.value, env))
+    g.Panic(..) ->
+      g.Panic(..expr, message: option.map(expr.message, rewrite_expr(_, env)))
+    g.Todo(..) ->
+      g.Todo(..expr, message: option.map(expr.message, rewrite_expr(_, env)))
+    g.Tuple(..) ->
+      g.Tuple(..expr, elements: list.map(expr.elements, rewrite_expr(_, env)))
     g.TupleIndex(..) ->
       g.TupleIndex(..expr, tuple: rewrite_expr(expr.tuple, env))
 
-    g.Variable(var) -> {
-      list.key_find(env, var)
+    g.Variable(name:, location:) -> {
+      list.key_find(env, name)
       |> result.unwrap(option.None)
       |> option.map(fn(found) {
-        let #(module, label) = found
-        let container = g.Variable(module)
-        g.FieldAccess(container:, label:)
+        let #(name, label) = found
+        let container = g.Variable(location:, name:)
+        g.FieldAccess(location:, container:, label:)
       })
-      |> option.unwrap(g.Variable(var))
+      |> option.unwrap(g.Variable(name:, location:))
     }
 
-    g.Block(stats) -> {
-      list.fold(stats, #([], env), rewrite_statement)
-      |> pair.first
-      |> list.reverse
-      |> g.Block
+    g.Block(statements:, ..) -> {
+      g.Block(..expr, statements: {
+        list.fold(statements, #([], env), rewrite_statement)
+        |> pair.first
+        |> list.reverse
+      })
     }
 
-    g.Fn(return_annotation:, body:, arguments:) -> {
+    g.Fn(return_annotation:, body:, arguments:, ..) -> {
       let rewrite_type = rewrite_type(_, env)
       let return_annotation = option.map(return_annotation, rewrite_type)
       let body = rewrite_function_body(body, env)
-      g.Fn(return_annotation:, body:, arguments: {
+      g.Fn(..expr, return_annotation:, body:, arguments: {
         use argument <- list.map(arguments)
         let type_ = option.map(argument.type_, rewrite_type)
         g.FnParameter(..argument, type_:)
@@ -346,7 +358,7 @@ fn rewrite_expr(expr: g.Expression, env: Environment) -> g.Expression {
     g.List(..) -> {
       let elements = list.map(expr.elements, rewrite_expr(_, env))
       let rest = option.map(expr.rest, rewrite_expr(_, env))
-      g.List(elements:, rest:)
+      g.List(..expr, elements:, rest:)
     }
 
     g.RecordUpdate(..) -> {
@@ -376,7 +388,7 @@ fn rewrite_expr(expr: g.Expression, env: Environment) -> g.Expression {
       let rewrite_expr_field = rewrite_expr_field(_, env)
       let function = rewrite_expr(expr.function, env)
       let arguments = list.map(expr.arguments, rewrite_expr_field)
-      g.Call(function:, arguments:)
+      g.Call(..expr, function:, arguments:)
     }
 
     g.FnCapture(function:, arguments_before:, arguments_after:, ..) -> {
@@ -387,9 +399,9 @@ fn rewrite_expr(expr: g.Expression, env: Environment) -> g.Expression {
       g.FnCapture(..expr, function:, arguments_before:, arguments_after:)
     }
 
-    g.BitString(segments:) -> {
+    g.BitString(segments:, ..) -> {
       let rewrite_expr = rewrite_expr(_, env)
-      g.BitString(segments: {
+      g.BitString(..expr, segments: {
         use #(expr, segments) <- list.map(segments)
         #(rewrite_expr(expr), {
           use segment <- list.map(segments)
@@ -401,9 +413,9 @@ fn rewrite_expr(expr: g.Expression, env: Environment) -> g.Expression {
       })
     }
 
-    g.Case(subjects:, clauses:) -> {
+    g.Case(subjects:, clauses:, ..) -> {
       let subjects = list.map(subjects, rewrite_expr(_, env))
-      g.Case(subjects:, clauses: {
+      g.Case(..expr, subjects:, clauses: {
         use g.Clause(patterns:, guard:, body:) <- list.map(clauses)
         let #(patterns, env) = rewrite_nested_patterns(patterns, env)
         let guard = option.map(guard, rewrite_expr(_, env))
@@ -412,10 +424,10 @@ fn rewrite_expr(expr: g.Expression, env: Environment) -> g.Expression {
       })
     }
 
-    g.BinaryOperator(name:, left:, right:) -> {
+    g.BinaryOperator(name:, left:, right:, ..) -> {
       let left = rewrite_expr(left, env)
       let right = rewrite_expr(right, env)
-      g.BinaryOperator(name:, left:, right:)
+      g.BinaryOperator(..expr, name:, left:, right:)
     }
 
     _ -> expr

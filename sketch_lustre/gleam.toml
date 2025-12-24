@@ -1,11 +1,11 @@
 name = "sketch_lustre"
-version = "3.1.1"
+version = "3.1.2"
 
 description = "A Sketch runtime package, made to work with Lustre!"
 internal_modules = ["sketch/lustre/internals", "sketch/lustre/internals/*"]
 licences = ["MIT"]
 links = [{title = "Sponsor", href = "https://github.com/sponsors/ghivert"}]
-gleam = ">= 1.6.0"
+gleam = ">= 1.13.0"
 
 [repository]
 type = "github"

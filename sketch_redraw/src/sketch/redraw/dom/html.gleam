@@ -4,7 +4,7 @@
 //// `redraw/dom/html`. `html.text` and `html.none` have been reexported for
 //// convenience.
 
-import redraw.{type Component} as _
+import redraw.{type Element} as _
 import redraw/dom/attribute.{type Attribute}
 import redraw/dom/html
 import sketch/css.{type Class}
@@ -21,8 +21,8 @@ import sketch/redraw.{styled}
 pub fn html(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("html", class, attributes, children)
 }
 
@@ -36,7 +36,7 @@ pub fn html(
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/base)
-pub fn base(class: Class, attributes: List(Attribute)) -> Component {
+pub fn base(class: Class, attributes: List(Attribute)) -> Element {
   styled("base", class, attributes, Nil)
 }
 
@@ -54,8 +54,8 @@ pub fn base(class: Class, attributes: List(Attribute)) -> Component {
 pub fn head(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("head", class, attributes, children)
 }
 
@@ -68,7 +68,7 @@ pub fn head(
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/link)
-pub fn link(class: Class, attributes: List(Attribute)) -> Component {
+pub fn link(class: Class, attributes: List(Attribute)) -> Element {
   styled("link", class, attributes, Nil)
 }
 
@@ -91,7 +91,7 @@ pub fn link(class: Class, attributes: List(Attribute)) -> Component {
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/meta)
-pub fn meta(class: Class, attributes: List(Attribute)) -> Component {
+pub fn meta(class: Class, attributes: List(Attribute)) -> Element {
   styled("meta", class, attributes, Nil)
 }
 
@@ -106,7 +106,7 @@ pub fn style(
   class: Class,
   attributes: List(Attribute),
   child: String,
-) -> Component {
+) -> Element {
   styled("style", class, attributes, [text(child)])
 }
 
@@ -121,7 +121,7 @@ pub fn title(
   class: Class,
   attributes: List(Attribute),
   title: String,
-) -> Component {
+) -> Element {
   styled("title", class, attributes, [text(title)])
 }
 
@@ -130,10 +130,10 @@ pub fn title(
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/API/Text)
-pub const text: fn(String) -> Component = html.text
+pub const text: fn(String) -> Element = html.text
 
 /// Does not render anything in the DOM.
-pub const none: fn() -> Component = html.none
+pub const none: fn() -> Element = html.none
 
 /// The `<a>` HTML element (or anchor element), with [its `href` attribute](https://developer.mozilla.org/docs/Web/HTML/Element/a#href),
 /// creates a hyperlink to web pages, files, email addresses, locations in the
@@ -152,8 +152,8 @@ pub const none: fn() -> Component = html.none
 pub fn a(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("a", class, attributes, children)
 }
 
@@ -175,8 +175,8 @@ pub fn a(
 pub fn abbr(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("abbr", class, attributes, children)
 }
 
@@ -200,8 +200,8 @@ pub fn abbr(
 pub fn address(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("address", class, attributes, children)
 }
 
@@ -214,7 +214,7 @@ pub fn address(
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/area)
-pub fn area(class: Class, attributes: List(Attribute)) -> Component {
+pub fn area(class: Class, attributes: List(Attribute)) -> Element {
   styled("area", class, attributes, Nil)
 }
 
@@ -236,8 +236,8 @@ pub fn area(class: Class, attributes: List(Attribute)) -> Component {
 pub fn article(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("article", class, attributes, children)
 }
 
@@ -251,8 +251,8 @@ pub fn article(
 pub fn aside(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("aside", class, attributes, children)
 }
 
@@ -267,8 +267,8 @@ pub fn aside(
 pub fn audio(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("audio", class, attributes, children)
 }
 
@@ -286,8 +286,8 @@ pub fn audio(
 pub fn b(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("b", class, attributes, children)
 }
 
@@ -302,8 +302,8 @@ pub fn b(
 pub fn bdi(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("bdi", class, attributes, children)
 }
 
@@ -316,8 +316,8 @@ pub fn bdi(
 pub fn bdo(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("bdo", class, attributes, children)
 }
 
@@ -332,8 +332,8 @@ pub fn bdo(
 pub fn blockquote(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("blockquote", class, attributes, children)
 }
 
@@ -346,8 +346,8 @@ pub fn blockquote(
 pub fn body(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("body", class, attributes, children)
 }
 
@@ -358,7 +358,7 @@ pub fn body(
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/br)
-pub fn br(class: Class, attributes: List(Attribute)) -> Component {
+pub fn br(class: Class, attributes: List(Attribute)) -> Element {
   styled("br", class, attributes, Nil)
 }
 
@@ -376,8 +376,8 @@ pub fn br(class: Class, attributes: List(Attribute)) -> Component {
 pub fn button(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("button", class, attributes, children)
 }
 
@@ -392,8 +392,8 @@ pub fn button(
 pub fn canvas(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("canvas", class, attributes, children)
 }
 
@@ -406,8 +406,8 @@ pub fn canvas(
 pub fn caption(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("caption", class, attributes, children)
 }
 
@@ -421,8 +421,8 @@ pub fn caption(
 pub fn cite(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("cite", class, attributes, children)
 }
 
@@ -436,8 +436,8 @@ pub fn cite(
 pub fn code(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("code", class, attributes, children)
 }
 
@@ -449,7 +449,7 @@ pub fn code(
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/col)
-pub fn col(class: Class, attributes: List(Attribute)) -> Component {
+pub fn col(class: Class, attributes: List(Attribute)) -> Element {
   styled("col", class, attributes, Nil)
 }
 
@@ -461,8 +461,8 @@ pub fn col(class: Class, attributes: List(Attribute)) -> Component {
 pub fn colgroup(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("colgroup", class, attributes, children)
 }
 
@@ -476,8 +476,8 @@ pub fn colgroup(
 pub fn data(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("data", class, attributes, children)
 }
 
@@ -491,8 +491,8 @@ pub fn data(
 pub fn datalist(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("datalist", class, attributes, children)
 }
 
@@ -505,8 +505,8 @@ pub fn datalist(
 pub fn dd(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("dd", class, attributes, children)
 }
 
@@ -524,8 +524,8 @@ pub fn dd(
 pub fn del(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("del", class, attributes, children)
 }
 
@@ -545,8 +545,8 @@ pub fn del(
 pub fn details(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("details", class, attributes, children)
 }
 
@@ -564,8 +564,8 @@ pub fn details(
 pub fn dfn(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("dfn", class, attributes, children)
 }
 
@@ -591,8 +591,8 @@ pub fn dfn(
 pub fn dialog(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("dialog", class, attributes, children)
 }
 
@@ -613,8 +613,8 @@ pub fn dialog(
 pub fn div(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("div", class, attributes, children)
 }
 
@@ -629,8 +629,8 @@ pub fn div(
 pub fn dl(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("dl", class, attributes, children)
 }
 
@@ -648,8 +648,8 @@ pub fn dl(
 pub fn dt(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("dt", class, attributes, children)
 }
 
@@ -663,8 +663,8 @@ pub fn dt(
 pub fn em(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("em", class, attributes, children)
 }
 
@@ -675,7 +675,7 @@ pub fn em(
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/embed)
-pub fn embed(class: Class, attributes: List(Attribute)) -> Component {
+pub fn embed(class: Class, attributes: List(Attribute)) -> Element {
   styled("embed", class, attributes, Nil)
 }
 
@@ -688,8 +688,8 @@ pub fn embed(class: Class, attributes: List(Attribute)) -> Component {
 pub fn fieldset(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("fieldset", class, attributes, children)
 }
 
@@ -703,8 +703,8 @@ pub fn fieldset(
 pub fn figcaption(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("figcaption", class, attributes, children)
 }
 
@@ -719,8 +719,8 @@ pub fn figcaption(
 pub fn figure(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("figure", class, attributes, children)
 }
 
@@ -736,8 +736,8 @@ pub fn figure(
 pub fn footer(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("footer", class, attributes, children)
 }
 
@@ -754,8 +754,8 @@ pub fn footer(
 pub fn form(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("form", class, attributes, children)
 }
 
@@ -770,8 +770,8 @@ pub fn form(
 pub fn h1(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("h1", class, attributes, children)
 }
 
@@ -786,8 +786,8 @@ pub fn h1(
 pub fn h2(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("h2", class, attributes, children)
 }
 
@@ -802,8 +802,8 @@ pub fn h2(
 pub fn h3(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("h3", class, attributes, children)
 }
 
@@ -818,8 +818,8 @@ pub fn h3(
 pub fn h4(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("h4", class, attributes, children)
 }
 
@@ -834,8 +834,8 @@ pub fn h4(
 pub fn h5(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("h5", class, attributes, children)
 }
 
@@ -850,8 +850,8 @@ pub fn h5(
 pub fn h6(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("h6", class, attributes, children)
 }
 
@@ -865,8 +865,8 @@ pub fn h6(
 pub fn header(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("header", class, attributes, children)
 }
 
@@ -879,8 +879,8 @@ pub fn header(
 pub fn hgroup(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("hgroup", class, attributes, children)
 }
 
@@ -891,7 +891,7 @@ pub fn hgroup(
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/hr)
-pub fn hr(class: Class, attributes: List(Attribute)) -> Component {
+pub fn hr(class: Class, attributes: List(Attribute)) -> Element {
   styled("hr", class, attributes, Nil)
 }
 
@@ -907,8 +907,8 @@ pub fn hr(class: Class, attributes: List(Attribute)) -> Component {
 pub fn i(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("i", class, attributes, children)
 }
 
@@ -921,8 +921,8 @@ pub fn i(
 pub fn iframe(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("iframe", class, attributes, children)
 }
 
@@ -931,7 +931,7 @@ pub fn iframe(
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/img)
-pub fn img(class: Class, attributes: List(Attribute)) -> Component {
+pub fn img(class: Class, attributes: List(Attribute)) -> Element {
   styled("img", class, attributes, Nil)
 }
 
@@ -945,7 +945,7 @@ pub fn img(class: Class, attributes: List(Attribute)) -> Component {
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/input)
-pub fn input(class: Class, attributes: List(Attribute)) -> Component {
+pub fn input(class: Class, attributes: List(Attribute)) -> Element {
   styled("input", class, attributes, Nil)
 }
 
@@ -959,8 +959,8 @@ pub fn input(class: Class, attributes: List(Attribute)) -> Component {
 pub fn ins(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("ins", class, attributes, children)
 }
 
@@ -976,8 +976,8 @@ pub fn ins(
 pub fn kbd(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("kbd", class, attributes, children)
 }
 
@@ -990,8 +990,8 @@ pub fn kbd(
 pub fn label(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("label", class, attributes, children)
 }
 
@@ -1004,8 +1004,8 @@ pub fn label(
 pub fn legend(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("legend", class, attributes, children)
 }
 
@@ -1021,8 +1021,8 @@ pub fn legend(
 pub fn li(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("li", class, attributes, children)
 }
 
@@ -1037,8 +1037,8 @@ pub fn li(
 pub fn main(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("main", class, attributes, children)
 }
 
@@ -1051,8 +1051,8 @@ pub fn main(
 pub fn map(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("map", class, attributes, children)
 }
 
@@ -1066,8 +1066,8 @@ pub fn map(
 pub fn mark(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("mark", class, attributes, children)
 }
 
@@ -1086,8 +1086,8 @@ pub fn mark(
 pub fn math(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("math", class, attributes, children)
 }
 
@@ -1102,8 +1102,8 @@ pub fn math(
 pub fn menu(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("menu", class, attributes, children)
 }
 
@@ -1116,8 +1116,8 @@ pub fn menu(
 pub fn meter(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("meter", class, attributes, children)
 }
 
@@ -1132,8 +1132,8 @@ pub fn meter(
 pub fn nav(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("nav", class, attributes, children)
 }
 
@@ -1147,8 +1147,8 @@ pub fn nav(
 pub fn noscript(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("noscript", class, attributes, children)
 }
 
@@ -1162,8 +1162,8 @@ pub fn noscript(
 pub fn object(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("object", class, attributes, children)
 }
 
@@ -1176,8 +1176,8 @@ pub fn object(
 pub fn ol(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("ol", class, attributes, children)
 }
 
@@ -1190,8 +1190,8 @@ pub fn ol(
 pub fn optgroup(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("optgroup", class, attributes, children)
 }
 
@@ -1206,8 +1206,8 @@ pub fn optgroup(
 pub fn option(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("option", class, attributes, children)
 }
 
@@ -1220,8 +1220,8 @@ pub fn option(
 pub fn output(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("output", class, attributes, children)
 }
 
@@ -1241,8 +1241,8 @@ pub fn output(
 pub fn p(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("p", class, attributes, children)
 }
 
@@ -1262,8 +1262,8 @@ pub fn p(
 pub fn picture(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("picture", class, attributes, children)
 }
 
@@ -1284,8 +1284,8 @@ pub fn picture(
 pub fn portal(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("portal", class, attributes, children)
 }
 
@@ -1303,8 +1303,8 @@ pub fn portal(
 pub fn pre(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("pre", class, attributes, children)
 }
 
@@ -1317,8 +1317,8 @@ pub fn pre(
 pub fn progress(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("progress", class, attributes, children)
 }
 
@@ -1333,8 +1333,8 @@ pub fn progress(
 pub fn q(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("q", class, attributes, children)
 }
 
@@ -1349,8 +1349,8 @@ pub fn q(
 pub fn rp(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("rp", class, attributes, children)
 }
 
@@ -1365,8 +1365,8 @@ pub fn rp(
 pub fn rt(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("rt", class, attributes, children)
 }
 
@@ -1386,8 +1386,8 @@ pub fn rt(
 pub fn ruby(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("ruby", class, attributes, children)
 }
 
@@ -1403,8 +1403,8 @@ pub fn ruby(
 pub fn s(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("s", class, attributes, children)
 }
 
@@ -1419,8 +1419,8 @@ pub fn s(
 pub fn samp(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("samp", class, attributes, children)
 }
 
@@ -1435,8 +1435,8 @@ pub fn samp(
 pub fn script(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("script", class, attributes, children)
 }
 
@@ -1454,8 +1454,8 @@ pub fn script(
 pub fn search(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("search", class, attributes, children)
 }
 
@@ -1469,8 +1469,8 @@ pub fn search(
 pub fn section(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("section", class, attributes, children)
 }
 
@@ -1482,8 +1482,8 @@ pub fn section(
 pub fn select(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("select", class, attributes, children)
 }
 
@@ -1497,8 +1497,8 @@ pub fn select(
 pub fn slot(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("slot", class, attributes, children)
 }
 
@@ -1513,8 +1513,8 @@ pub fn slot(
 pub fn small(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("small", class, attributes, children)
 }
 
@@ -1529,7 +1529,7 @@ pub fn small(
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/source)
-pub fn source(class: Class, attributes: List(Attribute)) -> Component {
+pub fn source(class: Class, attributes: List(Attribute)) -> Element {
   styled("source", class, attributes, Nil)
 }
 
@@ -1547,8 +1547,8 @@ pub fn source(class: Class, attributes: List(Attribute)) -> Component {
 pub fn span(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("span", class, attributes, children)
 }
 
@@ -1562,8 +1562,8 @@ pub fn span(
 pub fn strong(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("strong", class, attributes, children)
 }
 
@@ -1577,8 +1577,8 @@ pub fn strong(
 pub fn sub(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("sub", class, attributes, children)
 }
 
@@ -1592,8 +1592,8 @@ pub fn sub(
 pub fn summary(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("summary", class, attributes, children)
 }
 
@@ -1607,8 +1607,8 @@ pub fn summary(
 pub fn sup(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("sup", class, attributes, children)
 }
 
@@ -1622,8 +1622,8 @@ pub fn sup(
 pub fn table(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("table", class, attributes, children)
 }
 
@@ -1636,8 +1636,8 @@ pub fn table(
 pub fn tbody(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("tbody", class, attributes, children)
 }
 
@@ -1650,8 +1650,8 @@ pub fn tbody(
 pub fn td(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("td", class, attributes, children)
 }
 
@@ -1665,8 +1665,8 @@ pub fn td(
 pub fn template(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("template", class, attributes, children)
 }
 
@@ -1680,8 +1680,8 @@ pub fn template(
 pub fn textarea(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("textarea", class, attributes, children)
 }
 
@@ -1696,8 +1696,8 @@ pub fn textarea(
 pub fn tfoot(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("tfoot", class, attributes, children)
 }
 
@@ -1711,8 +1711,8 @@ pub fn tfoot(
 pub fn th(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("th", class, attributes, children)
 }
 
@@ -1727,8 +1727,8 @@ pub fn th(
 pub fn thead(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("thead", class, attributes, children)
 }
 
@@ -1749,8 +1749,8 @@ pub fn thead(
 pub fn time(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("time", class, attributes, children)
 }
 
@@ -1764,8 +1764,8 @@ pub fn time(
 pub fn tr(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("tr", class, attributes, children)
 }
 
@@ -1787,7 +1787,7 @@ pub fn tr(
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/track)
-pub fn track(class: Class, attributes: List(Attribute)) -> Component {
+pub fn track(class: Class, attributes: List(Attribute)) -> Element {
   styled("track", class, attributes, Nil)
 }
 
@@ -1807,8 +1807,8 @@ pub fn track(class: Class, attributes: List(Attribute)) -> Component {
 pub fn u(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("u", class, attributes, children)
 }
 
@@ -1821,8 +1821,8 @@ pub fn u(
 pub fn ul(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("ul", class, attributes, children)
 }
 
@@ -1837,8 +1837,8 @@ pub fn ul(
 pub fn var(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("var", class, attributes, children)
 }
 
@@ -1852,8 +1852,8 @@ pub fn var(
 pub fn video(
   class: Class,
   attributes: List(Attribute),
-  children: List(Component),
-) -> Component {
+  children: List(Element),
+) -> Element {
   styled("video", class, attributes, children)
 }
 
@@ -1864,6 +1864,6 @@ pub fn video(
 /// ---
 ///
 /// [MDN Reference](https://developer.mozilla.org/docs/Web/HTML/Element/wbr)
-pub fn wbr(class: Class, attributes: List(Attribute)) -> Component {
+pub fn wbr(class: Class, attributes: List(Attribute)) -> Element {
   styled("wbr", class, attributes, Nil)
 }

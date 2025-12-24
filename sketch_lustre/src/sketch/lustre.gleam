@@ -1,5 +1,4 @@
 import gleam/dynamic.{type Dynamic}
-import gleam/function
 import gleam/list
 import gleam/result
 import lustre/element as el
@@ -7,6 +6,7 @@ import lustre/element/html as h
 import lustre/vdom/vnode
 import sketch
 import sketch/lustre/internals/css_stylesheet
+import sketch/lustre/internals/function
 import sketch/lustre/internals/global
 
 /// Location to output the generated CSS. Every `render` or `ssr` call expect

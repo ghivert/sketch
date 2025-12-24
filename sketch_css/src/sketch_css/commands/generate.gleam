@@ -22,7 +22,7 @@ pub fn css() -> glint.Command(Nil) {
     io.println("=========")
     io.println("Done!")
   })
-  |> result.unwrap_both
+  |> result.unwrap(Nil)
 }
 
 fn run_glint(continuation: fn(Flag, Flag, Flag) -> Nil) {

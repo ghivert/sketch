@@ -23,6 +23,10 @@ fn in_statement(statement: g.Statement, other: String) {
     g.Expression(expression) -> in_expression(expression, other)
     g.Assignment(value:, ..) -> in_expression(value, other)
     g.Use(function:, ..) -> in_expression(function, other)
+    g.Assert(expression:, message:, ..) ->
+      in_expression(expression, other)
+      || option.map(message, in_expression(_, other))
+      |> option.unwrap(False)
   }
 }
 
@@ -34,23 +38,23 @@ fn in_expressions(expressions: List(g.Expression), other: String) {
 
 fn in_expression(expression: g.Expression, other: String) -> Bool {
   case expression {
-    g.Variable(var) -> var == other
-    g.NegateInt(expr) -> in_expression(expr, other)
-    g.NegateBool(expr) -> in_expression(expr, other)
+    g.Variable(..) -> expression.name == other
+    g.NegateInt(..) -> in_expression(expression.value, other)
+    g.NegateBool(..) -> in_expression(expression.value, other)
     g.FieldAccess(container:, ..) -> in_expression(container, other)
     g.TupleIndex(tuple:, ..) -> in_expression(tuple, other)
-    g.Block(statements) -> in_statements(statements, other)
-    g.Tuple(expressions) -> in_expressions(expressions, other)
+    g.Block(statements:, ..) -> in_statements(statements, other)
+    g.Tuple(elements:, ..) -> in_expressions(elements, other)
     g.Fn(body:, ..) -> in_statements(body, other)
 
-    g.List(elements:, rest:) -> {
+    g.List(elements:, rest:, ..) -> {
       rest
       |> option.map(list.prepend(elements, _))
       |> option.unwrap(elements)
       |> in_expressions(other)
     }
 
-    g.Call(function:, arguments:) ->
+    g.Call(function:, arguments:, ..) ->
       arguments
       |> list.filter_map(extract_field)
       |> list.prepend(function)
@@ -62,7 +66,7 @@ fn in_expression(expression: g.Expression, other: String) -> Bool {
       |> list.prepend(function)
       |> in_expressions(other)
 
-    g.Case(subjects:, clauses:) -> {
+    g.Case(subjects:, clauses:, ..) -> {
       clauses
       |> list.map(fn(clause) { clause.body })
       |> list.append(subjects, _)
@@ -80,7 +84,7 @@ fn in_expression(expression: g.Expression, other: String) -> Bool {
 fn extract_field(field: g.Field(a)) {
   case field {
     g.UnlabelledField(expression) -> Ok(expression)
-    g.LabelledField(_, expression) -> Ok(expression)
+    g.LabelledField(item:, ..) -> Ok(item)
     g.ShorthandField(..) -> Error(Nil)
   }
 }

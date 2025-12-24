@@ -27,25 +27,33 @@ fn remove_statement(stat: g.Statement) -> g.Statement {
     g.Use(..) -> g.Use(..stat, function: remove_expr(stat.function))
     g.Expression(e) -> g.Expression(remove_expr(e))
     g.Assignment(..) -> g.Assignment(..stat, value: remove_expr(stat.value))
+    g.Assert(..) -> {
+      let expression = remove_expr(stat.expression)
+      let message = option.map(stat.message, remove_expr)
+      g.Assert(..stat, expression:, message:)
+    }
   }
 }
 
 fn remove_expr(expr: g.Expression) -> g.Expression {
   case expr {
     // Deeply rewrites.
-    g.NegateInt(expr) -> g.NegateInt(remove_expr(expr))
-    g.NegateBool(expr) -> g.NegateBool(remove_expr(expr))
-    g.Block(stat) -> g.Block(list.map(stat, remove_statement))
-    g.Todo(stat) -> g.Todo(option.map(stat, remove_expr))
-    g.Panic(stat) -> g.Panic(option.map(stat, remove_expr))
-    g.Tuple(stat) -> g.Tuple(list.map(stat, remove_expr))
+    g.NegateInt(..) -> g.NegateInt(..expr, value: remove_expr(expr))
+    g.NegateBool(..) -> g.NegateBool(..expr, value: remove_expr(expr))
+    g.Block(..) ->
+      g.Block(..expr, statements: list.map(expr.statements, remove_statement))
+    g.Todo(..) -> g.Todo(..expr, message: option.map(expr.message, remove_expr))
+    g.Panic(..) ->
+      g.Panic(..expr, message: option.map(expr.message, remove_expr))
+    g.Tuple(..) ->
+      g.Tuple(..expr, elements: list.map(expr.elements, remove_expr))
     g.Fn(..) -> g.Fn(..expr, body: list.map(expr.body, remove_statement))
     g.TupleIndex(..) -> g.TupleIndex(..expr, tuple: remove_expr(expr.tuple))
 
-    g.List(elements, rest) -> {
+    g.List(elements:, rest:, ..) -> {
       let elements = list.map(elements, remove_expr)
       let rest = option.map(rest, remove_expr)
-      g.List(elements:, rest:)
+      g.List(..expr, elements:, rest:)
     }
 
     g.RecordUpdate(..) -> {
@@ -64,7 +72,7 @@ fn remove_expr(expr: g.Expression) -> g.Expression {
 
     g.Call(..) -> {
       let function = remove_expr(expr.function)
-      g.Call(function:, arguments: {
+      g.Call(..expr, function:, arguments: {
         use argument <- list.map(expr.arguments)
         remove_expr_field(argument)
       })
@@ -72,7 +80,7 @@ fn remove_expr(expr: g.Expression) -> g.Expression {
 
     g.Case(..) -> {
       let subjects = list.map(expr.subjects, remove_expr)
-      g.Case(subjects:, clauses: {
+      g.Case(..expr, subjects:, clauses: {
         use clause <- list.map(expr.clauses)
         let guard = option.map(clause.guard, remove_expr)
         let body = remove_expr(clause.body)
@@ -81,24 +89,23 @@ fn remove_expr(expr: g.Expression) -> g.Expression {
     }
 
     // Rewrites pipe.
-    g.BinaryOperator(g.Pipe, left:, right: g.Call(function:, arguments:)) -> {
+    g.BinaryOperator(location:, name: g.Pipe, left:, right: g.Call(..) as r) -> {
       let left = g.UnlabelledField(remove_expr(left))
-      let arguments = list.map(arguments, remove_expr_field)
+      let arguments = list.map(r.arguments, remove_expr_field)
       let arguments = [left, ..arguments]
-      g.Call(function:, arguments:)
+      g.Call(location:, function: r.function, arguments:)
     }
 
-    g.BinaryOperator(g.Pipe, left:, right: g.Variable(variable)) -> {
+    g.BinaryOperator(location:, name: g.Pipe, left:, right: g.Variable(..) as v) -> {
       let left = g.UnlabelledField(remove_expr(left))
       let arguments = [left]
-      let function = g.Variable(variable)
-      g.Call(function:, arguments:)
+      g.Call(location:, function: v, arguments:)
     }
 
-    g.BinaryOperator(g.Pipe, left:, right:) -> {
+    g.BinaryOperator(location:, name: g.Pipe, left:, right:) -> {
       let left = remove_expr(left)
       let right = remove_expr(right)
-      g.Call(function: right, arguments: [g.UnlabelledField(left)])
+      g.Call(location:, function: right, arguments: [g.UnlabelledField(left)])
     }
 
     // Nothing to handle.
@@ -109,8 +116,8 @@ fn remove_expr(expr: g.Expression) -> g.Expression {
 fn remove_expr_field(argument: g.Field(g.Expression)) -> g.Field(g.Expression) {
   case argument {
     g.UnlabelledField(e) -> g.UnlabelledField(remove_expr(e))
-    g.ShorthandField(label:) -> g.ShorthandField(label:)
-    g.LabelledField(label:, item:) ->
-      g.LabelledField(label:, item: remove_expr(item))
+    g.ShorthandField(label:, ..) -> g.ShorthandField(..argument, label:)
+    g.LabelledField(label:, item:, ..) ->
+      g.LabelledField(..argument, label:, item: remove_expr(item))
   }
 }

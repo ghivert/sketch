@@ -80,10 +80,10 @@ fn convert_expression(
   modules: List(#(String, StyleSheet)),
 ) -> Result(Value, Nil) {
   case value {
-    g.Int(int) -> int.parse(int) |> result.map(IntValue)
-    g.Float(float) -> float.parse(float) |> result.map(FloatValue)
-    g.String(string) -> Ok(StringValue(string))
-    g.Variable(variable) -> list.key_find(env.environment, variable)
+    g.Int(_, int) -> int.parse(int) |> result.map(IntValue)
+    g.Float(_, float) -> float.parse(float) |> result.map(FloatValue)
+    g.String(_, string) -> Ok(StringValue(string))
+    g.Variable(_, variable) -> list.key_find(env.environment, variable)
 
     g.List(elements:, ..) -> {
       elements
@@ -91,13 +91,13 @@ fn convert_expression(
       |> result.map(ListValue)
     }
 
-    g.Tuple(expressions) -> {
+    g.Tuple(_, expressions) -> {
       expressions
       |> list.try_map(convert_expression(_, env, modules))
       |> result.map(TupleValue)
     }
 
-    g.TupleIndex(tuple:, index:) -> {
+    g.TupleIndex(_, tuple:, index:) -> {
       use value <- result.try(convert_expression(tuple, env, modules))
       case value {
         TupleValue(elements) -> utils.at(elements, index)
@@ -105,7 +105,7 @@ fn convert_expression(
       }
     }
 
-    g.FieldAccess(container: g.Variable(module), label:) -> {
+    g.FieldAccess(_, container: g.Variable(_, module), label:) -> {
       use module <- result.try(list.key_find(modules, module))
       module.environment
       |> list.key_find(label)
@@ -121,9 +121,9 @@ fn convert_expression(
       })
     }
 
-    g.Call(function:, arguments:) -> {
+    g.Call(_, function:, arguments:) -> {
       case function {
-        g.FieldAccess(container: g.Variable("sketch/css"), label:) ->
+        g.FieldAccess(_, container: g.Variable(_, "sketch/css"), label:) ->
           case label {
             "class" -> convert_class_call(arguments, env, modules)
             "compose" -> convert_compose_call(arguments, env, modules)
@@ -137,42 +137,51 @@ fn convert_expression(
             label -> convert_generic_call(label, arguments, env, modules)
           }
 
-        g.FieldAccess(container: g.Variable("sketch/css/svg"), label:) ->
+        g.FieldAccess(_, container: g.Variable(_, "sketch/css/svg"), label:) ->
           convert_generic_call(label, arguments, env, modules)
 
-        g.FieldAccess(container: g.Variable("sketch/css/transform"), label:) ->
-          convert_transform(label, arguments, env, modules)
+        g.FieldAccess(
+          _,
+          container: g.Variable(_, "sketch/css/transform"),
+          label:,
+        ) -> convert_transform(label, arguments, env, modules)
 
-        g.FieldAccess(container: g.Variable("sketch/css/media"), label:) ->
+        g.FieldAccess(_, container: g.Variable(_, "sketch/css/media"), label:) ->
           convert_media(label, arguments, env, modules)
 
-        g.FieldAccess(container: g.Variable("sketch/css/length"), label:) ->
+        g.FieldAccess(_, container: g.Variable(_, "sketch/css/length"), label:) ->
           convert_length(label, arguments, env, modules)
 
-        g.FieldAccess(container: g.Variable("sketch/css/angle"), label:) ->
+        g.FieldAccess(_, container: g.Variable(_, "sketch/css/angle"), label:) ->
           convert_angle(label, arguments, env, modules)
 
-        g.FieldAccess(container: g.Variable("sketch/css/keyframe"), label:) ->
-          convert_keyframe(label, arguments, env, modules)
+        g.FieldAccess(
+          _,
+          container: g.Variable(_, "sketch/css/keyframe"),
+          label:,
+        ) -> convert_keyframe(label, arguments, env, modules)
 
-        g.FieldAccess(container: g.Variable("sketch/css/font_face"), label:) ->
-          convert_font_face(label, arguments, env, modules)
+        g.FieldAccess(
+          _,
+          container: g.Variable(_, "sketch/css/font_face"),
+          label:,
+        ) -> convert_font_face(label, arguments, env, modules)
 
-        g.FieldAccess(container: g.Variable(container), label:) -> {
+        g.FieldAccess(_, container: g.Variable(_, container), label:) -> {
           let stylesheet = list.key_find(modules, container)
           let classes = result.map(stylesheet, fn(s) { s.classes })
           let styles = result.map(stylesheet, fn(s) { s.styles })
           classes
-          |> result.then(list.key_find(_, label))
+          |> result.try(list.key_find(_, label))
           |> result.map(ClassValue)
           |> result.try_recover(fn(_) {
             styles
-            |> result.then(list.key_find(_, label))
+            |> result.try(list.key_find(_, label))
             |> result.map(StyleValue)
           })
         }
 
-        g.Variable(label) -> {
+        g.Variable(_, label) -> {
           env.classes
           |> list.key_find(label)
           |> result.map(ClassValue)
@@ -219,7 +228,7 @@ fn convert_body(
 ) -> StyleSheet {
   use env, statement <- list.fold(function.body, env)
   case statement {
-    g.Assignment(pattern: g.PatternVariable(name:), value:, ..) -> {
+    g.Assignment(pattern: g.PatternVariable(_, name:), value:, ..) -> {
       case convert_expression(value, env, modules) {
         Error(_) -> env
         Ok(value) -> {
@@ -381,7 +390,7 @@ fn convert_keyframe(
   modules: List(#(String, StyleSheet)),
 ) -> Result(Value, Nil) {
   case arguments {
-    [g.UnlabelledField(item: g.List(items, ..))] -> {
+    [g.UnlabelledField(item: g.List(_, items, ..))] -> {
       let values = list.try_map(items, convert_expression(_, env, modules))
       use values <- result.try(values)
       let values =
@@ -398,7 +407,7 @@ fn convert_keyframe(
       }
     }
 
-    [g.UnlabelledField(item:), g.UnlabelledField(item: g.List(items, ..))] -> {
+    [g.UnlabelledField(item:), g.UnlabelledField(item: g.List(_, items, ..))] -> {
       use item <- result.try(convert_expression(item, env, modules))
       let values = list.try_map(items, convert_expression(_, env, modules))
       use values <- result.try(values)
@@ -427,7 +436,7 @@ fn convert_transform(
   modules: List(#(String, StyleSheet)),
 ) -> Result(Value, Nil) {
   case arguments {
-    [g.UnlabelledField(item: g.Tuple(items))] -> {
+    [g.UnlabelledField(item: g.Tuple(_, items))] -> {
       let items = list.try_map(items, convert_expression(_, env, modules))
       use items <- result.try(items)
       case label, items {
@@ -628,7 +637,7 @@ fn convert_class_call(
   modules: List(#(String, StyleSheet)),
 ) -> Result(Value, Nil) {
   case arguments {
-    [g.UnlabelledField(item: g.List(elements, ..))] -> {
+    [g.UnlabelledField(item: g.List(_, elements, ..))] -> {
       css.class({
         use element <- list.map(elements)
         case convert_expression(element, env, modules) {
@@ -649,7 +658,7 @@ fn convert_keyframes_call(
   modules: List(#(String, StyleSheet)),
 ) -> Result(Value, Nil) {
   case arguments {
-    [g.UnlabelledField(item:), g.UnlabelledField(item: g.List(elements, ..))] -> {
+    [g.UnlabelledField(item:), g.UnlabelledField(item: g.List(_, elements, ..))] -> {
       use item <- result.try(convert_expression(item, env, modules))
       case item {
         StringValue(s) ->
@@ -675,7 +684,7 @@ fn convert_font_face_call(
   modules: List(#(String, StyleSheet)),
 ) -> Result(Value, Nil) {
   case arguments {
-    [g.UnlabelledField(item: g.List(elements, ..))] -> {
+    [g.UnlabelledField(item: g.List(_, elements, ..))] -> {
       css.font_face({
         use element <- list.flat_map(elements)
         case convert_expression(element, env, modules) {
@@ -730,7 +739,7 @@ fn convert_media_call(
   modules: List(#(String, StyleSheet)),
 ) -> Result(Value, Nil) {
   case arguments {
-    [g.UnlabelledField(item:), g.UnlabelledField(item: g.List(styles, ..))] -> {
+    [g.UnlabelledField(item:), g.UnlabelledField(item: g.List(_, styles, ..))] -> {
       use value <- result.map(convert_expression(item, env, modules))
       case value {
         MediaValue(query) ->
@@ -757,7 +766,7 @@ fn convert_selector_call(
   modules: List(#(String, StyleSheet)),
 ) -> Result(Value, Nil) {
   case arguments {
-    [g.UnlabelledField(item:), g.UnlabelledField(item: g.List(styles, ..))] -> {
+    [g.UnlabelledField(item:), g.UnlabelledField(item: g.List(_, styles, ..))] -> {
       use selector <- result.map(convert_expression(item, env, modules))
       case selector {
         StringValue(prop) ->
@@ -802,7 +811,7 @@ fn convert_transform_call(
   modules: List(#(String, StyleSheet)),
 ) -> Result(Value, Nil) {
   case arguments {
-    [g.UnlabelledField(item: g.List(transforms, ..))] -> {
+    [g.UnlabelledField(item: g.List(_, transforms, ..))] -> {
       let styles = list.try_map(transforms, convert_expression(_, env, modules))
       use styles <- result.try(styles)
       use transforms <- result.map({
@@ -835,7 +844,7 @@ fn convert_generic_call(
         |> utils.remove_trailing_underscore
         |> string.replace(each: "_", with: "-")
       case arguments {
-        [g.UnlabelledField(item: g.List(styles, ..))] -> {
+        [g.UnlabelledField(item: g.List(_, styles, ..))] -> {
           let styles = list.try_map(styles, convert_expression(_, env, modules))
           use styles <- result.map(styles)
           list.map(styles, fn(value) {
@@ -886,7 +895,7 @@ fn convert_pseudo_selector_call(
     | "nth_of_type"
     | "nth_last_of_type" -> {
       case arguments {
-        [g.UnlabelledField(item:), g.UnlabelledField(g.List(styles, ..))] -> {
+        [g.UnlabelledField(item:), g.UnlabelledField(g.List(_, styles, ..))] -> {
           use selector <- result.map(convert_expression(item, env, modules))
           case selector {
             StringValue(prop) ->
@@ -907,7 +916,7 @@ fn convert_pseudo_selector_call(
     }
     _ -> {
       case arguments {
-        [g.UnlabelledField(g.List(styles, ..))] -> {
+        [g.UnlabelledField(g.List(_, styles, ..))] -> {
           css.selector(class, {
             use style <- list.filter_map(styles)
             use value <- result.map(convert_expression(style, env, modules))
@@ -932,7 +941,7 @@ fn convert_combinator_call(
   modules: List(#(String, StyleSheet)),
 ) -> Result(Value, Nil) {
   case arguments {
-    [g.UnlabelledField(item:), g.UnlabelledField(g.List(styles, ..))] -> {
+    [g.UnlabelledField(item:), g.UnlabelledField(g.List(_, styles, ..))] -> {
       use class <- result.map(convert_expression(item, env, modules))
       case class {
         ClassValue(class) ->

@@ -1,5 +1,5 @@
 name = "sketch_css"
-version = "2.1.0"
+version = "2.1.1"
 
 description = "A Sketch runtime package, made to generate CSS!"
 internal_modules = ["sketch_css/*"]
@@ -19,14 +19,14 @@ path = "sketch_css"
 
 [dependencies]
 argv = ">= 1.0.0 and < 2.0.0"
-glance = ">= 2.0.0 and < 3.0.0"
+glance = ">= 6.0.0 and < 7.0.0"
 gleam_erlang = ">= 1.0.0 and < 2.0.0"
 gleam_stdlib = ">= 0.60.0 and < 2.0.0"
 glint = ">= 1.2.0 and < 2.0.0"
 simplifile = ">= 2.0.0 and < 3.0.0"
 sketch = ">= 4.0.0 and < 5.0.0"
 snag = ">= 1.1.0 and < 2.0.0"
-tom = ">= 1.1.0 and < 2.0.0"
+tom = ">= 2.0.0 and < 3.0.0"
 
 [dev-dependencies]
 birdie = ">= 1.2.5 and < 2.0.0"
