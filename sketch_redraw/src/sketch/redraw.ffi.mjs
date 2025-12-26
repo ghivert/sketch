@@ -1,14 +1,14 @@
 import * as React from 'react'
-import * as $gleam from ' ../gleam.mjs'
+import * as $gleam from '../gleam.mjs'
 
-let context = null
+let context_ = null
 
 export function context(stylesheet) {
-  context ??= React.createContext(stylesheet)
-  return context
+  context_ ??= React.createContext(stylesheet)
+  return context_
 }
 
 export function get() {
-  if (context === null) return $gleam.Result$Error()
-  return $gleam.Result$Ok(context)
+  if (context_ === null) return $gleam.Result$Error()
+  return $gleam.Result$Ok(context_)
 }

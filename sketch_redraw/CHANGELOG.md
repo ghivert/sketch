@@ -1,3 +1,11 @@
+## v3.3.2 - 2025-12-26
+
+- Fix JS error.
+
+## v3.3.1 - 2025-12-24
+
+- Use latest Gleam external API.
+
 ## v3.3.0 - 2025-09-22
 
 - Add `hooks` namespace to allow more flexibility in component generation.

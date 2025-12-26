@@ -10,14 +10,14 @@ packages = [
   { name = "gleam_stdlib", version = "0.67.1", build_tools = ["gleam"], requirements = [], otp_app = "gleam_stdlib", source = "hex", outer_checksum = "6CE3E4189A8B8EC2F73AB61A2FBDE49F159D6C9C61C49E3B3082E439F260D3D0" },
   { name = "gleeunit", version = "1.9.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "gleeunit", source = "hex", outer_checksum = "DA9553CE58B67924B3C631F96FE3370C49EB6D6DC6B384EC4862CC4AAA718F3C" },
   { name = "murmur3a", version = "1.0.0", build_tools = ["gleam"], requirements = ["gleam_stdlib"], otp_app = "murmur3a", source = "hex", outer_checksum = "DAA714CEF379915D0F718BC410389245AA8ABFB6F48C73ADB9F011B009F28893" },
-  { name = "redraw", version = "19.2.0", build_tools = ["gleam"], requirements = ["gleam_javascript", "gleam_stdlib"], otp_app = "redraw", source = "hex", outer_checksum = "6192CBD9381A43F037792AAE05EF351302BE2840391D8A57DBA6ABEBF98D0739" },
-  { name = "redraw_dom", version = "19.2.0", build_tools = ["gleam"], requirements = ["gleam_fetch", "gleam_stdlib", "redraw"], otp_app = "redraw_dom", source = "hex", outer_checksum = "88092AC17687F4CB72D33CA924C00FCA272749D79054DEA7F1DDBDE8E46E3117" },
+  { name = "redraw", version = "19.2.1", build_tools = ["gleam"], requirements = ["gleam_javascript", "gleam_stdlib"], otp_app = "redraw", source = "hex", outer_checksum = "E98873DA0AB968B31996214ADBD4FCC19792732652942F99EBD3DD0CD1BF643F" },
+  { name = "redraw_dom", version = "19.2.1", build_tools = ["gleam"], requirements = ["gleam_fetch", "gleam_stdlib", "redraw"], otp_app = "redraw_dom", source = "hex", outer_checksum = "7ADC31BCBFA12AB57280AE02C1110FC1F55EE6CA06891AEFA0E5BA58BA3E64F1" },
   { name = "sketch", version = "4.2.0", build_tools = ["gleam"], requirements = ["gleam_erlang", "gleam_otp", "gleam_stdlib", "murmur3a"], otp_app = "sketch", source = "hex", outer_checksum = "4FFB47A957D39DB1487790E23662E654E91B7D3AA36C99333335E39E48241128" },
 ]
 
 [requirements]
 gleam_stdlib = { version = ">= 0.60.0 and < 2.0.0" }
 gleeunit = { version = ">= 1.5.0 and < 2.0.0" }
-redraw = { version = ">= 19.0.0 and < 20.0.0" }
-redraw_dom = { version = ">= 19.0.0 and < 20.0.0" }
+redraw = { version = ">= 19.2.0 and < 20.0.0" }
+redraw_dom = { version = ">= 19.2.0 and < 20.0.0" }
 sketch = { version = ">= 4.0.0 and < 5.0.0" }
