@@ -1,13 +1,7 @@
 ---
-version: 1.2.5
+version: 1.5.5
 title: js_css_nestings_css.gleam
 ---
-.sketch_css_test-classes-nestings_css_content {
-  color: var(--custom);
-  background: green;
-  padding: 12.0px;
-}
-
 .sketch_css_test-classes-nestings_css_example {
 }
 
@@ -34,4 +28,10 @@ title: js_css_nestings_css.gleam
   .sketch_css_test-classes-nestings_css_example:hover > .sketch_css_test-classes-nestings_css_content:hover {
           background: red;
   }
+}
+
+.sketch_css_test-classes-nestings_css_content {
+  color: var(--custom);
+  background: green;
+  padding: 12.0px;
 }
