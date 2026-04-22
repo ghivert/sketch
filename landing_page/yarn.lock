@@ -5,14 +5,14 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@chouquette/gleam@npm:^1.12.0":
-  version: 1.12.0
-  resolution: "@chouquette/gleam@npm:1.12.0"
+"@chouquette/gleam@npm:^1.15.4":
+  version: 1.15.4
+  resolution: "@chouquette/gleam@npm:1.15.4"
   dependencies:
     tar: "npm:^7.1.0"
   bin:
     gleam: bin/cli.mjs
-  checksum: 10c0/dc72305b79eecec220fc11034b52d7e0a48610c9cf49a6c3843663ed73931b30a99c330e54050f1a7c01a6ebef64dd0ebf6b63695786f09e23012d45b2d9eed6
+  checksum: 10c0/58b72fab9e58b8f59fac6c28255c01ecdf9c9b73e45f20ddaeb2049b957531e9b3475004c297a4910a46cbeeb065e045a4aed2cad8a81b98ffe1a5c5c1171e10
   languageName: node
   linkType: hard
 
@@ -1216,13 +1216,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "landing_page@workspace:."
   dependencies:
-    "@chouquette/gleam": "npm:^1.12.0"
+    "@chouquette/gleam": "npm:^1.15.4"
     "@gleam-lang/highlight.js-gleam": "npm:^1.5.0"
     "@vitejs/plugin-react-swc": "npm:^3.11.0"
     highlight.js: "npm:^11.11.1"
-    react: "npm:^19.1.1"
-    react-dom: "npm:^19.1.1"
-    vite: "npm:^5.4.20"
+    react: "npm:^19.2.5"
+    react-dom: "npm:^19.2.5"
+    vite: "npm:^5.4.21"
     vite-gleam: "npm:^0.4.3"
   languageName: unknown
   linkType: soft
@@ -1506,21 +1506,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^19.1.1":
-  version: 19.1.1
-  resolution: "react-dom@npm:19.1.1"
+"react-dom@npm:^19.2.5":
+  version: 19.2.5
+  resolution: "react-dom@npm:19.2.5"
   dependencies:
-    scheduler: "npm:^0.26.0"
+    scheduler: "npm:^0.27.0"
   peerDependencies:
-    react: ^19.1.1
-  checksum: 10c0/8c91198510521299c56e4e8d5e3a4508b2734fb5e52f29eeac33811de64e76fe586ad32c32182e2e84e070d98df67125da346c3360013357228172dbcd20bcdd
+    react: ^19.2.5
+  checksum: 10c0/8067606e9f58e4c2e8cb5f09570217dbc71c4843ebcaa20ae2085912d3e3a351f17d8f7c1713313cdda7f272840c8c34ff6c860fcb840862071bceea218e0c63
   languageName: node
   linkType: hard
 
-"react@npm:^19.1.1":
-  version: 19.1.1
-  resolution: "react@npm:19.1.1"
-  checksum: 10c0/8c9769a2dfd02e603af6445058325e6c8a24b47b185d0e461f66a6454765ddcaecb3f0a90184836c68bb509f3c38248359edbc42f0d07c23eb500a5c30c87b4e
+"react@npm:^19.2.5":
+  version: 19.2.5
+  resolution: "react@npm:19.2.5"
+  checksum: 10c0/4b5f231dbef92886f602533c9ce3bde04d99f0e71dfb5d794c43e02726efaad0421c08688f75fc98a6d6e1dc017372e1af7abbfecdc86a79968f461675931a7a
   languageName: node
   linkType: hard
 
@@ -1626,10 +1626,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.26.0":
-  version: 0.26.0
-  resolution: "scheduler@npm:0.26.0"
-  checksum: 10c0/5b8d5bfddaae3513410eda54f2268e98a376a429931921a81b5c3a2873aab7ca4d775a8caac5498f8cbc7d0daeab947cf923dbd8e215d61671f9f4e392d34356
+"scheduler@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "scheduler@npm:0.27.0"
+  checksum: 10c0/4f03048cb05a3c8fddc45813052251eca00688f413a3cee236d984a161da28db28ba71bd11e7a3dd02f7af84ab28d39fb311431d3b3772fed557945beb00c452
   languageName: node
   linkType: hard
 
@@ -1861,9 +1861,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.4.20":
-  version: 5.4.20
-  resolution: "vite@npm:5.4.20"
+"vite@npm:^5.4.21":
+  version: 5.4.21
+  resolution: "vite@npm:5.4.21"
   dependencies:
     esbuild: "npm:^0.21.3"
     fsevents: "npm:~2.3.3"
@@ -1900,7 +1900,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/391a1fdd7e05445d60aa3b15d6c1cffcdd92c5d154da375bf06b9cd5633c2387ebee0e8f2fceed3226a63dff36c8ef18fb497662dde8c135133c46670996c7a1
+  checksum: 10c0/468336a1409f728b464160cbf02672e72271fb688d0e605e776b74a89d27e1029509eef3a3a6c755928d8011e474dbf234824d054d07960be5f23cd176bc72de
   languageName: node
   linkType: hard
 

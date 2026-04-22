@@ -10,7 +10,7 @@ import sketch/redraw/dom/hooks/html as shh
 import sketch/redraw/dom/html as sh
 
 pub fn copy_button() {
-  use #(text) <- redraw.element("CopyButton")
+  use text: String <- redraw.component_("CopyButton")
   let #(copied, on_copy) = use_copy(text)
   sh.code(code_install(), [on_copy], [
     h.text(text),

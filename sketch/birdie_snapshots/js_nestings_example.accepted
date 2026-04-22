@@ -1,7 +1,13 @@
 ---
-version: 1.2.5
+version: 1.5.5
 title: js_nestings_example
 ---
+.css-3A1178AC {
+  color: blue;
+  background: green;
+  padding: 12.0px;
+}
+
 .css-C2B72822 {
 }
 
@@ -28,10 +34,4 @@ title: js_nestings_example
   .css-C2B72822:hover > .css-3A1178AC:hover {
           background: red;
   }
-}
-
-.css-3A1178AC {
-  color: blue;
-  background: green;
-  padding: 12.0px;
 }

@@ -21,35 +21,33 @@ import sketch/redraw/dom/html as sh
 import texts
 
 pub fn main() {
-  let app = app()
   let assert Ok(root) = client.create_root("app")
   let cache = sr.initialise_cache(function.identity)
-  client.render(root, {
-    redraw.strict_mode([
-      sr.provider(cache, [
-        app(),
-      ]),
-    ])
-  })
+  use app <- client.render_(root, app())
+  redraw.strict_mode([
+    sr.provider(cache, [
+      app(Nil),
+    ]),
+  ])
 }
 
 fn app() {
-  let lustre_section = lustre_section()
-  let redraw_section = redraw_section()
-  let plain_css_section = plain_css_section()
-  let wisp_section = wisp_section()
-  let navbar = navbar.navbar()
-  let footer = footer.footer()
+  use lustre_section <- redraw.compose(lustre_section())
+  use redraw_section <- redraw.compose(redraw_section())
+  use plain_css_section <- redraw.compose(plain_css_section())
+  use wisp_section <- redraw.compose(wisp_section())
+  use navbar <- redraw.compose(navbar.navbar())
+  use footer <- redraw.compose(footer.footer())
 
-  use <- redraw.standalone("App")
+  use _ <- redraw.component_("App")
   sh.div(css.class([css.font_family("Lexend")]), [], [
-    navbar(),
+    navbar(Nil),
     description_section(),
-    lustre_section(),
-    redraw_section(),
-    plain_css_section(),
-    wisp_section(),
-    footer(),
+    lustre_section(Nil),
+    redraw_section(Nil),
+    plain_css_section(Nil),
+    wisp_section(Nil),
+    footer(Nil),
   ])
 }
 
@@ -99,13 +97,13 @@ fn scroll_to(id: String) {
 }
 
 fn lustre_section() {
-  let copy_button = copy_button.copy_button()
-  use <- redraw.standalone("LustreSection")
+  use copy_button <- redraw.compose(copy_button.copy_button())
+  use _ <- redraw.component_("LustreSection")
   section("lustre-section", "var(--dark-background)", [
     width_container([
       column([], [
         copy_button.title("Sketch Lustre"),
-        copy_button(#("gleam add sketch sketch_lustre")),
+        copy_button("gleam add sketch sketch_lustre"),
       ]),
       layout.windows_wrapper(px(1000), [
         column([], [
@@ -132,13 +130,13 @@ fn lustre_section() {
 }
 
 fn redraw_section() {
-  let copy_button = copy_button.copy_button()
-  use <- redraw.standalone("RedrawSection")
+  use copy_button <- redraw.compose(copy_button.copy_button())
+  use _ <- redraw.component_("RedrawSection")
   section("redraw-section", "var(--background)", [
     width_container([
       column([], [
         copy_button.title("Sketch Redraw"),
-        copy_button(#("gleam add sketch sketch_redraw")),
+        copy_button("gleam add sketch sketch_redraw"),
       ]),
       layout.windows_wrapper(px(1000), [
         column([], [
@@ -165,13 +163,13 @@ fn redraw_section() {
 }
 
 fn plain_css_section() {
-  let copy_button = copy_button.copy_button()
-  use <- redraw.standalone("PlainCssSection")
+  use copy_button <- redraw.compose(copy_button.copy_button())
+  use _ <- redraw.component_("PlainCssSection")
   section("plain-css-section", "var(--dark-background)", [
     width_container([
       column([], [
         copy_button.title("Sketch CSS"),
-        copy_button(#("gleam add sketch sketch_css")),
+        copy_button("gleam add sketch sketch_css"),
       ]),
       layout.windows_wrapper(px(1400), [
         column([], [
@@ -199,13 +197,13 @@ fn plain_css_section() {
 }
 
 fn wisp_section() {
-  let copy_button = copy_button.copy_button()
-  use <- redraw.standalone("WispSection")
+  use copy_button <- redraw.compose(copy_button.copy_button())
+  use _ <- redraw.component_("WispSection")
   section("wisp-section", "var(--background)", [
     width_container([
       column([], [
         copy_button.title("Sketch SSR"),
-        copy_button(#("gleam add sketch")),
+        copy_button("gleam add sketch"),
       ]),
       layout.windows_wrapper(px(1400), [
         column([], [

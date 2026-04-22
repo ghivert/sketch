@@ -6,7 +6,7 @@ import sketch/css/length.{px, rem}
 import sketch/redraw/dom/hooks/html as sh
 
 pub fn footer() {
-  use <- redraw.standalone("Footer")
+  use _ <- redraw.component_("Footer")
   footer_([], [
     column([
       footer_details([h.text("Made with 💜 at Chou Corp.")]),

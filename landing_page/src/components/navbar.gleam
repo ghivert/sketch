@@ -8,7 +8,7 @@ import sketch/redraw/dom/hooks/html as shh
 import sketch/redraw/dom/html as sh
 
 pub fn navbar() {
-  use <- redraw.standalone("Navbar")
+  use _ <- redraw.component_("Navbar")
   nav([a.id("navbar")], [
     // icons.small(icons.home()),
     h.div([], []),

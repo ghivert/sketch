@@ -1,5 +1,5 @@
 name = "sketch"
-version = "4.2.0"
+version = "4.2.1"
 
 description = "A CSS-in-Gleam package, foundation for CSS packages!"
 internal_modules = ["sketch/internals", "sketch/internals/*"]
@@ -19,7 +19,7 @@ path = "sketch"
 [dependencies]
 gleam_erlang = ">= 1.0.0 and < 2.0.0"
 gleam_otp = ">= 1.0.0 and < 2.0.0"
-gleam_stdlib = ">= 0.60.0 and < 1.0.0"
+gleam_stdlib = ">= 0.60.0 and < 2.0.0"
 murmur3a = ">= 1.0.0 and < 2.0.0"
 
 [dev-dependencies]

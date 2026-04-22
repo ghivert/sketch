@@ -1,6 +1,8 @@
 ---
-version: 1.2.5
+version: 1.5.5
 title: run_globals_blue
+file: ./test/sketch_test/class.gleam
+test_name: run_globals
 ---
 :root {
   color: blue;
