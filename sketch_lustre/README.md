@@ -38,7 +38,6 @@ fn setup_sketch_lustre() {
   // Add any initial style you want here, `sketch.at_rule`, etc.
 }
 
-
 fn view(model, stylesheet) {
   // Add the sketch CSS generation "view middleware". If you don't, your `view`
   // function _will panic_. This behaviour is expected, to make sure you never
@@ -48,6 +47,14 @@ fn view(model, stylesheet) {
   // Run your actual view function.
   my_view(model)
 }
+```
+
+Alternatively if you don't want to customize your stylesheet you
+can initiate one quickly, using `sketch_lustre.setup()` in place of
+`setup_sketch_lustre()`, like so
+
+```gleam
+let assert Ok(stylesheet) = sketch_lustre.setup()
 ```
 
 ## Usage
