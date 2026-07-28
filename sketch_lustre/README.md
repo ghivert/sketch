@@ -22,15 +22,22 @@ pub fn main() {
   // once before rendering the application. You can initialize one stylesheet
   // for your entire app, or multiple stylesheets if you're running server
   // components (in that case, one stylesheet per client is recommended).
-  let assert Ok(stylesheet) = sketch_lustre.setup()
-  // Because stylesheets are persistents with sketch_lustre, you can inject
-  // classes, keyframes or @rules directly in it.
-  sketch.global(stylesheet, css.global("body", [css.margin(px(0))]))
+  let assert Ok(stylesheet) = setup_sketch_lustre()
   // Generate the partial view function, compatible with Lustre's runtime.
-  lustre.simple(init, update, view(_, stylesheet))
+  let view = view(_, stylesheet)
+  lustre.simple(init, update, view)
   // And voilà!
   |> lustre.start("#app", Nil)
 }
+
+/// Inject default styling in the initial stylesheet.
+fn setup_sketch_lustre() {
+  use stylesheet <- sketch_lustre.construct
+  stylesheet
+  |> sketch.global(css.global("body", [css.margin(px(0))]))
+  // Add any initial style you want here, `sketch.at_rule`, etc.
+}
+
 
 fn view(model, stylesheet) {
   // Add the sketch CSS generation "view middleware". If you don't, your `view`
