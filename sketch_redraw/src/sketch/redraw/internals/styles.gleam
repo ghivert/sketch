@@ -19,9 +19,15 @@ pub fn dump(style: Node, content: String) -> Nil
 pub fn cache(tag: String, value: fn(a) -> Element) -> fn(a) -> Element
 
 /// Creates the styled function from `hook_factory` if it does not exists.
-/// Otherwise, returns the existing `hook_factory` function specialized for the tag.
+/// Otherwise, returns the existing `hook_factory` function specialized for the
+/// tag and the `styles` function. The component is unique per call site, since
+/// two different `styles` functions can run different hooks.
 @external(javascript, "./styles.ffi.mjs", "hookCache")
-pub fn hook_cache(tag: String, value: fn(a) -> Element) -> fn(a) -> Element
+pub fn hook_cache(
+  tag: String,
+  styles: fn() -> Class,
+  value: fn(a) -> Element,
+) -> fn(a) -> Element
 
 /// Extracts the props generated from `styled` function.
 /// Extracts `as` and `styles`, and the new props without them.

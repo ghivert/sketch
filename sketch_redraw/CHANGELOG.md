@@ -1,3 +1,9 @@
+## v3.3.3 - 2026-10-14
+
+- Fix hooks errors in `sketch/redraw/dom/hooks/html` when two different styled
+  nodes of the same tag swap positions in the tree. Hooked components are now
+  unique per call site instead of per tag.
+
 ## v3.3.2 - 2025-12-26
 
 - Fix JS error.

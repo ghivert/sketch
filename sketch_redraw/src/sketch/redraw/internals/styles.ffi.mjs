@@ -10,7 +10,7 @@ export function dump(style, content) {
 }
 
 const styleds = {}
-const hookStyleds = {}
+const hookStyleds = new Map()
 
 export function cache(tag, defaultValue) {
   if (styleds[tag]) return styleds[tag]
@@ -20,11 +20,22 @@ export function cache(tag, defaultValue) {
   return value
 }
 
-export function hookCache(tag, defaultValue) {
-  if (hookStyleds[tag]) return hookStyleds[tag]
-  let value = defaultValue.bind({})
+/** Hooked styled components must be unique per call site, otherwise React
+ * reuses the same fiber for two different `styles` functions with potentially
+ * different hooks sequences, and raises a hooks error. Gleam closures are
+ * recreated at each render, so their identity is unstable, but their source
+ * text is stable and identical for a given call site. Two call sites with the
+ * exact same source run the exact same hooks, so sharing the component between
+ * them is safe. If the Gleam closures are different between render (source to
+ * source), then it's better to recreate a component on the fly, instead of
+ * introducting bugs in the hooks. */
+export function hookCache(tag, styles, defaultValue) {
+  const key = `${tag}\0${styles.toString()}`
+  let value = hookStyleds.get(key)
+  if (value) return value
+  value = defaultValue.bind({})
   value.displayName = `Sketch.Styled(${tag})`
-  hookStyleds[tag] ??= value
+  hookStyleds.set(key, value)
   return value
 }
 

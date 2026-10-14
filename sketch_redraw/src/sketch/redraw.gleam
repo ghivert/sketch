@@ -221,9 +221,9 @@ pub fn hooked(
   children: a,
   styles: fn() -> Class,
 ) -> Element {
+  let fun = styles.hook_cache(tag, styles, hook_factory)
   let as_ = a.attribute("as", tag)
   let styles = a.attribute("styles", styles)
-  let fun = styles.hook_cache(tag, hook_factory)
   let props = html.to_props([as_, styles, ..props])
   react.jsx(fun, props, children, convert_children: True)
 }
