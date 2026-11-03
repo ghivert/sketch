@@ -38,8 +38,8 @@ fn remove_statement(stat: g.Statement) -> g.Statement {
 fn remove_expr(expr: g.Expression) -> g.Expression {
   case expr {
     // Deeply rewrites.
-    g.NegateInt(..) -> g.NegateInt(..expr, value: remove_expr(expr))
-    g.NegateBool(..) -> g.NegateBool(..expr, value: remove_expr(expr))
+    g.NegateInt(..) -> g.NegateInt(..expr, value: remove_expr(expr.value))
+    g.NegateBool(..) -> g.NegateBool(..expr, value: remove_expr(expr.value))
     g.Block(..) ->
       g.Block(..expr, statements: list.map(expr.statements, remove_statement))
     g.Todo(..) -> g.Todo(..expr, message: option.map(expr.message, remove_expr))
