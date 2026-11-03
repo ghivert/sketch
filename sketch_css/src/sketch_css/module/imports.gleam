@@ -209,7 +209,6 @@ fn rewrite_pattern(
         let #(exprs, env) = acc
         let #(pattern, segments) = segment
         let #(pattern, env) = rewrite_pattern(pattern, env)
-        let #(segments, env) = rewrite_bitstring_segments_pattern(segments, env)
         #([#(pattern, segments), ..exprs], env)
       })
       |> pair.map_first(list.reverse)
@@ -229,24 +228,6 @@ fn rewrite_pattern(
 
     _ -> #(pattern, env)
   }
-}
-
-fn rewrite_bitstring_segments_pattern(
-  segments: List(g.BitStringSegmentOption(g.Pattern)),
-  env: Environment,
-) -> #(List(g.BitStringSegmentOption(g.Pattern)), Environment) {
-  list.fold(segments, #([], env), fn(acc, segment) {
-    let #(segments, env) = acc
-    case segment {
-      g.SizeValueOption(type_) -> {
-        let #(type_, env) = rewrite_pattern(type_, env)
-        let segment = g.SizeValueOption(type_)
-        #([segment, ..segments], env)
-      }
-      _ -> #([segment, ..segments], env)
-    }
-  })
-  |> pair.map_first(list.reverse)
 }
 
 fn rewrite_patterns(elems: List(g.Pattern), env: Environment) {
