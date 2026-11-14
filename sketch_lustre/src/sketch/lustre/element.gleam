@@ -24,6 +24,20 @@ pub const text = el.text
 /// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#map)
 pub const map = el.map
 
+/// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#unsafe_raw_html)
+pub fn unsafe_raw_html(
+  namespace namespace: String,
+  tag tag: String,
+  class class: css.Class,
+  attributes attributes: List(Attribute(msg)),
+  inner_html inner_html: String,
+) -> Element(msg) {
+  let class_name = class_name(class)
+  let attributes = [attribute.class(class_name), ..attributes]
+
+  el.unsafe_raw_html(namespace, tag, attributes, inner_html)
+}
+
 /// [Lustre Documentation](https://hexdocs.pm/lustre/lustre/element.html#element)
 pub fn element(
   tag tag: String,
